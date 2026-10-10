@@ -36,6 +36,7 @@
 #define KEY_RETURN      0x0D
 #define KEY_SPACE       0x20
 #define KEY_ESCAPE      0x1B
+#define KEY_TAB         0x09
 
 /**
  * @brief Start a new game and draw the complete playing field

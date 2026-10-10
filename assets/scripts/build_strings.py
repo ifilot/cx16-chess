@@ -14,7 +14,7 @@ STRINGS = {
     'TO_MOVE': 'ХОД',
     'WHITE_GEN': 'БЕЛЫХ',      # "white's (move)"
     'BLACK_GEN': 'ЧЁРНЫХ',
-    'CHECK': 'ШАХ!',
+    'CHECK': 'ШАХ',
     'WHITE_DAT': 'БЕЛЫМ',      # "(check) to white"
     'BLACK_DAT': 'ЧЁРНЫМ',
     'MATE': 'МАТ!',

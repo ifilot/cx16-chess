@@ -9,9 +9,11 @@ Soviet chess gazette from the 1980s: 640x480, sixteen colours.
 
 ![Playing field](docs/playfield.png)
 
-Playing against the computer ("ЭВМ", the Soviet word for a computer):
+The board takes up the full height of the screen. Key **I** (or the button
+at the bottom right) adds the side columns with the players ("ЭВМ" is the
+Soviet word for a computer), the clocks and the move list:
 
-![Game against the computer](docs/playfield-computer.png)
+![Side columns](docs/playfield-computer.png)
 
 The board can also be shown in the wooden style (key **T**):
 
@@ -22,9 +24,13 @@ The board can also be shown in the wooden style (key **T**):
 * Full rules: castling, en passant, promotion (with a piece picker on the
   board), check, checkmate, stalemate, fifty-move rule and insufficient
   material.
-* Move list in figurine algebraic notation, as printed in chess columns, and
-  two 30-minute clocks.
-* Newspaper styling: masthead with ears and dateline, column rules, PT Serif
+* A 448x448 board (56-pixel squares) with a status bar: side to move,
+  the engine's best move and evaluation, and both 30-minute clocks.
+* Analysis on request (**A** or the АНАЛИЗ button): the engine looks at the
+  position for 10 seconds and shows its best move and evaluation.
+* Switchable side columns with the players, the clocks and the move list in
+  figurine algebraic notation, as printed in chess columns.
+* Newspaper styling: masthead with dateline, double rules, PT Serif
   typography, a halftone "photo" and a printed-diagram board with hatched
   dark squares.
 * Legal destinations, captures, the last move and check are highlighted.
@@ -38,6 +44,8 @@ The board can also be shown in the wooden style (key **T**):
 | --- | --- | --- |
 | Select piece / move | Left click | Arrows + Return or Space |
 | Cancel selection | Click an empty square | Escape |
+| Analyse the position | АНАЛИЗ button | A |
+| Side columns on / off | Button at the bottom right | I or Tab |
 | Flip board | | F |
 | Board style (diagram / wood) | | T |
 | Computer plays black / white / nobody | | C |
@@ -150,13 +158,17 @@ Results with 10 s per move (October 2026, details and games in
 
 ## How it is built
 
-* **Layer 0** shows the background: 16x16 tiles at 4 bpp, deduplicated
-  (about 320 tiles). It is scrolled by 8 pixels so the 48x48 squares sit on
-  an 8-pixel grid. Board squares, clock boxes and move rows switch between
-  pre-rendered tile variants for their highlighted states.
-* **Layer 1** shows pieces (6x6 tiles of 8x8) and text with transparent
-  index 0. The 16 palette rows repeat the base palette with a different ink
-  colour, so text colour is just the tilemap palette offset.
+* **Layer 0** shows the background: 8x8 tiles at 4 bpp, deduplicated
+  (about 640 tiles). There are two complete tilemaps in VRAM, with and
+  without the side columns; switching the view only changes the map base.
+  Board squares switch between pre-rendered 7x7-tile variants for their
+  highlighted states (`SQTILES.DAT`, kept in banked RAM). Active clocks and
+  the current move row are tinted red by changing their palette offset.
+* **Layer 1** shows pieces (7x7 tiles) and text with transparent index 0.
+  The 16 palette rows repeat the base palette with a different ink colour,
+  so text colour is just the tilemap palette offset.
+* The game keeps its C stack in golden RAM ($0400-$07FF) to leave main RAM
+  for code and engine tables.
 * **Sprites** are used for the mouse pointer and the keyboard cursor.
 * `assets/scripts/build_graphics.py` renders the whole screen from
   `assets/scripts/layout.py` and `palette.py` and writes the VRAM files and

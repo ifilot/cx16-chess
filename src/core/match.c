@@ -34,6 +34,11 @@ uint8_t match_computer;
 uint16_t match_clock[2];
 uint8_t match_last_from;
 uint8_t match_last_to;
+uint8_t match_eval_valid;
+int16_t match_eval;
+char match_best[8];
+
+#define ANALYSIS_TIME   (10 * 60)       // jiffies
 
 static uint8_t jiffy_count;
 
@@ -117,6 +122,8 @@ void match_new(uint16_t seconds, uint8_t computer) {
     match_computer = computer;
     match_clock[0] = match_clock[1] = seconds;
     match_last_from = match_last_to = NO_SQUARE;
+    match_eval_valid = 0;
+    match_best[0] = 0;
     jiffy_count = 0;
 }
 
@@ -130,6 +137,7 @@ void match_play(const move_t* m) {
     san_store(ply, san);
     rules_make(&mv);
     rules_commit();
+    match_best[0] = 0;
     match_last_from = mv.from;
     match_last_to = mv.to;
     engine_sync();
@@ -187,13 +195,37 @@ static uint16_t think_time(void) {
     return secs * 60;
 }
 
+static engine_result_t result;
+
+/**
+ * @brief Search the current position; keeps the evaluation (white's view)
+ */
+static void think(void (*poll)(void), uint16_t jiffies) {
+    engine_poll = poll;
+    engine_search(0, jiffies, 0, &result);
+    engine_poll = 0;
+    match_eval = (side == WHITE) ? result.score : -result.score;
+    match_eval_valid = 1;
+}
+
+void match_analyse(void (*poll)(void)) {
+    const move_t* m;
+    move_t mv;
+
+    if(match_state != MATCH_PLAYING) return;
+    think(poll, ANALYSIS_TIME);
+    m = match_find_move(result.from, result.to, result.promo ? result.promo : EMPTY);
+    if(m) {
+        mv = *m;
+        rules_san(&mv, match_best);             // overwrites legal_moves
+        rules_generate_legal();
+    }
+}
+
 void match_computer_move(void (*poll)(void)) {
-    static engine_result_t result;
     const move_t* m;
 
-    engine_poll = poll;
-    engine_search(0, think_time(), 0, &result);
-    engine_poll = 0;
+    think(poll, think_time());
     m = match_find_move(result.from, result.to, result.promo ? result.promo : EMPTY);
     if(!m && legal_count) m = &legal_moves[0];  // never stall the game
     if(m) match_play(m);

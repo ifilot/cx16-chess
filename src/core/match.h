@@ -61,6 +61,9 @@ extern uint8_t match_computer;
 extern uint16_t match_clock[2];         // seconds left, [0] white, [1] black
 extern uint8_t match_last_from;         // most recent move, NO_SQUARE if none
 extern uint8_t match_last_to;
+extern uint8_t match_eval_valid;        // match_eval holds an engine evaluation
+extern int16_t match_eval;              // centipawns, white's view (ENGINE_MATE scale)
+extern char match_best[8];              // SAN of the move suggested by match_analyse, or 
 
 /**
  * @brief Prepare the engine; call once at start-up
@@ -105,6 +108,12 @@ uint8_t match_computer_to_move(void);
  * the clocks on screen running; it may call match_tick().
  */
 void match_computer_move(void (*poll)(void));
+
+/**
+ * @brief Let the engine analyse the position for the side to move: sets
+ *        match_best and match_eval (takes a while, like match_computer_move)
+ */
+void match_analyse(void (*poll)(void));
 
 /**
  * @brief Copy the SAN of a played half move (0 = white's first) into buf

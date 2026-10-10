@@ -3,15 +3,14 @@
 This is *not* part of the normal build. It needs rsvg-convert and the
 PT Serif and Roboto Slab fonts, and writes editable PNGs:
 
-  assets/pieces/pieces.png      12 Cburnett pieces, 48x48, 2-tone pixel art
+  assets/pieces/pieces.png      12 Cburnett pieces in 56x56 cells, 2-tone pixel art
   assets/font/font8x16.png      condensed PT Serif Bold, Windows-1251 32..255,
                                 with figurines at codes 0x81-0x86
   assets/font/digits16x32.png   PT Serif Bold clock digits 0-9 and ':'
   assets/font/headline.png/.json  proportional PT Serif Bold (headings)
   assets/font/small.png/.json     proportional PT Serif (small print)
   assets/font/italic.png/.json    proportional PT Serif Italic (captions)
-  assets/art/masthead.png       the 'ШАХМАТЫ' newspaper title
-  assets/art/knight.png         36x36 knight for the masthead ear
+  assets/art/masthead.png       the 'ШАХМАТЫ' newspaper title (14 px high)
   assets/art/photo.png          halftone 'photograph' of a king
 
 Hand edits to these PNGs are preserved by the build; rerunning this script
@@ -37,7 +36,8 @@ PT_SERIF_BOLD = '/usr/share/fonts/truetype/paratype/PTF75F.ttf'
 # Sheet order equals the engine's piece types: pawn, knight, bishop, rook,
 # queen, king; white first, then black.
 PIECE_NAMES = 'pnbrqk'
-CELL = 48
+CELL = 56
+PIECE_SIZE = 52
 FIGURINE_CODE = 0x80        # + piece type (1..6)
 
 # Solid figurines for the move list, 7x11, standing on the font's baseline.
@@ -108,11 +108,12 @@ def render_piece(name, size=45, stroke=None, over=16):
 
 def make_pieces():
     sheet = np.zeros((CELL, CELL * 12), np.uint8)
+    o = (CELL - PIECE_SIZE) // 2
     for colour, suffix, stroke in ((0, 'lt', 2.0), (1, 'dt', None)):
         for i, letter in enumerate(PIECE_NAMES):
-            piece = render_piece(letter + suffix, stroke=stroke)
-            x = (colour * 6 + i) * CELL + 1
-            sheet[1:46, x:x + 45] = piece
+            piece = render_piece(letter + suffix, size=PIECE_SIZE, stroke=stroke)
+            x = (colour * 6 + i) * CELL + o
+            sheet[o:o + PIECE_SIZE, x:x + PIECE_SIZE] = piece
     indexed(sheet).save(ASSETS / 'pieces/pieces.png')
 
 
@@ -214,7 +215,7 @@ def make_fonts():
 # --------------------------------------------------------------------------
 # artwork
 # --------------------------------------------------------------------------
-def make_masthead(height=36, embolden=7):
+def make_masthead(height=14, embolden=3):
     font = ImageFont.truetype(SLAB, 200)
     big = Image.new('L', (1900, 300), 0)
     ImageDraw.Draw(big).text((20, 10), 'ШАХМАТЫ', font=font, fill=255,
@@ -225,7 +226,6 @@ def make_masthead(height=36, embolden=7):
     out = np.zeros(small.shape, np.uint8)
     out[small] = INK
     indexed(out).save(ASSETS / 'art/masthead.png')
-    indexed(render_piece('nlt', size=36, stroke=2.0)).save(ASSETS / 'art/knight.png')
 
 
 def halftone(gray, period=4.0, angle=45):

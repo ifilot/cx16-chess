@@ -54,16 +54,24 @@ def pil_palette():
     return flat + [0] * (768 - len(flat))
 
 
+TINT_ROW = 14
+
+
 def vera_palette():
     """256 VERA palette entries (512 bytes).
 
     Row k repeats the base palette but replaces index 1 by colour k. Text and
     digit glyphs are drawn with index 1, so the tilemap palette offset selects
     their colour while the screen still only ever shows the same 16 colours.
+
+    Row TINT_ROW is special: paper and its specks turn red while ink stays
+    ink, so a layer-0 region can be highlighted by its palette offset alone.
     """
     out = bytearray()
     for row in range(16):
         for i in range(16):
             value = RGB12[row] if i == INK else RGB12[i]
+            if row == TINT_ROW:
+                value = RGB12[RED] if i in (PAPER, SHADE) else RGB12[i]
             out += bytes([value & 0xFF, value >> 8])
     return bytes(out)

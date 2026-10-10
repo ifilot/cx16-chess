@@ -35,6 +35,11 @@
 #define SPRITE_POINTER  0
 #define SPRITE_CURSOR   1
 
+/*
+ * Both layers use 8x8 tiles, addressed by (col, row) in 8-pixel units.
+ * Layer 0 has two maps: PLAIN (board only) and INFO (with side columns).
+ */
+
 /**
  * @brief Set up 640x480 with two 4bpp tile layers and load all graphics
  *
@@ -43,15 +48,25 @@
 uint8_t video_init(void);
 
 /**
+ * @brief Show the background with (1) or without (0) the side columns
+ */
+void video_show_info(uint8_t on);
+
+/**
  * @brief Clear all of layer 1 (pieces and text)
  */
 void video_clear_layer1(void);
 
 /**
- * @brief Copy a w x h block of map entries into layer 0
+ * @brief Draw board square variant v (index into SQTILES.DAT) at a 7x7
+ *        tile block, in both background maps
  */
-void video_layer0_block(uint8_t col, uint8_t row, uint8_t w, uint8_t h,
-                        const uint16_t* entries);
+void video_square(uint8_t col, uint8_t row, uint8_t v);
+
+/**
+ * @brief Tint (red paper) or untint a block of the INFO background map
+ */
+void video_tint(uint8_t col, uint8_t row, uint8_t w, uint8_t h, uint8_t on);
 
 /**
  * @brief Draw an 8x16 text string on layer 1 in the given palette colour
@@ -69,14 +84,24 @@ void video_text_centered(uint16_t cx, uint8_t row, const char* s, uint8_t color)
 void video_text_clear(uint8_t col, uint8_t row, uint8_t n);
 
 /**
+ * @brief Blank a w x h block of layer-1 tiles
+ */
+void video_clear_block(uint8_t col, uint8_t row, uint8_t w, uint8_t h);
+
+/**
  * @brief Draw 16x32 clock digits ('0'-'9', ':' is 8 px wide)
  */
 void video_digits(uint8_t col, uint8_t row, const char* s, uint8_t color);
 
 /**
- * @brief Draw a 48x48 piece (0-11), or clear the cell when piece is 0xFF
+ * @brief Draw a 56x56 piece (0-11), or clear the cell when piece is 0xFF
  */
 void video_piece(uint8_t col, uint8_t row, uint8_t piece);
+
+/**
+ * @brief Put a single layer-1 tile
+ */
+void video_tile(uint8_t col, uint8_t row, uint16_t tile, uint8_t color);
 
 /**
  * @brief Show the 64x64 cursor sprite at pixel position, or hide it
