@@ -1,0 +1,8 @@
+*.DAT
+*.PRG
+*.o
+*.sym
+*.map
+gfx.h
+strings.h
+playfield.png
