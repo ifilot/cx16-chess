@@ -23,6 +23,7 @@
 #pragma static-locals (on)
 #endif
 #include <string.h>
+#include <time.h>
 
 #include "rules.h"
 #include "engine.h"
@@ -31,7 +32,9 @@
 uint8_t match_state;
 uint8_t match_result;
 uint8_t match_computer;
+uint8_t match_difficulty = 1;
 uint16_t match_clock[2];
+uint16_t match_think_start, match_think_budget;
 uint8_t match_last_from;
 uint8_t match_last_to;
 uint8_t match_eval_valid;
@@ -185,13 +188,15 @@ uint8_t match_computer_to_move(void) {
 
 /**
  * @brief Thinking time for the engine: a 30th of the remaining time,
- *        between 2 and 20 seconds (in jiffies)
+ *        capped at 2/10/20 seconds for easy/normal/hard (in jiffies).
+ *        Remaining clock time can shorten the normal and hard budgets.
  */
 static uint16_t think_time(void) {
     uint16_t secs = match_clock[side >> 3] / 30;
+    uint8_t limit = match_difficulty == 0 ? 2 : match_difficulty == 1 ? 10 : 20;
 
     if(secs < 2) secs = 2;
-    if(secs > 20) secs = 20;
+    if(secs > limit) secs = limit;
     return secs * 60;
 }
 
@@ -201,6 +206,8 @@ static engine_result_t result;
  * @brief Search the current position; keeps the evaluation (white's view)
  */
 static void think(void (*poll)(void), uint16_t jiffies) {
+    match_think_start = (uint16_t)clock();
+    match_think_budget = jiffies;
     engine_poll = poll;
     engine_search(0, jiffies, 0, &result);
     engine_poll = 0;

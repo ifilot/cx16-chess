@@ -7,3 +7,9 @@ gfx.h
 strings.h
 playfield.png
 playfield-info.png
+splash.png
+setup.png
+*.menu
+*.BIN
+assets.h
+assets.inc

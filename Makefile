@@ -2,10 +2,13 @@ EMU ?= $(abspath ../x16-emulator/build/x16emu)
 ROM ?= $(abspath $(firstword $(wildcard ../emulator/rom.bin ../emulator-win/rom.bin) ../emulator/rom.bin))
 EMU_FLAGS ?= -scale 2
 
-.PHONY: all run screenshot test parity fuzz bench wac clean
+.PHONY: all run screenshot test test-ui test-dist test-sd parity fuzz bench wac dist clean
 
 all:
 	$(MAKE) -C src
+
+dist: all
+	python3 tools/distribute.py
 
 run: all
 	cd src && "$(EMU)" -rom "$(ROM)" -prg CHESS.PRG -run $(EMU_FLAGS)
@@ -16,6 +19,26 @@ screenshot: all
 # native tests: perft and SAN of rules.c, engine perft and mates
 test:
 	$(MAKE) -C tests
+	python3 tests/graphics_test.py
+
+test-ui: all
+	python3 tools/startup_test.py
+	python3 tools/ui_test.py
+	python3 tools/scorecard_test.py
+	python3 tools/options_test.py
+	python3 tools/indicators_test.py
+	python3 tools/assets_test.py
+
+test-dist: dist
+	CHESS_FSROOT="$(abspath build/dist/CHESS)" $(MAKE) test-ui
+
+# Exercise the ROM's real CMDR-DOS/SD path, including native partial reads.
+# Requires mkfs.fat and mcopy; the generated image is confined to build/.
+test-sd: dist
+	python3 tools/make_sdcard.py
+	CHESS_FSROOT="$(abspath build/dist/CHESS)" CHESS_SDCARD="$(abspath build/dist/CHESS.IMG)" python3 tools/startup_test.py --out build/startup-sd.json
+	CHESS_FSROOT="$(abspath build/dist/CHESS)" CHESS_SDCARD="$(abspath build/dist/CHESS.IMG)" python3 tools/ui_test.py
+	CHESS_FSROOT="$(abspath build/dist/CHESS)" CHESS_SDCARD="$(abspath build/dist/CHESS.IMG)" python3 tools/options_test.py
 
 # X16 engine tests in the AgentBridge emulator (see README); fuzz and wac
 # need python-chess

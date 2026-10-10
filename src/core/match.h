@@ -58,6 +58,10 @@
 extern uint8_t match_state;
 extern uint8_t match_result;
 extern uint8_t match_computer;
+/* CPU difficulty: 0 easy, 1 normal, 2 hard; applied to computer moves. */
+extern uint8_t match_difficulty;
+/* Search budget and starting jiffy, for the thinking indicator. */
+extern uint16_t match_think_start, match_think_budget;
 extern uint16_t match_clock[2];         // seconds left, [0] white, [1] black
 extern uint8_t match_last_from;         // most recent move, NO_SQUARE if none
 extern uint8_t match_last_to;

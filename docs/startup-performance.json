@@ -1,0 +1,25 @@
+{
+  "graphics_bytes_loaded_before_menu": {
+    "before": 160816,
+    "after": 81984,
+    "reduction_percent": 49.02
+  },
+  "bytes_avoided_per_return_to_board": 27328,
+  "baseline_startup": {
+    "main_to_menu_cycles": 39004893,
+    "main_to_menu_seconds_8mhz": 4.875611625,
+    "init_cycles": 21714084,
+    "layers_enabled_before_open": true,
+    "incorrect_visible_frames_during_open": 0,
+    "timing": "AgentBridge HostFS; physical disk transfer time excluded"
+  },
+  "latest_startup": {
+    "main_to_menu_cycles": 28947147,
+    "main_to_menu_seconds_8mhz": 3.618393375,
+    "init_cycles": 9663378,
+    "layers_enabled_before_open": false,
+    "incorrect_visible_frames_during_open": 0,
+    "timing": "AgentBridge HostFS; physical disk transfer time excluded"
+  },
+  "note": "Emulator HostFS timing varies between runs and excludes physical disk transfer time. Byte counts exclude menu code; the engine is now initialized on first game."
+}

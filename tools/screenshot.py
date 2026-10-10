@@ -10,6 +10,7 @@ Keys are SDL key names separated by spaces. Special tokens:
   click:X,Y         move the mouse to screen pixel (X, Y) and left-click
 """
 import argparse
+import os
 import sys
 from pathlib import Path
 
@@ -19,9 +20,12 @@ from x16agent import X16Agent  # noqa: E402
 
 
 class Session:
-    def __init__(self, emu, rom):
-        self.emu = X16Agent(emu, rom, fsroot=ROOT / 'src',
-                            options=['-prg', str(ROOT / 'src/CHESS.PRG'), '-run'])
+    def __init__(self, emu, rom, fsroot=None):
+        fsroot = Path(fsroot or os.environ.get('CHESS_FSROOT', ROOT / 'src'))
+        options = ['-prg', str(fsroot / 'CHESS.PRG'), '-run']
+        if os.environ.get('CHESS_SDCARD'):
+            options += ['-sdcard', os.environ['CHESS_SDCARD']]
+        self.emu = X16Agent(emu, rom, fsroot=fsroot, options=options)
         self.mouse = None
 
     def press(self, key):

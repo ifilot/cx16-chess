@@ -1,0 +1,1406 @@
+{
+  "archive": "/mnt/c/PROGRAMMING/CX16/cx16-chess-design-archive-2026-10-10.tar.gz",
+  "archive_bytes": 79204325,
+  "archived_bytes": 85267646,
+  "archived_file_count": 340,
+  "removed_paths": [
+    "assets/art/masthead.png",
+    "assets/art/photo.png",
+    "assets/font/italic.png",
+    "assets/font/italic.json",
+    "assets/font/small.png",
+    "assets/font/small.json",
+    "assets/font/digits16x32.png",
+    "assets/pieces/pieces.png",
+    "assets/pieces/svg",
+    "assets/scripts/make_sources.py",
+    "docs/mockups",
+    "docs/approved-indicators-keyboard.png",
+    "docs/options-continental.png",
+    "docs/options-letterpress.png",
+    "docs/options-validation.json",
+    "docs/playfield-computer.png",
+    "docs/playfield-wood.png",
+    "docs/scorecard-icons-detail.png",
+    "docs/scorecard-icons-validation.json",
+    "docs/scorecard-icons.png",
+    "docs/scorecard.png",
+    "docs/victorian-game.png",
+    "docs/victorian-selected.png"
+  ],
+  "files": {
+    "assets/art/masthead.png": {
+      "bytes": 1015,
+      "sha256": "08adca24507b86b706ec66b78d71139fc173bec1ebd3a87d67d581c92e5aa86b"
+    },
+    "assets/art/photo.png": {
+      "bytes": 1455,
+      "sha256": "d3024b29865a32992d83c2856e62e3a844355f7d2d6c8a7fe9dd4291d85cac9c"
+    },
+    "assets/font/italic.png": {
+      "bytes": 3360,
+      "sha256": "4ec7d0bb03669cde087db0427bc83f1a3e97f2d32c6fce13e689f4be0a59d1b1"
+    },
+    "assets/font/italic.json": {
+      "bytes": 733,
+      "sha256": "4a7fa13a25f643b0f93c4b98e33fa0e24491890ec30761c90dc6f00ab4c56b7b"
+    },
+    "assets/font/small.png": {
+      "bytes": 3253,
+      "sha256": "f22101fe73deea8c552fd64e972fa8c18b1887a0a4ef428c0621dab11776a452"
+    },
+    "assets/font/small.json": {
+      "bytes": 736,
+      "sha256": "4b0e0e66bfa4b7a62a92977b4493a50aea023b387e1e864387ff7406efdcc1fe"
+    },
+    "assets/font/digits16x32.png": {
+      "bytes": 986,
+      "sha256": "4384d271dfac240f1f5bc531a7e48db43f230a7b3a3c32031f166e69a7944453"
+    },
+    "assets/pieces/pieces.png": {
+      "bytes": 2577,
+      "sha256": "0aebb435b4492c0b63a36b2dc59a2c37a6d2f720456a4300dba9afdf0cb2c254"
+    },
+    "assets/pieces/svg/Chess_bdt45.svg": {
+      "bytes": 1282,
+      "sha256": "ba67da76ce919addc60ecb8b46801def073dd54149b2c038a2d07a16d904d5e4"
+    },
+    "assets/pieces/svg/Chess_blt45.svg": {
+      "bytes": 1282,
+      "sha256": "1d7beace24d455c923ee80d27125963eaf0287b956c5576dbf790c97ac0b97eb"
+    },
+    "assets/pieces/svg/Chess_kdt45.svg": {
+      "bytes": 1456,
+      "sha256": "025eea92e0ef8eb1fd06b1c58d0d112948f08bf66cea6b5d003659569949b41c"
+    },
+    "assets/pieces/svg/Chess_klt45.svg": {
+      "bytes": 700,
+      "sha256": "56f55c784843b1ac272b8745d740aa2a3e6c585513ef889978916f88e5d0b70b"
+    },
+    "assets/pieces/svg/Chess_ndt45.svg": {
+      "bytes": 1620,
+      "sha256": "735cc58315b123a56632d4877a6b976c827481fa97bf9a5c8f459ec969bc2549"
+    },
+    "assets/pieces/svg/Chess_nlt45.svg": {
+      "bytes": 1325,
+      "sha256": "5486791207156f7ae8b8678187648df45085d726334c2862e73b077dea00641e"
+    },
+    "assets/pieces/svg/Chess_pdt45.svg": {
+      "bytes": 766,
+      "sha256": "4413bf7c18a341f9723d97e6f92c985e30b6167b037e80842cea59b7541bb074"
+    },
+    "assets/pieces/svg/Chess_plt45.svg": {
+      "bytes": 766,
+      "sha256": "cc7de30708dcec8f4d593a89d10893d5f9c063682039a1c441e86c44cf2096db"
+    },
+    "assets/pieces/svg/Chess_qdt45.svg": {
+      "bytes": 1422,
+      "sha256": "70191a3fbc729ef629661e2419a66ab8024c49277aab8ccae3a5ef61372ab802"
+    },
+    "assets/pieces/svg/Chess_qlt45.svg": {
+      "bytes": 1087,
+      "sha256": "b72b864e2a5b6c8f8afb7f260130c10e649ff063f4ef58190c00a35c56364327"
+    },
+    "assets/pieces/svg/Chess_rdt45.svg": {
+      "bytes": 1818,
+      "sha256": "6abf617a9e26902e0734d85897c9ca55e29d7be2928142aa21032c38967e34ba"
+    },
+    "assets/pieces/svg/Chess_rlt45.svg": {
+      "bytes": 1198,
+      "sha256": "4d42ab45afd862c704eb9b35317102d453a7a6b9b71d40f18958c8eadc829e4b"
+    },
+    "assets/scripts/make_sources.py": {
+      "bytes": 9157,
+      "sha256": "a374205f13693b0d72c68c3f0cf5e171d06399df8a544f3f0e6213a2365c57be"
+    },
+    "docs/mockups/board-overview.png": {
+      "bytes": 4694683,
+      "sha256": "8002acee725eb6b125aac8cee17c4488a081b27a8051407205feeec455cb835d"
+    },
+    "docs/mockups/finalize.py": {
+      "bytes": 5346,
+      "sha256": "9869c7572ff142490bb11297beb5778384c51dcdeef2ee20b5214a610e5600d5"
+    },
+    "docs/mockups/generated-paths.json": {
+      "bytes": 4196,
+      "sha256": "be982529edf9a0dca51ebf71e7c18170da9b81bc1607af7ae3f5e33d5d33206a"
+    },
+    "docs/mockups/index.html": {
+      "bytes": 12074,
+      "sha256": "f1bf19f107a906919bd4454a5a6c588024d9fcbb36692856350ac8660869dda9"
+    },
+    "docs/mockups/palette-16.ppm": {
+      "bytes": 60,
+      "sha256": "50fa6023e1f1955300388f4e47951589b2bb8f5fb141d274ced2574c88407bd5"
+    },
+    "docs/mockups/palette-4.ppm": {
+      "bytes": 23,
+      "sha256": "f9a5992520c1a899855c5d66dcae9f137b599e391d8eff856d99f4234fc74f6c"
+    },
+    "docs/mockups/prompts.json": {
+      "bytes": 30211,
+      "sha256": "753deb629c58074171836a372abeed79d55d93b28bbd715a458014c84644fcb8"
+    },
+    "docs/mockups/splash-overview.png": {
+      "bytes": 4920053,
+      "sha256": "6b1ec86d4e1b796113f6946b768349aa4e66d2b47cb9b2b9a8c138850275f9a3"
+    },
+    "docs/mockups/validation.json": {
+      "bytes": 8421,
+      "sha256": "82b48d1526302765513fb8fa56b2d08d00c05decc38b197f4db85bf9e4c7e44a"
+    },
+    "docs/mockups/board/01-classic-gazette.png": {
+      "bytes": 72593,
+      "sha256": "f1b81867f6c62fb555a2c5c8a11ec9de91fa152811abbd671ba7bf546c006859"
+    },
+    "docs/mockups/board/02-right-scorecard.png": {
+      "bytes": 75333,
+      "sha256": "2f7825045494016679c28c2784c90b65d1309415337b8f537df18f49a7e9ad13"
+    },
+    "docs/mockups/board/03-bottom-ledger.png": {
+      "bytes": 77001,
+      "sha256": "1531b33a2fe71ca0c93fe5bffb171283ed6764d438f19629bfccda095b779185"
+    },
+    "docs/mockups/board/04-tournament-sheet.png": {
+      "bytes": 76587,
+      "sha256": "aca09a307f511a7bcd859eae75e465fdc2b283a54df4cc410ff3b4b987b46b84"
+    },
+    "docs/mockups/board/05-engraved-staunton.png": {
+      "bytes": 77319,
+      "sha256": "47f56c150cbe6535facaa1f627e4f70ecde3158749201c78822db29c8efb2282"
+    },
+    "docs/mockups/board/06-airy-diagram.png": {
+      "bytes": 72101,
+      "sha256": "e5ff470b97cf8276d86a3c364cc45b6198f10bc4db7c0693fe5da2e49008b37c"
+    },
+    "docs/mockups/board/07-red-editorial.png": {
+      "bytes": 67210,
+      "sha256": "1ca93d0e9d2879e33a768ef0cf25a900bf5d9679634560638201f7a206b365b2"
+    },
+    "docs/mockups/board/08-left-player-column.png": {
+      "bytes": 75393,
+      "sha256": "5f633ad5b7ffdcb46e501f8388502f5e483402d697d3b5eeddb01ab1b01d5b39"
+    },
+    "docs/mockups/board/09-columnist-layout.png": {
+      "bytes": 70214,
+      "sha256": "e19747e56a15212826b856884669caa4be326caa12423442c373538ffced2b9a"
+    },
+    "docs/mockups/board/10-pure-study.png": {
+      "bytes": 72852,
+      "sha256": "ccd09c034ec1d4c3fa88a024d89acfd788247e1e94a8270400ff937829150ad5"
+    },
+    "docs/mockups/newspaper/finalize.py": {
+      "bytes": 9243,
+      "sha256": "d440112f603575c7ffbc4e7a97872c64d6769b0d4f7584470a1bab8371fa24a8"
+    },
+    "docs/mockups/newspaper/index.html": {
+      "bytes": 2938,
+      "sha256": "bfa11959b0081fefaff6e6ee6f4a099906309104b8ab2e02f09306ee5f9e7a39"
+    },
+    "docs/mockups/newspaper/options-preview.png": {
+      "bytes": 37575,
+      "sha256": "29faff05a79b7086082d60a19aa7cae741ced633b0fdf45291b34fe1398903f6"
+    },
+    "docs/mockups/newspaper/prompts.json": {
+      "bytes": 5901,
+      "sha256": "445f07e70563d776e8349faf72dbb0212657f692116673e3e2449831c2a55d4e"
+    },
+    "docs/mockups/newspaper/README.md": {
+      "bytes": 1906,
+      "sha256": "d09cb91cc7029441c05d483296fb335dd9566eef7bbbbb63e813c225d9836886"
+    },
+    "docs/mockups/newspaper/references.md": {
+      "bytes": 1275,
+      "sha256": "7c74bd05199a8942096907ed5c4337bf2d8426b544e68243de5a534cf5741d49"
+    },
+    "docs/mockups/newspaper/selection.json": {
+      "bytes": 1085,
+      "sha256": "b79ff3c9d2eb40003884f208fde7cb23456fa56142de47e0f0a906772d575870"
+    },
+    "docs/mockups/newspaper/validation.json": {
+      "bytes": 1054,
+      "sha256": "302ce8403f00130601f1d78d16014eed97a7bb0b3759cd0931da0731f864b4cf"
+    },
+    "docs/mockups/originals/board-01-classic-gazette.png": {
+      "bytes": 2562833,
+      "sha256": "c44404e8eec8bc6cb59d184080dc1b01574693a21fc28d8a7b22719ddc47f0ed"
+    },
+    "docs/mockups/originals/board-02-right-scorecard.png": {
+      "bytes": 1513353,
+      "sha256": "983fc42d6b0cff8572c605b912d3774c1a345353a03c37bbd46c44fec28360fe"
+    },
+    "docs/mockups/originals/board-03-bottom-ledger.png": {
+      "bytes": 2162970,
+      "sha256": "c93594a33c8b9e42709f7c95c188869684a9e8ea53bdefeaef1555c8bf965bf9"
+    },
+    "docs/mockups/originals/board-04-tournament-sheet.png": {
+      "bytes": 2605201,
+      "sha256": "8e2ce65fd354cb204e39c604622cfc77c4a4eecf2378a1ca4819514e22b1def2"
+    },
+    "docs/mockups/originals/board-05-engraved-staunton.png": {
+      "bytes": 1931016,
+      "sha256": "a601990c67919cbceb2b760085af2084c8c6890580f9a1991e5f78888aed0d3d"
+    },
+    "docs/mockups/originals/board-06-airy-diagram.png": {
+      "bytes": 2276316,
+      "sha256": "2bdb3b1523ecb92165c0196b1138fa9af80db3e441825b2ce28933fe448e9e58"
+    },
+    "docs/mockups/originals/board-07-red-editorial.png": {
+      "bytes": 1676792,
+      "sha256": "0fb91ffbd0d13a52f3772c576d45b3d61721623ec6e8aad571414bd1cd4df494"
+    },
+    "docs/mockups/originals/board-08-left-player-column.png": {
+      "bytes": 2446214,
+      "sha256": "f855b1862cf00b6a00c7f9fafcdd9bca733b0629952219ea022133d82b3dcc6b"
+    },
+    "docs/mockups/originals/board-09-columnist-layout.png": {
+      "bytes": 2217392,
+      "sha256": "4e2e777641daca0f18d37afab472d602cdeac910a354733bc66c93c0644de3dc"
+    },
+    "docs/mockups/originals/board-10-pure-study.png": {
+      "bytes": 1956524,
+      "sha256": "8a5887fb597ee0036d723d3d8e2ad5d8f53b6076c40ee199c50514f824ae1da3"
+    },
+    "docs/mockups/originals/splash-01-knight-editorial.png": {
+      "bytes": 2833453,
+      "sha256": "9dca5d83fb6aee784552b16f0911481592661fb53cbb7fa20eecd67eec0d26e9"
+    },
+    "docs/mockups/originals/splash-02-king-cover.png": {
+      "bytes": 2870742,
+      "sha256": "b37890681b671318616a5c54e445dbec30dd144a55642d293f58d068cdc991d4"
+    },
+    "docs/mockups/originals/splash-03-royal-pair.png": {
+      "bytes": 2745795,
+      "sha256": "5a4aa7e687310425dfffeeadc3c236ffb44308526799abc18fd87b506c12c14f"
+    },
+    "docs/mockups/originals/splash-04-rook-column.png": {
+      "bytes": 2662964,
+      "sha256": "56f7516db9a9dbc5dc30565ae835588e5306a2de4e44ca035d9aa54e355f2ee8"
+    },
+    "docs/mockups/originals/splash-05-bishop-study-v2-clean-paper-16.png": {
+      "bytes": 1626045,
+      "sha256": "f736a796bab66f472e9880f1f16e60ee55706aa0e55ea80e89d1259b2ec096e7"
+    },
+    "docs/mockups/originals/splash-05-bishop-study.png": {
+      "bytes": 1664166,
+      "sha256": "d4fa696ca543f1483be2a331743a5fbce0a6c785d57cc80cea1ff73032cd8c14"
+    },
+    "docs/mockups/originals/splash-06-pawn-procession.png": {
+      "bytes": 1936363,
+      "sha256": "e7d8a202c4d6c62181bc17d9ef631fd2a3ee1ab65ee2b82d6e2c521f557aad48"
+    },
+    "docs/mockups/originals/splash-07-knight-duet.png": {
+      "bytes": 3089680,
+      "sha256": "61015183f605ee4a822f30fff1ba52be05d495d913997b2480293e07a7b5e659"
+    },
+    "docs/mockups/originals/splash-08-queen-portrait.png": {
+      "bytes": 2011572,
+      "sha256": "94200aea261ab1d902d1268890248a3daa35eb252ea43744e3c85d78b42baac9"
+    },
+    "docs/mockups/originals/splash-09-chess-still-life.png": {
+      "bytes": 2878467,
+      "sha256": "feb7846f5f59e1db7178b0582b757dfe1bb7c6eff1e17959cefc13d11f493185"
+    },
+    "docs/mockups/originals/splash-10-endgame-cover.png": {
+      "bytes": 2225048,
+      "sha256": "e2475273df03b96da6fc20cc5f19f1d4f3e7fad919641d0e806990744f32738a"
+    },
+    "docs/mockups/piece-sets/finalize.py": {
+      "bytes": 9460,
+      "sha256": "850e8c4c564ba3d0bd72e03eab707a6c1ca3745a782448a6255951774d282ede"
+    },
+    "docs/mockups/piece-sets/generated-paths.json": {
+      "bytes": 20427,
+      "sha256": "2e2310977f19d56d380acc0bf341b974077cf5611b8c1aa1d3160323d02f9db2"
+    },
+    "docs/mockups/piece-sets/index.html": {
+      "bytes": 7123,
+      "sha256": "0c38daf6aa140811234127ec9b0af66048145ac4d66c114c9603f88050a9d85b"
+    },
+    "docs/mockups/piece-sets/README.md": {
+      "bytes": 3018,
+      "sha256": "de43e80ff8c9bbf20b28579e577add8faa721106ab32a0a20d4e08198128a725"
+    },
+    "docs/mockups/piece-sets/validation.json": {
+      "bytes": 3999,
+      "sha256": "4fd60869c2b0d21b9098f3bac85944aba68cccd16571d2ebd98c405c68c1bcff"
+    },
+    "docs/mockups/selectors/generate.py": {
+      "bytes": 12174,
+      "sha256": "9a820649e1903123a5485f3cd9e21ba242f83d40e786964bb5609fa035e729a1"
+    },
+    "docs/mockups/selectors/index.html": {
+      "bytes": 885,
+      "sha256": "dfdf2819e9d5955eb4a049a3462657582d616dd7e7f4c601326825ab8af270d9"
+    },
+    "docs/mockups/selectors/README.md": {
+      "bytes": 2524,
+      "sha256": "db859c84e1b43a83bba06c8d057b6e4f2ac2f9182e664148c9cbc3735836d43f"
+    },
+    "docs/mockups/selectors/validation.json": {
+      "bytes": 1626,
+      "sha256": "28c2ecb97bf72e4db5fe0e6c934e46d16998acca74d077f573d5f7fd3ab27f6e"
+    },
+    "docs/mockups/setup-queen/queen-four-tone-original.png": {
+      "bytes": 1756998,
+      "sha256": "e8f1bcbec5fef915194f35256b87a1de15979ca90b90f6fb32304a987256e2c9"
+    },
+    "docs/mockups/setup-queen/validation.json": {
+      "bytes": 516,
+      "sha256": "3dde0542962730218dd95a614f2e6cc8402c00dd043a4d8fc1ba4613846bb05a"
+    },
+    "docs/mockups/splash/01-knight-editorial.png": {
+      "bytes": 35307,
+      "sha256": "e8f8d9c2137ddbec8e9fef0183a6f3e620fa83981ec7d91160f628c2c3766ae6"
+    },
+    "docs/mockups/splash/02-king-cover.png": {
+      "bytes": 37962,
+      "sha256": "3b29d79e67dcfe37a659b4eddeab9a6e600d93008e43125288354b897da90016"
+    },
+    "docs/mockups/splash/03-royal-pair.png": {
+      "bytes": 44215,
+      "sha256": "d745fda5f56ab7bf25949d720345220238cabc0d6cea49ea6523f47c3199db5d"
+    },
+    "docs/mockups/splash/04-rook-column.png": {
+      "bytes": 41567,
+      "sha256": "423d470828f040ff216d16d641cb492672d4e9eb7b3814a1be2dde236d32932c"
+    },
+    "docs/mockups/splash/05-bishop-study-v2-clean-paper-16.png": {
+      "bytes": 21402,
+      "sha256": "0ecae089bb9535e3360f1612dee6ff7e8aec68e24acdd209e5b890390cc9fee3"
+    },
+    "docs/mockups/splash/05-bishop-study-v2-prompt.json": {
+      "bytes": 1805,
+      "sha256": "d8cec74d5d6f8c252cd52870ebee6e89094b64d5d979acf8c929b7324f81d2ac"
+    },
+    "docs/mockups/splash/05-bishop-study-v2-validation.json": {
+      "bytes": 465,
+      "sha256": "8bddaf191bb924ce03e5a5680a33346013d531c12bdd9a7d5204938be991b6f9"
+    },
+    "docs/mockups/splash/05-bishop-study.png": {
+      "bytes": 26861,
+      "sha256": "9e8a8ba2977cb9d9b08a8df151755b3760feb9cb02d1645299534be75d40340b"
+    },
+    "docs/mockups/splash/06-pawn-procession.png": {
+      "bytes": 30763,
+      "sha256": "082d072b95fc34ca36ff96f279513dae5d0e3c3a9b644e43f71300dba7a94d0b"
+    },
+    "docs/mockups/splash/07-knight-duet.png": {
+      "bytes": 44260,
+      "sha256": "705bcb347832f65d3045a7be2a2fa172014d0abad63540dab1875c66b142b20b"
+    },
+    "docs/mockups/splash/08-queen-portrait.png": {
+      "bytes": 39974,
+      "sha256": "15ec5ee844c1b9f4d45fabdfba8b6eb68c724fe2bbcd45b129f5c38a1678d183"
+    },
+    "docs/mockups/splash/09-chess-still-life.png": {
+      "bytes": 39996,
+      "sha256": "dab06a3877571e644aebe22b1cb802ef83d439807096dfec9ee04517b581ad8e"
+    },
+    "docs/mockups/splash/10-endgame-cover.png": {
+      "bytes": 40556,
+      "sha256": "829ab23a9515aa6e906c6c8749bcfcf46fbb9d3cc989178cfe12cba4f9047b65"
+    },
+    "docs/mockups/splash-dithering/capture.py": {
+      "bytes": 3766,
+      "sha256": "91ca330bf29dbbccc08ab6b069a7b585052f51afa5a752b967fdd28e73ffb8d3"
+    },
+    "docs/mockups/splash-dithering/emulator-validation.json": {
+      "bytes": 1356,
+      "sha256": "a31329fca0279d1e2b797ecf64c6b211535e2e147c6540ed49fc38f86ece1025"
+    },
+    "docs/mockups/splash-dithering/finalize.py": {
+      "bytes": 7471,
+      "sha256": "904f64c1fd8b8a9a71c030f12f7de9aec921c67db60473d9c4c55c7ab0722064"
+    },
+    "docs/mockups/splash-dithering/index.html": {
+      "bytes": 4032,
+      "sha256": "246ccb04bbb58a5954fc195fc11231d5524dd1451d53b7048433547d617ec958"
+    },
+    "docs/mockups/splash-dithering/prompts.json": {
+      "bytes": 10865,
+      "sha256": "b9655f7fa10b7e59f18a15ac76c3e76562d871fac3712c1c5fa9245a43f67582"
+    },
+    "docs/mockups/splash-dithering/README.md": {
+      "bytes": 2054,
+      "sha256": "fbe6a65d34fe79ccce5de758c92567d1c9a967c4bdd2b5916c6e72670b06b1aa"
+    },
+    "docs/mockups/splash-dithering/validation.json": {
+      "bytes": 3411,
+      "sha256": "b8f1d30b5e9744ffb1475fe968179f76aa3b5830b6d961f2ff2151e775ab92b1"
+    },
+    "docs/mockups/newspaper/11-victorian-diagram/background.4bpp": {
+      "bytes": 6496,
+      "sha256": "9984248cf848a305f52fa5974e286627164fc7ae1301e29a072c7177af65d187"
+    },
+    "docs/mockups/newspaper/11-victorian-diagram/background.map": {
+      "bytes": 16384,
+      "sha256": "d80101bac5bc7a2c5c4204dc5f9595694213201d54c7f0d1f65f809c94a2abbf"
+    },
+    "docs/mockups/newspaper/11-victorian-diagram/board-only.png": {
+      "bytes": 5402,
+      "sha256": "d1a8763908472d2f013412d54c51d059ed91a5fafeaa81d0a9d8ed3cd8033fdc"
+    },
+    "docs/mockups/newspaper/11-victorian-diagram/board.png": {
+      "bytes": 10060,
+      "sha256": "08e24a2441aa101d56ea38f3546bf98f86102565fca007d8c78d7a0ebd96b63a"
+    },
+    "docs/mockups/newspaper/11-victorian-diagram/midgame.png": {
+      "bytes": 11315,
+      "sha256": "91b4e5cc6ae9db9fe5b7e56db7bcd5f9dca027d216e03bdeaa5849e05fc6463e"
+    },
+    "docs/mockups/newspaper/11-victorian-diagram/pieces-preview.png": {
+      "bytes": 7027,
+      "sha256": "17e2c7880807903b6a9269cafc8fd52d3e174aa9e2b42379694b87962150e315"
+    },
+    "docs/mockups/newspaper/11-victorian-diagram/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "1b1bc5c5f6f93726e2a70a8937d25dec8f461ea1d1ca2bf584720731141eb86b"
+    },
+    "docs/mockups/newspaper/11-victorian-diagram/pieces.png": {
+      "bytes": 3476,
+      "sha256": "1f31ffdc1dd8576afbbbf939f122863d7269ec20d6f4d1ef75c379b00b8bc349"
+    },
+    "docs/mockups/newspaper/11-victorian-diagram/sprites.png": {
+      "bytes": 3434,
+      "sha256": "b11a950f0efed259d81a0a14c847eaf9f78d1a19c0d389c4c86d0b8db2474677"
+    },
+    "docs/mockups/newspaper/12-continental-engraving/background.4bpp": {
+      "bytes": 6496,
+      "sha256": "476d44f3f0251f991747cec5dfcfb00cae3e9096c5eb1860d8759beb1ef9182f"
+    },
+    "docs/mockups/newspaper/12-continental-engraving/background.map": {
+      "bytes": 16384,
+      "sha256": "d80101bac5bc7a2c5c4204dc5f9595694213201d54c7f0d1f65f809c94a2abbf"
+    },
+    "docs/mockups/newspaper/12-continental-engraving/board-only.png": {
+      "bytes": 6214,
+      "sha256": "71cd2b9a17a36d793d53f01ce0c652ba7c63acee8bd0115e8029ccb0f27beda9"
+    },
+    "docs/mockups/newspaper/12-continental-engraving/board.png": {
+      "bytes": 11004,
+      "sha256": "fdad94c955aca44d5b59529db1fa5c5ecef39af3d799a98f04a2579df5b22543"
+    },
+    "docs/mockups/newspaper/12-continental-engraving/midgame.png": {
+      "bytes": 12930,
+      "sha256": "e25fc07a10bc9f4d18018c85aab1d372237626b88eda61fdffa9d6846c21249b"
+    },
+    "docs/mockups/newspaper/12-continental-engraving/pieces-preview.png": {
+      "bytes": 7352,
+      "sha256": "0bfbe6273855402db80b7fc2d0351c7ec6f34f5eb73880b66affb68e65c071a9"
+    },
+    "docs/mockups/newspaper/12-continental-engraving/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "037d3c8c944ec3d9c1d87d45754478fb79a605d279537af9c7c9dc6f8ee26b0b"
+    },
+    "docs/mockups/newspaper/12-continental-engraving/pieces.png": {
+      "bytes": 3618,
+      "sha256": "e94fbb9bafed7508be6a56f40f2d776e2fd620ac63acfd5d8861a6789b7c7d6f"
+    },
+    "docs/mockups/newspaper/12-continental-engraving/sprites.png": {
+      "bytes": 3597,
+      "sha256": "13d96cbdcd88841f3088c37000a26354db16f7284bcf510f6ee3d9f426e37109"
+    },
+    "docs/mockups/newspaper/13-daily-letterpress/background.4bpp": {
+      "bytes": 6496,
+      "sha256": "fc79169e73e62429743055d5f3798ff84ca1f40ced6b3c54973d803f5889ffd5"
+    },
+    "docs/mockups/newspaper/13-daily-letterpress/background.map": {
+      "bytes": 16384,
+      "sha256": "d80101bac5bc7a2c5c4204dc5f9595694213201d54c7f0d1f65f809c94a2abbf"
+    },
+    "docs/mockups/newspaper/13-daily-letterpress/board-only.png": {
+      "bytes": 5575,
+      "sha256": "d749feb75fbac0a650f80b39748b670120174500080cc00853421ca1b2e87eb1"
+    },
+    "docs/mockups/newspaper/13-daily-letterpress/board.png": {
+      "bytes": 9671,
+      "sha256": "42a8692311f33ce68c0936e43541df92600b052823c17532add756ecf5c0aee6"
+    },
+    "docs/mockups/newspaper/13-daily-letterpress/midgame.png": {
+      "bytes": 11198,
+      "sha256": "e4a7de5e36a9361893b49d30ab3a5b48ff71643d86b671cd3c16eae1d48d03ba"
+    },
+    "docs/mockups/newspaper/13-daily-letterpress/pieces-preview.png": {
+      "bytes": 6651,
+      "sha256": "eb8ca7d2792b9cc5035a81a1ff90f7ba201f4ca4dbe4bbf4e03bfc3a886f0a45"
+    },
+    "docs/mockups/newspaper/13-daily-letterpress/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "be9908d9403d7b98b0f5211acf0759397e7bdd7a876a5f4122b4797f22e102bc"
+    },
+    "docs/mockups/newspaper/13-daily-letterpress/pieces.png": {
+      "bytes": 3002,
+      "sha256": "edfb280b6fcfeeefd31e495f1ae446700e617cb448c6b27d0056ea111f6fb1ac"
+    },
+    "docs/mockups/newspaper/13-daily-letterpress/sprites.png": {
+      "bytes": 2996,
+      "sha256": "f362e1b561308555db0be9535a1930307199a990c835c089864240d9e80e8483"
+    },
+    "docs/mockups/newspaper/originals/11-victorian-diagram.png": {
+      "bytes": 794020,
+      "sha256": "17621e0937c309024e39f64e21032610b6c156adb8afad5620def40d231f35f2"
+    },
+    "docs/mockups/newspaper/originals/12-continental-engraving.png": {
+      "bytes": 988456,
+      "sha256": "73a9fb861e72b2074962de384bf217dcf81f49d2eb0a170dfcfe065971e44f4f"
+    },
+    "docs/mockups/newspaper/originals/13-daily-letterpress.png": {
+      "bytes": 785553,
+      "sha256": "6c5b53911aad542dbf9d788564342e3bd5871abcacaa2f788223c1a68a620d0c"
+    },
+    "docs/mockups/piece-sets/01-editorial/board.png": {
+      "bytes": 8857,
+      "sha256": "995804de24f045007bcb3dfad696f265d967f9a3f1cd9944a2fa0a85a7d36d85"
+    },
+    "docs/mockups/piece-sets/01-editorial/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "864150be4cd2c3b4be485ce0cd0736915dcd89e3c455a2d557ddad3a6d8b7351"
+    },
+    "docs/mockups/piece-sets/01-editorial/pieces.png": {
+      "bytes": 3122,
+      "sha256": "2000632c5b64bc6dca6ac8b7a75fb28fb7f8b3b332455922fe61ac9d3c253e04"
+    },
+    "docs/mockups/piece-sets/01-editorial/sprites.png": {
+      "bytes": 3128,
+      "sha256": "bc5d851ab40bc2c7ce6d27b6b606fe9ba7d549326a417712ae6df1be695bc8ae"
+    },
+    "docs/mockups/piece-sets/01-editorial/tiles.png": {
+      "bytes": 6581,
+      "sha256": "8c374f06bff20341b646387c402026e134c69b5f44d5eecf066bf232deec64c3"
+    },
+    "docs/mockups/piece-sets/02-engraved/board.png": {
+      "bytes": 10485,
+      "sha256": "05859269504305d54ae1acc0f5fb12a93991ad67225efc7ee772a5249be2b7c9"
+    },
+    "docs/mockups/piece-sets/02-engraved/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "3b11ace686ba1fc5fcaae030eb42966a2a9c7003e93ec3908081e87dcf48c53e"
+    },
+    "docs/mockups/piece-sets/02-engraved/pieces.png": {
+      "bytes": 4284,
+      "sha256": "0be1d2feb921966ff7f4e259bca42220c7f4a37d1b95a489af8d8a1512e9b751"
+    },
+    "docs/mockups/piece-sets/02-engraved/sprites.png": {
+      "bytes": 4265,
+      "sha256": "f71a15f88209b2a8f92c780deaf76756f433d2089a57ddd6127070789e8cca3e"
+    },
+    "docs/mockups/piece-sets/02-engraved/tiles.png": {
+      "bytes": 7624,
+      "sha256": "da077c22fa023248567ad27c0d1847bfae2eb27b99d9efce3a630f2ffaaa7bcc"
+    },
+    "docs/mockups/piece-sets/03-geometric/board.png": {
+      "bytes": 8920,
+      "sha256": "95e4a03daf97abba1611cfde807552708d81ab1395ec8a5977500428bc29bc1c"
+    },
+    "docs/mockups/piece-sets/03-geometric/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "cc0c511069aa90987ef9472522ab019135bba4413c37f07bcf9a18786e6e9351"
+    },
+    "docs/mockups/piece-sets/03-geometric/pieces.png": {
+      "bytes": 3429,
+      "sha256": "754c625d477087b4ad8144ee7047cb466dd6ee23c6f059f4cf3b24eac29b8c45"
+    },
+    "docs/mockups/piece-sets/03-geometric/sprites.png": {
+      "bytes": 3380,
+      "sha256": "f05d6e60dcb36dfb2db5f56f4098dc7a42238cc3d0352e534949b3e32847027a"
+    },
+    "docs/mockups/piece-sets/03-geometric/tiles.png": {
+      "bytes": 6868,
+      "sha256": "ba320eaa4882179eb04f13fbc97bb5418e5129e1cecfd437115f41f6f0f3b424"
+    },
+    "docs/mockups/piece-sets/04-letterpress/board.png": {
+      "bytes": 10046,
+      "sha256": "224e0156fffb1acbcbfa7a55c0f43bedd909d05aecd7be5d2c1e43a8a2b493f9"
+    },
+    "docs/mockups/piece-sets/04-letterpress/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "7c641971be5d1b1b184a9ebc3f93380bfc7fd1dffd566820059637044e397ebe"
+    },
+    "docs/mockups/piece-sets/04-letterpress/pieces.png": {
+      "bytes": 3990,
+      "sha256": "4f2e0993cb89231c56c1b27a87d40e4a55dbcdf2b3b2b52f6e5a522d81e19a7e"
+    },
+    "docs/mockups/piece-sets/04-letterpress/sprites.png": {
+      "bytes": 3948,
+      "sha256": "ba9c80a8b291f02c5c197d8c28569239dc25e7ab67fdfabd37430dc14c140210"
+    },
+    "docs/mockups/piece-sets/04-letterpress/tiles.png": {
+      "bytes": 7316,
+      "sha256": "31cdfd629428246f377c84167665e9a0ba05ce066de210ea4baa44574a440015"
+    },
+    "docs/mockups/piece-sets/05-dithered-staunton/board.png": {
+      "bytes": 10158,
+      "sha256": "16446fdac2a8b0c96494f381528cc101f88432e5d8ef5277daf36eb13adfebc0"
+    },
+    "docs/mockups/piece-sets/05-dithered-staunton/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "8d7df00b763b2a40578813b8c945c447418896e286e4df5840486c8c19ecd82f"
+    },
+    "docs/mockups/piece-sets/05-dithered-staunton/pieces.png": {
+      "bytes": 4040,
+      "sha256": "2459299b9cfe156a0956151571972007df1576ce8b2144ee2729995d8ca4402e"
+    },
+    "docs/mockups/piece-sets/05-dithered-staunton/sprites.png": {
+      "bytes": 3987,
+      "sha256": "0c097e38a7c694f0a756167dc3e7f91d0326bdef33cb5fc695a7497ee9391934"
+    },
+    "docs/mockups/piece-sets/05-dithered-staunton/tiles.png": {
+      "bytes": 7427,
+      "sha256": "94948cf50af8edf1e6673bfc53cbd7e070f6f3e46e9192b75149ab1c553d2b62"
+    },
+    "docs/mockups/piece-sets/06-slim/board.png": {
+      "bytes": 9089,
+      "sha256": "66b48391e73a1a66eae2619b690fffdc20a4cc11bbe66bddf4f241db12cdd765"
+    },
+    "docs/mockups/piece-sets/06-slim/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "4e9aea80db11d69991ca40798a8bd132221ed5647302bd3ff0100f7454ac7b9a"
+    },
+    "docs/mockups/piece-sets/06-slim/pieces.png": {
+      "bytes": 3270,
+      "sha256": "35eea4fac9cbcc4dc531a4cafdc2c42eda1a0bfdf3fdf7c054cbf833b2446032"
+    },
+    "docs/mockups/piece-sets/06-slim/sprites.png": {
+      "bytes": 3238,
+      "sha256": "a3281b0368948d43ec208c3df2b603d36c909557ee57753b32cce72c6bd3a12b"
+    },
+    "docs/mockups/piece-sets/06-slim/tiles.png": {
+      "bytes": 6589,
+      "sha256": "39285e671fa850702bc286ed1105f2f71de0150925e1d5ecb8a1e647123ed33c"
+    },
+    "docs/mockups/piece-sets/07-bold/board.png": {
+      "bytes": 9808,
+      "sha256": "b1c847b670e812457a9b2290d0cc6c2ffa27fa121ac76cf481b3604ab3fd21ae"
+    },
+    "docs/mockups/piece-sets/07-bold/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "ef047243a9ba0d54845f95ab1e1c93cff9b769419294320b4eac5d6aad81fe04"
+    },
+    "docs/mockups/piece-sets/07-bold/pieces.png": {
+      "bytes": 3941,
+      "sha256": "9b84fdd0b8af74586f25f7135e5edbef620d5becc2900703920500a437a4e152"
+    },
+    "docs/mockups/piece-sets/07-bold/sprites.png": {
+      "bytes": 3834,
+      "sha256": "1792e4c2bcd2bce7999a265e1a013a256d0ec2ab8fb01de0941fec6a0f1e12d7"
+    },
+    "docs/mockups/piece-sets/07-bold/tiles.png": {
+      "bytes": 7236,
+      "sha256": "b439610bd546d702d6f68eb12177f3e916d7fc864ff017d89e15ec2a4d8a804c"
+    },
+    "docs/mockups/piece-sets/08-isometric/board.png": {
+      "bytes": 10126,
+      "sha256": "34277477611d679e6e7c3d2c0d33687e904398b6e9d7b534c4fb8b3a9f80baf1"
+    },
+    "docs/mockups/piece-sets/08-isometric/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "562c5e101d9e9339e25436bbe1b603fee7444c7364f1293b06caf817f2f91449"
+    },
+    "docs/mockups/piece-sets/08-isometric/pieces.png": {
+      "bytes": 3934,
+      "sha256": "0d5ab8ce35b450f606c013362f2f36487ec0ec9996a268a76e0de6a6c06dae0f"
+    },
+    "docs/mockups/piece-sets/08-isometric/sprites.png": {
+      "bytes": 3892,
+      "sha256": "7246e512f7e3ec34a8ed7ab2650bfee71664e902e3a1f5aaa7a207274c0660da"
+    },
+    "docs/mockups/piece-sets/08-isometric/tiles.png": {
+      "bytes": 7390,
+      "sha256": "a023edcfd3adaa530f64a2a7a60bd521f00f03534f22c21535de14d473b10bff"
+    },
+    "docs/mockups/piece-sets/09-outline/board.png": {
+      "bytes": 9667,
+      "sha256": "9fca880e00c3e03ec98994648677550a5e7815878d12170c57444b23368fc4a7"
+    },
+    "docs/mockups/piece-sets/09-outline/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "73f9f57ca23c6caf10fdd5e7068947eaaf9331869f254122e740b416e4f35d26"
+    },
+    "docs/mockups/piece-sets/09-outline/pieces.png": {
+      "bytes": 4040,
+      "sha256": "00dc33d4751c3554a7279cd58833cbbb5bae9e3306fe9dc8b68157cce8a2b6dc"
+    },
+    "docs/mockups/piece-sets/09-outline/sprites.png": {
+      "bytes": 3940,
+      "sha256": "d42bafec108dcc2d0830d55b1423e86116ea78dcb4b3b6c90cff854e742e604c"
+    },
+    "docs/mockups/piece-sets/09-outline/tiles.png": {
+      "bytes": 7318,
+      "sha256": "0d7655458d32b05b5352b1b880254eae4bfd9d6c6cf57efe2b91efd56cf38646"
+    },
+    "docs/mockups/piece-sets/10-art-deco/board.png": {
+      "bytes": 9613,
+      "sha256": "3452983a0132e88c9066ac8c463d25f882a1ed9e72c447db707beb63f0e4e843"
+    },
+    "docs/mockups/piece-sets/10-art-deco/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "74d880aaef9130749aa21d36c1e00414bc256130c75f6dae8b65751b1bcaaf90"
+    },
+    "docs/mockups/piece-sets/10-art-deco/pieces.png": {
+      "bytes": 3760,
+      "sha256": "80d91f2bff2cc16cf343df7e09ae4a78c40e83eada9d504415a3b4aa5ea9651f"
+    },
+    "docs/mockups/piece-sets/10-art-deco/sprites.png": {
+      "bytes": 3691,
+      "sha256": "7c715af2afca45fa12551de1884d2b13af4cfae7f206700a06ec0efae68ba078"
+    },
+    "docs/mockups/piece-sets/10-art-deco/tiles.png": {
+      "bytes": 6973,
+      "sha256": "dbcf53627823d157df450a19b95a3d869b4ce6a67dfef447a41b84aef6a05af1"
+    },
+    "docs/mockups/piece-sets/larger/index.html": {
+      "bytes": 7280,
+      "sha256": "16b2857cb6f656edf4cc8da8321fa771b649cb22d21f31296ff5473f3c56fe9e"
+    },
+    "docs/mockups/piece-sets/larger/validation.json": {
+      "bytes": 11609,
+      "sha256": "147022cadafbb98c511106546cebc235eeaa7799ada193ad7a303b8d3fde9676"
+    },
+    "docs/mockups/piece-sets/originals/01-editorial.png": {
+      "bytes": 804542,
+      "sha256": "83f359e8d9f694190254782219581d2db7c4223b67a3eea43c1efd47363a2251"
+    },
+    "docs/mockups/piece-sets/originals/02-engraved.png": {
+      "bytes": 1361014,
+      "sha256": "ebdfb218d5398fd90423b7483cd6c41b96ad657428650326b1dc4515214eec1c"
+    },
+    "docs/mockups/piece-sets/originals/03-geometric.png": {
+      "bytes": 760433,
+      "sha256": "d211a8e4d9db2f85b2c90cc621b9b609425fb4480bd05594b0d3aaab216e8738"
+    },
+    "docs/mockups/piece-sets/originals/04-letterpress.png": {
+      "bytes": 998472,
+      "sha256": "951bde8de1935e49d6b563993a615ac1d0762af82ac90ea5b1c92eeb1a0c3c28"
+    },
+    "docs/mockups/piece-sets/originals/05-dithered-staunton.png": {
+      "bytes": 1116738,
+      "sha256": "27eec3a214b39e8f76483cc4b2723b33ead8df40c7e118116de874cab39c24f1"
+    },
+    "docs/mockups/piece-sets/originals/06-slim.png": {
+      "bytes": 885608,
+      "sha256": "2e3f7af49cc5879dd5defcd22a8ad06bf4d6940eb7fbb7aeb4be69f2ec8ca150"
+    },
+    "docs/mockups/piece-sets/originals/07-bold.png": {
+      "bytes": 1056883,
+      "sha256": "1420545595197bd49b43368101dcc871f9d8a2aa89e3a9ba7897fee01241d7d2"
+    },
+    "docs/mockups/piece-sets/originals/08-isometric.png": {
+      "bytes": 929068,
+      "sha256": "77f787fa0684c2b2ddfb4e3e00a452470dc6c9c9732454bc86a95641ca9ac492"
+    },
+    "docs/mockups/piece-sets/originals/09-outline.png": {
+      "bytes": 812447,
+      "sha256": "e4f4c5bb1cbb462808e48949a476285a9c6136815715f9d80c62f81feae4a42c"
+    },
+    "docs/mockups/piece-sets/originals/10-art-deco.png": {
+      "bytes": 869503,
+      "sha256": "1db07fff71302f32c45e84a06f52d84f70e6b771555c733aeadad7bc3b0456ee"
+    },
+    "docs/mockups/piece-sets/__pycache__/finalize.cpython-312.pyc": {
+      "bytes": 16156,
+      "sha256": "74a50b3007a6854715a940350e910ccffdf4df1f7a5497cd1ac11298972ccf40"
+    },
+    "docs/mockups/piece-sets/larger/01-editorial/board.png": {
+      "bytes": 9587,
+      "sha256": "aa05b931f79ca94bd37d6da5599fc327e8b573d44c1a4af65137e55594bad9c8"
+    },
+    "docs/mockups/piece-sets/larger/01-editorial/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "8cda8cd15325ec17f93c8ec142645a852e5e26d917448073ef86d5addac919ef"
+    },
+    "docs/mockups/piece-sets/larger/01-editorial/pieces.png": {
+      "bytes": 3582,
+      "sha256": "318c67fd309bc81f206723255f3abbf50cf9020d7f5ca75df105e8c727fbfe35"
+    },
+    "docs/mockups/piece-sets/larger/01-editorial/sprites.png": {
+      "bytes": 3573,
+      "sha256": "4a95ede34d1f69cdf697ea9ba2ec75a535e8c0f92eeee010b49819eeb3bb5182"
+    },
+    "docs/mockups/piece-sets/larger/01-editorial/tiles.png": {
+      "bytes": 7153,
+      "sha256": "e5f548b136a0848aed035d1e9421a7315b3977022b6eda84049b4fae59658fec"
+    },
+    "docs/mockups/piece-sets/larger/02-engraved/board.png": {
+      "bytes": 11703,
+      "sha256": "06ba26d5482a7d7483ac22ba17f268014bec47738de01c51db9488293abbf08d"
+    },
+    "docs/mockups/piece-sets/larger/02-engraved/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "25ed56c3ff608f62dc7ff7f03d9ea1e8bdfacbe00037dbffbcd86104a46f0032"
+    },
+    "docs/mockups/piece-sets/larger/02-engraved/pieces.png": {
+      "bytes": 5156,
+      "sha256": "b91bfd0c1861566e7dcd23260a29aaf63fa4ccb7cae9a5d19b8faad30379f1c2"
+    },
+    "docs/mockups/piece-sets/larger/02-engraved/sprites.png": {
+      "bytes": 5114,
+      "sha256": "ec90a4f7a463c77f2fbd359095031912b67420dcb8895efaa5c7ce79ef7e671e"
+    },
+    "docs/mockups/piece-sets/larger/02-engraved/tiles.png": {
+      "bytes": 8692,
+      "sha256": "fedda06eb3d647c11d577249192fa5414648c175e5a256db796a6bf9b4cbdb41"
+    },
+    "docs/mockups/piece-sets/larger/03-geometric/board.png": {
+      "bytes": 9382,
+      "sha256": "042946fb000dcd7385fdf756b6df71eb96961f56b7c558d60a0c85e28dbb2d2c"
+    },
+    "docs/mockups/piece-sets/larger/03-geometric/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "0eceb275e92cb77ec04ed766c55a1c13d34ad194425442997fc0aa6e8e8ec63f"
+    },
+    "docs/mockups/piece-sets/larger/03-geometric/pieces.png": {
+      "bytes": 3856,
+      "sha256": "4ad855ac170fd6fd0669262b253fe3c192122e42bc7716c0d5608470a544ec09"
+    },
+    "docs/mockups/piece-sets/larger/03-geometric/sprites.png": {
+      "bytes": 3740,
+      "sha256": "ef4967580d84000ab276e08dbce0a792c8c013b4dfdd5d2f9d038f7e1dc68e23"
+    },
+    "docs/mockups/piece-sets/larger/03-geometric/tiles.png": {
+      "bytes": 7157,
+      "sha256": "e090a701adee0d800e3688576122bf20cc170ebc8302badcbfc578bf944dcc73"
+    },
+    "docs/mockups/piece-sets/larger/04-letterpress/board.png": {
+      "bytes": 11085,
+      "sha256": "dba3ef145331a46aa6a927d77884ef5516dfe0563b3072b26a164e2ee024db10"
+    },
+    "docs/mockups/piece-sets/larger/04-letterpress/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "d91765270f7cf29c057e09ee9033e48be06b73862790f2ddf1e0a73f4625cf9c"
+    },
+    "docs/mockups/piece-sets/larger/04-letterpress/pieces.png": {
+      "bytes": 4861,
+      "sha256": "5a285bba1dbbc7960957fc66c410eb3f52b0190a8c5588b664ebe9d9a5f4da68"
+    },
+    "docs/mockups/piece-sets/larger/04-letterpress/sprites.png": {
+      "bytes": 4759,
+      "sha256": "5863d024459e302c2bf01d92514863aab7b24630390028b62834f806548f7cfa"
+    },
+    "docs/mockups/piece-sets/larger/04-letterpress/tiles.png": {
+      "bytes": 8283,
+      "sha256": "c936d786643d3ed3e8fe8bdc7e76cb0acc0135d55bc98b7206b7753754ef79aa"
+    },
+    "docs/mockups/piece-sets/larger/05-dithered-staunton/board.png": {
+      "bytes": 11705,
+      "sha256": "f7fe8e3e63841150b938d68d5bba875945dcc6b88bd3b25e869b4695c5c1503b"
+    },
+    "docs/mockups/piece-sets/larger/05-dithered-staunton/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "09b027ad247c4bcdf35248e797a18672c7b37a0e2e05ffee8cb65e82af03c493"
+    },
+    "docs/mockups/piece-sets/larger/05-dithered-staunton/pieces.png": {
+      "bytes": 5037,
+      "sha256": "71165000c521b622ea232b6a31137bf0e68950aef4f2f2963d02f921be204e74"
+    },
+    "docs/mockups/piece-sets/larger/05-dithered-staunton/sprites.png": {
+      "bytes": 4974,
+      "sha256": "fcac50f6fdb36b4b947411cb2865b2f8f13f66665b34d0de1b974b396c82143f"
+    },
+    "docs/mockups/piece-sets/larger/05-dithered-staunton/tiles.png": {
+      "bytes": 8616,
+      "sha256": "f61b70b30d181699643241a7c2ee885de8ea953843d4a7d31df62354b28ab496"
+    },
+    "docs/mockups/piece-sets/larger/06-slim/board.png": {
+      "bytes": 10052,
+      "sha256": "cb2c6847fcc0081ff63f148581192869698f99877090c0bb405a8346bfc08186"
+    },
+    "docs/mockups/piece-sets/larger/06-slim/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "96bf5c040b5e7651c8a1d1997ff3410a30396199f3adc29d908ec6a7b6854397"
+    },
+    "docs/mockups/piece-sets/larger/06-slim/pieces.png": {
+      "bytes": 3902,
+      "sha256": "c064092a5da71776a718df37e9305c4f1fb39840e0797aa9738d2587abe1e71f"
+    },
+    "docs/mockups/piece-sets/larger/06-slim/sprites.png": {
+      "bytes": 3875,
+      "sha256": "20fd569ce30a4ea9635db80222cdcfa4870de079848de33a2d418aadae18e6bb"
+    },
+    "docs/mockups/piece-sets/larger/06-slim/tiles.png": {
+      "bytes": 7330,
+      "sha256": "ea8b04c830aee5d546d23d5ea898e9c258f78bdc1068b2a8af83560113872975"
+    },
+    "docs/mockups/piece-sets/larger/07-bold/board.png": {
+      "bytes": 10919,
+      "sha256": "7fb247f368ef1787d1b67457f4e6e7bd58d024e9083883f7b3aa5619e3ff729c"
+    },
+    "docs/mockups/piece-sets/larger/07-bold/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "dc3bfb58d0ddede013606be206118bf743356860725b0ad568cb2a84bd82cab1"
+    },
+    "docs/mockups/piece-sets/larger/07-bold/pieces.png": {
+      "bytes": 4828,
+      "sha256": "1e977c70b3701f53a7f04aea9616b0608559f36702430bfcc5fdcfbe85ad7b44"
+    },
+    "docs/mockups/piece-sets/larger/07-bold/sprites.png": {
+      "bytes": 4671,
+      "sha256": "490346ff9fa8bf4750662cd01478a0af6c273a0ea57565c8b9abc470b62bfb0f"
+    },
+    "docs/mockups/piece-sets/larger/07-bold/tiles.png": {
+      "bytes": 8080,
+      "sha256": "d49395675ae04cfc04f045fef221dfe0ac8b723ffb0d447a50fadd57eea29a00"
+    },
+    "docs/mockups/piece-sets/larger/08-isometric/board.png": {
+      "bytes": 11083,
+      "sha256": "3fb6155d945e67827c95bd3680a6c4db3b25384193a2b2cadfc94b0c08026ec7"
+    },
+    "docs/mockups/piece-sets/larger/08-isometric/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "4978e7d0c95911ebc5a3aea8f454df88a76669404e4bf87d48fe489fe8f495c5"
+    },
+    "docs/mockups/piece-sets/larger/08-isometric/pieces.png": {
+      "bytes": 4692,
+      "sha256": "569a91950859495a125bb2afffa89fe9240c6ffd0c47e8a6978a4d960fb549b3"
+    },
+    "docs/mockups/piece-sets/larger/08-isometric/sprites.png": {
+      "bytes": 4636,
+      "sha256": "3f93f82e7d84a364dfe6a2ffcfba98f51aca84b07638f36d34f7b008a823de75"
+    },
+    "docs/mockups/piece-sets/larger/08-isometric/tiles.png": {
+      "bytes": 8202,
+      "sha256": "057e996784fec4c8cabe757bbf4259aeffc35acd3a6d2d69a07d7886dc2c8bd4"
+    },
+    "docs/mockups/piece-sets/larger/09-outline/board.png": {
+      "bytes": 10431,
+      "sha256": "21b84d4fdfea3e4deb7bbbdb0e51975685d268e386eb121926fc097150ebfa45"
+    },
+    "docs/mockups/piece-sets/larger/09-outline/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "2460578b0c0db752817c84a083fedf75c61239769139369652fd9f96aeeaf0d9"
+    },
+    "docs/mockups/piece-sets/larger/09-outline/pieces.png": {
+      "bytes": 4544,
+      "sha256": "fd437a629e24771ec9f3513230b41837e96a7dd97204093ece9971b5b185ddcf"
+    },
+    "docs/mockups/piece-sets/larger/09-outline/sprites.png": {
+      "bytes": 4436,
+      "sha256": "21e30fe0a24b1ec25a749ae1ef31c1942233adccfb2606ec91d8e76a57acd857"
+    },
+    "docs/mockups/piece-sets/larger/09-outline/tiles.png": {
+      "bytes": 7935,
+      "sha256": "c6978f3856545fe08fef898bc09ad8c9b9f416e690a97f402659064c2813f2cf"
+    },
+    "docs/mockups/piece-sets/larger/10-art-deco/board.png": {
+      "bytes": 10675,
+      "sha256": "f676aa3934d638b9db60a94e4ed53530faeaea53c5097a676e9ac4837b272672"
+    },
+    "docs/mockups/piece-sets/larger/10-art-deco/pieces.4bpp": {
+      "bytes": 18816,
+      "sha256": "2bbf73abb926d19e808516c3184b499797e3aa0c3a19e4d2906c542ac2dec598"
+    },
+    "docs/mockups/piece-sets/larger/10-art-deco/pieces.png": {
+      "bytes": 4588,
+      "sha256": "fd4bb30f30d9ad9a23b59854fc4d939fee9fc3c3d1186c1fb028e349572c9df8"
+    },
+    "docs/mockups/piece-sets/larger/10-art-deco/sprites.png": {
+      "bytes": 4512,
+      "sha256": "1fa42b7ad6c15185e3243f7389191cf3ce80f1e8b12a215575232cc8a441c0fc"
+    },
+    "docs/mockups/piece-sets/larger/10-art-deco/tiles.png": {
+      "bytes": 7816,
+      "sha256": "0322d61bebd888d7a1e1db0d6ecd4024a0a8800d2fa7793da6348b0d1a3a01ec"
+    },
+    "docs/mockups/selectors/01-open-brackets/background.4bpp": {
+      "bytes": 19424,
+      "sha256": "c2adccdcea6353b315eeb68b68cc2ff656e3cd65b54868dad78994d5a0f9ef43"
+    },
+    "docs/mockups/selectors/01-open-brackets/background.map": {
+      "bytes": 16384,
+      "sha256": "3843ea4f1ef51af0b9239feb596b8f3c11a33fdbabdd540f859448fd5fe96b12"
+    },
+    "docs/mockups/selectors/01-open-brackets/foreground.4bpp": {
+      "bytes": 32,
+      "sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "docs/mockups/selectors/01-open-brackets/foreground.map": {
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    "docs/mockups/selectors/01-open-brackets/screen.png": {
+      "bytes": 25847,
+      "sha256": "dcd34365fb29229dc49acadaf4f773ff315e6101258ff7ba9c23fae48bdf2133"
+    },
+    "docs/mockups/selectors/01-open-brackets/selector.4bpp": {
+      "bytes": 2048,
+      "sha256": "3057489d0a65ccee2b87dad4b8492e27a6fa1bb84e0f3153d376eb5164a4a664"
+    },
+    "docs/mockups/selectors/02-double-rule/background.4bpp": {
+      "bytes": 19616,
+      "sha256": "1b6eaca7ad18d8350785ebbf40abffd8dc4fe50426b826712b84a9bb261fce12"
+    },
+    "docs/mockups/selectors/02-double-rule/background.map": {
+      "bytes": 16384,
+      "sha256": "696000dfc605efb9c1d2179ef5d128201b1567f323ae17d47c043f506ac66352"
+    },
+    "docs/mockups/selectors/02-double-rule/foreground.4bpp": {
+      "bytes": 32,
+      "sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "docs/mockups/selectors/02-double-rule/foreground.map": {
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    "docs/mockups/selectors/02-double-rule/screen.png": {
+      "bytes": 25501,
+      "sha256": "27be4f9f03de422c7654d5326523e489f3eb488123ddb4eeffa3d3e30a5b19f2"
+    },
+    "docs/mockups/selectors/02-double-rule/selector.4bpp": {
+      "bytes": 2048,
+      "sha256": "9a69e803dac2bbc811b2a8c9ca6b01518c42cd51fb75e6fd138d732ea0cce91d"
+    },
+    "docs/mockups/selectors/03-edge-crosshair/background.4bpp": {
+      "bytes": 19936,
+      "sha256": "e29b851b99fd154d44462d36b8d2544f580436d1bd91f539cd699c3ba96f04b4"
+    },
+    "docs/mockups/selectors/03-edge-crosshair/background.map": {
+      "bytes": 16384,
+      "sha256": "7b9245987d463f73f9fbf2dd6e8dc920a094a85daf1f4b6f565b419dc3471e1c"
+    },
+    "docs/mockups/selectors/03-edge-crosshair/foreground.4bpp": {
+      "bytes": 32,
+      "sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "docs/mockups/selectors/03-edge-crosshair/foreground.map": {
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    "docs/mockups/selectors/03-edge-crosshair/screen.png": {
+      "bytes": 26351,
+      "sha256": "51f4ad73aae035d4ee37255d315837df461f34b014ce90d3136a95546e53aec1"
+    },
+    "docs/mockups/selectors/03-edge-crosshair/selector.4bpp": {
+      "bytes": 2048,
+      "sha256": "af9eb1dfba1fde8432f0ebe62d7bfa845c5b7c903b10e238b13185006e6a603b"
+    },
+    "docs/mockups/selectors/04-corner-diamonds/background.4bpp": {
+      "bytes": 19296,
+      "sha256": "23dce4c50ccbcd27e623c3b3f34b7dac2f63f596dfb31ec01caf4eb8b1e5573d"
+    },
+    "docs/mockups/selectors/04-corner-diamonds/background.map": {
+      "bytes": 16384,
+      "sha256": "8c91f7b987b43583849b8f430e3a51560e1a1263b9675b21a42a6bb08429a6f1"
+    },
+    "docs/mockups/selectors/04-corner-diamonds/foreground.4bpp": {
+      "bytes": 32,
+      "sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "docs/mockups/selectors/04-corner-diamonds/foreground.map": {
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    "docs/mockups/selectors/04-corner-diamonds/screen.png": {
+      "bytes": 26281,
+      "sha256": "e09b86479d3012ecf93163d8c0ce1000a4b6af57103bfee80499fa886ace6c0c"
+    },
+    "docs/mockups/selectors/04-corner-diamonds/selector.4bpp": {
+      "bytes": 2048,
+      "sha256": "652221472f7eff735d231d6327f631a99b33b9c5bbfc440af87e57b8856d0f7f"
+    },
+    "docs/mockups/selectors/05-heavy-brackets/background.4bpp": {
+      "bytes": 19712,
+      "sha256": "30e086db66e2f9efa6c90f027c4ec0b448b2c25b9a380922cbf1f75b28f1f3e5"
+    },
+    "docs/mockups/selectors/05-heavy-brackets/background.map": {
+      "bytes": 16384,
+      "sha256": "c4aa36454ec01876361ddbe7b38255c5f73115aa2259459f91c331d4373c751d"
+    },
+    "docs/mockups/selectors/05-heavy-brackets/foreground.4bpp": {
+      "bytes": 32,
+      "sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "docs/mockups/selectors/05-heavy-brackets/foreground.map": {
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    "docs/mockups/selectors/05-heavy-brackets/screen.png": {
+      "bytes": 26052,
+      "sha256": "5d5ce3f58f4073905f06d7873aad6798123a933eefcf58ed55d50a805648ac04"
+    },
+    "docs/mockups/selectors/05-heavy-brackets/selector.4bpp": {
+      "bytes": 2048,
+      "sha256": "5541dd60e02f106b901bfc1a82ba087e9a68a28c0de413dda06ffaa6734e6423"
+    },
+    "docs/mockups/selectors/overview/background.4bpp": {
+      "bytes": 16288,
+      "sha256": "3999009d74c98a97eb755c70ae9000eece8d4a29c83a55ba0bc161b845ec6593"
+    },
+    "docs/mockups/selectors/overview/background.map": {
+      "bytes": 16384,
+      "sha256": "e03a8908a5844fb263329f2959bd629d0d2a17359d9ffcca255d3e980ba73201"
+    },
+    "docs/mockups/selectors/overview/foreground.4bpp": {
+      "bytes": 32,
+      "sha256": "66687aadf862bd776c8fc18b8e9f8e20089714856ee233b3902a591d0d5f2925"
+    },
+    "docs/mockups/selectors/overview/foreground.map": {
+      "bytes": 16384,
+      "sha256": "4fe7b59af6de3b665b67788cc2f99892ab827efae3a467342b3bb4e3bc8e5bfe"
+    },
+    "docs/mockups/selectors/overview/screen.png": {
+      "bytes": 18162,
+      "sha256": "d641bd3ba7945413d0d348b52196e4f3b60260236b389bff097abcf25c22a901"
+    },
+    "docs/mockups/selectors/overview/selector.4bpp": {
+      "bytes": 2048,
+      "sha256": "e5a00aa9991ac8a5ee3109844d84a55583bd20572ad3ffcd42792f3c36b183ad"
+    },
+    "docs/mockups/selectors/__pycache__/generate.cpython-312.pyc": {
+      "bytes": 22722,
+      "sha256": "65984a909103a01db57db69cc625be230fa58037fc120d1e78e0a5abf8aeccf4"
+    },
+    "docs/mockups/splash-dithering/01-gray-paper/emulator.png": {
+      "bytes": 50246,
+      "sha256": "0da4ee35673bb4f1119c410c0d13fa62382a79859bdd24639adc38b88f90d2b5"
+    },
+    "docs/mockups/splash-dithering/01-gray-paper/L0.4bpp": {
+      "bytes": 24576,
+      "sha256": "5c01ef1f1f472690ce5ea7ae12592ef603c2555867f70e624227e228c2eafcca"
+    },
+    "docs/mockups/splash-dithering/01-gray-paper/L0.map": {
+      "bytes": 16384,
+      "sha256": "96a4e126e58895b28b1f0633aa72615eaeb6ff907cc3385db3d01d178e095567"
+    },
+    "docs/mockups/splash-dithering/01-gray-paper/L1.4bpp": {
+      "bytes": 24224,
+      "sha256": "28ee0d96afa3577af785dc3634c64e5e3f49ba94d748b4b2cdcbfa1c75aad121"
+    },
+    "docs/mockups/splash-dithering/01-gray-paper/L1.map": {
+      "bytes": 16384,
+      "sha256": "8ddd3a06d131641e61a44b63bb09a2d017270556b5734e7a2b531c5841e22b3c"
+    },
+    "docs/mockups/splash-dithering/01-gray-paper/palette.dat": {
+      "bytes": 512,
+      "sha256": "c8142f7c0b09125c0175dae887792f5b40c3628af6fbb9b06364535e8d17db96"
+    },
+    "docs/mockups/splash-dithering/01-gray-paper/screen.png": {
+      "bytes": 19412,
+      "sha256": "3725faf54807c3e01e174d0276c2a2cc0913bfd81d6be3b06b670b4062cb79c3"
+    },
+    "docs/mockups/splash-dithering/02-black-paper/emulator.png": {
+      "bytes": 33202,
+      "sha256": "8c22f5f804f3e0dbfe720458e7388eed8fc7042d4bd84d14d0d9d9fac61f3a3b"
+    },
+    "docs/mockups/splash-dithering/02-black-paper/L0.4bpp": {
+      "bytes": 24576,
+      "sha256": "3a37c0be06cddd570cba3e82eeb7a06612ca145109e77ca9b82c17a08a3112e1"
+    },
+    "docs/mockups/splash-dithering/02-black-paper/L0.map": {
+      "bytes": 16384,
+      "sha256": "a2b5edb9f4a73c4f24266e357c6f4dc281abafebf1ed86b39b01e0e2f32f075b"
+    },
+    "docs/mockups/splash-dithering/02-black-paper/L1.4bpp": {
+      "bytes": 23392,
+      "sha256": "e1d7bdcebffd159730df508b9ca8e52ab30dac5864e16e3a360f10d37e9cf59e"
+    },
+    "docs/mockups/splash-dithering/02-black-paper/L1.map": {
+      "bytes": 16384,
+      "sha256": "b499ab7c7849809c37d48829f82cf2774429d56f1a093bf41581d52bcf96549f"
+    },
+    "docs/mockups/splash-dithering/02-black-paper/palette.dat": {
+      "bytes": 512,
+      "sha256": "b745d87dcaed77a6700ac21795bb68ecf7ece7d34a2c6523d01e407271502fdd"
+    },
+    "docs/mockups/splash-dithering/02-black-paper/screen.png": {
+      "bytes": 13982,
+      "sha256": "9e0491dc92f6187ac2c8bff247cac508d32c7cafc7949d30f5d45000e6283cc8"
+    },
+    "docs/mockups/splash-dithering/03-gray-bayer/emulator.png": {
+      "bytes": 47136,
+      "sha256": "369bc177a57dc9c2f24b7a2cce84465afb81b07e57f265a8bcacf471228032b2"
+    },
+    "docs/mockups/splash-dithering/03-gray-bayer/L0.4bpp": {
+      "bytes": 24576,
+      "sha256": "2bbdab9cea315150cfc576eeec3481bd4df453a87509e0d16ca3db29ac7cbb6c"
+    },
+    "docs/mockups/splash-dithering/03-gray-bayer/L0.map": {
+      "bytes": 16384,
+      "sha256": "bd19d21f882f81c921dc9ed81f272d8d4985d8dc0ce735a3f9e117778ec86030"
+    },
+    "docs/mockups/splash-dithering/03-gray-bayer/L1.4bpp": {
+      "bytes": 23744,
+      "sha256": "150cffbc7dbab229598673f52f98696159452bc411285a62a48efd9f8ff3e894"
+    },
+    "docs/mockups/splash-dithering/03-gray-bayer/L1.map": {
+      "bytes": 16384,
+      "sha256": "fdfc59aed05a3c06bb85f869a908461c22ae07157bc536b6add51ee87e5efccd"
+    },
+    "docs/mockups/splash-dithering/03-gray-bayer/palette.dat": {
+      "bytes": 512,
+      "sha256": "123d756ff199a672535d757fecc5082911e51c5b1f3e62556dc4e1020d0c5b6f"
+    },
+    "docs/mockups/splash-dithering/03-gray-bayer/screen.png": {
+      "bytes": 18520,
+      "sha256": "9250bc28a13a81f1603389390e101e6dec5998a7faf75f47e8fef2819a126f77"
+    },
+    "docs/mockups/splash-dithering/04-black-clustered/emulator.png": {
+      "bytes": 32987,
+      "sha256": "fc73be5872784007920bc0c30d5108955cad363e8b1481b317302f03aa1bcbdb"
+    },
+    "docs/mockups/splash-dithering/04-black-clustered/L0.4bpp": {
+      "bytes": 24576,
+      "sha256": "79397d4dfeeac931431c2df617d50a7acf2693e1374557621a46d30f4c137811"
+    },
+    "docs/mockups/splash-dithering/04-black-clustered/L0.map": {
+      "bytes": 16384,
+      "sha256": "4f1122828a268fcaa98e9f454e59bd7a51f2379f6cda2872081937b6b7300403"
+    },
+    "docs/mockups/splash-dithering/04-black-clustered/L1.4bpp": {
+      "bytes": 23328,
+      "sha256": "b1907e8da917c0018f8e7b185244ee9dc8a0207ceb0674e2767d6f4eb0f9447b"
+    },
+    "docs/mockups/splash-dithering/04-black-clustered/L1.map": {
+      "bytes": 16384,
+      "sha256": "e902bcab2961bd559a568604f6f8d9bd85d22ed4b13a6d7d6a72798d04481870"
+    },
+    "docs/mockups/splash-dithering/04-black-clustered/palette.dat": {
+      "bytes": 512,
+      "sha256": "b745d87dcaed77a6700ac21795bb68ecf7ece7d34a2c6523d01e407271502fdd"
+    },
+    "docs/mockups/splash-dithering/04-black-clustered/screen.png": {
+      "bytes": 14032,
+      "sha256": "7cf7694c00ae6e12560b22f423582ad08523cbe082e03822a402423049983fb6"
+    },
+    "docs/mockups/splash-dithering/05-blue-gray/emulator.png": {
+      "bytes": 51730,
+      "sha256": "cd5d6b850a10b8cdb2bc57e5c43f254eb02ff93f218aaf14757ea0fea389c47a"
+    },
+    "docs/mockups/splash-dithering/05-blue-gray/L0.4bpp": {
+      "bytes": 24576,
+      "sha256": "3efec40242f3b1173f28d9576a8fcfef8f47e991ab0b8332e6422166388b98e1"
+    },
+    "docs/mockups/splash-dithering/05-blue-gray/L0.map": {
+      "bytes": 16384,
+      "sha256": "d93f911eac28fc17155141f32d2cfb300391945bf14cac63da64a74c7175aa03"
+    },
+    "docs/mockups/splash-dithering/05-blue-gray/L1.4bpp": {
+      "bytes": 23936,
+      "sha256": "9c622c8e76f1d1201084170f6c0f95ea42b38ebc1e47f8a63343658dfa0c37b1"
+    },
+    "docs/mockups/splash-dithering/05-blue-gray/L1.map": {
+      "bytes": 16384,
+      "sha256": "a27ec93c187bbc531098434f3536ce7ce5b740527159da73a4cc827edc48127f"
+    },
+    "docs/mockups/splash-dithering/05-blue-gray/palette.dat": {
+      "bytes": 512,
+      "sha256": "be9b5dd5525f858ef6308d1332e9bfffaa54b09528f45aee681a5751f664dfff"
+    },
+    "docs/mockups/splash-dithering/05-blue-gray/screen.png": {
+      "bytes": 19193,
+      "sha256": "d752d502aac3fcb4aae7f412b399d3966657970a0f06d25d89b139fd12133cb3"
+    },
+    "docs/mockups/splash-dithering/06-charcoal-lines/emulator.png": {
+      "bytes": 51511,
+      "sha256": "8850e3f2c105cdd34fe2bd7f46714bb7444bb32b98518b177a51a572018d6628"
+    },
+    "docs/mockups/splash-dithering/06-charcoal-lines/L0.4bpp": {
+      "bytes": 24576,
+      "sha256": "5a3df0f8caf6093507aba9e5a5cc1cd962827bb4a7e1383b754ef6bab326e9a6"
+    },
+    "docs/mockups/splash-dithering/06-charcoal-lines/L0.map": {
+      "bytes": 16384,
+      "sha256": "b97d99425a9bde33e6d5b6b5b081012d10b569a29ac4e2488a482fbe3f7c72f4"
+    },
+    "docs/mockups/splash-dithering/06-charcoal-lines/L1.4bpp": {
+      "bytes": 23744,
+      "sha256": "e0784e0d92d8ec152c56d352a3aae971f5b0fd7c202f44f0d9d9a809483a9a22"
+    },
+    "docs/mockups/splash-dithering/06-charcoal-lines/L1.map": {
+      "bytes": 16384,
+      "sha256": "4a14f08e6dafefbf2d9f264d6a6c516b4fa4832032ccfeac1129d86b0be9da63"
+    },
+    "docs/mockups/splash-dithering/06-charcoal-lines/palette.dat": {
+      "bytes": 512,
+      "sha256": "123d756ff199a672535d757fecc5082911e51c5b1f3e62556dc4e1020d0c5b6f"
+    },
+    "docs/mockups/splash-dithering/06-charcoal-lines/screen.png": {
+      "bytes": 20016,
+      "sha256": "55b65e1f6387e6321655a8ab1638d91ee392d8ef1389d666c0c631bc8579519a"
+    },
+    "docs/mockups/splash-dithering/originals/01-gray-paper.png": {
+      "bytes": 1638349,
+      "sha256": "65e0d3330e89460e511c7b896b7c3858d5a453708e2bc21bc888c71c583f064b"
+    },
+    "docs/mockups/splash-dithering/originals/02-black-paper.png": {
+      "bytes": 1608605,
+      "sha256": "c9a589b6055f01fefbaa343af759190354bcfb83f182ce8e93272f59fba3ec7a"
+    },
+    "docs/mockups/splash-dithering/originals/03-gray-bayer.png": {
+      "bytes": 1555251,
+      "sha256": "b1641f4342e72b4ac636233cb2df3d7eed9e80028aff9a669a9192726858b107"
+    },
+    "docs/mockups/splash-dithering/originals/04-black-clustered.png": {
+      "bytes": 1614566,
+      "sha256": "448afc89fceaa775439b141cee13d92f3a31ad2857305a6f7d22838e563a8e44"
+    },
+    "docs/mockups/splash-dithering/originals/05-blue-gray.png": {
+      "bytes": 1618609,
+      "sha256": "e1ef169d1c749c64c28c6aeddc83eeec1fbc69f3bda2be24eff1270c3c615cae"
+    },
+    "docs/mockups/splash-dithering/originals/06-charcoal-lines.png": {
+      "bytes": 1639295,
+      "sha256": "0889db2bbc3f24ca3e9f223ad31ba5884855688405f119c3150095118193fc5a"
+    },
+    "docs/approved-indicators-keyboard.png": {
+      "bytes": 24714,
+      "sha256": "ec77458184dfdafdcf4ce78754ded62e4dd7446e09993657274bc9af4530985b"
+    },
+    "docs/options-continental.png": {
+      "bytes": 28118,
+      "sha256": "056e7f8ab504b220810ecdf7745531c2607d687f5d11cad155bb74f3b38b9520"
+    },
+    "docs/options-letterpress.png": {
+      "bytes": 21957,
+      "sha256": "f59beaac9d0192f847f45780e3dbeda3e896e7c9b5d3d33d83065870c0be6a70"
+    },
+    "docs/options-validation.json": {
+      "bytes": 541,
+      "sha256": "799a77ed13fe4a1b0cde44dcdbb589c11113308b7761047ef0223f1fd9ceccfa"
+    },
+    "docs/playfield-computer.png": {
+      "bytes": 22078,
+      "sha256": "7eead15da8bca5a6c557437f50698581091bee13a07793331b868c5251c8f026"
+    },
+    "docs/playfield-wood.png": {
+      "bytes": 22710,
+      "sha256": "d583e5da8e22c3a9f8885d34057a7be913433212f5df3a35f59ff2c21d578d3b"
+    },
+    "docs/scorecard-icons-detail.png": {
+      "bytes": 10205,
+      "sha256": "09a9e98c004e999fc42b3fadee87060fd0abf573ac355139925cc8f9cc2aa157"
+    },
+    "docs/scorecard-icons-validation.json": {
+      "bytes": 988,
+      "sha256": "e8b5af40865727be4ffe469a6d28c8a0231438f86539a93e5ccdf58051fe4f37"
+    },
+    "docs/scorecard-icons.png": {
+      "bytes": 29507,
+      "sha256": "1baeaeabc1f4a4f5381454db129e48217ce794838a3c2d9b6759505bcc9a86d2"
+    },
+    "docs/scorecard.png": {
+      "bytes": 24435,
+      "sha256": "a55421dfa0ac1d7daf3a4f854173a5afa0f8bae7116e0ee0a4e351ee4ff26b03"
+    },
+    "docs/victorian-game.png": {
+      "bytes": 24521,
+      "sha256": "97989a4d00f3411bc2153fbbf15611a8811710047b34ffc8152f1e019ed9a534"
+    },
+    "docs/victorian-selected.png": {
+      "bytes": 24927,
+      "sha256": "c489cb25a8848cbbda360285a189f3da1252b3769714921dc299cb7624a15429"
+    }
+  },
+  "verification": "Every archived file read back and SHA256 verified before removal",
+  "graphics_before": {
+    "foreground_tiles": 1021,
+    "resident_font_tiles": 366,
+    "resident_font_bytes": 11712
+  },
+  "graphics_after": {
+    "foreground_tiles": 833,
+    "resident_font_tiles": 220,
+    "resident_font_bytes": 7040,
+    "free_foreground_tiles": 191
+  },
+  "test_fixtures": "tests/fixtures/graphics"
+}

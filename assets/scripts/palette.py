@@ -40,38 +40,44 @@ RGB12 = [
 ]
 
 
-def rgb(index):
+# The black-and-paper opening portrait uses the standard palette.
+# Keep its palette separate so switching views always restores their colors.
+SPLASH_RGB12 = RGB12.copy()
+
+# Four achromatic tones for the setup queen, plus paper and the UI colors.
+SETUP_RGB12 = RGB12.copy()
+SETUP_RGB12[3] = 0x555
+SETUP_RGB12[4] = 0xAAA
+SETUP_RGB12[12] = 0xFFF
+
+
+def rgb(index, colors=RGB12):
     """Return the 24-bit colour of a palette index."""
-    value = RGB12[index]
+    value = colors[index]
     return (((value >> 8) & 15) * 17, ((value >> 4) & 15) * 17, (value & 15) * 17)
 
 
-def pil_palette():
+def pil_palette(colors=RGB12):
     """Palette list for PIL 'P' images (unused entries are black)."""
     flat = []
     for i in range(16):
-        flat.extend(rgb(i))
+        flat.extend(rgb(i, colors))
     return flat + [0] * (768 - len(flat))
 
 
-TINT_ROW = 14
 
-
-def vera_palette():
+def vera_palette(colors=RGB12):
     """256 VERA palette entries (512 bytes).
 
-    Row k repeats the base palette but replaces index 1 by colour k. Text and
+    Row 0 preserves the complete base palette for artwork. Other rows repeat
+    the base palette but replace index 1 by colour k. Text and
     digit glyphs are drawn with index 1, so the tilemap palette offset selects
     their colour while the screen still only ever shows the same 16 colours.
 
-    Row TINT_ROW is special: paper and its specks turn red while ink stays
-    ink, so a layer-0 region can be highlighted by its palette offset alone.
     """
     out = bytearray()
     for row in range(16):
         for i in range(16):
-            value = RGB12[row] if i == INK else RGB12[i]
-            if row == TINT_ROW:
-                value = RGB12[RED] if i in (PAPER, SHADE) else RGB12[i]
+            value = colors[row] if i == INK and row != 0 else colors[i]
             out += bytes([value & 0xFF, value >> 8])
     return bytes(out)

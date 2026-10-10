@@ -42,6 +42,10 @@
  * @brief Start a new game and draw the complete playing field
  */
 void playfield_new(void);
+/* Redraw a paused game and reset its wall-clock sampling point. */
+void playfield_resume(void);
+extern uint8_t playfield_new_requested;
+extern uint8_t playfield_theme;
 
 /**
  * @brief Run the clocks; call once per frame

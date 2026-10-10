@@ -1,12 +1,15 @@
 """Build all VERA graphics for the playing field.
 
-Outputs (in the given directory, normally src/):
+Intermediate outputs (normally build/graphics/; package_graphics.py packs
+them into the single runtime CHESS.DAT container):
   L0TILES.DAT   layer-0 4bpp 8x8 tiles (deduplicated background)
   L0PLAIN.DAT   layer-0 128x64 map: masthead, board, status bar
   L0INFO.DAT    layer-0 128x64 map: the same plus the side columns
   SQTILES.DAT   layer-0 entries of every board square variant (banked RAM)
-  L1TILES.DAT   layer-1 4bpp 8x8 tiles: font, pieces, clock digits, letters
   SPRITES.DAT   mouse pointer (16x16) and keyboard cursor (64x64), 4bpp
+  FONT.DAT      resident bitmap font shared by every view
+  L1ART.DAT     game foreground tiles after the resident font
+  SPL1ART.DAT, SET1ART.DAT  menu artwork after the resident font
   PALETTE.DAT   512-byte VERA palette
   gfx.h         layout constants
   playfield.png, playfield-info.png  previews (not loaded by the game)
@@ -17,42 +20,34 @@ from pathlib import Path
 
 import numpy as np
 from PIL import Image
+from bitmap_font import BitmapFont, glyph8
 
 import layout as L
-from palette import (ALERT, CREAM, DARK, DARK_GRAIN, DARK_GREY, DEEP_RED, HL_DARK, HL_LIGHT,
-                     INK, PAPER, RED, SHADE, TEXTURE, WHITE, pil_palette, vera_palette)
+import indicators
+from palette import (ALERT, DARK, DARK_GREY, HL_DARK, HL_LIGHT,
+                     INK, PAPER, RED, RGB12, SPLASH_RGB12, SETUP_RGB12, SHADE, TEXTURE, WHITE, pil_palette, rgb, vera_palette)
 
 ASSETS = Path(__file__).resolve().parents[1]
 W, H = 640, 480
 
 
-def load_indexed(path):
-    image = Image.open(path)
-    assert image.mode == 'P', f'{path} must be an indexed PNG'
-    return np.asarray(image).copy()
+def load_indexed(path, colors=RGB12):
+    with Image.open(path) as image:
+        if image.mode != 'P':
+            raise ValueError(f'{path} must be an indexed PNG')
+        pixels = np.asarray(image).copy()
+        palette = image.getpalette()
+        for index in np.unique(pixels):
+            if index >= 16 or tuple(palette[index * 3:index * 3 + 3]) != rgb(int(index), colors):
+                raise ValueError(f'{path}: palette index {index} does not match the project palette')
+        if 'transparency' in image.info:
+            raise ValueError(f'{path}: PNG transparency must be explicit in the layer compositor')
+    return pixels
 
 
 FONT = load_indexed(ASSETS / 'font/font8x16.png')
-DIGITS = load_indexed(ASSETS / 'font/digits16x32.png')
-PIECES = load_indexed(ASSETS / 'pieces/pieces.png')
-MASTHEAD = load_indexed(ASSETS / 'art/masthead.png')
-PHOTO = load_indexed(ASSETS / 'art/photo.png')
-
-ROOK = ['#.#.#.#.#', '#########', '.#######.', '..#####..', '..#####..', '..#####..',
-        '..#####..', '..#####..', '.#######.', '#########', '#########']
-
-# small letters a-h for the corners of the bottom row of squares (4x5)
-FILE_LETTERS = {
-    'a': ['.##.', '...#', '.###', '#..#', '.###'],
-    'b': ['#...', '###.', '#..#', '#..#', '###.'],
-    'c': ['.##.', '#..#', '#...', '#..#', '.##.'],
-    'd': ['...#', '.###', '#..#', '#..#', '.###'],
-    'e': ['.##.', '#..#', '####', '#...', '.##.'],
-    'f': ['..##', '.#..', '###.', '.#..', '.#..'],
-    'g': ['.###', '#..#', '.###', '...#', '.##.'],
-    'h': ['#...', '###.', '#..#', '#..#', '#..#'],
-}
-
+PIECES = load_indexed(ASSETS / 'pieces/victorian.png')
+FIGURINES16 = load_indexed(ASSETS / 'pieces/scorecard.png')
 
 # --------------------------------------------------------------------------
 # drawing primitives (inclusive coordinates)
@@ -66,12 +61,6 @@ def frame(img, x0, y0, x1, y1, colour, t=1):
     fill(img, x0, y1 - t + 1, x1, y1, colour)
     fill(img, x0, y0, x0 + t - 1, y1, colour)
     fill(img, x1 - t + 1, y0, x1, y1, colour)
-
-
-def double_frame(img, x0, y0, x1, y1, colour=INK):
-    """Newspaper box: heavy outer rule, hairline inside."""
-    frame(img, x0, y0, x1, y1, colour, 2)
-    frame(img, x0 + 3, y0 + 3, x1 - 3, y1 - 3, colour, 1)
 
 
 def blit(img, x, y, sprite, remap=None):
@@ -100,38 +89,22 @@ def text_centered(img, x0, x1, y, string, colour):
     text(img, (x0 + x1 + 1 - 8 * len(string)) // 2, y, string, colour)
 
 
-class PropFont:
-    """Proportional font sheet written by make_sources.py."""
-
-    def __init__(self, name):
-        self.sheet = load_indexed(ASSETS / f'font/{name}.png')
-        meta = json.loads((ASSETS / f'font/{name}.json').read_text())
-        self.cw, self.ch = meta['cell']
-        self.baseline = meta['baseline']
-        self.advance = meta['advance']
-
-    def width(self, string, tracking=0):
-        codes = string.encode('cp1251')
-        return sum(self.advance[c - 32] + tracking for c in codes) - tracking
-
-    def draw(self, img, x, baseline, string, colour, tracking=0):
-        for c in string.encode('cp1251'):
-            slot = c - 32
-            cell = self.sheet[(slot // 16) * self.ch:(slot // 16 + 1) * self.ch,
-                              (slot % 16) * self.cw:(slot % 16 + 1) * self.cw]
-            blit(img, x, baseline - self.baseline, cell, {INK: colour})
-            x += self.advance[slot] + tracking
-
-    def centered(self, img, cx, baseline, string, colour, tracking=0):
-        self.draw(img, cx - self.width(string, tracking) // 2, baseline, string, colour, tracking)
-
-    def right(self, img, x1, baseline, string, colour, tracking=0):
-        self.draw(img, x1 + 1 - self.width(string, tracking), baseline, string, colour, tracking)
+SMALL = BitmapFont()
 
 
-HEADLINE = PropFont('headline')
-SMALL = PropFont('small')
-ITALIC = PropFont('italic')
+def masthead(img, cx, baseline):
+    """Preserve the original serif CX16 CHESS logo; UI text stays bitmap."""
+    sheet = load_indexed(ASSETS / 'font/headline.png')
+    meta = json.loads((ASSETS / 'font/headline.json').read_text())
+    cw, ch = meta['cell']
+    codes = b'CX16 CHESS'
+    x = cx - sum(meta['advance'][code - 32] for code in codes) // 2
+    for code in codes:
+        slot = code - 32
+        cell = sheet[slot // 16 * ch:(slot // 16 + 1) * ch,
+                     slot % 16 * cw:(slot % 16 + 1) * cw]
+        blit(img, x, baseline - meta['baseline'], cell)
+        x += meta['advance'][slot]
 
 
 def piece_image(index):
@@ -141,127 +114,90 @@ def piece_image(index):
 # --------------------------------------------------------------------------
 # artwork
 # --------------------------------------------------------------------------
-def grain(x, y):
-    return ((y % 4 == 0) & (x % 4 == 0)) | ((y % 4 == 2) & (x % 4 == 2))
-
-
 def square_image(theme, light, state):
     """Board square of a style in a highlight state.
 
     NEWSPRINT is a printed chess diagram: plain paper for light squares and
-    diagonal hatching for dark ones. WOOD is the brown board of the mockups.
+    diagonal hatching for dark ones. CROSSHATCH and COARSE use the reviewed
+    newspaper patterns. WOOD is the brown board of the mockups.
     """
     s = L.SQUARE
     c = (s - 1) / 2
     y, x = np.mgrid[0:s, 0:s]
-    highlighted = state in ('LASTMOVE', 'SELECTED')
-    if theme == 'NEWSPRINT':
-        hatch = (x + y) % 3 == 0
+    highlighted = state == 'LASTMOVE'
+    if theme != 'WOOD':
+        # Four-pixel repeat aligns exactly at every 8x8 tile and 56px square.
+        if theme == 'CROSSHATCH':
+            hatch = ((x + y) % 8 == 0) | ((x - y) % 8 == 0)
+        elif theme == 'COARSE':
+            hatch = (x + y) % 8 < 2
+        else:
+            hatch = (x + y) % 4 == 0
         a = np.full((s, s), HL_LIGHT if highlighted else PAPER, np.uint8)
         if not light:
-            a[hatch] = HL_DARK if highlighted else DARK_GREY
+            a[hatch] = HL_DARK if highlighted else INK
     else:
-        base, speck = (SHADE, TEXTURE) if light else (DARK, DARK_GRAIN)
-        a = np.where(grain(x, y), speck, base).astype(np.uint8)
+        base = SHADE if light else DARK
+        a = np.full((s, s), base, np.uint8)
         if highlighted:
             a[:] = HL_LIGHT if light else HL_DARK
     r2 = (x - c) ** 2 + (y - c) ** 2
     if state == 'SELECTED':
-        frame(a, 2, 2, s - 3, s - 3, RED, 2)
+        blit(a, 0, 0, indicators.selection())
     elif state == 'TARGET':
-        a[r2 <= 7.5 ** 2] = DEEP_RED
+        blit(a, 0, 0, indicators.movement())
     elif state == 'CAPTURE':
-        corner = (x + y < 14) | ((s - 1 - x) + y < 14) | (x + (s - 1 - y) < 14) | \
-                 ((s - 1 - x) + (s - 1 - y) < 14)
-        a[corner] = DEEP_RED
+        blit(a, 0, 0, indicators.capture())
     elif state == 'CHECK':
         a[(r2 <= 25.5 ** 2) & ((x + y) % 2 == 0)] = ALERT
         a[r2 <= 18.5 ** 2] = ALERT
     return a
 
 
-def newsprint(img, keep_out):
-    """Sprinkle specks over plain paper, outside the given rectangles.
-
-    The pattern repeats every 16 pixels, so blank paper stays a handful of
-    tiles.
-    """
-    mask = np.zeros(img.shape, bool)
-    mask[3::16, 1::16] = True
-    mask[11::16, 9::16] = True
-    mask[6::16, 13::16] = True
-    for x0, y0, x1, y1 in keep_out:
-        mask[y0:y1 + 1, x0:x1 + 1] = False
-    img[mask & (img == PAPER)] = SHADE
-
-
 def render(info):
     img = np.full((H, W), PAPER, np.uint8)
     bx, by, bs = L.BOARD_X, L.BOARD_Y, 8 * L.SQUARE
 
-    # ---- masthead strip ------------------------------------------------
-    left = '№ 1  ·  ЯНВАРЬ 1985  ·  МОСКВА'
-    right = 'СОВЕТСКАЯ ШАХМАТНАЯ ГАЗЕТА'
-    SMALL.draw(img, 4, 11, left, INK, tracking=1)
-    lw = SMALL.width(left, 1)
-    rx = 615 - SMALL.width(right, 1)
-    SMALL.right(img, 614, 11, right, INK, tracking=1)
-    mh, mw = MASTHEAD.shape
-    tx = 320 - mw // 2
-    blit(img, tx, 0, MASTHEAD)
-    for y in (5, 8):                                  # double rules to the title
-        fill(img, 4 + lw + 8, y, tx - 8, y, INK)
-        fill(img, tx + mw + 8, y, rx - 8, y, INK)
-    fill(img, 620, 1, 635, 13, RED)                   # rook emblem
-    rook = np.array([[c == '#' for c in row] for row in ROOK])
-    img[2:13, 624:633][rook] = CREAM
-
-    # ---- board ---------------------------------------------------------
-    frame(img, bx - 2, by - 2, bx + bs + 1, by + bs + 1, INK, 2)
+    # Scorecard 02: board first, one quiet sidebar, flat warm paper.
+    frame(img, bx - 4, by - 4, bx + bs + 3, by + bs + 3, INK)
+    frame(img, bx - 2, by - 2, bx + bs + 1, by + bs + 1, INK)
     for rank in range(8):
         for file in range(8):
-            img[by + rank * 56:by + rank * 56 + 56, bx + file * 56:bx + file * 56 + 56] = \
-                square_image('NEWSPRINT', (rank + file) % 2 == 0, 'NORMAL')
-
-    # ---- status bar ----------------------------------------------------
-    fill(img, 0, 464, 639, 465, INK)
-    ax0, ax1 = L.ANALYSE_BUTTON
-    fill(img, ax0, 467, ax1, 479, RED)
-    text_centered(img, ax0, ax1, 464, 'АНАЛИЗ', CREAM)
-    ix0, ix1 = L.INFO_BUTTON
-    fill(img, ix0, 467, ix1, 479, RED)
-    fill(img, (ix0 + ix1) // 2 - 6, 472, (ix0 + ix1) // 2 + 5, 473, CREAM)   # "—"
-    for x in L.STATUS_SEPARATORS:
-        fill(img, x, 468, x, 478, INK)
-    for col, label in ((L.STATUS_TURN_COL, 'ХОД:'), (L.STATUS_BEST_COL, 'ЛУЧШИЙ ХОД:'),
-                       (L.STATUS_EVAL_COL, 'ОЦЕНКА:')):
-        SMALL.right(img, col * 8 - 5, 476, label, INK, tracking=1)
-
-    keep_out = [(bx - 2, by - 2, bx + bs + 1, by + bs + 1)]
-
-    # ---- side columns (INFO view) --------------------------------------
+            y, x = by + rank * L.SQUARE, bx + file * L.SQUARE
+            img[y:y + L.SQUARE, x:x + L.SQUARE] = square_image('NEWSPRINT', (rank + file) % 2 == 0, 'NORMAL')
+    cx = (L.RIGHT_X0 + L.RIGHT_X1 + 1) // 2
+    masthead(img, cx, 28)
+    # Red masthead; compact clocks and a centred, signed evaluation bar.
+    region = img[:36, 488:632]
+    region[region == INK] = RED
+    for y in (36, 39):
+        fill(img, L.RIGHT_X0, y, L.RIGHT_X1, y, INK)
+    frame(img, 496, 56, 623, 63, INK)
+    fill(img, 560, 55, 560, 64, INK)
+    SMALL.draw(img, 488, 52, 'B', INK)
+    SMALL.draw(img, 624, 52, 'W', INK)
     if info:
-        x0, x1 = L.LEFT_X0, L.LEFT_X1
-        for side in ('top', 'bottom'):
-            py = L.PLATE_Y[side]
-            fill(img, x0, py, x1, py + 47, RED)
-            frame(img, x0 + 2, py + 2, x1 - 2, py + 45, CREAM)
-            cy = L.CLOCK_Y[side]
-            double_frame(img, x0, cy, x1, cy + 47)
-        py = L.PHOTO_Y
-        frame(img, x0, py, x1, py + 91, INK)
-        ph, pw = PHOTO.shape
-        img[py + 2:py + 2 + ph, (x0 + x1 + 1 - pw) // 2:(x0 + x1 + 1 + pw) // 2] = PHOTO
-        ITALIC.centered(img, (x0 + x1 + 1) // 2, py + 103, 'Из архива', INK)
-        keep_out.append((x0, py, x1, py + 91))
+        SMALL.draw(img, 488, 118, 'No.', INK)
+        SMALL.centered(img, 536, 118, 'WHITE', INK)
+        SMALL.centered(img, 600, 118, 'BLACK', INK)
+        fill(img, 488, 122, 631, 122, INK)
+        bottom = L.MOVES_Y + L.MOVE_ROWS * 16 - 1
+        for row in range(L.MOVE_ROWS):
+            if row % 2:
+                fill(img, 488, L.MOVES_Y + row * 16, 631, L.MOVES_Y + row * 16 + 15, SHADE)
+        fill(img, 511, 123, 511, bottom, TEXTURE)
+        fill(img, 575, 123, 575, bottom, TEXTURE)
 
-        rx0, rx1 = L.RIGHT_X0, L.RIGHT_X1
-        HEADLINE.centered(img, (rx0 + rx1 + 1) // 2, 39, 'ХОДЫ', INK)
-        fill(img, rx0, 44, rx1, 45, INK)
-        fill(img, rx0, 47, rx1, 47, INK)
-        fill(img, rx0, 456, rx1, 456, INK)
-    newsprint(img, keep_out)
     return img
+
+
+def render_options():
+    image = render(False)
+    fill(image, 480, 0, 639, 479, PAPER)
+    BitmapFont(2).centered(image, 560, 80, 'OPTIONS', RED)
+    for y in (104, 107, 352, 355):
+        fill(image, 488, y, 631, y, INK)
+    return image
 
 
 # --------------------------------------------------------------------------
@@ -299,11 +235,74 @@ def tile_map(tiles, img):
     return b''.join(v.to_bytes(2, 'little') for v in entries)
 
 
+def menu_artwork(artwork):
+    image = load_indexed(ASSETS / f'art/{artwork}.png',
+                         SPLASH_RGB12 if artwork == 'splash' else SETUP_RGB12)
+    assert image.shape == (H, W) and image.max() < 16
+    if artwork == 'setup':
+        BitmapFont(3).centered(image, 480, 80, 'NEW GAME', RED)
+        for y in (104, 107, 352, 355):
+            fill(image, 344, y, 615, y, INK)
+    return image
+
+
+def build_splash(dest, artwork="splash", prefix="SPL"):
+    """Split the native-resolution artwork across two 4bpp tile layers.
+
+    Layer 1 retains the runtime font, so menu labels can change without
+    baking dead controls into the picture. Its unused piece slots hold the
+    artwork overflow while the start screen is visible.
+    """
+    image = menu_artwork(artwork)
+    colors = SPLASH_RGB12 if artwork == 'splash' else SETUP_RGB12
+    (dest / f'{prefix}PAL.DAT').write_bytes(vera_palette(colors))
+    tiles = TileSet(8)
+    tiles.add(np.full((8, 8), PAPER, np.uint8))
+    # Index zero is opaque in the artwork but transparent on VERA layer 1.
+    # Overflow tiles need that exact palette color underneath (black in both
+    # portraits), preserving every source pixel.
+    underlay_tile = tiles.add(np.zeros((8, 8), np.uint8))
+    capacity0 = (L.VRAM_L0_MAP_PLAIN - L.VRAM_L0_TILES) // 32
+    capacity1 = (L.VRAM_L1_MAP - L.VRAM_L1_TILES) // 32
+    layer0, layer1 = [0] * 8192, [0] * 8192
+    for r in range(60):
+        for c in range(80):
+            t = tiles.add(image[r * 8:r * 8 + 8, c * 8:c * 8 + 8])
+            if t < capacity0:
+                layer0[r * 128 + c] = t
+            else:
+                layer0[r * 128 + c] = underlay_tile
+                layer1[r * 128 + c] = L.L1_PIECES + t - capacity0
+    count1 = L.L1_PIECES + max(0, len(tiles.tiles) - capacity0)
+    if count1 > capacity1:
+        raise ValueError(f'{artwork}: needs {count1} layer-1 tiles, budget is {capacity1}; '
+                         'reduce artwork complexity explicitly, never drop or truncate tiles')
+    (dest / f'{prefix}TILE.DAT').write_bytes(b''.join(tiles.tiles[:capacity0]))
+    font = build_layer1()[:L.L1_PIECES * 32]
+    art = b''.join(tiles.tiles[capacity0:])
+    (dest / f'{prefix}1ART.DAT').write_bytes(art)
+    (dest / 'FONT.DAT').write_bytes(font)
+    for name, entries in [(f'{prefix}MAP.DAT', layer0), (f'{prefix}1MAP.DAT', layer1)]:
+        (dest / name).write_bytes(b''.join(t.to_bytes(2, 'little') for t in entries))
+    # Check actual packed files and palette, rather than trusting the source
+    # preview. Any missing/recoloured pixel or invalid tile reference fails
+    # the build before it can reach the emulator.
+    from verify_graphics import verify_artwork
+    reconstructed = verify_artwork(dest, prefix, image, palette_data=vera_palette(colors), expected_palette=colors)
+    preview = reconstructed.copy()
+    if artwork == 'splash':
+        for y, label, color in [(376, 'NEW GAME', RED), (400, 'CONTINUE', DARK_GREY), (424, 'OPTIONS', INK)]:
+            text_centered(preview, 0, 639, y, label, color)
+        text_centered(preview, 0, 639, 456, 'UP/DOWN  ENTER TO SELECT', INK)
+    save_preview(preview, dest / f'{artwork}.png', colors)
+    print(f'{artwork}: {len(tiles.tiles)} tiles across two layers')
+
+
 def build_layer0():
     tiles = TileSet(8)
     tiles.add(np.full((8, 8), PAPER, np.uint8))           # tile 0 = blank paper
     plain, info = render(False), render(True)
-    maps = (tile_map(tiles, plain), tile_map(tiles, info))
+    maps = (tile_map(tiles, plain), tile_map(tiles, info), tile_map(tiles, render_options()))
     squares = bytearray()
     for theme in L.BOARD_THEMES:
         for light in (True, False):
@@ -321,7 +320,7 @@ def font_codes():
         yield from range(a, b + 1)
 
 
-def build_layer1():
+def build_layer1(pieces=PIECES):
     tiles = []
 
     def cut(image, x, y):
@@ -329,29 +328,37 @@ def build_layer1():
 
     for code in font_codes():
         g = glyph(code)
+        if code in (L.MENU_ARROW_LEFT, L.MENU_ARROW_RIGHT):
+            g = np.zeros((16, 8), np.uint8)
+            for y, width in enumerate((1, 2, 3, 4, 3, 2, 1)):
+                g[4 + y, 2:2 + width] = INK
+            if code == L.MENU_ARROW_LEFT:
+                g = g[:, ::-1]
         cut(g, 0, 0)
         cut(g, 0, 8)
+    assert len(tiles) == L.L1_FIGURINES
+    for p in range(6):
+        for ty in range(2):
+            for tx in range(2):
+                cut(FIGURINES16, p * 16 + tx * 8, ty * 8)
     assert len(tiles) == L.L1_PIECES
     for p in range(12):
-        piece = piece_image(p)
+        piece = pieces[:, p * L.SQUARE:(p + 1) * L.SQUARE]
         for ty in range(7):
             for tx in range(7):
                 cut(piece, tx * 8, ty * 8)
-    assert len(tiles) == L.L1_DIGITS
-    for d in range(10):
-        for ty in range(4):
-            for tx in range(2):
-                cut(DIGITS, d * 16 + tx * 8, ty * 8)
-    colon = DIGITS[:, 160:176]
-    used = np.nonzero(colon.any(axis=0))[0]
-    left = 160 + max(0, min(8, (used[0] + used[-1] + 1) // 2 - 4))
-    for ty in range(4):
-        cut(DIGITS, left, ty * 8)
+    assert len(tiles) == L.L1_FILES
     for letter in 'abcdefgh':
-        t = np.zeros((8, 8), np.uint8)
-        g = np.array([[c == '#' for c in row] for row in FILE_LETTERS[letter]])
-        t[2:7, 1:5][g] = INK
-        tiles.append(pack4(t))
+        tiles.append(pack4(glyph8(ord(letter))))
+    assert len(tiles) == L.L1_BAR
+    for width in range(9):
+        bar = np.zeros((8, 8), np.uint8)
+        bar[2:6, :width] = INK
+        tiles.append(pack4(bar))
+    for width in range(1, 9):
+        bar = np.zeros((8, 8), np.uint8)
+        bar[2:6, 8-width:] = INK
+        tiles.append(pack4(bar))
     assert len(tiles) == L.L1_COUNT <= 1024
     return b''.join(tiles)
 
@@ -380,15 +387,7 @@ def build_sprites():
     rows = POINTER.strip().splitlines()
     pointer = np.array([[{'.': 0, '1': INK, 'c': WHITE}[ch] for ch in row] for row in rows],
                        np.uint8)
-    cursor = np.zeros((64, 64), np.uint8)
-    lo, hi, t, n = 4, 59, 3, 16                       # corner brackets of a 56 px square
-    for (x, y, dx, dy) in ((lo, lo, 1, 1), (hi, lo, -1, 1), (lo, hi, 1, -1), (hi, hi, -1, -1)):
-        xs = sorted((x, x + dx * (n - 1)))
-        ys = sorted((y, y + dy * (t - 1)))
-        fill(cursor, xs[0], ys[0], xs[1], ys[1], ALERT)
-        xs = sorted((x, x + dx * (t - 1)))
-        ys = sorted((y, y + dy * (n - 1)))
-        fill(cursor, xs[0], ys[0], xs[1], ys[1], ALERT)
+    cursor = indicators.cursor()
     data = pack4(pointer)
     data += bytes(L.VRAM_CURSOR - L.VRAM_POINTER - len(data))
     return data + pack4(cursor)
@@ -397,21 +396,15 @@ def build_sprites():
 def write_header(path, tiles):
     out = ['/* Generated by assets/scripts/build_graphics.py - do not edit. */',
            '#ifndef _GFX_H', '#define _GFX_H', '']
-    for name in ('BOARD_X', 'BOARD_Y', 'SQUARE', 'STATUS_Y', 'LEFT_X0', 'LEFT_X1',
-                 'RIGHT_X0', 'RIGHT_X1', 'PHOTO_Y', 'MOVES_Y', 'MOVE_ROWS', 'MOVE_ROW_H',
-                 'STATUS_TURN_COL', 'STATUS_BEST_COL', 'STATUS_EVAL_COL', 'STATUS_CLOCK_COL',
-                 'L1_FONT', 'L1_PIECES', 'L1_DIGITS', 'L1_COLON', 'L1_FILES', 'L1_COUNT',
-                 'GUI_BANK', 'TINT_ROW', 'FIGURINE_CODE'):
+    for name in ('BOARD_X', 'BOARD_Y', 'SQUARE', 'LEFT_X0', 'LEFT_X1',
+                 'RIGHT_X0', 'RIGHT_X1', 'MOVES_Y', 'MOVE_ROWS', 'MOVE_ROW_H',
+                 'L1_FONT', 'L1_FIGURINES', 'L1_PIECES', 'L1_FILES', 'L1_BAR', 'L1_COUNT',
+                 'GUI_BANK', 'FIGURINE_CODE'):
         out.append(f'#define {name:<20} {getattr(L, name)}')
     out.append(f'#define RANK_LABEL_COL_LEFT  {L.RANK_LABEL_COLS[0]}')
     out.append(f'#define RANK_LABEL_COL_RIGHT {L.RANK_LABEL_COLS[1]}')
-    out.append(f'#define ANALYSE_X0           {L.ANALYSE_BUTTON[0]}')
-    out.append(f'#define ANALYSE_X1           {L.ANALYSE_BUTTON[1]}')
-    out.append(f'#define INFO_X0              {L.INFO_BUTTON[0]}')
-    out.append(f'#define INFO_X1              {L.INFO_BUTTON[1]}')
     for side in ('top', 'bottom'):
         out.append(f'#define PLATE_Y_{side.upper():<12} {L.PLATE_Y[side]}')
-        out.append(f'#define CLOCK_Y_{side.upper():<12} {L.CLOCK_Y[side]}')
     for name in ('VRAM_L0_TILES', 'VRAM_L0_MAP_PLAIN', 'VRAM_L0_MAP_INFO', 'VRAM_L1_TILES',
                  'VRAM_L1_MAP', 'VRAM_SPRITES', 'VRAM_POINTER', 'VRAM_CURSOR'):
         out.append(f'#define {name:<20} 0x{getattr(L, name):05X}UL')
@@ -431,25 +424,35 @@ def write_header(path, tiles):
         out.append(f'#define FONT_RANGE{i}_LAST     0x{b:02X}')
         out.append(f'#define FONT_RANGE{i}_SLOT     {slot}')
         slot += b - a + 1
+    out.append(f'#define MENU_ARROW_LEFT      {L.MENU_ARROW_LEFT}')
+    out.append(f'#define MENU_ARROW_RIGHT     {L.MENU_ARROW_RIGHT}')
     out.append('')
     out.append('#endif')
     path.write_text('\n'.join(out) + '\n')
 
 
-def save_preview(img, path):
+def save_preview(img, path, colors=RGB12):
     preview = Image.fromarray(img, 'P')
-    preview.putpalette(pil_palette())
+    preview.putpalette(pil_palette(colors))
     preview.save(path)
 
 
 def main(dest):
     dest = Path(dest)
+    build_splash(dest)
+    build_splash(dest, "setup", "SET")
     tiles, maps, squares, plain, info = build_layer0()
     (dest / 'L0TILES.DAT').write_bytes(tiles.data())
     (dest / 'L0PLAIN.DAT').write_bytes(maps[0])
     (dest / 'L0INFO.DAT').write_bytes(maps[1])
+    (dest / 'OPTMAP.DAT').write_bytes(maps[2])
     (dest / 'SQTILES.DAT').write_bytes(squares)
-    (dest / 'L1TILES.DAT').write_bytes(build_layer1())
+    foreground = build_layer1()
+    (dest / 'L1ART.DAT').write_bytes(foreground[L.L1_PIECES * 32:])
+    for name, filename in [('continental', 'ENGART.DAT'), ('letterpress', 'LETART.DAT')]:
+        sheet = load_indexed(ASSETS / f'pieces/{name}.png')
+        assert sheet.shape == (L.SQUARE, L.SQUARE * 12)
+        (dest / filename).write_bytes(build_layer1(sheet)[L.L1_PIECES * 32:])
     (dest / 'SPRITES.DAT').write_bytes(build_sprites())
     (dest / 'PALETTE.DAT').write_bytes(vera_palette())
     write_header(dest / 'gfx.h', tiles)

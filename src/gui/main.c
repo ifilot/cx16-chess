@@ -21,11 +21,13 @@
 #include <cx16.h>
 #include <cbm.h>
 #include <stdint.h>
+#include <ascii_charmap.h>
 #pragma static-locals (on)
 
 #include "video.h"
 #include "match.h"
 #include "playfield.h"
+#include "start.h"
 
 // KERNAL mouse_get stores the pointer position in r0 (x) and r1 (y)
 #define MOUSE_X     (*(volatile uint16_t*)0x02)
@@ -69,25 +71,57 @@ static void mouse_read(void) {
 }
 
 void main(void) {
-    uint8_t key;
+    uint8_t key, action, menu = 1, has_game = 0, release_mouse = 0;
 
     mouse_init();
     if(!video_init()) {
         return;
     }
-    match_init();
-    match_computer = COMPUTER_BLACK;
-    playfield_new();
+    *(volatile uint8_t*)0x00 = 21;
+    if(!start_open(0)) return;
 
     while(1) {
         wait_frame();
         mouse_read();
-        playfield_mouse(MOUSE_X, MOUSE_Y, mouse_buttons);
         key = cbm_k_getin();
-        if(key) {
-            playfield_key(key);
+        if(menu) {
+            action = start_mouse(MOUSE_X, MOUSE_Y, mouse_buttons);
+            if(!action && key) action = start_key(key);
+            if(action == START_ERROR) return;
+            if(action) {
+                if(!video_show_game()) return;
+                if(action == START_NEW) {
+                    if(!has_game) match_init();
+                    match_computer = start_computer;
+                    match_difficulty = start_difficulty;
+                    playfield_new();
+                } else {
+                    playfield_resume();
+                }
+                video_present();
+                has_game = 1;
+                menu = 0;
+                /* Consume a held menu click before board input resumes. */
+                release_mouse = 1;
+            }
+        } else if(key == 'M' || key == 'm') {
+            *(volatile uint8_t*)0x00 = 21;
+            if(!start_open(has_game)) return;
+            menu = 1;
+        } else {
+            if(!(mouse_buttons & 1)) release_mouse = 0;
+            if(!release_mouse) playfield_mouse(MOUSE_X, MOUSE_Y, mouse_buttons);
+            if(key) playfield_key(key);
+            if(playfield_new_requested) {
+                playfield_new_requested = 0;
+                *(volatile uint8_t*)0x00 = 21;
+                if(!start_open(has_game)) return;
+                if(start_key('N') == START_ERROR) return;
+                menu = 1;
+            } else {
+                playfield_tick();
+                playfield_update();
+            }
         }
-        playfield_tick();
-        playfield_update();
     }
 }

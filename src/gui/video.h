@@ -29,7 +29,6 @@
 #define COL_INK         1
 #define COL_PAPER       2
 #define COL_RED         7
-#define COL_CREAM       9
 #define COL_GREY        10
 
 #define SPRITE_POINTER  0
@@ -41,11 +40,18 @@
  */
 
 /**
- * @brief Set up 640x480 with two 4bpp tile layers and load all graphics
+ * @brief Set up 640x480 tile layers, pointer and resident font; keep display hidden
  *
  * @return 0 when a graphics file could not be loaded
  */
 uint8_t video_init(void);
+/* View loads keep the display hidden until the caller finishes drawing. */
+void video_present(void);
+uint8_t video_show_start(void);
+uint8_t video_show_setup(void);
+uint8_t video_show_game(void);
+uint8_t video_show_options(void);
+uint8_t video_load_piece_set(void);
 
 /**
  * @brief Show the background with (1) or without (0) the side columns
@@ -64,12 +70,7 @@ void video_clear_layer1(void);
 void video_square(uint8_t col, uint8_t row, uint8_t v);
 
 /**
- * @brief Tint (red paper) or untint a block of the INFO background map
- */
-void video_tint(uint8_t col, uint8_t row, uint8_t w, uint8_t h, uint8_t on);
-
-/**
- * @brief Draw an 8x16 text string on layer 1 in the given palette colour
+ * @brief Draw bitmap text on layer 1; figurines occupy 16x16, text 8x16
  */
 void video_text(uint8_t col, uint8_t row, const char* s, uint8_t color);
 
@@ -87,11 +88,6 @@ void video_text_clear(uint8_t col, uint8_t row, uint8_t n);
  * @brief Blank a w x h block of layer-1 tiles
  */
 void video_clear_block(uint8_t col, uint8_t row, uint8_t w, uint8_t h);
-
-/**
- * @brief Draw 16x32 clock digits ('0'-'9', ':' is 8 px wide)
- */
-void video_digits(uint8_t col, uint8_t row, const char* s, uint8_t color);
 
 /**
  * @brief Draw a 56x56 piece (0-11), or clear the cell when piece is 0xFF

@@ -23,8 +23,8 @@
  * keyboard input into moves. All game logic lives in core/; this file only
  * knows how things look.
  *
- * Screen: masthead strip, the 448x448 board, a status bar below. The side
- * columns (players, clocks, move list) can be switched on and off.
+ * Screen: a 448x448 board on the left, clocks and a paired scorecard on
+ * the right, with a signed evaluation bar and animated thinking indicator.
  */
 
 #include <ascii_charmap.h>
@@ -48,13 +48,7 @@
 #define SQ_ROW          (BOARD_Y / 8)
 
 // text rows
-#define ROW_STATUS      (STATUS_Y / 8)
-#define ROW_PLATE_TOP   ((PLATE_Y_TOP + 8) / 8)
-#define ROW_PLATE_BOT   ((PLATE_Y_BOTTOM + 8) / 8)
-#define ROW_CLOCK_TOP   ((CLOCK_Y_TOP + 16) / 8)
-#define ROW_CLOCK_BOT   ((CLOCK_Y_BOTTOM + 16) / 8)
 #define LEFT_CX         ((LEFT_X0 + LEFT_X1 + 1) / 2)
-#define MOVES_COL       (RIGHT_X0 / 8 + 1)
 #define MOVES_ROW       (MOVES_Y / 8)
 
 #define MARK_TARGET     1
@@ -66,9 +60,11 @@
 #define INPUT_PROMOTE   1
 
 static uint8_t input_phase;
+uint8_t playfield_new_requested;
 static uint8_t flipped;                 // black at the bottom
-static uint8_t theme;                   // THEME_NEWSPRINT or THEME_WOOD
-static uint8_t info;                    // side columns shown
+uint8_t playfield_theme = THEME_NEWSPRINT;
+static uint8_t info = 1;                 // score sheet shown
+static uint16_t thinking_frame;
 static uint8_t thinking;                // the engine is busy
 static uint8_t selected;                // square of the selected piece
 static uint8_t check_square;            // king in check
@@ -134,15 +130,12 @@ static void board_refresh(void) {
                 drawn_state[idx] = state;
                 // a1 is a dark square; per theme the table holds light squares first
                 video_square(SQ_COL + col * 7, SQ_ROW + row * 7,
-                             ((theme << 1) + !((f + r) & 1)) * SQ_STATES + state);
+                             ((playfield_theme << 1) + !((f + r) & 1)) * SQ_STATES + state);
             }
             if(piece != drawn_piece[idx]) {
                 drawn_piece[idx] = piece;
                 video_piece(SQ_COL + col * 7, SQ_ROW + row * 7,
                             piece == EMPTY ? 0xFF : (COLOR(piece) ? 6 : 0) + TYPE(piece) - 1);
-                if(row == 7) {                      // file letter in the corner
-                    video_tile(SQ_COL + col * 7, SQ_ROW + 7 * 7 + 6, L1_FILES + f, COL_INK);
-                }
             }
         }
     }
@@ -155,7 +148,7 @@ static void redraw_board(void) {
 }
 
 /**
- * @brief Rank numbers on both sides of the board
+ * @brief Ranks on the left and files below the board
  */
 static void draw_labels(void) {
     uint8_t i, row;
@@ -165,7 +158,9 @@ static void draw_labels(void) {
         buf[0] = '1' + (flipped ? i : 7 - i);
         row = SQ_ROW + i * 7 + 3;
         video_text(RANK_LABEL_COL_LEFT, row, buf, COL_INK);
-        video_text(RANK_LABEL_COL_RIGHT, row, buf, COL_INK);
+    }
+    for(i=0; i<8; i++) {
+        video_tile(SQ_COL + i * 7 + 3, 58, L1_FILES + (flipped ? 7 - i : i), COL_INK);
     }
 }
 
@@ -211,34 +206,10 @@ static void figurines(const char* san, char* out) {
 }
 
 /**
- * @brief Evaluation as "+0.35", "-1.20" or "+#3" (mate in 3), white's view
- */
-static void format_eval(void) {
-    int16_t e = match_eval;
-    uint16_t a = e < 0 ? -e : e;
-    char* p = buf;
-
-    *p++ = e < 0 ? '-' : '+';
-    if(a > ENGINE_MATE - 512) {
-        a = (ENGINE_MATE - a + 1) >> 1;
-        *p++ = '#';
-        if(a >= 10) *p++ = '0' + a / 10;
-        *p++ = '0' + a % 10;
-    } else {
-        if(a >= 1000) *p++ = '0' + (a / 1000) % 10;
-        *p++ = '0' + (a / 100) % 10;
-        *p++ = '.';
-        *p++ = '0' + (a / 10) % 10;
-        *p++ = '0' + a % 10;
-    }
-    *p = 0;
-}
-
-/**
- * @brief Whose move it is, check, thinking, promotion or the result
+ * @brief Check, promotion or the result; normal turns need no status label
  */
 static void draw_turn(void) {
-    const char* a = (side == WHITE) ? STR_WHITE : STR_BLACK;
+    const char* a = 0;
     const char* b = 0;
     uint8_t color = COL_INK;
 
@@ -256,123 +227,125 @@ static void draw_turn(void) {
             default:                   a = STR_DRAW; break;
         }
     } else if(thinking) {
-        a = STR_COMPUTER;
-        b = STR_THINKS;
+        return;
     } else if(input_phase == INPUT_PROMOTE) {
         a = STR_PROMOTE;
+        b = 0;
     } else if(check_square != NO_SQUARE) {
         a = STR_CHECK;
         b = (side == WHITE) ? STR_WHITE_DAT : STR_BLACK_DAT;
         color = COL_RED;
     }
+    video_text_clear(61, 55, 19);
+    if(!a) return;
     strcpy(buf, a);
     if(b) {
         strcat(buf, " ");
         strcat(buf, b);
     }
-    video_text_clear(STATUS_TURN_COL, ROW_STATUS, 10);
-    video_text(STATUS_TURN_COL, ROW_STATUS, buf, color);
+    video_text_centered(LEFT_CX, 55, buf, color);
 }
 
 /**
- * @brief Best move and evaluation from the engine
+ * @brief Evaluation bar: Black to the left, White to the right
  */
 static void draw_analysis(void) {
-    video_text_clear(STATUS_BEST_COL, ROW_STATUS, 7);
-    video_text_clear(STATUS_EVAL_COL, ROW_STATUS, 7);
-    figurines(match_best, buf);
-    video_text(STATUS_BEST_COL, ROW_STATUS, buf, COL_INK);
-    if(match_eval_valid) {
-        format_eval();
-        video_text(STATUS_EVAL_COL, ROW_STATUS, buf, COL_INK);
+    int16_t e = match_eval_valid ? match_eval : 0;
+    uint16_t magnitude = e < 0 ? -e : e;
+    uint8_t width, i, part;
+
+    /* +/- seven pawns fills its half; mate scores saturate safely. */
+    if(magnitude > 700) magnitude = 700;
+    width = magnitude * 56 / 700;
+    for(i=0; i<7; i++) {
+        part = width >= 8 ? 8 : width;
+        video_tile(70 + i, 7, L1_BAR + (e > 0 ? part : 0), COL_RED);
+        video_tile(69 - i, 7, L1_BAR + (e < 0 && part ? 8 + part : 0), COL_INK);
+        width -= part;
     }
 }
 
-/**
- * @brief Clocks: both in the status bar, and in the side column boxes
- */
+/** Compact clocks following WHITE / BLACK on a single text line. */
 static void draw_clocks(void) {
     uint8_t top = flipped ? WHITE : BLACK;
     uint8_t color, row, active;
 
-    format_clock(WHITE, 0);
-    buf[5] = ' ';
-    format_clock(BLACK, 6);
-    video_text(STATUS_CLOCK_COL, ROW_STATUS, buf, COL_INK);
-    if(!info) return;
     for(color=WHITE; ; color=BLACK) {
-        row = (color == top) ? ROW_CLOCK_TOP : ROW_CLOCK_BOT;
+        row = (color == top ? PLATE_Y_TOP : PLATE_Y_BOTTOM) / 8;
         active = (match_state == MATCH_PLAYING && side == color);
-        video_tint(LEFT_X0 / 8, row - 2, 9, 6, active);
-        format_clock(color, 0);
-        video_text_centered(LEFT_CX, row, buf, active ? COL_CREAM : COL_INK);
+        strcpy(buf, color == WHITE ? "WHITE  " : "BLACK  ");
+        format_clock(color, 7);
+        video_text_clear(61, row, 19);
+        video_text_centered(LEFT_CX, row, buf, active ? COL_RED : COL_INK);
         if(color == BLACK) break;
     }
 }
 
-/**
- * @brief Player name and colour on the plates of the side column
- */
-static void draw_plates(void) {
-    uint8_t top = flipped ? WHITE : BLACK;
-    uint8_t color, row, computer;
+/** Rotate two figurines four times a second; percentage is time budget used. */
+static void draw_thinking(uint16_t now) {
+    uint16_t frame = now / 15;
+    uint16_t elapsed = now - match_think_start;
+    uint8_t percent, phase;
+    char icon[2];
 
-    for(color=WHITE; ; color=BLACK) {
-        row = (color == top) ? ROW_PLATE_TOP : ROW_PLATE_BOT;
-        computer = match_computer & (color == WHITE ? COMPUTER_WHITE : COMPUTER_BLACK);
-        video_text_centered(LEFT_CX, row, computer ? STR_COMPUTER : STR_HUMAN, COL_CREAM);
-        video_text_centered(LEFT_CX, row + 2, color == WHITE ? STR_WHITE : STR_BLACK, COL_CREAM);
-        if(color == BLACK) break;
-    }
+    if(frame == thinking_frame) return;
+    thinking_frame = frame;
+    percent = match_think_budget ?
+              ((uint32_t)elapsed * 100 / match_think_budget) : 0;
+    if(elapsed >= match_think_budget || percent > 99) percent = 99;
+    phase = frame % 6;
+    video_text_clear(61, 55, 19);
+    icon[1] = 0;
+    icon[0] = FIGURINE_CODE + 1 + phase;
+    video_text(61 + (phase & 1), 55, icon, COL_INK);
+    icon[0] = FIGURINE_CODE + 1 + (phase + 3) % 6;
+    video_text(64 + (phase & 1), 55, icon, COL_RED);
+    strcpy(buf, "TIME 00%");
+    buf[5] = '0' + percent / 10;
+    buf[6] = '0' + percent % 10;
+    video_text(69, 55, buf, COL_INK);
 }
 
 /**
- * @brief The move list of the side column: one half move per row, the move
- *        in progress tinted
+ * @brief Scrolling score sheet: one numbered white/black pair per row
  */
 static void draw_moves(void) {
-    uint16_t first, n;
-    uint8_t k, row, current;
+    uint16_t first, n, number;
+    uint8_t k, row, column;
     char san[8];
 
     if(!info) return;
-    first = ply + 1 > MOVE_ROWS ? ply + 1 - MOVE_ROWS : 0;
+    first = ply / 2 >= MOVE_ROWS ? ply / 2 - MOVE_ROWS + 1 : 0;
     for(k=0; k<MOVE_ROWS; k++) {
-        n = first + k;
         row = MOVES_ROW + k * 2;
-        current = (n == ply && match_state == MATCH_PLAYING);
-        video_tint(RIGHT_X0 / 8, row, 9, 2, current);
-        video_text_clear(MOVES_COL, row, 9);
-        if(n > ply || (n == ply && match_state != MATCH_PLAYING)) continue;
-        buf[0] = buf[1] = ' ';
-        if(!(n & 1)) {                              // white's move: its number
-            if((n >> 1) + 1 >= 10) buf[0] = '0' + ((n >> 1) + 1) / 10 % 10;
-            buf[1] = '0' + ((n >> 1) + 1) % 10;
-        }
-        buf[2] = ' ';
-        if(n < ply) {
+        video_text_clear(61, row, 19);
+        number = first + k + 1;
+        if((first + k) * 2 > ply) continue;
+        buf[0] = number >= 100 ? '0' + number / 100 % 10 : ' ';
+        buf[1] = number >= 10 ? '0' + number / 10 % 10 : ' ';
+        buf[2] = '0' + number % 10;
+        buf[3] = 0;
+        video_text(61, row, buf, COL_INK);
+        for(column=0; column<2; column++) {
+            n = (first + k) * 2 + column;
+            if(n >= ply) continue;
             match_san(n, san);
-            figurines(san, buf + 3);
-        } else {
-            strcpy(buf + 3, STR_PLACEHOLDER);
+            figurines(san, buf);
+            /* Figurines occupy 16px; other notation keeps its 8px advance. */
+            video_text(column ? 72 : 64, row, buf, COL_INK);
         }
-        video_text(MOVES_COL, row, buf, current ? COL_CREAM : COL_INK);
     }
 }
 
 /**
- * @brief Show or hide the side columns
+ * @brief Show or hide the score sheet while keeping clocks visible
  */
 static void set_info(uint8_t on) {
     info = on;
     video_show_info(on);
-    video_clear_block(0, SQ_ROW, RANK_LABEL_COL_LEFT, 56);
-    video_clear_block(RANK_LABEL_COL_RIGHT + 1, SQ_ROW, 80 - RANK_LABEL_COL_RIGHT - 1, 56);
-    if(on) {
-        draw_plates();
-        draw_clocks();
-        draw_moves();
-    }
+    video_clear_block(61, MOVES_ROW, 19, MOVE_ROWS * 2);
+    draw_clocks();
+    if(on) draw_moves();
 }
 
 /**
@@ -385,10 +358,7 @@ static void refresh_all(void) {
     draw_turn();
     draw_analysis();
     draw_clocks();
-    if(info) {
-        draw_plates();
-        draw_moves();
-    }
+    if(info) draw_moves();
 }
 
 /*****************************************************************************
@@ -473,6 +443,8 @@ static void activate(uint8_t sq) {
  */
 static void engine_turn(uint8_t analyse) {
     thinking = 1;
+    thinking_frame = 0xFFFF;
+    video_text_clear(61, 55, 19);
     input_phase = INPUT_MOVE;
     clear_selection();
     board_refresh();
@@ -509,7 +481,7 @@ static void cycle_computer(void) {
     clear_selection();
     board_refresh();
     draw_turn();
-    if(info) draw_plates();
+    draw_clocks();
 }
 
 /*****************************************************************************
@@ -517,6 +489,7 @@ static void cycle_computer(void) {
  *****************************************************************************/
 
 void playfield_new(void) {
+    playfield_new_requested = 0;
     match_new(CLOCK_START, match_computer);
     input_phase = INPUT_MOVE;
     flipped = (match_computer == COMPUTER_WHITE);
@@ -531,7 +504,18 @@ void playfield_new(void) {
 
     video_clear_layer1();
     draw_labels();
-    set_info(info);
+    video_show_info(info);
+    refresh_all();
+    update_cursor();
+}
+
+void playfield_resume(void) {
+    last_clock = clock();
+    video_clear_layer1();
+    draw_labels();
+    video_show_info(info);
+    memset(drawn_state, NOT_DRAWN, sizeof(drawn_state));
+    memset(drawn_piece, NOT_DRAWN, sizeof(drawn_piece));
     refresh_all();
     update_cursor();
 }
@@ -541,6 +525,7 @@ void playfield_tick(void) {
     clock_t delta = now - last_clock;
 
     last_clock = now;
+    if(thinking && match_state == MATCH_PLAYING) draw_thinking((uint16_t)now);
     if(match_tick(delta > 120 ? 120 : (uint8_t)delta)) {
         draw_clocks();
         if(match_state == MATCH_OVER) {
@@ -585,10 +570,10 @@ void playfield_key(uint8_t key) {
             flip_board();
             return;
         case 'N': case 'n':
-            playfield_new();
+            playfield_new_requested = 1;
             return;
         case 'T': case 't':
-            theme ^= 1;
+            playfield_theme = (playfield_theme + 1) % THEMES;
             redraw_board();
             return;
         case 'C': case 'c':
@@ -627,8 +612,5 @@ void playfield_mouse(uint16_t x, uint16_t y, uint8_t buttons) {
         cursor_col = (x - BOARD_X) / SQUARE;
         cursor_row = (y - BOARD_Y) / SQUARE;
         activate(square_at(cursor_col, cursor_row));
-    } else if(y >= STATUS_Y) {                      // status bar buttons
-        if(x >= ANALYSE_X0 && x <= ANALYSE_X1) playfield_key('A');
-        else if(x >= INFO_X0 && x <= INFO_X1) playfield_key('I');
     }
 }

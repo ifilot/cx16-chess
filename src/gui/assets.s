@@ -1,0 +1,227 @@
+; Indexed CHESS.DAT loader. Device 8, data channel 2, command channel 15.
+; Seek/open/validation code lives in bank 21. The reader stays resident so
+; SQTILES can be loaded with RAM bank 20 active without executing banked code.
+; Documented KERNAL APIs only: POSITION, MACPTR, ACPTR fallback.
+        .include "zeropage.inc"
+        .macpack longbranch
+        .repeat 26, letter
+            .charmap $41+letter, $41+letter ; filenames/commands use ASCII
+        .endrepeat
+        .export _asset_prepare, _asset_read, _asset_stream
+        .export asset_abort, asset_remaining, asset_count, asset_slot, asset_opened
+        .export asset_stamp, asset_command, asset_address
+
+.segment "BSS"
+_asset_stream:  .res 1
+asset_remaining: .res 2
+asset_address: .res 2
+asset_count: .res 1
+asset_slot: .res 1
+asset_opened: .res 1
+asset_stamp: .res 16
+asset_command: .res 6
+
+.segment "CODE"
+; __fastcall__: destination address in A/X; byte count supplied by prepare.
+_asset_read:
+        sta asset_address
+        stx asset_address+1
+        lda $01
+        pha
+        stz $01                 ; public KERNAL entry points are in ROM bank 0
+read_next:
+        lda asset_remaining
+        ora asset_remaining+1
+        beq read_done
+        lda #255                ; never use A=0 (ROM may read up to 512 bytes)
+        ldx asset_remaining+1
+        bne request_ready
+        lda asset_remaining
+request_ready:
+        pha
+        lda _asset_stream
+        lsr a                   ; C=1 writes repeatedly to VERA DATA0
+        pla
+        ldx asset_address
+        ldy asset_address+1
+        jsr $FF44               ; MACPTR may return a short successful read
+        bcs read_single
+        cpy #0                  ; request was at most 255 bytes
+        bne asset_abort
+        cpx #0
+        beq asset_abort         ; prevent an endless loop on zero progress
+        stx asset_count
+        bra read_status
+read_single:
+        lda asset_address
+        sta ptr1
+        lda asset_address+1
+        sta ptr1+1
+        jsr $FFA5               ; ACPTR fallback for devices without MACPTR
+        ldy #0
+        sta (ptr1),y
+        lda #1
+        sta asset_count
+read_status:
+        jsr $FFB7               ; errors and premature EOF are failures
+        bne asset_abort
+        sec
+        lda asset_remaining
+        sbc asset_count
+        sta asset_remaining
+        lda asset_remaining+1
+        sbc #0
+        sta asset_remaining+1
+        bcc asset_abort
+        lda _asset_stream
+        bne read_next
+        clc
+        lda asset_address
+        adc asset_count
+        sta asset_address
+        bcc read_next
+        inc asset_address+1
+        bra read_next
+read_done:
+        jsr $FFCC               ; restore keyboard input after file I/O
+        pla
+        sta $01
+        lda #1
+        ldx #0
+        rts
+asset_abort:
+        jsr $FFCC
+        lda #2
+        jsr $FFC3
+        lda #15
+        jsr $FFC3
+        stz asset_opened
+        pla
+        sta $01
+        lda #0
+        ldx #0
+        rts
+
+.segment "MENUCODE"
+_asset_prepare:
+        asl a                   ; index records are six bytes each
+        sta asset_slot
+        asl a
+        clc
+        adc asset_slot
+        sta asset_slot
+        lda $01
+        pha
+        stz $01
+        lda asset_opened
+        bne seek_resource
+        lda #15
+        ldx #8
+        ldy #15
+        jsr $FFBA               ; SETLFS command channel
+        lda #0
+        jsr $FFBD               ; SETNAM empty command
+        jsr $FFC0               ; OPEN
+        jcs prepare_failed
+        lda #2
+        ldx #8
+        ldy #2
+        jsr $FFBA
+        lda #asset_name_end-asset_name
+        ldx #<asset_name
+        ldy #>asset_name
+        jsr $FFBD
+        jsr $FFC0
+        jcs prepare_failed
+        ldx #2
+        jsr $FFC6               ; CHKIN data channel
+        jcs prepare_failed
+        stz _asset_stream
+        lda #16
+        sta asset_remaining
+        stz asset_remaining+1
+        lda #<asset_stamp
+        ldx #>asset_stamp
+        jsr _asset_read
+        cmp #0
+        jeq prepare_failed
+        ldx #15
+check_stamp:
+        lda asset_stamp,x
+        cmp asset_expected,x    ; reject data from a different graphics build
+        jne prepare_failed
+        dex
+        bpl check_stamp
+        lda #1
+        sta asset_opened
+seek_resource:
+        ldx asset_slot
+        ldy #0
+copy_offset:
+        lda asset_index,x
+        sta asset_command+2,y
+        inx
+        iny
+        cpy #4
+        bne copy_offset
+        lda asset_index,x
+        sta asset_remaining
+        lda asset_index+1,x
+        sta asset_remaining+1
+        lda #'P'
+        sta asset_command
+        lda #2
+        sta asset_command+1
+        lda #8
+        jsr $FFB1               ; LISTEN
+        lda #$6F
+        jsr $FF93               ; SECOND command channel
+        ldy #0
+send_command:
+        phy
+        lda asset_command,y
+        jsr $FFA8               ; CIOUT
+        ply
+        iny
+        cpy #6
+        bne send_command
+        jsr $FFAE               ; UNLSN executes POSITION
+        lda #8
+        jsr $FFB4               ; TALK
+        lda #$6F
+        jsr $FF96               ; TKSA command channel
+        jsr $FFA5
+        cmp #'0'
+        jne prepare_failed
+        jsr $FFA5
+        cmp #'0'
+        jne prepare_failed
+        ldx #64                 ; consume the entire DOS status line
+read_dos_status:
+        phx
+        jsr $FFA5
+        plx
+        cmp #13
+        beq dos_status_done
+        dex
+        bne read_dos_status
+        jmp prepare_failed
+dos_status_done:
+        jsr $FFAB               ; UNTALK
+        ldx #2
+        jsr $FFC6               ; CHKIN resets status and selects file
+        jcs prepare_failed
+        pla
+        sta $01
+        lda #1
+        ldx #0
+        rts
+prepare_failed:
+        jmp asset_abort
+.segment "RODATA"
+; OPEN must be able to read the filename regardless of the selected RAM bank.
+asset_name:
+        .byte "CHESS.DAT,S,R"
+asset_name_end:
+.segment "MENUCODE"
+        .include "assets.inc"

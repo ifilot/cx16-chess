@@ -1,35 +1,22 @@
-"""Write src/strings.h: UI strings encoded in Windows-1251.
-
-The layer-1 font stores glyphs in Windows-1251 order, so Cyrillic text can be
-written here in UTF-8 and is emitted as escaped C string literals.
-"""
+"""Write src/strings.h from the active English UI strings."""
 import sys
 from pathlib import Path
 
 STRINGS = {
-    'PLAYER1': 'ИГРОК 1',
-    'PLAYER2': 'ИГРОК 2',
-    'WHITE': 'БЕЛЫЕ',
-    'BLACK': 'ЧЁРНЫЕ',
-    'TO_MOVE': 'ХОД',
-    'WHITE_GEN': 'БЕЛЫХ',      # "white's (move)"
-    'BLACK_GEN': 'ЧЁРНЫХ',
-    'CHECK': 'ШАХ',
-    'WHITE_DAT': 'БЕЛЫМ',      # "(check) to white"
-    'BLACK_DAT': 'ЧЁРНЫМ',
-    'MATE': 'МАТ!',
-    'STALEMATE': 'ПАТ',
-    'DRAW': 'НИЧЬЯ',
-    'TIME': 'ВРЕМЯ',
-    'PROMOTE': 'ФИГУРА?',
+    'WHITE': 'WHITE',
+    'BLACK': 'BLACK',
+    'CHECK': 'CHECK',
+    'WHITE_DAT': 'WHITE',      # "(check) to white"
+    'BLACK_DAT': 'BLACK',
+    'MATE': 'MATE',
+    'STALEMATE': 'STALEMATE',
+    'DRAW': 'DRAW',
+    'TIME': 'TIME',
+    'PROMOTE': 'PROMOTE',
     'WHITE_WINS': '1-0',
     'BLACK_WINS': '0-1',
     'DRAWN': '1/2',
-    'PLACEHOLDER': '---',
-    'HUMAN': 'ИГРОК',
-    'COMPUTER': 'ЭВМ',          # Soviet term for a computer
-    'THINKS': 'ДУМАЕТ',
-    'REPETITION': 'ПОВТОР',
+    'REPETITION': 'REPETITION',
 }
 
 
