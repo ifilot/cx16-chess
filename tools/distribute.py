@@ -21,14 +21,16 @@ def main():
         'Copy the directory contents to the SD card root to boot automatically.\n'
         'AUTOBOOT.X16 is a copy of CHESS.PRG and starts the game on power-up.\n'
         'Load CHESS.PRG and run it. Emulator: x16emu -prg CHESS.PRG -run\n\n'
-        'Audio: V toggles music; S toggles sound effects (in menus or during play).\n'
-        'All music and effects load into RAM at startup; keep the ZSM files and SFX.BIN.\n\n'
-        'Source, license and credits: https://github.com/ifilot/cx16-chess\n')
+        'Music and Sounds can be toggled in Options or the midgame Escape menu.\n'
+        'Keyboard: V toggles music; S toggles sound effects.\n'
+        'Save Preferences in Options remembers both settings.\n'
+        'CHESS.BIN contains all banked code, music and effects; CHESS.DAT holds graphics.\n\n'
+        'Source, license and credits: https://github.com/ifilot/cx16-chess\n\n'
+        'ZSMKit audio library license:\n\n' + (ROOT / 'src/vendor/zsmkit/LICENSE').read_text())
     manifest = {name: {'bytes': (destination / name).stat().st_size,
                        'sha256': hashlib.sha256((destination / name).read_bytes()).hexdigest()}
                 for name in names}
     (destination / 'HASHES.TXT').write_text(''.join(f'{info["sha256"]}  {name}\n' for name, info in manifest.items()))
-    (destination / 'ZSMKIT.TXT').write_text((ROOT / 'src/vendor/zsmkit/LICENSE').read_text())
     archive = destination.parent / 'CHESS.ZIP'
     with ZipFile(archive, 'w', compression=ZIP_DEFLATED) as output:
         for path in sorted(destination.iterdir()):

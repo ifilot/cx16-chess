@@ -1,5 +1,9 @@
 # Initial fixed-depth Elo probe, 2026-10-11
 
+Raw PGNs, search records and logs are in [evidence.zip](evidence.zip).
+Aggregate PGNs are reconstructed without duplicate storage; see the
+[archive guide](../ARCHIVES.md).
+
 The first probe of the new 2–6-ply difficulty settings completed 192 games:
 96 each at 2 and 3 ply. Both depths used the same 24 opening positions from the
 extended tournament, each with both colours against Stockfish 16 UCI_Elo 1320
@@ -49,8 +53,8 @@ The legacy rating summaries and confidence intervals were reproduced exactly
 after extending the runner.
 
 Raw data: [summary.json](summary.json), [configuration.json](configuration.json),
-[validation.json](validation.json), [games.jsonl](games.jsonl),
-[2-ply PGNs](ply2.pgn), [3-ply PGNs](ply3.pgn), [run.log](run.log).
+[validation.json](validation.json), [games.jsonl (archive)](evidence.zip),
+[2-ply PGNs (archive)](evidence.zip), [3-ply PGNs (archive)](evidence.zip), [run.log (archive)](evidence.zip).
 
 ```sh
 PYTHONPATH=build/test-python python3 tools/rate_difficulties.py \

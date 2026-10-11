@@ -6,13 +6,15 @@ import json
 import math
 from pathlib import Path
 
+from engine_evidence import read_text, records
+
 import chess
 import chess.pgn
 
 
 def validate(root):
     config = json.loads((root / 'configuration.json').read_text())
-    rows = [json.loads(line) for line in (root / 'games.jsonl').read_text().splitlines()]
+    rows = list(records(root / 'games.jsonl'))
     expected = {(level, anchor, number) for level in config['levels']
                 for anchor in config['opponents'] for number in range(config['games_per_opponent'])}
     actual = {(row['level'], row['opponent_elo'], row['number']) for row in rows}
@@ -22,7 +24,7 @@ def validate(root):
         level, anchor, number = row['level'], row['opponent_elo'], row['number']
         assert row['white'] == (number % 2 == 0)
         assert row['opening_pair'] == number // 2
-        game = chess.pgn.read_game(io.StringIO((root / 'games' / f'{level}-{anchor}-{number:02d}.pgn').read_text()))
+        game = chess.pgn.read_game(io.StringIO(read_text(root / 'games' / f'{level}-{anchor}-{number:02d}.pgn')))
         assert game is not None and not game.errors, (level, anchor, number, 'PGN parse')
         assert game.headers['Result'] == row['result']
         ours = 'White' if row['white'] else 'Black'

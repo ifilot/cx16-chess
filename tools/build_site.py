@@ -3,10 +3,13 @@ from hashlib import sha256
 from pathlib import Path
 import html
 import json
+import re
 import shutil
 import subprocess
 import urllib.request
 from zipfile import ZipFile
+
+from engine_evidence import read_bytes
 
 from runtime_files import RUNTIME_FILES
 
@@ -52,10 +55,23 @@ def main():
 
     (output / 'research').mkdir()
     for name in ('RESULTS.md', 'summary.json', 'configuration.json', 'rating-comparison.png',
-                 'easy.pgn', 'normal.pgn', 'hard.pgn', 'games.jsonl'):
-        shutil.copy2(RESEARCH / name, output / 'research' / name)
+                 'easy.pgn', 'normal.pgn', 'hard.pgn', 'games.jsonl', 'evidence.zip', 'evidence.json'):
+        (output / 'research' / name).write_bytes(read_bytes(RESEARCH / name))
     # The report's links keep working in the downloaded static tree.
-    shutil.copy2(ROOT / 'docs/engine/RESULTS.md', output / 'RESULTS.md')
+    for name in ('RESULTS.md', 'LEGACY.md', 'ARCHIVES.md', 'ARCHIVES.json'):
+        source = ROOT / 'docs/engine' / name
+        if source.suffix == '.md':
+            # Only the legacy sample is shipped with the site. Other report
+            # links point to the full repository rather than missing files.
+            def report_link(match):
+                label, target = match.groups()
+                if '://' in target or target.startswith('#') or target in ('RESULTS.md', 'LEGACY.md', 'ARCHIVES.md', 'ARCHIVES.json') or (output / target).is_file():
+                    return match.group(0)
+                relative = (source.parent / target).relative_to(ROOT).as_posix()
+                return f'[{label}](https://github.com/ifilot/cx16-chess/blob/master/{relative})'
+            (output / name).write_text(re.sub(r'\[([^\]]+)\]\(([^)]+)\)', report_link, source.read_text()))
+        else:
+            shutil.copy2(source, output / name)
     summary = json.loads((RESEARCH / 'summary.json').read_text())
     rows = []
     for key, label in (('easy', 'Easy'), ('normal', 'Normal'), ('hard', 'Hard')):

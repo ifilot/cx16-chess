@@ -1,5 +1,9 @@
 # Extended native fixed-depth Elo test, 2026-10-11
 
+Raw PGNs, search records and logs are in [evidence.zip](evidence.zip).
+Aggregate PGNs are reconstructed without duplicate storage; see the
+[archive guide](../ARCHIVES.md).
+
 The 2,400-game run completed successfully, with 1,200 games at each depth.
 The game phase took about 11 minutes with 16 workers; summary calculation and
 automatic validation finished afterward. The process exited with status 0.
@@ -52,8 +56,8 @@ used an ordinary game clock, so the two datasets were kept separate.
 
 Raw evidence: [configuration.json](configuration.json), [summary.json](summary.json),
 [validation.json](validation.json), [audit.json](audit.json),
-[games.jsonl](games.jsonl), [2-ply PGNs](ply2.pgn), [3-ply PGNs](ply3.pgn),
-[run.log](run.log). The recorded opening suite is [openings.json](openings.json).
+[games.jsonl (archive)](evidence.zip), [2-ply PGNs (archive)](evidence.zip), [3-ply PGNs (archive)](evidence.zip),
+[run.log (archive)](evidence.zip). The recorded opening suite is [openings.json](openings.json).
 
 ```sh
 PYTHONPATH=build/test-python python3 tools/rate_difficulties.py \

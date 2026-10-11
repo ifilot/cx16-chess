@@ -1,5 +1,9 @@
 # Fixed-depth 6-ply Elo test, 2026-10-11
 
+Raw PGNs, search records and logs are in [evidence.zip](evidence.zip).
+Aggregate PGNs are reconstructed without duplicate storage; see the
+[archive guide](../ARCHIVES.md).
+
 All 1,200 games completed and passed validation. The game phase took **6.9
 minutes** with 16 native workers, or 7.2 minutes including summary generation
 and validation. The selector now displays **6 PLY (~1450 ELO)**.
@@ -53,8 +57,8 @@ Terminations were 1,050 checkmates, 132 threefold draws and 18 fifty-move draws.
 There were no time forfeits or move-limit draws.
 
 Raw data: [configuration.json](configuration.json), [summary.json](summary.json),
-[validation.json](validation.json), [games.jsonl](games.jsonl), [PGNs](ply6.pgn),
-[run.log](run.log), [job.json](job.json).
+[validation.json](validation.json), [games.jsonl (archive)](evidence.zip), [PGNs (archive)](evidence.zip),
+[run.log (archive)](evidence.zip), [job.json](job.json).
 
 ```sh
 PYTHONPATH=build/test-python python3 tools/depth_parity_test.py \

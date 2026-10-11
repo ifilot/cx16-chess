@@ -1,0 +1,145 @@
+{
+  "format_version": 1,
+  "original_committed_files": 21769,
+  "original_committed_bytes": 153821365,
+  "original_evidence_files": 21656,
+  "original_evidence_bytes": 152044211,
+  "archive_bytes": 33039266,
+  "archives": {
+    "difficulty-2026-10-10": {
+      "archive": "evidence.zip",
+      "sha256": "c9b55e4691bc3982a2c1aafb04f5b9b43f55b18e7caaf12fe91bb242a3ac91c5",
+      "archive_bytes": 110135,
+      "stored_files": 145,
+      "derived_files": 3,
+      "original_files": 148,
+      "original_bytes": 306601
+    },
+    "difficulty-2026-10-11": {
+      "archive": "evidence.zip",
+      "sha256": "a27ed70627badc604bb86b7bad2eb3aaba0bd22830f330358d87db4d6f72f57d",
+      "archive_bytes": 1751404,
+      "stored_files": 1202,
+      "derived_files": 3,
+      "original_files": 1205,
+      "original_bytes": 9314753
+    },
+    "fixed-depth-elo-2026-10-11": {
+      "archive": "evidence.zip",
+      "sha256": "ca537a1f59b9ca3c9e0c78b0627bd8d145093fcc84899b80ca5a0d72bc761020",
+      "archive_bytes": 267184,
+      "stored_files": 194,
+      "derived_files": 2,
+      "original_files": 196,
+      "original_bytes": 1430183
+    },
+    "native-depth-elo-2026-10-11": {
+      "archive": "evidence.zip",
+      "sha256": "63bf4f4f94b5b7e7c82311d14b10eb2968d23b3bf6bd865d01a41f380927ed5d",
+      "archive_bytes": 4075814,
+      "stored_files": 2402,
+      "derived_files": 2,
+      "original_files": 2404,
+      "original_bytes": 19159841
+    },
+    "native-depth1-elo-2026-10-11": {
+      "archive": "evidence.zip",
+      "sha256": "9cadaa8eba5268e228d90be594b76e7e9471670a42f7950126d45b8cd3e13875",
+      "archive_bytes": 1742448,
+      "stored_files": 1203,
+      "derived_files": 1,
+      "original_files": 1204,
+      "original_bytes": 8227775
+    },
+    "native-depth4-elo-2026-10-11": {
+      "archive": "evidence.zip",
+      "sha256": "4d40a49e1f4ba407a4fbb1c2868ce40d06d1f94d0b55c3080b146507287ca9e7",
+      "archive_bytes": 2074430,
+      "stored_files": 1202,
+      "derived_files": 1,
+      "original_files": 1203,
+      "original_bytes": 9651454
+    },
+    "native-depth5-elo-2026-10-11": {
+      "archive": "evidence.zip",
+      "sha256": "ea56eb354288e0d58431559e53b94ce53bc674e08edc338df61a12d01ec0022e",
+      "archive_bytes": 2159344,
+      "stored_files": 1202,
+      "derived_files": 1,
+      "original_files": 1203,
+      "original_bytes": 10014898
+    },
+    "native-depth6-elo-2026-10-11": {
+      "archive": "evidence.zip",
+      "sha256": "b07df24e088827c20f08e11af4e4c95e047a34e615aedd43e3449b3d8975bb94",
+      "archive_bytes": 2176038,
+      "stored_files": 1202,
+      "derived_files": 1,
+      "original_files": 1203,
+      "original_bytes": 10010137
+    },
+    "native-depth78-elo-2026-10-11": {
+      "archive": "evidence.zip",
+      "sha256": "0f71baa680e14c9c707befc82c2d4bb7238a97e658aad52083468793e476a3e9",
+      "archive_bytes": 4354923,
+      "stored_files": 2404,
+      "derived_files": 2,
+      "original_files": 2406,
+      "original_bytes": 19574817
+    },
+    "weak-calibration-2026-10-11/beginner-bracket": {
+      "archive": "evidence.zip",
+      "sha256": "32bbe51f1fb23b5a368f973f76a420ba763fabc910a3bf81533a91164c39444b",
+      "archive_bytes": 3192253,
+      "stored_files": 2401,
+      "derived_files": 1,
+      "original_files": 2402,
+      "original_bytes": 14187296
+    },
+    "weak-calibration-2026-10-11/confirmation": {
+      "archive": "evidence.zip",
+      "sha256": "f42685b87392ba7fb607cc1c21a80db853c1a88914075244cd476320e40e6957",
+      "archive_bytes": 6863469,
+      "stored_files": 4801,
+      "derived_files": 2,
+      "original_files": 4803,
+      "original_bytes": 31238160
+    },
+    "weak-calibration-2026-10-11/final-beginner-350": {
+      "archive": "evidence.zip",
+      "sha256": "20090763f197ed6b299a445853d5806bb77b7784772a3e1d157f215170c7eef4",
+      "archive_bytes": 1554665,
+      "stored_files": 1201,
+      "derived_files": 1,
+      "original_files": 1202,
+      "original_bytes": 6847344
+    },
+    "weak-calibration-2026-10-11/final-beginner": {
+      "archive": "evidence.zip",
+      "sha256": "e65989ffffd2c173e455cf4793043295773e1265bb243eb062069806d30fd2b2",
+      "archive_bytes": 1533456,
+      "stored_files": 1201,
+      "derived_files": 1,
+      "original_files": 1202,
+      "original_bytes": 6727591
+    },
+    "weak-calibration-2026-10-11/fine-pilot": {
+      "archive": "evidence.zip",
+      "sha256": "1639a09e54374d8f11cbb2d4580e2c94c1e734839f707cd5609c0217204710ed",
+      "archive_bytes": 594831,
+      "stored_files": 385,
+      "derived_files": 4,
+      "original_files": 389,
+      "original_bytes": 2797611
+    },
+    "weak-calibration-2026-10-11/pilot": {
+      "archive": "evidence.zip",
+      "sha256": "1dd3dbeb5be4dd27aa9d418ac67dc58f3fd70a7192fbbb17c90f8fec7e154588",
+      "archive_bytes": 588872,
+      "stored_files": 481,
+      "derived_files": 5,
+      "original_files": 486,
+      "original_bytes": 2555750
+    }
+  }
+}

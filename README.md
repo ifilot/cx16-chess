@@ -190,8 +190,8 @@ immediately. **SAVE PREFERENCES** in Options remembers both switches for the
 next launch; older preference files enable both by default.
 
 All audio loads into RAM at startup and ZSMKit services it in interrupts,
-including during long engine searches. The supplied runtime now includes
-`AUDIO.BIN`, eight `.ZSM` tracks, and `SFX.BIN`. Source assets and provenance
+including during long engine searches. The startup bundle `CHESS.BIN`
+contains the sound controller, eight music tracks, and sixteen effects. Source assets and provenance
 are documented in [assets/sound/README.md](assets/sound/README.md); ZSMKit's
 MIT license is included in [src/vendor/zsmkit/LICENSE](src/vendor/zsmkit/LICENSE).
 
@@ -252,8 +252,9 @@ make wac        # Win At Chess test suite at 10 s per position
 `make run` uses `../x16-emulator/build/x16emu` and the first ROM found in
 `../emulator/rom.bin` or `../emulator-win/rom.bin`; override with
 `make run EMU=... ROM=...`. For distribution, run `make dist` and extract `build/dist/CHESS.ZIP`.
-Keep all runtime files together: `CHESS.PRG`, `MENU.BIN`, `UI.BIN`,
-`DRAG.BIN`, `AUDIO.BIN`, `CHESS.DAT`, `SFX.BIN`, and the eight `.ZSM` tracks.
+Keep the four game files together: `CHESS.PRG`, `AUTOBOOT.X16`, `CHESS.BIN`,
+and `CHESS.DAT`. The release has six files in total, including `README.TXT`
+(with the audio library license) and `HASHES.TXT`.
 All distribution filenames follow 8.3. The ZIP excludes the
 headless engine, intermediate graphics, previews, symbols and test files.
 The build and ZIP also include `AUTOBOOT.X16`, a copy of the game with its
@@ -264,6 +265,13 @@ root to start Chess automatically on power-up or reset.
 All graphics `.DAT` files are generated from the checked-in bitmap artwork, fonts and
 Python generators; none are tracked by Git. Intermediate tiles and maps live
 in `build/graphics/`; `src/` contains just one runtime graphics container.
+
+`CHESS.BIN` is a headerless 200 KiB image of RAM banks 21–45: menu, dialog,
+board and sound code, plus every music track and sound effect. The packer
+checks bank boundaries and verifies every source byte; zero padding initializes
+banked state. One KERNAL LOAD fills the banks at startup, with no audio disk
+reads during play. The individual `.BIN` and `.ZSM` files remain development
+inputs and intermediate outputs and are excluded from the release.
 
 `CHESS.DAT` contains a 16-byte build identifier, twenty-four index entries (32-bit
 file offset and 16-bit length), and the original graphics bytes without VRAM
@@ -403,6 +411,11 @@ about 7 times faster than a real X16; times below are emulated X16 time.
 | `tools/x16uci.py` | the emulated X16 engine as a UCI engine |
 | `tools/screenshot.py` | boots the game, clicks and types, captures screenshots |
 
+Completed engine-test evidence is [indexed here](docs/engine/RESULTS.md).
+Raw games and search records are consolidated into verified per-run archives;
+[analysis and restoration instructions](docs/engine/ARCHIVES.md) preserve the
+original tool paths. New rating runs default to ignored `build/engine/` output.
+
 The [legacy time-capped difficulty test](docs/engine/difficulty-2026-10-11/RESULTS.md)
 played 400 games per level against local Stockfish 16 across 100 distinct opening
 positions. Estimates on Stockfish's UCI_Elo scale: Easy **1357**, Medium (Normal)
@@ -520,9 +533,9 @@ Earlier results with 10 s per move (October 2026, details and games in
   and serif masthead artwork are kept as approved PNG sources.
 * Start/setup artwork is split between both tile layers at native 640x480;
   each layer stays within its tile and VRAM budget. Menu code lives in RAM
-  bank 21 (`MENU.BIN`), along with SAN formatting; dialogs and persistence
-  live in bank 22 (`UI.BIN`); board drawing, input and sprite copying use bank 23
-  (`DRAG.BIN`), leaving main RAM for the engine and ZSMKit. Coordinate history
+  bank 21, along with SAN formatting; dialogs and persistence
+  live in bank 22; board drawing, input and sprite copying use bank 23
+  from the shared startup bundle, leaving main RAM for the engine and ZSMKit. Coordinate history
   uses bank 24; SAN still uses bank 19. Returning to
   play reloads the playing-field graphics without resetting the match.
   Startup loads only opening-screen assets; engine and board data wait until

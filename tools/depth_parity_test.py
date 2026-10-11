@@ -8,6 +8,8 @@ from multiprocessing.util import Finalize
 from pathlib import Path
 import time
 
+from engine_evidence import open_text
+
 import chess
 import chess.pgn
 
@@ -46,7 +48,7 @@ def cold(position):
 
 def warm(task):
     path, limit = task
-    with path.open() as stream:
+    with open_text(path) as stream:
         game = chess.pgn.read_game(stream)
     assert game is not None and not game.errors
     colour = chess.WHITE if game.headers['White'].startswith('CX16') else chess.BLACK

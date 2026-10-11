@@ -1,5 +1,9 @@
 # Fixed-depth 4-ply Elo test, 2026-10-11
 
+Raw PGNs, search records and logs are in [evidence.zip](evidence.zip).
+Aggregate PGNs are reconstructed without duplicate storage; see the
+[archive guide](../ARCHIVES.md).
+
 All 1,200 games completed successfully. The game phase took 5.7 minutes with
 16 native workers; summary generation and validation followed. The process
 exited with status 0.
@@ -45,8 +49,8 @@ threefold draws, 12 fifty-move draws and five insufficient-material draws.
 There were no time forfeits or move-limit draws.
 
 Raw data: [configuration.json](configuration.json), [summary.json](summary.json),
-[validation.json](validation.json), [games.jsonl](games.jsonl),
-[PGNs](ply4.pgn), [run.log](run.log). The shared opening suite and earlier
+[validation.json](validation.json), [games.jsonl (archive)](evidence.zip),
+[PGNs (archive)](evidence.zip), [run.log (archive)](evidence.zip). The shared opening suite and earlier
 results are in [the 2/3-ply run](../native-depth-elo-2026-10-11/RESULTS.md).
 
 ```sh

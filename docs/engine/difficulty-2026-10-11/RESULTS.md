@@ -1,5 +1,9 @@
 # Extended difficulty strength test — 2026-10-11
 
+Raw PGNs, search records and logs are in [evidence.zip](evidence.zip).
+Aggregate PGNs are reconstructed without duplicate storage; see the
+[archive guide](../ARCHIVES.md).
+
 The actual banked 65C02 engine played **1,200 games** against local Stockfish 16:
 **400 games per difficulty**, using **100 distinct opening positions**.
 The tournament took **2 hours 40 minutes** with 16 workers.
@@ -96,8 +100,8 @@ recorded with the tournament configuration.
 ## Artifacts and reproduction
 
 - [Summary and paired comparisons](summary.json), [configuration](configuration.json),
-  [opening suite](openings.json), [validation](validation.json), and [run log](run.log).
-- PGNs: [Easy](easy.pgn), [Normal](normal.pgn), [Hard](hard.pgn).
+  [opening suite](openings.json), [validation](validation.json), and [run log (archive)](evidence.zip).
+- PGNs: [Easy (archive)](evidence.zip), [Normal (archive)](evidence.zip), [Hard (archive)](evidence.zip).
 - `games.jsonl` contains per-game totals and each engine move's ply, budget,
   chosen move, depth, evaluation, node count, clock ticks and emulated elapsed time.
 - Runner: [tools/rate_difficulties.py](../../../tools/rate_difficulties.py).

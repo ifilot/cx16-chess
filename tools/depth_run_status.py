@@ -6,13 +6,14 @@ import json
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+from engine_evidence import records as evidence_records
+
 from rate_difficulties import rating
 
 
 def records(root):
     # A tournament can still be writing the final line of the checkpoint.
-    return [json.loads(line) for line in (root / 'games.jsonl').read_text().splitlines(keepends=True)
-            if line.endswith('\n')]
+    return list(evidence_records(root / 'games.jsonl', complete_lines=True))
 
 
 def stats(rows):

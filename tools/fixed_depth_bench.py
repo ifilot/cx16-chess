@@ -9,6 +9,8 @@ import random
 import statistics
 import time
 
+from engine_evidence import read_bytes, open_text
+
 import chess.pgn
 
 from depth_bench import POSITIONS
@@ -38,7 +40,7 @@ def measure(task):
 def sample_positions(pgn, count, seed):
     rng = random.Random(seed)
     games = []
-    with pgn.open() as stream:
+    with open_text(pgn) as stream:
         while (game := chess.pgn.read_game(stream)) is not None:
             if game.errors:
                 raise ValueError(game.errors)
@@ -103,7 +105,7 @@ def main():
             # Keep completed searches available even during a long depth-six run.
             progress.write(json.dumps(row) + '\n')
             progress.flush()
-    report = dict(pgn=str(args.pgn), pgn_sha256=hashlib.sha256(args.pgn.read_bytes()).hexdigest(),
+    report = dict(pgn=str(args.pgn), pgn_sha256=hashlib.sha256(read_bytes(args.pgn)).hexdigest(),
         engine_sha256=hashlib.sha256((ROOT / 'src/ENGINE.PRG').read_bytes()).hexdigest(),
         emulator_sha256=hashlib.sha256((ROOT.parent / 'x16-emulator/build/x16emu').read_bytes()).hexdigest(),
         cpu_hz=CPU_HZ,

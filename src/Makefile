@@ -14,10 +14,13 @@ BRIDGE_SRC=$(wildcard bridge/*.c)
 CORE_HDR=$(wildcard core/*.h)
 ENGINE_SRC=$(filter-out core/match.c,$(CORE_SRC))
 
-all: CHESS.PRG MENU.BIN UI.BIN DRAG.BIN AUDIO.BIN ENGINE.PRG AUTOBOOT.X16 $(SOUND_ASSETS)
+all: CHESS.PRG CHESS.BIN ENGINE.PRG AUTOBOOT.X16
 
 $(SOUND_ASSETS): %: ../assets/sound/%
 	cp $< $@
+
+CHESS.BIN: CHESS.PRG MENU.BIN UI.BIN DRAG.BIN AUDIO.BIN $(SOUND_ASSETS) ../tools/package_banks.py ../tools/runtime_files.py
+	$(PYTHON) ../tools/package_banks.py .
 
 # Memory playback needs no streaming buffers or disk work during search.
 vendor/zsmkit/zsmkit.o: $(wildcard vendor/zsmkit/*.s vendor/zsmkit/*.inc)

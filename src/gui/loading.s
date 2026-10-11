@@ -23,6 +23,12 @@ VERA_VIDEO = $9F29
 .endmacro
 
 boot_loading:
+        ; Disable an inherited KERNAL pointer before drawing/loading any art.
+        ; Do not install its default bitmap in our layer-1 tile memory.
+        lda #0
+        ldx #0
+        ldy #0
+        jsr $FF68
         stz VERA_CTRL
         lda VERA_VIDEO
         and #$0F

@@ -1,12 +1,12 @@
 .import zsm_init_engine, zsmkit_setisr, zsm_setmem, zsm_setloop, zsm_play, zsm_setatten
 .import _sound_ready, _sound_effects_enabled, _sound_dispatch
 .export _sound_engine_init, _sound_music, _sound_sfx, _sound_event, _sound_music_volume
-.export _sound_load_raw
+.export _bank_load_raw
 .export _sound_effects_volume
 .segment "CODE"
 
 ; KERNAL LOAD reports failure in carry, regardless of its returned address.
-_sound_load_raw:
+_bank_load_raw:
         tay
         lda $00
         pha

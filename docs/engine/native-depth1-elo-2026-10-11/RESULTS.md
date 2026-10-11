@@ -1,5 +1,9 @@
 # Fixed-depth 1-ply Elo test, 2026-10-11
 
+Raw PGNs, search records and logs are in [evidence.zip](evidence.zip).
+Aggregate PGNs are reconstructed without duplicate storage; see the
+[archive guide](../ARCHIVES.md).
+
 All 1,200 games completed and passed validation. The game phase took 4.9
 minutes with 16 native workers, followed by summary calculation and validation.
 The process exited with status 0.
@@ -28,7 +32,7 @@ Before launch, depth-1 searches, evaluations and perft counts matched the X16
 engine on all 11 standard parity positions. An additional 35 searches across
 two move sequences matched moves, scores, depths and node counts while
 retaining warm search tables and reversible history. Evidence is in
-[parity.log](parity.log) and [warm-parity.json](warm-parity.json). All engine
+[parity.log (archive)](evidence.zip) and [warm-parity.json](warm-parity.json). All engine
 and opponent binary hashes were checked before and after the run.
 
 Validation confirmed all 1,200 legal PGNs, complete game identities without
@@ -49,8 +53,8 @@ and therefore relies on extrapolating the assumed Elo score model. Statistical
 intervals cover game/opening sampling, not calibration error.
 
 Raw data: [configuration.json](configuration.json), [summary.json](summary.json),
-[validation.json](validation.json), [games.jsonl](games.jsonl),
-[PGNs](ply1.pgn), [run.log](run.log). Earlier results:
+[validation.json](validation.json), [games.jsonl (archive)](evidence.zip),
+[PGNs (archive)](evidence.zip), [run.log (archive)](evidence.zip). Earlier results:
 [2/3 ply](../native-depth-elo-2026-10-11/RESULTS.md) and
 [4 ply](../native-depth4-elo-2026-10-11/RESULTS.md).
 

@@ -3,6 +3,8 @@ import argparse
 import hashlib
 import json
 from pathlib import Path
+from engine_evidence import open_text, records
+
 import chess
 import chess.pgn
 from engine_bridge import EngineBridge
@@ -51,14 +53,14 @@ def main():
                     cases.append(dict(noise=noise, seed=19377, fen=board.fen(), warm_ply=ply, result=x16.last))
                     board.push(move)
             if args.run:
-                rows = [json.loads(line) for line in (args.run / 'games.jsonl').read_text().splitlines()]
+                rows = list(records(args.run / 'games.jsonl'))
                 for row in sorted((r for r in rows if r['number'] < 2), key=lambda r: (r['level'], r['opponent_elo'], r['number'])):
                     native.noise = x16.noise = row['noise']
                     native.seed = x16.seed = row['seed']
                     native.new_game()
                     x16.new_game()
                     path = args.run / 'games' / f'{row["level"]}-{row["opponent_elo"]}-{row["number"]:02d}.pgn'
-                    with path.open() as stream:
+                    with open_text(path) as stream:
                         game = chess.pgn.read_game(stream)
                     board = game.board()
                     trace = {entry['ply']: entry for entry in row['engine_moves']}

@@ -1,5 +1,9 @@
 # Fixed-depth 5-ply Elo test, 2026-10-11
 
+Raw PGNs, search records and logs are in [evidence.zip](evidence.zip).
+Aggregate PGNs are reconstructed without duplicate storage; see the
+[archive guide](../ARCHIVES.md).
+
 All 1,200 games completed and passed validation. The game phase took **6.4
 minutes** with 16 native workers; summary generation and validation brought
 the total to 6.7 minutes. The game selector now displays **5 PLY (~1400 ELO)**.
@@ -51,7 +55,7 @@ and five insufficient-material draws. There were no time forfeits or
 move-limit draws. Evidence: [validation.json](validation.json).
 
 Raw data: [configuration.json](configuration.json), [summary.json](summary.json),
-[games.jsonl](games.jsonl), [PGNs](ply5.pgn), [run.log](run.log),
+[games.jsonl (archive)](evidence.zip), [PGNs (archive)](evidence.zip), [run.log (archive)](evidence.zip),
 [job.json](job.json). Earlier results: [4 ply](../native-depth4-elo-2026-10-11/RESULTS.md)
 and [2/3 ply](../native-depth-elo-2026-10-11/RESULTS.md).
 

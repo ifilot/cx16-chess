@@ -56,7 +56,7 @@ def main():
             session.emu.advance(480)
             assert session.emu.read_memory(symbols['_sound_ready'])[0] == 1
             for name in SOUND_FILES:
-                data = (folder / name).read_bytes()
+                data = (ROOT / 'assets/sound' / name).read_bytes()
                 bank = 25 if name == 'SFX.BIN' else banks[name.split('.')[0]]
                 actual = b''.join(bytes(session.emu.read_memory(0, min(8192, len(data) - pos),
                     space='banked_ram', bank=bank + pos // 8192)) for pos in range(0, len(data), 8192))
@@ -122,8 +122,8 @@ def main():
 
             for name in SOUND_FILES:
                 if name.endswith('.ZSM'):
-                    verify(name, (folder / name).read_bytes(), '_sound_music', banks[name.split('.')[0]])
-            effects = (folder / 'SFX.BIN').read_bytes()
+                    verify(name, (ROOT / 'assets/sound' / name).read_bytes(), '_sound_music', banks[name.split('.')[0]])
+            effects = (ROOT / 'assets/sound/SFX.BIN').read_bytes()
             for name, offset in offsets.items():
                 verify(name, effects[offset:], '_sound_sfx', offset)
             # Restore the game and check that its live IRQ advances while a
@@ -142,10 +142,10 @@ def main():
             assert session.emu.read_memory(symbols['_match_think_depth'])[0] == 4
             session.emu.request('breakpoint', action='remove', address=symbols['_engine_search'], bank=0)
             previous = session.emu.read_memory(PSG, 48, space='vram')
-            session.emu.request('breakpoint', address=symbols['_cbm_k_load'], bank=0)
+            session.emu.request('breakpoint', address=symbols['_bank_load_raw'], bank=0)
             result = session.emu.advance(60)
             assert result['reason'] != 'breakpoint', 'Engine search streamed audio from disk'
-            session.emu.request('breakpoint', action='remove', address=symbols['_cbm_k_load'], bank=0)
+            session.emu.request('breakpoint', action='remove', address=symbols['_bank_load_raw'], bank=0)
             assert session.emu.read_memory(PSG, 48, space='vram') != previous
             session.emu.advance(600)
             assert int.from_bytes(session.emu.read_memory(symbols['_ply'], 2), 'little') == 1

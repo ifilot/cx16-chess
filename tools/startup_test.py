@@ -53,7 +53,7 @@ def main():
         check_cover()
         assert cover_ready - boot < 80_000, 'Initial loading cover takes more than 10ms at 8MHz'
         begin = stop_at('_main')
-        stop_at('_cbm_k_load')  # First disk read: DRAG.BIN, before font/menu assets.
+        stop_at('_bank_load_raw')  # First disk read: bundled code and audio.
         check_cover()
         opening = stop_at('_start_open', 21, check_loading=True)
         enabled_before_open = bool(session.emu.read_memory(0x9F29)[0] & 0x30)

@@ -116,7 +116,7 @@ assert np.array_equal(actual[232:288,248:304],colors[pawn]),'Pawn did not arrive
     await page.screenshot({path:path.join(captures,'website.png'),fullPage:true});
     await boot(page);
     const manifest=JSON.parse(fs.readFileSync(path.join(site,'game/manifest.json')));
-    assert.deepEqual(manifest.resources,['AUDIO.BIN','CHESS.DAT','CHESS.PRG','DRAG.BIN','DRAW.ZSM','GAME.ZSM','GAME2.ZSM','GAME3.ZSM','GAME4.ZSM','LOSE.ZSM','MENU.BIN','SFX.BIN','TITLE.ZSM','UI.BIN','WIN.ZSM']);
+    assert.deepEqual(manifest.resources,['CHESS.BIN','CHESS.DAT','CHESS.PRG']);
     const loaded=await page.evaluate(()=>FS.readdir('/'));
     for(const file of manifest.resources)assert(loaded.includes(file),`${file} missing from emulator filesystem`);
     await page.locator('#audio').click();

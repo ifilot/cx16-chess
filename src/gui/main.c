@@ -38,16 +38,12 @@
 
 static uint8_t mouse_buttons;
 
-/**
- * @brief Enable the KERNAL mouse driver for the 640x480 screen
- *
- * screen_mode with carry set returns the text size (80x60) in X/Y, which
- * mouse_config uses as the pointer range in 8 pixel units.
- */
+/** Enable the already loaded native pointer once the first menu is ready.
+ * Explicit bounds are independent of the inherited BASIC screen mode. */
 static void mouse_init(void) {
-    asm("sec");
-    asm("jsr $FF5F");
-    asm("lda #1");
+    asm("lda #$FF");               // preserve our custom sprite image
+    asm("ldx #80");
+    asm("ldy #60");
     asm("jsr $FF68");
 }
 
@@ -76,7 +72,6 @@ static void mouse_read(void) {
 void main(void) {
     uint8_t key, action, menu = 1, has_game = 0, release_mouse = 1, dialog = 0, initialized = 0;
 
-    mouse_init();
     if(!video_init()) {
         return;
     }
@@ -88,6 +83,7 @@ void main(void) {
      * Drain them before the first menu; later input remains untouched. */
     while(cbm_k_getin());
     if(!start_open(0)) return;
+    mouse_init();
 
     while(1) {
         wait_frame();

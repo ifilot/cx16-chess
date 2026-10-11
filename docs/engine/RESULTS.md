@@ -1,54 +1,55 @@
-# Engine test results
+# Engine evidence and current difficulty calibration
 
-The [difficulty comparison](difficulty-2026-10-10/RESULTS.md) tests Easy,
-Medium, and Hard separately in 144 games against local Stockfish 16, with
-clock-aware 2/10/20-second search caps. Point estimates are 1340, 1264, and
-1410 respectively, with broad uncertainty intervals. The fixed-budget
-results below are from the earlier test.
+The game uses the following approximate local Stockfish benchmark ratings,
+rounded to 50 Elo. These are not certified human or online ratings. X16 move
+times are measured sample averages at 8 MHz, not limits; complex positions can
+require substantially longer.
 
-All tests ran the real X16 program (`src/ENGINE.PRG`) in the AgentBridge
-emulator at 8 MHz, with **10 seconds per move** (emulated X16 time), on
-2026-10-10.
+| Game level | Search | Approximate Elo | Average X16 move | Calibration report |
+| --- | --- | ---: | ---: | --- |
+| Beginner | Weakened 1 ply, noise 350 | 800 | 0.4 s | [Final weak calibration](weak-calibration-2026-10-11/RESULTS.md) |
+| Easy | Weakened 1 ply, noise 50 | 1100 | 0.4 s | [Final weak calibration](weak-calibration-2026-10-11/RESULTS.md) |
+| Casual | 1 ply | 1200 | 0.4 s | [1-ply assessment](native-depth1-elo-2026-10-11/RESULTS.md) |
+| Medium | 2 ply | 1350 | 0.7 s | [2/3-ply assessment](native-depth-elo-2026-10-11/RESULTS.md) |
+| Challenging | 3 ply | 1400 | 1.5 s | [2/3-ply assessment](native-depth-elo-2026-10-11/RESULTS.md) |
+| Strong | 4 ply | 1450 | 4 s | [4-ply assessment](native-depth4-elo-2026-10-11/RESULTS.md) |
+| Deep | 6 ply | 1450 | 26 s | [6-ply assessment](native-depth6-elo-2026-10-11/RESULTS.md) |
+| Very Hard | 7 ply | 1600 | 60 s | [7/8-ply assessment](native-depth78-elo-2026-10-11/RESULTS.md) |
+| Analysis | 8 ply | 1750 | 204 s | [7/8-ply assessment](native-depth78-elo-2026-10-11/RESULTS.md) |
 
-## Matches against Stockfish 16
+Each regular depth and final weakened preset has 1,200 assessment games.
+The reports retain exact estimates, uncertainty intervals, test conditions,
+paired comparisons, and native/X16 parity evidence. The earlier weak-engine
+candidates and pilot runs are preserved within the calibration directory.
+Five ply remains playable in legacy saves but is omitted from the game ladder:
+the [5-ply assessment](native-depth5-elo-2026-10-11/RESULTS.md) showed no measured
+improvement over 3 ply. Search depth is not a guarantee of increasing strength.
 
-Stockfish played with `UCI_LimitStrength` (0.1 s per move). Each opening
-of `tools/match.py` was played with both colours. The games are in this
-directory.
+## Timing and implementation evidence
 
-| Opponent | Games | Score | Rating estimate |
-| --- | --- | --- | --- |
-| Stockfish UCI_Elo 1320 | 48 | 31 = 65% | 1424 |
-| Stockfish UCI_Elo 1500 | 48 | 15.5 = 32% | 1371 |
+- [Fixed-depth X16 waiting-time measurements](fixed-depth-2026-10-11/RESULTS.md).
+- [7/8-ply timing samples and long-search observations](native-depth78-elo-2026-10-11/RESULTS.md).
+- [Emulator performance and worker measurements](emulator-performance-2026-10-11/RESULTS.md).
 
-Estimated strength: **about 1400** on Stockfish's UCI_Elo scale.
+## Historical experiments
 
-## Quality of the moves
+These reports record earlier engine settings and sample sizes. Their original
+measurements are preserved; descriptions of then-available game levels should
+be read in that historical context.
 
-Every move of the 96 games analysed by Stockfish 16 at depth 12
-(`tools/review_games.py --local`). Centipawn loss is how much worse a move
-is than the best one; positions beyond 10 pawns are clipped.
+- [Original timed matches, move-quality review, and tactical tests](LEGACY.md).
+- [First time-capped difficulty sample](difficulty-2026-10-10/RESULTS.md).
+- [Extended time-capped comparison](difficulty-2026-10-11/RESULTS.md).
+- [Initial fixed-depth emulator probe](fixed-depth-elo-2026-10-11/RESULTS.md).
+- [Earlier weak-engine candidate](weak-calibration-2026-10-11/candidate-300-results.md).
 
-| Games against | Moves | Average loss | Same move as Stockfish | Blunders (>= 3 pawns) | Mistakes (1-3) |
-| --- | --- | --- | --- | --- | --- |
-| Stockfish 1320 | 2164 | 45 cp | 37% | 60 | 220 |
-| Stockfish 1500 | 2239 | 53 cp | 37% | 75 | 273 |
+## Raw evidence
 
-A spot check of earlier games with online engines (Lichess cloud
-evaluation and chess-api.com, `tools/review_games.py` without `--local`)
-gave similar numbers.
+Completed game records, individual PGNs, and run logs are bundled per run in
+`evidence.zip`. Reports, summaries, configurations, opening suites, and audits
+remain directly readable. Aggregate PGNs are reconstructed exactly from the
+individual archived games, avoiding duplicate game storage.
 
-## Test suite
-
-Win At Chess (300 tactical positions, `tests/epd/wac.epd`): **187 solved**
-at 10 s per position. Details in `wac_10s.txt`.
-
-## Search depth
-
-| Position | 5 s | 10 s | 30 s |
-| --- | --- | --- | --- |
-| Openings, middlegames | 3-4 | 4-5 | 5-6 |
-| Endgames | 4-9 | 5-11 | 7-15 |
-
-(Plies of the main search; captures are searched beyond it and checks are
-extended.) Speed is 400-1200 nodes per second.
+See the [archive guide](ARCHIVES.md) for verification, replay, restoration,
+and recording new experiments. Consolidation changes storage only: every
+original evidence byte and all reported results are retained.

@@ -26,6 +26,7 @@ from pathlib import Path
 
 import chess
 import chess.pgn
+from engine_evidence import open_text
 
 ROOT = Path(__file__).resolve().parents[1]
 CACHE = ROOT / 'build/online_cache.json'
@@ -128,7 +129,7 @@ def main():
     cache = load_cache()
     # fetch all needed evaluations first, a few requests at a time
     fens = set()
-    with open(args.pgn) as f:
+    with open_text(args.pgn) as f:
         for gi in range(args.games):
             game = chess.pgn.read_game(f)
             if game is None:
@@ -148,7 +149,7 @@ def main():
             list(pool.map(lambda fen: evaluate(fen, cache, args.depth), sorted(fens)))
     losses, sources = [], {}
     blunders = mistakes = inaccuracies = best = 0
-    with open(args.pgn) as f:
+    with open_text(args.pgn) as f:
         for gi in range(args.games):
             game = chess.pgn.read_game(f)
             if game is None:

@@ -1,5 +1,9 @@
 # Difficulty strength test — 2026-10-10
 
+Raw PGNs, search records and logs are in [evidence.zip](evidence.zip).
+Aggregate PGNs are reconstructed without duplicate storage; see the
+[archive guide](../ARCHIVES.md).
+
 The real `src/ENGINE.PRG` played **144 games** against the locally installed
 **Stockfish 16**: 48 games for each difficulty. Hard had the highest point
 estimate. Medium (called `normal` internally) scored below Easy in this sample;
@@ -83,9 +87,9 @@ Long games can reduce the budget below the difficulty cap as the clock runs down
 
 ## Artifacts and reproduction
 
-- Games: [Easy](easy.pgn), [Medium](normal.pgn), [Hard](hard.pgn).
+- Games: [Easy (archive)](evidence.zip), [Medium (archive)](evidence.zip), [Hard (archive)](evidence.zip).
 - [Summary and paired comparisons](summary.json), [configuration and engine
-  SHA-256](configuration.json), [per-game statistics](games.jsonl).
+  SHA-256](configuration.json), [per-game statistics (archive)](evidence.zip).
 - Runner: [tools/rate_difficulties.py](../../../tools/rate_difficulties.py).
 
 With Python, `python-chess`, the X16 AgentBridge emulator, and local Stockfish

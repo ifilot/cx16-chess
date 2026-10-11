@@ -13,15 +13,10 @@ void sound_engine_init(void);
 void __fastcall__ sound_music(uint8_t bank);
 void __fastcall__ sound_music_volume(uint8_t attenuation);
 void __fastcall__ sound_effects_volume(uint8_t attenuation);
-uint8_t __fastcall__ sound_load_file(const char* name, uint8_t bank);
 
 static uint8_t sound_scene, sound_track, next_track, result_played;
 static uint16_t previous_clock;
 static const uint8_t tracks[] = {MUSIC_GAME_BANK, MUSIC_GAME2_BANK, MUSIC_GAME3_BANK, MUSIC_GAME4_BANK};
-static const uint8_t banks[] = {25, MUSIC_TITLE_BANK, MUSIC_GAME_BANK, MUSIC_GAME2_BANK,
-    MUSIC_GAME3_BANK, MUSIC_GAME4_BANK, MUSIC_WIN_BANK, MUSIC_LOSE_BANK, MUSIC_DRAW_BANK};
-static const char* const files[] = {SFX_BANK_FILE, MUSIC_TITLE_FILE, MUSIC_GAME_FILE,
-    MUSIC_GAME2_FILE, MUSIC_GAME3_FILE, MUSIC_GAME4_FILE, MUSIC_WIN_FILE, MUSIC_LOSE_FILE, MUSIC_DRAW_FILE};
 
 static void result(void) {
     uint8_t bank = MUSIC_DRAW_BANK, winner;
@@ -36,15 +31,11 @@ static void result(void) {
 }
 
 void __fastcall__ sound_dispatch(uint8_t event) {
-    uint8_t index;
     if(event == SOUND_INIT) {
         sound_scene = 0xFF;
         sound_track = next_track = result_played = 0;
         sound_music_enabled = sound_effects_enabled = 1;
         previous_clock = 0;
-        for(index = 0; index < 9; index++) {
-            if(!sound_load_file(files[index], banks[index])) return;
-        }
         sound_engine_init();
         sound_ready = 1;
     } else if(event == SOUND_MENU) {

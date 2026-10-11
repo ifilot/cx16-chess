@@ -3,6 +3,8 @@ import argparse
 import json
 from pathlib import Path
 
+from engine_evidence import records
+
 from rate_difficulties import paired_comparisons
 from validate_difficulty_run import validate
 
@@ -18,7 +20,7 @@ def compare(runs, already_validated=False, compatibility_reports=()):
         assert proof['x16_engine_sha256'] == source['engine_sha256']
         proofs.append(proof)
     baseline = None
-    records, levels, summaries, noises = [], {}, {}, {}
+    game_records, levels, summaries, noises = [], {}, {}, {}
     # Preserve pairing only when the actual opening list and test conditions
     # match. Different engine builds or opponent time controls are not pooled.
     keys = ('backend', 'native_engine_sha256', 'engine_sha256', 'stockfish_sha256',
@@ -48,12 +50,12 @@ def compare(runs, already_validated=False, compatibility_reports=()):
         levels.update(config['levels'])
         noises.update(config.get('noise_by_level', {}))
         summaries.update(json.loads((root / 'summary.json').read_text())['summaries'])
-        records.extend(json.loads(line) for line in (root / 'games.jsonl').read_text().splitlines())
+        game_records.extend(records(root / 'games.jsonl'))
     levels = dict(sorted(levels.items(), key=lambda pair: pair[1]))
-    return dict(source_runs=[str(root) for root in runs], games=len(records),
+    return dict(source_runs=[str(root) for root in runs], games=len(game_records),
                 engine_compatibility_reports=[str(path) for path in compatibility_reports],
                 levels=levels, noise_by_level=noises, summaries=summaries,
-                paired_comparisons=paired_comparisons(records, baseline['opponents'], levels))
+                paired_comparisons=paired_comparisons(game_records, baseline['opponents'], levels))
 
 
 def main():

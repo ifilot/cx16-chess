@@ -1,5 +1,9 @@
 # Experimental 7/8-ply exploration, 2026-10-11
 
+Raw PGNs, search records and logs are in [evidence.zip](evidence.zip).
+Aggregate PGNs are reconstructed without duplicate storage; see the
+[archive guide](../ARCHIVES.md).
+
 All **2,400 games** completed: 1,200 per depth, with 16 native workers. The
 game phase took **26.3 minutes**; summary generation and validation brought
 the total to 27.0 minutes. These depths are available in the test harness;
@@ -114,8 +118,8 @@ each setting rather than choosing even depths solely on parity.
 [Configuration](configuration.json), [summary](summary.json),
 [paired comparisons](comparisons.json), [validation](validation.json),
 [7-ply parity](parity7.json), [8-ply parity](parity8.json),
-[7-ply PGNs](ply7.pgn), [8-ply PGNs](ply8.pgn),
-[game records](games.jsonl), [run log](run.log).
+[7-ply PGNs (archive)](evidence.zip), [8-ply PGNs (archive)](evidence.zip),
+[game records (archive)](evidence.zip), [run log (archive)](evidence.zip).
 
 ```sh
 PYTHONPATH=build/test-python python3 tools/depth_parity_test.py \

@@ -35,6 +35,7 @@
 #define SQUARE_TABLE    ((const uint16_t*)0xA000)   // SQTILES.DAT in GUI_BANK
 
 static uint8_t game_tables_loaded;
+uint8_t __fastcall__ bank_load_raw(uint8_t bank);
 void playfield_drag_init(void);         // called with RAM bank 23 selected
 
 /**
@@ -75,22 +76,15 @@ uint8_t video_init(void) {
 
     sprite_setup(SPRITE_POINTER, VRAM_POINTER, 0, 0x50);   // hide KERNAL pointer
 
-    /* Load banked loader/menu code before reading the graphics container. */
+    /* One headerless image fills banks 21–45, including code and audio.
+     * KERNAL LOAD advances the RAM bank whenever it reaches $C000. */
+    cbm_k_setnam("CHESS.BIN");
+    cbm_k_setlfs(0, 8, 2);
+    ok = bank_load_raw(21);
+    if(!ok) { RAM_BANK = saved; return 0; }
     RAM_BANK = 23;
-    cbm_k_setnam("DRAG.BIN");
-    cbm_k_setlfs(0, 8, 2);
-    ok = cbm_k_load(0, 0xA000) != 0;
-    if(!ok) { RAM_BANK = saved; return 0; }
     playfield_drag_init();
-    RAM_BANK = 22;
-    cbm_k_setnam("UI.BIN");
-    cbm_k_setlfs(0, 8, 2);
-    ok = cbm_k_load(0, 0xA000) != 0;
-    if(!ok) { RAM_BANK = saved; return 0; }
     RAM_BANK = 21;
-    cbm_k_setnam("MENU.BIN");
-    cbm_k_setlfs(0, 8, 2);
-    ok = cbm_k_load(0, 0xA000) != 0;
     if(ok) ok = load_shared();
     RAM_BANK = saved;
     if(!ok) return 0;

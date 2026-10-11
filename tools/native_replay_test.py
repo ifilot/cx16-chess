@@ -4,6 +4,8 @@ import hashlib
 import json
 from pathlib import Path
 
+from engine_evidence import open_text, records
+
 import chess.pgn
 
 from rate_difficulties import NativeEngine, ROOT
@@ -20,13 +22,13 @@ def main():
     assert config['search_mode'] == 'depth'
     current_hash = hashlib.sha256((ROOT / 'src/ENGINE.PRG').read_bytes()).hexdigest()
     assert args.allow_new_engine or config['engine_sha256'] == current_hash
-    rows = [json.loads(line) for line in (args.run / 'games.jsonl').read_text().splitlines()]
+    rows = list(records(args.run / 'games.jsonl'))
     engine = NativeEngine(str(args.native_engine.resolve()))
     searches, differences = 0, []
     try:
         for index, row in enumerate(rows):
             path = args.run / 'games' / f'{row["level"]}-{row["opponent_elo"]}-{row["number"]:02d}.pgn'
-            with path.open() as stream:
+            with open_text(path) as stream:
                 game = chess.pgn.read_game(stream)
             assert game is not None and not game.errors
             board = game.board()

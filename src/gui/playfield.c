@@ -708,11 +708,12 @@ static void drag_image(uint8_t piece) {
 }
 void playfield_drag_mouse(uint16_t x, uint16_t y, uint8_t buttons) {
     uint8_t pressed = (buttons & 1) && !(last_buttons & 1);
+    uint8_t moved = x != last_x || y != last_y;
     uint8_t inside = x >= BOARD_X && x < BOARD_X + BOARD_PIXELS &&
                      y >= BOARD_Y && y < BOARD_Y + BOARD_PIXELS;
     uint8_t sq;
 
-    if(x != last_x || y != last_y) {
+    if(moved || pressed) {
         if(cursor_visible) {
             cursor_visible = 0;
             update_cursor();
@@ -722,9 +723,12 @@ void playfield_drag_mouse(uint16_t x, uint16_t y, uint8_t buttons) {
     }
     last_buttons = buttons;
     if(inside) {
-        cursor_col = (x - BOARD_X) / SQUARE;
-        cursor_row = (y - BOARD_Y) / SQUARE;
-        sq = square_at(cursor_col, cursor_row);
+        /* Stationary mouse polling must not overwrite keyboard navigation. */
+        if(moved || pressed) {
+            cursor_col = (x - BOARD_X) / SQUARE;
+            cursor_row = (y - BOARD_Y) / SQUARE;
+        }
+        sq = square_at((x - BOARD_X) / SQUARE, (y - BOARD_Y) / SQUARE);
     }
     if(dragging) {
         if(buttons & 1) {

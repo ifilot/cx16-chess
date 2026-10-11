@@ -4,6 +4,8 @@ import hashlib
 import json
 from pathlib import Path
 from statistics import mean
+from engine_evidence import records as evidence_records
+
 from validate_difficulty_run import validate
 
 from compare_depth_runs import compare
@@ -21,7 +23,7 @@ def main():
     (root / 'comparisons.json').write_text(json.dumps(report, indent=2) + '\n')
     selection = json.loads((root / 'profile-selection.json').read_text())
     assert selection['max_beginner_opening_pair_observed'] < min(selection['final_holdout_opening_pairs'])
-    records = [json.loads(line) for run in runs for line in (run / 'games.jsonl').read_text().splitlines()]
+    records = [row for run in runs for row in evidence_records(run / 'games.jsonl')]
     levels = {f'noise{p["noise"]}': p['depth'] for p in selection['profiles'].values()}
     holdout = [r for r in records if r['level'] in levels and r['opening_pair'] in selection['final_holdout_opening_pairs']]
     assert len(holdout) == 2400

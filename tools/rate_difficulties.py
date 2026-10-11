@@ -385,7 +385,9 @@ def main():
         openings = openings[:args.games_per_opponent // 2]
     elif args.games_per_opponent // 2 > len(OPENINGS):
         parser.error('Extended runs require --openings to avoid repeating the fixed opening list')
-    args.out = args.out or ROOT / 'docs/engine' / ('difficulty-' + args.date)
+    args.out = args.out or ROOT / 'build/engine' / ('difficulty-' + args.date)
+    if (args.out / 'evidence.zip').exists():
+        parser.error('This run is archived; choose a new --out directory for testing')
     sf = LocalStockfish(args.stockfish)
     try:
         low, high = sf.elo_limits

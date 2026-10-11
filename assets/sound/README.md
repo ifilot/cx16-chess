@@ -22,3 +22,6 @@ Bank 23 remains the board/menu helper bank. No audio file is opened during play.
 `python3 tools/audio_test.py` checks every loaded byte, compares actual PSG
 registers with the decoded assets through complete tracks/loops and all effects,
 and checks playback while the engine searches.
+
+The game build packs these source tracks and effects, together with banked
+code, into `CHESS.BIN`. Releases do not need the individual audio files.

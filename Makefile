@@ -31,10 +31,12 @@ demo: all
 test:
 	$(MAKE) -C tests
 	python3 tests/graphics_test.py
+	python3 tests/evidence_test.py
 
 test-ui: all
 	python3 tools/startup_test.py
 	python3 tools/startup_input_test.py
+	python3 tools/input_test.py
 	python3 tools/transitions_test.py
 	python3 tools/ui_test.py
 	python3 tools/drag_test.py
