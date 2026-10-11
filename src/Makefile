@@ -12,10 +12,10 @@ BRIDGE_SRC=$(wildcard bridge/*.c)
 CORE_HDR=$(wildcard core/*.h)
 ENGINE_SRC=$(filter-out core/match.c,$(CORE_SRC))
 
-all: CHESS.PRG MENU.BIN ENGINE.PRG
+all: CHESS.PRG MENU.BIN UI.BIN ENGINE.PRG
 
 # the game: core + graphical front end (C stack in golden RAM, gui/stack.s)
-CHESS.PRG MENU.BIN &: $(CORE_SRC) $(GUI_SRC) $(CORE_HDR) $(wildcard gui/*.h) chess.cfg $(GFX_ASSETS) strings.h
+CHESS.PRG MENU.BIN UI.BIN &: $(CORE_SRC) $(GUI_SRC) $(CORE_HDR) $(wildcard gui/*.h) chess.cfg $(GFX_ASSETS) strings.h build_info.h
 	$(CC) $(CFLAGS) --asm-include-dir . -DNO_TEST_HOOKS -o CHESS.PRG -m CHESS.map -Ln CHESS.sym $(LDFLAGS) -Wl -D,__STACKSIZE__=0 \
 		$(CORE_SRC) $(GUI_SRC)
 
@@ -33,10 +33,13 @@ $(GFX_ASSETS) &: ../tools/package_graphics.py $(SCRIPTS)/build_graphics.py $(SCR
 	$(PYTHON) $(SCRIPTS)/build_graphics.py ../build/graphics
 	$(PYTHON) ../tools/package_graphics.py ../build/graphics .
 
+build_info.h: ../VERSION ../tools/build_info.py Makefile chess.cfg $(GFX_ASSETS) strings.h $(CORE_SRC) $(GUI_SRC) $(CORE_HDR) $(wildcard gui/*.h)
+	$(PYTHON) ../tools/build_info.py $@
+
 strings.h: $(SCRIPTS)/build_strings.py
 	$(PYTHON) $(SCRIPTS)/build_strings.py strings.h
 
 clean:
-	rm -f core/*.o gui/*.o bridge/*.o *.DAT *.PRG *.BIN *.menu *.map *.sym gfx.h assets.h assets.inc strings.h playfield*.png splash.png setup.png
+	rm -f core/*.o gui/*.o bridge/*.o CHESS.DAT *.PRG *.BIN *.menu *.map *.sym gfx.h assets.h assets.inc strings.h build_info.h playfield*.png splash.png setup.png
 
 .PHONY: all clean

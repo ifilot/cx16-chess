@@ -7,7 +7,7 @@
         .repeat 26, letter
             .charmap $41+letter, $41+letter ; filenames/commands use ASCII
         .endrepeat
-        .export _asset_prepare, _asset_read, _asset_stream
+        .export _asset_prepare, _asset_read, _asset_stream, _asset_close
         .export asset_abort, asset_remaining, asset_count, asset_slot, asset_opened
         .export asset_stamp, asset_command, asset_address
 
@@ -22,6 +22,23 @@ asset_stamp: .res 16
 asset_command: .res 6
 
 .segment "CODE"
+_asset_close:
+        lda asset_opened
+        beq close_done
+        lda $01
+        pha
+        stz $01
+        jsr $FFCC
+        lda #2
+        jsr $FFC3
+        lda #15
+        jsr $FFC3
+        stz asset_opened
+        pla
+        sta $01
+close_done:
+        rts
+
 ; __fastcall__: destination address in A/X; byte count supplied by prepare.
 _asset_read:
         sta asset_address

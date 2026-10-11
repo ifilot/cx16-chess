@@ -8,9 +8,8 @@ import subprocess
 from package_graphics import ROOT
 
 
-def main():
-    folder = ROOT / 'build/dist/CHESS'
-    image = ROOT / 'build/dist/CHESS.IMG'
+def create_sdcard(folder, image):
+    folder, image = Path(folder), Path(image)
     sectors, start = 131072, 2048  # 64 MiB card, partition starts at 1 MiB
     mbr = bytearray(512)
     mbr[446:462] = struct.pack('<B3sB3sII', 0, b'\xfe\xff\xff', 0x0c,
@@ -23,6 +22,10 @@ def main():
     subprocess.run(['mcopy', '-i', str(image) + '@@' + str(start * 512),
                     *(str(path) for path in sorted(folder.iterdir())), '::'], check=True)
     print(f'SD image: {image}')
+
+
+def main():
+    create_sdcard(ROOT / 'build/dist/CHESS', ROOT / 'build/dist/CHESS.IMG')
 
 
 if __name__ == '__main__':

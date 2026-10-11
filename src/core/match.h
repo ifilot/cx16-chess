@@ -54,12 +54,15 @@
 #define COMPUTER_NONE           0
 #define COMPUTER_WHITE          1
 #define COMPUTER_BLACK          2
+#define COMPUTER_BOTH           3
 
 extern uint8_t match_state;
 extern uint8_t match_result;
 extern uint8_t match_computer;
 /* CPU difficulty: 0 easy, 1 normal, 2 hard; applied to computer moves. */
 extern uint8_t match_difficulty;
+/* Black's independent difficulty in computer-versus-computer mode. */
+extern uint8_t match_black_difficulty;
 /* Search budget and starting jiffy, for the thinking indicator. */
 extern uint16_t match_think_start, match_think_budget;
 extern uint16_t match_clock[2];         // seconds left, [0] white, [1] black
@@ -123,5 +126,9 @@ void match_analyse(void (*poll)(void));
  * @brief Copy the SAN of a played half move (0 = white's first) into buf
  */
 void match_san(uint16_t half_move, char* buf);
+
+void match_move_at(uint16_t index, move_t* move);
+uint8_t match_clock_fraction(void);
+void match_restore_fraction(uint8_t value);
 
 #endif // _MATCH_H

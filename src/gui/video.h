@@ -49,6 +49,7 @@ uint8_t video_init(void);
 void video_present(void);
 uint8_t video_show_start(void);
 uint8_t video_show_setup(void);
+uint8_t video_show_about(void);
 uint8_t video_show_game(void);
 uint8_t video_show_options(void);
 uint8_t video_load_piece_set(void);

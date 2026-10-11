@@ -79,6 +79,38 @@ void rules_new_game(void) {
     king_sq[1] = SQ(4, 7);
 }
 
+#if defined(__CC65__) && defined(NO_TEST_HOOKS)
+#pragma code-name (push, "UICODE")
+#endif
+void rules_capture(rules_position_t* position) {
+    memcpy(position->board, board, 128);
+    position->side = side;
+    position->castling = castling;
+    position->ep_square = ep_square;
+    position->halfmove_clock = halfmove_clock;
+    position->ply = ply;
+}
+
+void rules_restore(const rules_position_t* position) {
+    uint8_t square;
+    memcpy(board, position->board, 128);
+    side = position->side;
+    castling = position->castling;
+    ep_square = position->ep_square;
+    halfmove_clock = position->halfmove_clock;
+    ply = position->ply;
+    history_len = 0;
+    for(square = 0; square < 128; square++) {
+        if(!OFFBOARD(square) && TYPE(board[square]) == KING)
+            king_sq[COLOR(board[square]) >> 3] = square;
+    }
+    rules_generate_legal();
+}
+
+#if defined(__CC65__) && defined(NO_TEST_HOOKS)
+#pragma code-name (pop)
+#endif
+
 #ifndef NO_TEST_HOOKS
 /**
  * @brief Set up a position from FEN; returns 0 on malformed input
@@ -456,6 +488,9 @@ uint8_t rules_generate_legal(void) {
  *
  * Overwrites legal_moves (see rules_san).
  */
+#if defined(__CC65__) && defined(NO_TEST_HOOKS)
+#pragma code-name (push, "MENUCODE")
+#endif
 static uint8_t has_legal_move(void) {
     uint8_t i, n, ok;
 
@@ -473,7 +508,11 @@ static const char piece_letters[] = " PNBRQK";
 /**
  * @brief Write the SAN of a legal move into buf (8 bytes)
  */
+#if defined(__CC65__) && defined(NO_TEST_HOOKS)
+static void banked_san(const move_t* m, char* buf) {
+#else
 void rules_san(const move_t* m, char* buf) {
+#endif
     uint8_t piece = board[m->from];
     uint8_t type = TYPE(piece);
     uint8_t i, ambiguous = 0, same_file = 0, same_rank = 0;
@@ -525,6 +564,16 @@ void rules_san(const move_t* m, char* buf) {
     rules_unmake();
     *p = 0;
 }
+
+#if defined(__CC65__) && defined(NO_TEST_HOOKS)
+#pragma code-name (pop)
+void rules_san(const move_t* m, char* buf) {
+    uint8_t saved = *(uint8_t*)0;
+    *(uint8_t*)0 = 21;
+    banked_san(m, buf);
+    *(uint8_t*)0 = saved;
+}
+#endif
 
 /**
  * @brief Neither side can possibly mate (K v K, K+minor v K)

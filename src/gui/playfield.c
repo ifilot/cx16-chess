@@ -28,6 +28,7 @@
  */
 
 #include <ascii_charmap.h>
+#include <cbm.h>
 #pragma static-locals (on)
 #include <string.h>
 #include <time.h>
@@ -61,9 +62,9 @@
 
 static uint8_t input_phase;
 uint8_t playfield_new_requested;
-static uint8_t flipped;                 // black at the bottom
+uint8_t playfield_flipped;           // black at the bottom
 uint8_t playfield_theme = THEME_NEWSPRINT;
-static uint8_t info = 1;                 // score sheet shown
+uint8_t playfield_info = 1;          // score sheet shown
 static uint16_t thinking_frame;
 static uint8_t thinking;                // the engine is busy
 static uint8_t selected;                // square of the selected piece
@@ -86,7 +87,7 @@ static char buf[24];
  *****************************************************************************/
 
 static uint8_t square_at(uint8_t col, uint8_t row) {
-    return flipped ? SQ(7 - col, row) : SQ(col, 7 - row);
+    return playfield_flipped ? SQ(7 - col, row) : SQ(col, 7 - row);
 }
 
 /**
@@ -124,8 +125,8 @@ static void board_refresh(void) {
             }
 
             idx = (r << 3) | f;
-            col = flipped ? 7 - f : f;
-            row = flipped ? r : 7 - r;
+            col = playfield_flipped ? 7 - f : f;
+            row = playfield_flipped ? r : 7 - r;
             if(state != drawn_state[idx]) {
                 drawn_state[idx] = state;
                 // a1 is a dark square; per theme the table holds light squares first
@@ -155,12 +156,12 @@ static void draw_labels(void) {
 
     buf[1] = 0;
     for(i=0; i<8; i++) {
-        buf[0] = '1' + (flipped ? i : 7 - i);
+        buf[0] = '1' + (playfield_flipped ? i : 7 - i);
         row = SQ_ROW + i * 7 + 3;
         video_text(RANK_LABEL_COL_LEFT, row, buf, COL_INK);
     }
     for(i=0; i<8; i++) {
-        video_tile(SQ_COL + i * 7 + 3, 58, L1_FILES + (flipped ? 7 - i : i), COL_INK);
+        video_tile(SQ_COL + i * 7 + 3, 58, L1_FILES + (playfield_flipped ? 7 - i : i), COL_INK);
     }
 }
 
@@ -267,7 +268,7 @@ static void draw_analysis(void) {
 
 /** Compact clocks following WHITE / BLACK on a single text line. */
 static void draw_clocks(void) {
-    uint8_t top = flipped ? WHITE : BLACK;
+    uint8_t top = playfield_flipped ? WHITE : BLACK;
     uint8_t color, row, active;
 
     for(color=WHITE; ; color=BLACK) {
@@ -314,7 +315,7 @@ static void draw_moves(void) {
     uint8_t k, row, column;
     char san[8];
 
-    if(!info) return;
+    if(!playfield_info) return;
     first = ply / 2 >= MOVE_ROWS ? ply / 2 - MOVE_ROWS + 1 : 0;
     for(k=0; k<MOVE_ROWS; k++) {
         row = MOVES_ROW + k * 2;
@@ -341,7 +342,7 @@ static void draw_moves(void) {
  * @brief Show or hide the score sheet while keeping clocks visible
  */
 static void set_info(uint8_t on) {
-    info = on;
+    playfield_info = on;
     video_show_info(on);
     video_clear_block(61, MOVES_ROW, 19, MOVE_ROWS * 2);
     draw_clocks();
@@ -358,7 +359,7 @@ static void refresh_all(void) {
     draw_turn();
     draw_analysis();
     draw_clocks();
-    if(info) draw_moves();
+    if(playfield_info) draw_moves();
 }
 
 /*****************************************************************************
@@ -441,6 +442,21 @@ static void activate(uint8_t sq) {
 /**
  * @brief Run the engine (for its own move or an analysis)
  */
+/* Let a demo finish its current search early when Escape is pressed. */
+extern uint8_t search_aborted;
+uint8_t playfield_pending_key;
+static void demo_poll(void) {
+    uint8_t key;
+    playfield_tick();
+    if(match_computer == COMPUTER_BOTH) {
+        key = cbm_k_getin();
+        if(key == KEY_ESCAPE) {
+            playfield_pending_key = key;
+            search_aborted = 1;
+        }
+    }
+}
+
 static void engine_turn(uint8_t analyse) {
     thinking = 1;
     thinking_frame = 0xFFFF;
@@ -452,18 +468,18 @@ static void engine_turn(uint8_t analyse) {
     if(analyse) {
         match_analyse(playfield_tick);
     } else {
-        match_computer_move(playfield_tick);
+        match_computer_move(demo_poll);
     }
     thinking = 0;
     refresh_all();
 }
 
 static void flip_board(void) {
-    flipped ^= 1;
+    playfield_flipped ^= 1;
     cursor_col = 7 - cursor_col;
     cursor_row = 7 - cursor_row;
     draw_labels();
-    set_info(info);
+    set_info(playfield_info);
     redraw_board();
     update_cursor();
 }
@@ -492,7 +508,7 @@ void playfield_new(void) {
     playfield_new_requested = 0;
     match_new(CLOCK_START, match_computer);
     input_phase = INPUT_MOVE;
-    flipped = (match_computer == COMPUTER_WHITE);
+    playfield_flipped = (match_computer == COMPUTER_WHITE);
     thinking = 0;
     clear_selection();
     memset(drawn_state, NOT_DRAWN, sizeof(drawn_state));
@@ -504,7 +520,7 @@ void playfield_new(void) {
 
     video_clear_layer1();
     draw_labels();
-    video_show_info(info);
+    video_show_info(playfield_info);
     refresh_all();
     update_cursor();
 }
@@ -513,11 +529,21 @@ void playfield_resume(void) {
     last_clock = clock();
     video_clear_layer1();
     draw_labels();
-    video_show_info(info);
+    video_show_info(playfield_info);
     memset(drawn_state, NOT_DRAWN, sizeof(drawn_state));
     memset(drawn_piece, NOT_DRAWN, sizeof(drawn_piece));
     refresh_all();
     update_cursor();
+}
+
+void playfield_loaded(void) {
+    input_phase = INPUT_MOVE;
+    thinking = 0;
+    cursor_visible = 0;
+    cursor_col = 4;
+    cursor_row = 6;
+    clear_selection();
+    playfield_resume();
 }
 
 void playfield_tick(void) {
@@ -580,7 +606,7 @@ void playfield_key(uint8_t key) {
             cycle_computer();
             return;
         case 'I': case 'i': case KEY_TAB:
-            set_info(!info);
+            set_info(!playfield_info);
             return;
         case 'A': case 'a':
             if(match_state == MATCH_PLAYING && !match_computer_to_move()) engine_turn(1);

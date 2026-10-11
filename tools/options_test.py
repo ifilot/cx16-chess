@@ -54,7 +54,7 @@ def main():
     try:
         session.emu.advance(480)
         clocks = read('match_clock', 4)
-        session.click(320, 432)  # Opening screen OPTIONS, not New Game.
+        session.click(320, 424)  # Opening screen OPTIONS, not New Game.
         visible()
         session.move_mouse(639, 479)
         for index, piece_set in enumerate(SETS):

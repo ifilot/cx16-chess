@@ -7,9 +7,11 @@
 #define START_NEW 1
 #define START_CONTINUE 2
 #define START_ERROR 3
+#define START_LOAD 4
 
 extern uint8_t start_computer;
 extern uint8_t start_difficulty;
+extern uint8_t start_black_difficulty;
 extern uint8_t start_piece_set;
 uint8_t start_open(uint8_t can_continue);
 uint8_t start_key(uint8_t key);

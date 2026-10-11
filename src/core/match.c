@@ -33,6 +33,7 @@ uint8_t match_state;
 uint8_t match_result;
 uint8_t match_computer;
 uint8_t match_difficulty = 1;
+uint8_t match_black_difficulty = 1;
 uint16_t match_clock[2];
 uint16_t match_think_start, match_think_budget;
 uint8_t match_last_from;
@@ -57,6 +58,50 @@ static uint8_t jiffy_count;
 #else
 static char SAN_LIST[MAX_HISTORY * SAN_SIZE];
 #endif
+
+/* Coordinate history is separate from SAN so disk saves can replay all rules
+ * and rebuild the engine's repetition history. Bank 24 is not engine scratch. */
+#ifdef __CC65__
+#define MOVE_LIST ((uint8_t*)0xA000)
+#else
+static uint8_t MOVE_LIST[MAX_HISTORY * 3];
+#endif
+
+void match_move_at(uint16_t index, move_t* move) {
+    uint8_t from, to, promo;
+#ifdef __CC65__
+    uint8_t saved = RAM_BANK;
+    RAM_BANK = 24;
+#endif
+    index *= 3;
+    from = MOVE_LIST[index];
+    to = MOVE_LIST[index + 1];
+    promo = MOVE_LIST[index + 2];
+#ifdef __CC65__
+    RAM_BANK = saved;
+#endif
+    move->from = from;
+    move->to = to;
+    move->promo = promo;
+}
+
+static void record_move(const move_t* move) {
+    uint16_t index = ply * 3;
+    uint8_t from = move->from, to = move->to, promo = move->promo;
+#ifdef __CC65__
+    uint8_t saved = RAM_BANK;
+    RAM_BANK = 24;
+#endif
+    MOVE_LIST[index] = from;
+    MOVE_LIST[index + 1] = to;
+    MOVE_LIST[index + 2] = promo;
+#ifdef __CC65__
+    RAM_BANK = saved;
+#endif
+}
+
+uint8_t match_clock_fraction(void) { return jiffy_count; }
+void match_restore_fraction(uint8_t value) { jiffy_count = value; }
 
 static void san_store(uint16_t half_move, const char* san) {
 #ifdef __CC65__
@@ -138,6 +183,7 @@ void match_play(const move_t* m) {
     mv = *m;
     rules_san(&mv, san);
     san_store(ply, san);
+    record_move(&mv);
     rules_make(&mv);
     rules_commit();
     match_best[0] = 0;
@@ -193,7 +239,8 @@ uint8_t match_computer_to_move(void) {
  */
 static uint16_t think_time(void) {
     uint16_t secs = match_clock[side >> 3] / 30;
-    uint8_t limit = match_difficulty == 0 ? 2 : match_difficulty == 1 ? 10 : 20;
+    uint8_t difficulty = match_computer == COMPUTER_BOTH && side == BLACK ? match_black_difficulty : match_difficulty;
+    uint8_t limit = difficulty == 0 ? 2 : difficulty == 1 ? 10 : 20;
 
     if(secs < 2) secs = 2;
     if(secs > limit) secs = limit;

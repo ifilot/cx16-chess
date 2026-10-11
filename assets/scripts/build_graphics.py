@@ -239,9 +239,9 @@ def menu_artwork(artwork):
     image = load_indexed(ASSETS / f'art/{artwork}.png',
                          SPLASH_RGB12 if artwork == 'splash' else SETUP_RGB12)
     assert image.shape == (H, W) and image.max() < 16
-    if artwork == 'setup':
-        BitmapFont(3).centered(image, 480, 80, 'NEW GAME', RED)
-        for y in (104, 107, 352, 355):
+    if artwork in ('setup', 'about'):
+        BitmapFont(3).centered(image, 480, 80, 'ABOUT' if artwork == 'about' else 'NEW GAME', RED)
+        for y in ((104, 107, 392, 395) if artwork == 'about' else (104, 107, 352, 355)):
             fill(image, 344, y, 615, y, INK)
     return image
 
@@ -291,9 +291,9 @@ def build_splash(dest, artwork="splash", prefix="SPL"):
     reconstructed = verify_artwork(dest, prefix, image, palette_data=vera_palette(colors), expected_palette=colors)
     preview = reconstructed.copy()
     if artwork == 'splash':
-        for y, label, color in [(376, 'NEW GAME', RED), (400, 'CONTINUE', DARK_GREY), (424, 'OPTIONS', INK)]:
-            text_centered(preview, 0, 639, y, label, color)
-        text_centered(preview, 0, 639, 456, 'UP/DOWN  ENTER TO SELECT', INK)
+        for y, label, color in [(368, 'NEW GAME', RED), (384, 'CONTINUE', DARK_GREY), (400, 'LOAD GAME', INK), (416, 'OPTIONS', INK), (432, 'ABOUT', INK)]:
+            text(preview, 288, y, label, color)
+        text_centered(preview, 0, 639, 464, 'UP/DOWN  ENTER TO SELECT', INK)
     save_preview(preview, dest / f'{artwork}.png', colors)
     print(f'{artwork}: {len(tiles.tiles)} tiles across two layers')
 
@@ -441,6 +441,7 @@ def main(dest):
     dest = Path(dest)
     build_splash(dest)
     build_splash(dest, "setup", "SET")
+    build_splash(dest, "about", "ABT")
     tiles, maps, squares, plain, info = build_layer0()
     (dest / 'L0TILES.DAT').write_bytes(tiles.data())
     (dest / 'L0PLAIN.DAT').write_bytes(maps[0])

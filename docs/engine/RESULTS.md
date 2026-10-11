@@ -1,5 +1,11 @@
 # Engine test results
 
+The [difficulty comparison](difficulty-2026-10-10/RESULTS.md) tests Easy,
+Medium, and Hard separately in 144 games against local Stockfish 16, with
+clock-aware 2/10/20-second search caps. Point estimates are 1340, 1264, and
+1410 respectively, with broad uncertainty intervals. The fixed-budget
+results below are from the earlier test.
+
 All tests ran the real X16 program (`src/ENGINE.PRG`) in the AgentBridge
 emulator at 8 MHz, with **10 seconds per move** (emulated X16 time), on
 2026-10-10.

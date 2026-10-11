@@ -148,4 +148,12 @@ void rules_san(const move_t* m, char* buf);
  */
 uint8_t rules_insufficient_material(void);
 
+/* Used to validate a disk replay without changing the current match. */
+typedef struct {
+    uint8_t board[128], side, castling, ep_square, halfmove_clock;
+    uint16_t ply;
+} rules_position_t;
+void rules_capture(rules_position_t* position);
+void rules_restore(const rules_position_t* position);
+
 #endif // _RULES_H

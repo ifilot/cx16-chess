@@ -10,7 +10,7 @@ def main():
     if destination.exists():
         shutil.rmtree(destination)
     destination.mkdir(parents=True)
-    names = ('CHESS.PRG', 'MENU.BIN') + RUNTIME
+    names = ('CHESS.PRG', 'MENU.BIN', 'UI.BIN') + RUNTIME
     for name in names:
         base, extension = name.split('.')
         assert 1 <= len(base) <= 8 and 1 <= len(extension) <= 3, name

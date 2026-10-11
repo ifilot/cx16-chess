@@ -46,7 +46,7 @@ def main():
         session.shot(path)
         with Image.open(path) as im:
             assert im.size == (640, 480)
-            colors = SPLASH_RGB12 if name in ('start', 'paused-start') else SETUP_RGB12 if name in ('setup', 'white-hard-setup') else RGB12
+            colors = SPLASH_RGB12 if name in ('start', 'paused-start') else SETUP_RGB12 if name in ('setup', 'white-hard-setup', 'about', 'paused-about') else RGB12
             assert set(im.convert('RGB').getdata()) <= {rgb(i, colors) for i in range(16)}
             palette_data = bytes(session.emu.read_memory(0x1FA00, 32, space='vram'))
             assert list(np.frombuffer(palette_data, dtype='<u2')) == colors, f'{name}: wrong view palette'
@@ -85,7 +85,7 @@ def main():
                 expected = np.asarray(im.convert('RGB'))
             np.testing.assert_array_equal(actual[8:456, 24:472], expected[8:456, 24:472])
             print('verified Victorian board and all starting pieces: zero pixel differences')
-        artwork = 'splash' if name in ('start', 'paused-start') else 'setup' if name in ('setup', 'white-hard-setup') else None
+        artwork = 'splash' if name in ('start', 'paused-start') else 'setup' if name in ('setup', 'white-hard-setup') else 'about' if name in ('about', 'paused-about') else None
         if artwork:
             with Image.open(ROOT / 'build/graphics' / (artwork + '.png')) as im:
                 expected = np.asarray(im.convert('RGB'))
@@ -110,7 +110,25 @@ def main():
         session.emu.advance(480)
         shot('start')
         initial = read('match_clock', 4)
-        session.click(320, 408)  # Continue is disabled before the first game.
+        # Main-menu wrap includes About, skipping disabled Continue.
+        keys('Up', 'Return')
+        session.emu.advance(300)
+        shot('about')
+        assert read('match_clock', 4) == initial
+        # Direction keys have no settings to change on this informational view.
+        keys('Left', 'Right', 'Up', 'Down', 'Escape')
+        session.emu.advance(300)
+        session.click(320, 440)
+        session.emu.advance(300)
+        shot('about')
+        session.click(480, 416)
+        session.emu.advance(300)
+        keys('a')
+        session.emu.advance(300)
+        shot('about')
+        keys('Return')
+        session.emu.advance(300)
+        session.click(320, 392)  # Continue is disabled before the first game.
         session.emu.advance(120)
         assert read('match_clock', 4) == initial
         keys('Return')
@@ -139,6 +157,15 @@ def main():
         session.emu.advance(300)
         paused = read('match_clock', 4)
         shot('paused-start')
+        paused_clock = read('match_clock', 4)
+        paused_ply = number('ply')
+        keys('a')
+        session.emu.advance(300)
+        shot('paused-about')
+        assert read('match_clock', 4) == paused_clock
+        assert number('ply') == paused_ply
+        keys('space')
+        session.emu.advance(300)
         session.emu.advance(600)
         assert read('match_clock', 4) == paused, 'Menu must pause both clocks'
         keys('c')
@@ -163,7 +190,7 @@ def main():
         # Choose black and easy: the CPU must play the first white move.
         keys('n')
         session.emu.advance(300)
-        keys('Left', 'Down', 'Left', 'Down', 'Return')
+        keys('Left', 'Left', 'Down', 'Left', 'Down', 'Return')
         session.emu.advance(480)
         assert read('match_computer') == b'\x01'
         assert read('match_difficulty') == b'\x00'
@@ -174,7 +201,8 @@ def main():
         # the next match, so cancelling must preserve the live difficulty.
         keys('n')
         session.emu.advance(300)
-        session.click(604, 168)  # black -> two players
+        session.click(604, 168)  # black -> computer versus computer
+        session.click(604, 168)  # computer versus computer -> two players
         session.click(604, 168)  # two players -> white
         session.click(604, 240)  # easy -> normal
         session.click(604, 240)  # normal -> hard
@@ -188,7 +216,7 @@ def main():
         assert read('match_difficulty') == b'\x02'
         assert number('ply') == 0
         shot('white-hard')
-        print('PASS: menu/setup, disabled Continue, all sides and difficulties, keyboard/mouse, moves, pause/resume, flip/theme, 640x480 and palette')
+        print('PASS: menu/setup/about, disabled Continue, all sides and difficulties, keyboard/mouse, moves, pause/resume, flip/theme, 640x480 and palette')
     finally:
         session.close()
 

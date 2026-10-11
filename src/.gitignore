@@ -13,3 +13,6 @@ setup.png
 *.BIN
 assets.h
 assets.inc
+build_info.h
+*.SAV
+CHESSOPT.DAT

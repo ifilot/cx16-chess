@@ -27,6 +27,7 @@
 #include "video.h"
 #include "assets.h"
 #include "start.h"
+#include "transition.h"
 
 #define SPRITE_ATTR     0xFC00      // in VRAM bank 1
 #define AUTO_INC_1      0x10
@@ -72,6 +73,11 @@ uint8_t video_init(void) {
     VERA.display.vscale = 128;
 
     /* Load banked loader/menu code before reading the graphics container. */
+    RAM_BANK = 22;
+    cbm_k_setnam("UI.BIN");
+    cbm_k_setlfs(0, 8, 2);
+    ok = cbm_k_load(0, 0xA000) != 0;
+    if(!ok) { RAM_BANK = saved; return 0; }
     RAM_BANK = 21;
     cbm_k_setnam("MENU.BIN");
     cbm_k_setlfs(0, 8, 2);
@@ -101,12 +107,15 @@ uint8_t video_init(void) {
 }
 
 void video_present(void) {
+    transition_finish();
     VERA.control = 0;
     VERA.display.video |= 0x70;
 }
 
 void video_show_info(uint8_t on) {
-    VERA.layer0.mapbase = (on ? VRAM_L0_MAP_INFO : VRAM_L0_MAP_PLAIN) >> 9;
+    uint8_t value = (on ? VRAM_L0_MAP_INFO : VRAM_L0_MAP_PLAIN) >> 9;
+    if(transition_covered) transition_mapbase = value;
+    else VERA.layer0.mapbase = value;
 }
 
 /* Artwork shares VRAM with the playing field; read only the view's resources.
@@ -142,7 +151,7 @@ static uint8_t load_shared(void) {
 
 uint8_t video_show_start(void) {
     uint8_t ok;
-    VERA.display.video &= 0x0F;
+    transition_begin();
     video_cursor(0, 0, 0);
     ok = load_vram(ASSET_SPLTILE, VRAM_L0_TILES) &&
          load_vram(ASSET_SPLMAP, VRAM_L0_MAP_PLAIN) &&
@@ -155,7 +164,7 @@ uint8_t video_show_start(void) {
 
 uint8_t video_show_setup(void) {
     uint8_t ok;
-    VERA.display.video &= 0x0F;
+    transition_begin();
     ok = load_vram(ASSET_SETTILE, VRAM_L0_TILES) &&
          load_vram(ASSET_SETMAP, VRAM_L0_MAP_PLAIN) &&
          load_vram(ASSET_SET1ART, VRAM_L1_TILES + L1_PIECES * 32UL) &&
@@ -165,8 +174,20 @@ uint8_t video_show_setup(void) {
     return ok;
 }
 
+uint8_t video_show_about(void) {
+    uint8_t ok;
+    transition_begin();
+    ok = load_vram(ASSET_ABTTILE, VRAM_L0_TILES) &&
+         load_vram(ASSET_ABTMAP, VRAM_L0_MAP_PLAIN) &&
+         load_vram(ASSET_ABT1ART, VRAM_L1_TILES + L1_PIECES * 32UL) &&
+         load_vram(ASSET_ABT1MAP, VRAM_L1_MAP) &&
+         load_vram(ASSET_SETPAL, 0x1FA00UL);
+    video_show_info(0);
+    return ok;
+}
+
 uint8_t video_load_piece_set(void) {
-    VERA.display.video &= 0x0F;
+    transition_begin();
     return load_vram(start_piece_set == 1 ? ASSET_ENGART :
                      start_piece_set == 2 ? ASSET_LETART : ASSET_L1ART,
                      VRAM_L1_TILES + L1_PIECES * 32UL);
@@ -182,7 +203,7 @@ uint8_t video_show_options(void) {
 
 uint8_t video_show_game(void) {
     uint8_t ok;
-    VERA.display.video &= 0x0F;
+    transition_begin();
     if(!game_tables_loaded && !load_game_tables()) return 0;
     ok = load_vram(ASSET_L0TILES, VRAM_L0_TILES) &&
          load_vram(ASSET_L0PLAIN, VRAM_L0_MAP_PLAIN) &&
@@ -321,5 +342,6 @@ void video_cursor(uint8_t visible, uint16_t x, uint16_t y) {
     VERA.data0 = (uint8_t)(x >> 8);
     VERA.data0 = (uint8_t)y;
     VERA.data0 = (uint8_t)(y >> 8);
-    VERA.data0 = visible ? (3 << 2) : 0;
+    transition_cursor = visible ? (3 << 2) : 0;
+    VERA.data0 = transition_covered ? 0 : transition_cursor;
 }

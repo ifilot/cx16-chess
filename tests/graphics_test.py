@@ -29,6 +29,7 @@ class ArtworkTests(unittest.TestCase):
         cls.dest = Path(cls.temp.name)
         build_splash(cls.dest)
         build_splash(cls.dest, 'setup', 'SET')
+        build_splash(cls.dest, 'about', 'ABT')
 
     @classmethod
     def tearDownClass(cls):
@@ -47,6 +48,14 @@ class ArtworkTests(unittest.TestCase):
                            palette_data=(self.dest / 'SETPAL.DAT').read_bytes())
         expected = load_indexed(ASSETS / 'art/setup.png', SETUP_RGB12)
         np.testing.assert_array_equal(actual[:, :320], np.array(SETUP_RGB12)[expected[:, :320]])
+        self.assertEqual(set(np.unique(expected[:, :320])) - {PAPER}, {0, 3, 4, 12})
+        self.assertTrue(np.any(expected[-1, :320] != PAPER))
+
+    def test_about_portrait_export_is_lossless(self):
+        expected = menu_artwork('about')
+        decoded = verify_artwork(self.dest, 'ABT', expected,
+                                 (self.dest / 'ABTPAL.DAT').read_bytes(), SETUP_RGB12)
+        np.testing.assert_array_equal(decoded, expected)
         self.assertEqual(set(np.unique(expected[:, :320])) - {PAPER}, {0, 3, 4, 12})
         self.assertTrue(np.any(expected[-1, :320] != PAPER))
 

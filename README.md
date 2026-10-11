@@ -8,13 +8,22 @@ The start screen uses a dithered bishop portrait against solid paper:
 ![Start screen](docs/start-screen.png)
 
 **New Game** opens a setup screen beside a queen portrait. Choose White,
-Black, or Two Players and a CPU difficulty. Easy, Normal and Hard cap thinking
+Black, CPU vs CPU, or Two Players and a CPU difficulty. Easy, Normal and Hard cap thinking
 at 2, 10 and 20 seconds per move; remaining clock time can shorten these
 budgets. Use Up/Down to select, Left/Right to change, and Return to start.
 Click a setting to cycle it, or click Start Game. Escape returns to the menu.
-Options configures the next game through the same setup screen.
+Scene changes show a paper background sprinkled with small chess silhouettes
+and a native-font Loading label while
+the next artwork loads. The cover stays in VRAM and needs no extra disk reads.
+
+![Loading screen](docs/transition-screen.png)
+About (or **A** in the menu) shows the version from `VERSION`, compilation
+date and toolchain, author, and GitHub repository beside a matching knight portrait.
+Return, Space, Escape, or the Back button returns to the menu.
 
 ![Game setup](docs/game-setup.png)
+
+![About screen](docs/about-screen.png)
 
 The playing screen follows the Right Scorecard design: a large board on the
 left, clocks and paired white/black moves on the right. The default board uses
@@ -25,8 +34,43 @@ independent board and piece-set selectors. It offers Victorian Diagram,
 Continental Engraving, and Daily Letterpress pieces, plus fine hatching,
 crosshatching, coarse hatching, and wood boards. Selections apply immediately
 to the preview and are used when starting or resuming a game. Continue (or Escape from the main menu) resumes the
-same game; it is disabled until a game has been started. Continue is for the
-current session, rather than a saved game on disk.
+same game; it is disabled until a game has been started or loaded. Continue
+resumes the game held in RAM during this session. **Load Game** (or **L** in
+the menu) restores one of nine numbered disk slots, including after restarting.
+
+**CPU vs CPU** in New Game runs a demo with separate White CPU and Black CPU
+difficulty settings. Both computers move automatically. Escape pauses the demo
+(including during thinking), so you can save it or return to the main menu.
+Demo saves retain both levels; their Level column shows White/Black as E, N, or H.
+
+![Computer versus computer setup](docs/demo-setup.png)
+
+**Escape** on the board opens a pause dialog with Resume Game, Save Game,
+and Main Menu. Choose Save Game, select slot 1–9 with arrows, a number key,
+or a click, then confirm. Replacing an occupied slot asks for confirmation.
+Escape backs out or resumes play. Both clocks pause while any dialog or menu
+is open. Main Menu keeps the current game available through Continue.
+
+![Pause dialog](docs/pause-dialog.png)
+
+The save and load tables show each slot’s difficulty, your playing side, and
+number of moves played (one per player turn). Local games show **Local** and
+**Both**. These details are also available for existing saves.
+
+![Save slots](docs/save-slots.png)
+
+Saves retain the entire move history, clocks, opponent, difficulty, board style,
+piece set, board orientation, and move-sheet visibility. Replay rebuilds legal
+moves, castling, en passant, promotions, and repetition history. Each slot keeps
+two alternating generations (`CHESS1A.SAV` / `CHESS1B.SAV` through slot 9),
+with checksums and read-back verification; a damaged newest copy falls back
+to its previous valid copy. Missing or invalid saves leave the current game intact.
+Files use device 8 in the game directory on the SD card or emulator filesystem.
+
+Options includes **Save Preferences**, which persists the board and piece set,
+plus the default opponent and difficulty from New Game, in `CHESSOPT.DAT`.
+These defaults load at startup; loading a game restores that game's own appearance.
+Done or Escape keeps changes for this session without saving them to disk.
 
 ![Playing field](docs/playfield.png)
 
@@ -61,7 +105,8 @@ a hatched printed diagram, and **F** flips the board.
 | Action | Mouse | Keyboard |
 | --- | --- | --- |
 | Select piece / move | Left click | Arrows + Return or Space |
-| Cancel selection | Click an empty square | Escape |
+| Cancel selection | Click an empty square | |
+| Pause / save / main menu | Click a dialog option | Escape |
 | Analyse the position | | A |
 | Move sheet on / off | | I or Tab |
 | Flip board | | F |
@@ -70,6 +115,9 @@ a hatched printed diagram, and **F** flips the board.
 | New game setup | Main menu | N |
 | Menu / pause | | M |
 | Appearance options | OPTIONS on opening screen | O in menu |
+| Load a saved game | LOAD GAME on opening screen | L in menu |
+| Save preferences | SAVE PREFERENCES in Options | Select with arrows + Return |
+| About / version and credits | ABOUT on opening screen | A in menu |
 | Menu selection / setup field | Click a row | Up / Down |
 | Change setup choice | Click the value | Left / Right |
 | Start / confirm | Click Start Game | Return or Space |
@@ -84,13 +132,34 @@ and a C compiler (for the native tests).
 make            # build src/CHESS.PRG (the game) and src/ENGINE.PRG
 make run        # build and start the emulator
 make test       # native tests: rules perft and SAN, engine perft and mates
-make test-ui    # emulator tests: menus, setup, clocks, moves, palette
+make test-ui    # emulator tests: menus, setup, clocks, saves, preferences, palette
+make test-storage # isolated nine-slot and preference persistence tests
 make screenshot # headless capture via the X16 AgentBridge emulator
+make demo       # record a one-minute menu walkthrough and human-vs-CPU battle
 make test-dist  # run emulator tests using only the distribution files
 make test-sd    # test the ROM SD-card loader (requires mkfs.fat and mcopy)
 make dist       # package only the playable game in build/dist/CHESS.ZIP
 make clean      # remove everything generated
 ```
+
+`make demo` writes `docs/cx16-chess-gameplay.gif`: a looping, 640×480 GIF
+with exactly 60 seconds of playback at 10 fps. It visits About and Options,
+changes the board and pieces, then starts a human-versus-computer game. The
+first three human moves and computer replies run at normal speed; later turns
+run at 4× speed. Mouse motion, piece selection, legal targets, CPU thinking,
+and the growing move sheet are recorded from the running emulator. The final
+position stays visible for the closing seconds.
+
+The recorder uses temporary runtime copies, so it cannot change your saves or
+preferences. A native build of the same chess engine chooses the scripted
+human-side moves, which are entered through mouse clicks; the opponent runs
+on the emulated X16. It requires an AgentBridge-enabled emulator and its
+Python client, plus the build dependencies above. Override the output with
+`make demo DEMO_GIF=build/demo.gif`; `EMU` and `ROM` work as for `make run`.
+Timing and move details are saved to `build/demo-recording.json`.
+
+![One-minute gameplay walkthrough](docs/cx16-chess-gameplay.gif)
+
 
 The X16 engine tests need the [AgentBridge](https://github.com/ifilot/x16-emulator)
 emulator in `../x16-emulator`; `make fuzz`, `make wac` and the match and
@@ -107,14 +176,14 @@ make wac        # Win At Chess test suite at 10 s per position
 `make run` uses `../x16-emulator/build/x16emu` and the first ROM found in
 `../emulator/rom.bin` or `../emulator-win/rom.bin`; override with
 `make run EMU=... ROM=...`. For distribution, run `make dist` and extract `build/dist/CHESS.ZIP`.
-Keep these three runtime files together: `CHESS.PRG`, `MENU.BIN` and
-`CHESS.DAT`. All distribution filenames follow 8.3. The ZIP excludes the
+Keep these four runtime files together: `CHESS.PRG`, `MENU.BIN`, `UI.BIN`,
+and `CHESS.DAT`. All distribution filenames follow 8.3. The ZIP excludes the
 headless engine, intermediate graphics, previews, symbols and test files.
-All `.DAT` files are generated from the checked-in bitmap artwork, fonts and
+All graphics `.DAT` files are generated from the checked-in bitmap artwork, fonts and
 Python generators; none are tracked by Git. Intermediate tiles and maps live
 in `build/graphics/`; `src/` contains just one runtime graphics container.
 
-`CHESS.DAT` contains a 16-byte build identifier, twenty index entries (32-bit
+`CHESS.DAT` contains a 16-byte build identifier, twenty-four index entries (32-bit
 file offset and 16-bit length), and the original graphics bytes without VRAM
 padding. The packer verifies every resource against its generated source.
 The loader validates the identifier against the compiled index, keeps a data
@@ -124,15 +193,15 @@ provides a fallback when bulk reads are unavailable. Read errors and premature
 EOF abort loading while the display is hidden. Screen changes load only the
 required resources; font, sprites and game state stay resident.
 
-The distribution includes `HASHES.TXT` for verifying all three runtime files.
+The distribution includes `HASHES.TXT` for verifying all four runtime files.
 `make test-dist` exercises the menus, all piece sets and board styles, gameplay,
-and indicators using the distribution directory as the emulator filesystem.
+saves, preferences, and indicators using the distribution directory as the emulator filesystem.
 It also checks missing, mismatched and truncated containers, partial reads and
 byte-at-a-time fallback. `make test-sd` creates `build/dist/CHESS.IMG`, a FAT32
 SD image, and tests the actual ROM CMDR-DOS path, including all twelve board/set
-combinations. It requires dosfstools and mtools; it never accesses a physical disk.
+combinations and save/preference writes to an isolated SD image. It requires dosfstools and mtools; it never accesses a physical disk.
 `make` also builds `src/ENGINE.PRG`, a headless engine harness for the test tools
-below; its separate linker configuration cannot overwrite `MENU.BIN`.
+below; its separate linker configuration cannot overwrite the banked UI files.
 
 ## Source layout
 
@@ -141,7 +210,7 @@ The game is split into a core without any graphics and a front end:
 | Directory | Contents |
 | --- | --- |
 | `src/core/` | `rules.c` (move rules, SAN), `match.c` (game controller: moves, clocks, results, who plays which side), the engine (`engine*.c`, `engine_asm.s`, `engine_search.s`) |
-| `src/gui/` | VERA set-up (`video.c`), start/setup menus (`start.c`), the playing field (`playfield.c`, drawing and input only), `main.c` |
+| `src/gui/` | VERA set-up (`video.c`), start/setup menus (`start.c`), the playing field (`playfield.c`, drawing and input only), `main.c`, disk persistence (`storage.c`) and pause/slot dialogs (`dialog.c`) |
 | `src/bridge/` | `ENGINE.PRG`: the engine driven through a mailbox at `$0400` |
 | `tools/` | AgentBridge drivers: screenshots, engine bridge, tests, matches |
 
@@ -191,13 +260,19 @@ about 7 times faster than a real X16; times below are emulated X16 time.
 | `tools/depth_bench.py` | depth reached within a time limit |
 | `tools/epd_test.py` | test suites, e.g. `tests/epd/wac.epd` (Win At Chess) |
 | `tools/match.py --x16` | games against Stockfish with limited strength |
+| `tools/rate_difficulties.py` | paired, clock-aware Easy/Normal/Hard ratings against local Stockfish; checkpointed games and uncertainty |
 | `tools/review_games.py` | centipawn loss of every move, by local Stockfish or (`--online`) Lichess cloud evaluation and chess-api.com |
 | `tools/selfplay.py` | native self-play between engine variants, for tuning |
 | `tools/profile_engine.py` | statistical profiler: samples the emulated program counter |
 | `tools/x16uci.py` | the emulated X16 engine as a UCI engine |
 | `tools/screenshot.py` | boots the game, clicks and types, captures screenshots |
 
-Results with 10 s per move (October 2026, details and games in
+The [difficulty strength test](docs/engine/difficulty-2026-10-10/RESULTS.md)
+played 48 games per level against local Stockfish 16. Estimates on Stockfish's
+UCI_Elo scale: Easy **1340**, Medium **1264**, Hard **1410**. The uncertainty
+intervals are broad; this sample does not establish the ordering of the levels.
+
+Earlier results with 10 s per move (October 2026, details and games in
 [docs/engine](docs/engine/RESULTS.md)):
 
 | Test | Result |
@@ -230,10 +305,13 @@ Results with 10 s per move (October 2026, details and games in
   and serif masthead artwork are kept as approved PNG sources.
 * Start/setup artwork is split between both tile layers at native 640x480;
   each layer stays within its tile and VRAM budget. Menu code lives in RAM
-  bank 21 (`MENU.BIN`), leaving main RAM for the engine. Returning to
+  bank 21 (`MENU.BIN`), along with SAN formatting; dialogs and persistence
+  live in bank 22 (`UI.BIN`), leaving main RAM for the engine. Coordinate history
+  uses bank 24; SAN still uses bank 19. Returning to
   play reloads the playing-field graphics without resetting the match.
   Startup loads only opening-screen assets; engine and board data wait until
-  the first game. Screens become visible after artwork and controls are drawn.
+  the first game. Scene artwork becomes visible after artwork and controls are drawn; a separate
+  paper tilemap and Loading sprite cover scene and piece-set loading.
   The bitmap font and scorecard background map stay resident, avoiding repeated
   disk transfers. Layer-1 map clears use a direct VERA write loop.
   Startup graphics loading is roughly halved; retaining the font and scorecard
@@ -282,9 +360,9 @@ and removed slots are documented in `assets/font/README.md`.
   `assets/pieces/README.md`.
 * Fonts: native 8×8 bitmap UI font from Ivo Filot's CX16 Kakuro (GPL-3.0-or-later), see `assets/font/README.md`.
 * Serif masthead lettering: PT Serif (ParaType, SIL Open Font License 1.1).
-* Start/setup portraits generated with imagegen and constrained to the
-  project palette; source artwork lives in `assets/art/splash.png` and
-  `assets/art/setup.png`.
+* Start/setup/about portraits generated with imagegen and constrained to the
+  project palette; source artwork lives in `assets/art/splash.png`,
+  `assets/art/setup.png`, and `assets/art/about.png`.
 
 ## License
 

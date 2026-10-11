@@ -1,0 +1,141 @@
+{
+  "configuration": {
+    "stockfish": "/usr/games/stockfish",
+    "stockfish_id": {
+      "name": "Stockfish 16",
+      "author": "the Stockfish developers (see AUTHORS file)"
+    },
+    "sf_time": 0.1,
+    "date": "2026-10-10",
+    "games_per_opponent": 24,
+    "opponents": [
+      1320,
+      1500
+    ],
+    "levels": {
+      "easy": 2,
+      "normal": 10,
+      "hard": 20
+    },
+    "clock_seconds": 1800,
+    "engine_sha256": "32e97dbb244ceb52b200ce2fd07aefd71b2e2e076e30550320eaf6df9a6fd78b"
+  },
+  "summaries": {
+    "easy": {
+      "cap_seconds": 2,
+      "games": 48,
+      "points": 19.5,
+      "wins": 15,
+      "draws": 9,
+      "losses": 24,
+      "score": 0.40625,
+      "estimated_elo": 1340,
+      "confidence_95": [
+        1227,
+        1457
+      ],
+      "confidence_score_95": [
+        0.2708333333333333,
+        0.5625
+      ],
+      "mean_depth": 3.3282254078101827,
+      "mean_nodes": 1169.2254078101828,
+      "mean_search_seconds": 2.4196754814631727,
+      "per_opponent": {
+        "1320": {
+          "games": 24,
+          "points": 11.5
+        },
+        "1500": {
+          "games": 24,
+          "points": 8.0
+        }
+      }
+    },
+    "normal": {
+      "cap_seconds": 10,
+      "games": 48,
+      "points": 15.0,
+      "wins": 13,
+      "draws": 4,
+      "losses": 31,
+      "score": 0.3125,
+      "estimated_elo": 1264,
+      "confidence_95": [
+        1165,
+        1355
+      ],
+      "confidence_score_95": [
+        0.20833333333333334,
+        0.4270833333333333
+      ],
+      "mean_depth": 4.654226618705036,
+      "mean_nodes": 5355.526079136691,
+      "mean_search_seconds": 9.916036657992358,
+      "per_opponent": {
+        "1320": {
+          "games": 24,
+          "points": 10.5
+        },
+        "1500": {
+          "games": 24,
+          "points": 4.5
+        }
+      }
+    },
+    "hard": {
+      "cap_seconds": 20,
+      "games": 48,
+      "points": 24.0,
+      "wins": 22,
+      "draws": 4,
+      "losses": 22,
+      "score": 0.5,
+      "estimated_elo": 1410,
+      "confidence_95": [
+        1290,
+        1521
+      ],
+      "confidence_score_95": [
+        0.34375,
+        0.6458333333333334
+      ],
+      "mean_depth": 5.208786231884058,
+      "mean_nodes": 10344.93795289855,
+      "mean_search_seconds": 18.812513184952444,
+      "per_opponent": {
+        "1320": {
+          "games": 24,
+          "points": 13.0
+        },
+        "1500": {
+          "games": 24,
+          "points": 11.0
+        }
+      }
+    }
+  },
+  "paired_comparisons": {
+    "hard_minus_easy": {
+      "estimated_difference": 70,
+      "confidence_95": [
+        -106,
+        257
+      ]
+    },
+    "hard_minus_normal": {
+      "estimated_difference": 146,
+      "confidence_95": [
+        -9,
+        310
+      ]
+    },
+    "normal_minus_easy": {
+      "estimated_difference": -76,
+      "confidence_95": [
+        -246,
+        59
+      ]
+    }
+  }
+}

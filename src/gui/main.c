@@ -28,6 +28,8 @@
 #include "match.h"
 #include "playfield.h"
 #include "start.h"
+#include "storage.h"
+#include "dialog.h"
 
 // KERNAL mouse_get stores the pointer position in r0 (x) and r1 (y)
 #define MOUSE_X     (*(volatile uint16_t*)0x02)
@@ -71,29 +73,59 @@ static void mouse_read(void) {
 }
 
 void main(void) {
-    uint8_t key, action, menu = 1, has_game = 0, release_mouse = 0;
+    uint8_t key, action, menu = 1, has_game = 0, release_mouse = 0, dialog = 0, initialized = 0;
 
     mouse_init();
     if(!video_init()) {
         return;
     }
+    *(volatile uint8_t*)0x00 = 22;
+    storage_preferences_load();
     *(volatile uint8_t*)0x00 = 21;
     if(!start_open(0)) return;
 
     while(1) {
         wait_frame();
         mouse_read();
-        key = cbm_k_getin();
-        if(menu) {
+        key = playfield_pending_key ? playfield_pending_key : cbm_k_getin();
+        playfield_pending_key = 0;
+        if(dialog) {
+            action = DIALOG_NONE;
+            if(!(mouse_buttons & 1)) release_mouse = 0;
+            if(!release_mouse) action = dialog_mouse(MOUSE_X, MOUSE_Y, mouse_buttons);
+            if(!action && key) action = dialog_key(key);
+            if(action == DIALOG_MENU) {
+                dialog = 0;
+                menu = 1;
+                *(volatile uint8_t*)0x00 = 21;
+                if(!start_open(has_game)) return;
+            } else if(action) {
+                dialog = menu = 0;
+                *(volatile uint8_t*)0x00 = 21;
+                if(action == DIALOG_LOADED) {
+                    if(!video_show_game()) return;
+                    playfield_loaded();
+                    has_game = 1;
+                } else playfield_resume();
+                video_present();
+                release_mouse = 1;
+            }
+        } else if(menu) {
             action = start_mouse(MOUSE_X, MOUSE_Y, mouse_buttons);
             if(!action && key) action = start_key(key);
             if(action == START_ERROR) return;
-            if(action) {
+            if(action == START_LOAD) {
+                if(!initialized) { match_init(); initialized = 1; }
+                *(volatile uint8_t*)0x00 = 22;
+                dialog_open(1);
+                dialog = release_mouse = 1;
+            } else if(action) {
                 if(!video_show_game()) return;
                 if(action == START_NEW) {
-                    if(!has_game) match_init();
+                    if(!initialized) { match_init(); initialized = 1; }
                     match_computer = start_computer;
                     match_difficulty = start_difficulty;
+                    match_black_difficulty = start_black_difficulty;
                     playfield_new();
                 } else {
                     playfield_resume();
@@ -104,6 +136,12 @@ void main(void) {
                 /* Consume a held menu click before board input resumes. */
                 release_mouse = 1;
             }
+        } else if(key == KEY_ESCAPE) {
+            playfield_tick();
+            playfield_key(KEY_ESCAPE);
+            *(volatile uint8_t*)0x00 = 22;
+            dialog_open(0);
+            dialog = release_mouse = 1;
         } else if(key == 'M' || key == 'm') {
             *(volatile uint8_t*)0x00 = 21;
             if(!start_open(has_game)) return;

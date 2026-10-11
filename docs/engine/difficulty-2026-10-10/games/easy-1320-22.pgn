@@ -1,0 +1,14 @@
+[Event "X16 difficulty strength test"]
+[Site "Local AgentBridge / Stockfish"]
+[Date "2026.10.10"]
+[Round "23"]
+[White "CX16-CHESS easy (X16 2s cap)"]
+[Black "Stockfish 16 UCI_Elo 1320"]
+[Result "1/2-1/2"]
+[Termination "fifty_moves"]
+[X16Clock "1800 seconds; max(2, min(cap, remaining/30))"]
+[StockfishMoveTime "0.1"]
+[OpeningPair "11"]
+
+1. e4 d5 2. exd5 Qxd5 3. Nc3 Qd6 4. Ne4 Qe6 5. Bd3 g6 6. Nf3 Bg7 7. Ng5 Qc6 8. Qf3 f6 9. Nh3 f5 10. Neg5 Bd7 11. Nf4 Nf6 12. O-O Qxf3 13. Nxf3 Rg8 14. Bc4 Rf8 15. d4 Ne4 16. Ne6 Bxe6 17. Bxe6 c5 18. d5 a5 19. Bc8 b6 20. Bb7 Ra7 21. Bc6+ Kd8 22. Bb5 Kc8 23. Bc4 a4 24. Rb1 a3 25. Re1 Nd6 26. Be2 axb2 27. Bxb2 Rf7 28. Ng5 Rxa2 29. Nxf7 Rxb2 30. Rxb2 Bxb2 31. Nxd6+ exd6 32. Rb1 Be5 33. Rxb6 Nd7 34. Ba6+ Kc7 35. Rc6+ Kb8 36. Rc8+ Ka7 37. Bb5 Nf6 38. Bc4 Kb7 39. Rf8 Bc3 40. Rf7+ Kc8 41. Bb3 Ne4 42. Rxh7 Kd8 43. Rf7 Bd4 44. Bc4 Nxf2 45. h4 Ke8 46. Rb7 Ng4+ 47. Kh1 Kf8 48. Rc7 Ne3 49. Bb3 Bc3 50. Rc8+ Ke7 51. Kh2 Ng4+ 52. Kg3 Nf6 53. Ra8 Kf7 54. Rb8 Kg7 55. Kh2 Kh6 56. Rc8 Bd4 57. Rh8+ Kg7 58. Rb8 Bc3 59. Rb7+ Kh6 60. Kh3 Be5 61. Bc4 Ne4 62. g3 Nd2 63. Bd3 Ne4 64. Be2 Bxg3 65. Bf3 c4 66. Bxe4 Bf2 67. Bf3 Bd4 68. Rc7 Bf2 69. Rxc4 Bb6 70. Kg3 Ba5 71. Be2 Bd8 72. Rc6 Kg7 73. Rxd6 Bc7 74. Ba6 Kh8 75. Kh3 Bxd6 76. Bc4 Kg8 77. Kg2 Be5 78. Kf3 Bh2 79. d6+ Kg7 80. d7 Bc7 81. Be2 Bd8 82. Bd3 Bc7 83. h5 gxh5 84. Bxf5 Kf7 85. Ke4 Ke7 86. c4 h4 87. c5 Ba5 88. Bh3 Kd8 89. Kd5 Kc7 90. c6 Be1 91. Bf5 Ba5 92. Bg4 Bb6 93. Be6 Bf2 94. Ke4 Ba7 95. Bh3 Bg1 96. Kd5 Be3 97. Bf5 Bg5 98. Kc5 Kd8 99. Kc4 Kc7 100. Kd5 Be3 101. Ke6 Bc5 102. Bb1 Bb4 103. Kd5 h3 104. Bc2 h2 105. Be4 h1=Q 106. Bxh1 Ba5 107. Be4 Bb6 108. Bf3 Be3 109. Ke6 Bd2 110. Be4 Be3 111. Bg2 Bh6 112. Kd5 Kd8 113. Ke5 Kc7 114. Ke4 Bc1 115. Bf3 Bd2 116. Bg4 Ba5 117. Bf5 Kd8 118. Kd5 Bb4 119. Be4 Be1 120. Ke6 Bb4 121. Bd3 Bc3 122. Bc4 Bd2 123. Bb3 Bb4 124. Bc2 Be1 125. Bf5 Bh4 126. Be4 Bf2 127. Bd3 Bh4 128. Bf1 Bg3 129. Bc4 Bf4 130. Bb3 Bb8 131. Ba4 Bh2 132. Bb5 Bc7 133. Bd3 Ba5 134. Be2 Bd2 135. Bd1 Be1 136. Bf3 Bd2 137. Kd5 Be1 138. Be4 Bg3 139. Bc2 Bb8 140. Bd3 Bc7 141. Be2 Bf4 142. Ke4 Bh2 143. Ba6 Bb8 144. Kd5 Bf4 145. Ke6 Bb8 146. Be2 Bf4 147. Kf6 Bh2 148. Bd3 Bc7 149. Kf5 Bg3 150. Bc4 Bc7 151. Kf6 Bf4 152. Bb3 Bg3 153. Bd5 Bb8 154. Kf5 Bc7 155. Ke4 Bh2 1/2-1/2
+

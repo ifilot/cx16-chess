@@ -19,7 +19,7 @@ def main():
     resources = json.loads((ROOT / 'build/graphics/runtime-manifest.json').read_text())
     with tempfile.TemporaryDirectory(prefix='chess-assets-') as temporary:
         folder = Path(temporary)
-        for name in ('CHESS.PRG', 'MENU.BIN'):
+        for name in ('CHESS.PRG', 'MENU.BIN', 'UI.BIN'):
             shutil.copyfile(runtime / name, folder / name)
         for case in ('missing', 'wrong-build', 'truncated-font', 'truncated-setup'):
             data = original

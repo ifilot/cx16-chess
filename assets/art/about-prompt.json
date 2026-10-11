@@ -1,0 +1,7 @@
+{
+  "tool": "built-in imagegen",
+  "reference": "assets/art/setup.png",
+  "prompt": "Use case: style-transfer. Asset: 640x480 Commander X16 chess About screen portrait. Reference image: existing queen setup portrait, use its exact newspaper pixel engraving rendering style and layout. Replace the queen with a large sculpted chess KNIGHT (horse head chess piece), left-facing profile with detailed mane and curved neck on a turned pedestal. Render ONLY four achromatic colors on the piece: #000000, #555555, #AAAAAA, #FFFFFF, crisp fine discrete pixel halftone newspaper dithering. Background perfectly flat solid #EEDDBB. Same scale and composition as reference: entire horse chess piece fits x=8..312 on LEFT HALF, begins about 16 pixels below top, pedestal stem extends naturally through bottom edge with no gap or floor shadow. Entire RIGHT HALF x=320..639 empty paper for coded UI. Landscape 4:3, native 640x480 pixel art. No text, headers, borders, buttons, other objects, gradients or blur.",
+  "export": "Nearest-neighbor native 640x480 import; achromatic pixels mapped to four setup tones; background mapped to solid paper.",
+  "palette": "SETUP_RGB12; shared SETPAL.DAT"
+}
