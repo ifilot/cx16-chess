@@ -6,14 +6,15 @@
 #include "storage.h"
 #include "video.h"
 #include "playfield.h"
+#include "sound.h"
 #pragma static-locals (on)
 #pragma code-name ("UICODE")
 #pragma rodata-name ("UICODE")
 #pragma bss-name ("UIBSS")
 
-static uint8_t mode, selection, last_buttons, occupied[SAVE_SLOTS], confirm;
+static uint8_t mode, selection, last_buttons, occupied[SAVE_SLOTS], confirm, back_hover;
 static save_info_t info[SAVE_SLOTS];
-static const char* const levels[] = {"EASY", "NORMAL", "HARD"};
+static const char* const levels[] = {"2", "3", "4", "5", "6", "1", "EASY", "BEGIN.", "7", "8"};
 static const char* const players[] = {"BOTH", "BLACK", "WHITE", "CPU/CPU"};
 static const char* message;
 static char label[24];
@@ -27,7 +28,9 @@ static const char* const choices[] = {"RESUME GAME", "SAVE GAME", "MAIN MENU"};
 #define LINE_UP 4
 #define LINE_DOWN 8
 
-static void build_rules(void) {
+#pragma code-name ("DRAGCODE")
+#pragma bss-name ("DRAGBSS")
+void dialog_build_rules_banked(void) {
     uint8_t mask, x, y, pair, pixel;
     uint32_t address = VRAM_L1_TILES + RULE_TILES * 32UL;
     VERA.control = 0;
@@ -47,6 +50,9 @@ static void build_rules(void) {
         }
     }
 }
+#pragma code-name ("UICODE")
+#pragma bss-name ("UIBSS")
+void dialog_build_rules(void);
 static void rule(uint8_t col, uint8_t row, uint8_t mask) {
     video_tile(col, row, RULE_TILES + mask, COL_INK);
 }
@@ -103,7 +109,8 @@ static void draw_choice(uint8_t index) {
     if(confirm) {
         video_text_centered(304, index ? 28 : 23, index ? "REPLACE" : "CANCEL", color);
     } else if(!mode) {
-        video_text_centered(304, 22 + index * 5, choices[index], color);
+        if(index < 3) video_text_centered(304, 22 + index * 5, choices[index], color);
+        else sound_event(SOUND_PAUSE + selection);
     } else {
         label[0] = '1' + index;
         label[1] = 0;
@@ -126,6 +133,7 @@ static void draw_choice(uint8_t index) {
 
 static void draw(void) {
     uint8_t index;
+    back_hover = 0;
     paper();
     if(confirm) {
         frame(23, 21, 53, 31);
@@ -135,13 +143,15 @@ static void draw(void) {
         draw_choice(1);
         video_text_centered(304, 44, "ENTER SELECT / ESC CANCEL", COL_INK);
     } else if(!mode) {
-        frame(23, 20, 53, 35);
+        frame(23, 20, 53, 45);
+        separator(23, 53, 35);
+        separator(23, 53, 40);
         separator(23, 53, 25);
         separator(23, 53, 30);
         video_text_centered(304, 14, "GAME PAUSED", COL_RED);
-        for(index = 0; index < 3; index++)
+        for(index = 0; index < 5; index++)
             draw_choice(index);
-        video_text_centered(304, 44, "ESC RESUME", COL_INK);
+        video_text_centered(304, 48, "ESC RESUME", COL_INK);
     } else {
         video_text_centered(304, 11, mode == 1 ? "SAVE GAME" : "LOAD GAME", COL_RED);
         frame(19, 13, 56, 43);
@@ -155,15 +165,16 @@ static void draw(void) {
         video_text(35, 14, "PLAYER", COL_INK);
         video_text(45, 14, "MOVES", COL_INK);
         for(index = 0; index < SAVE_SLOTS; index++) draw_choice(index);
-        if(!message) video_text_centered(304, 44, "CPU LEVEL W/B: E EASY N NORMAL H HARD", COL_INK);
+        if(!message) video_text_centered(304, 44, "W/B: PLY OR B/E", COL_INK);
         video_text_centered(304, 46, "1-9 SELECT / ESC BACK", COL_INK);
-        video_text_centered(304, 48, "BACK", COL_RED);
+        video_text_centered(304, 48, "BACK", COL_INK);
     }
     if(message) video_text_centered(304, 44, message, COL_RED);
     video_present();
 }
 static void slots(uint8_t load) {
     uint8_t index;
+    sound_sfx(SFX_DIALOG);
     mode = load ? 2 : 1;
     selection = 0;
     message = 0;
@@ -171,15 +182,17 @@ static void slots(uint8_t load) {
     draw();
 }
 void dialog_open(uint8_t load) {
-    mode = selection = last_buttons = confirm = 0;
+    sound_sfx(SFX_DIALOG);
+    mode = selection = last_buttons = confirm = back_hover = 0;
     message = 0;
     video_cursor(0, 0, 0);
-    build_rules();
+    dialog_build_rules();
     if(load) slots(1);
     else draw();
 }
 static uint8_t activate(void) {
     static uint8_t slot;
+    sound_sfx(SFX_MENU_SELECT);
     if(confirm) {
         confirm = 0;
         if(selection == 0) { selection = slot; draw(); return DIALOG_NONE; }
@@ -187,7 +200,10 @@ static uint8_t activate(void) {
     } else if(!mode) {
         if(selection == 0) return DIALOG_RESUME;
         if(selection == 2) return DIALOG_MENU;
-        slots(0);
+        if(selection > 2) {
+            sound_event(selection == 3 ? SOUND_MUSIC_TOGGLE : SOUND_EFFECTS_TOGGLE);
+            sound_event(SOUND_PAUSE + selection);
+        } else slots(0);
         return DIALOG_NONE;
     } else if(mode == 1 && occupied[selection]) {
         slot = selection;
@@ -199,7 +215,7 @@ static uint8_t activate(void) {
     }
     if(mode == 2) {
         if(!occupied[selection]) message = "EMPTY SLOT";
-        else if(storage_load(selection)) return DIALOG_LOADED;
+        else if(storage_load(selection)) { sound_sfx(SFX_MENU_SELECT); return DIALOG_LOADED; }
         else message = "CANNOT LOAD THIS SAVE";
     } else {
         if(storage_save(selection)) {
@@ -207,22 +223,28 @@ static uint8_t activate(void) {
             message = "GAME SAVED";
         } else message = "SAVE FAILED - TRY AGAIN";
     }
+    sound_sfx(message[0] == 'G' ? SFX_SAVE : SFX_ERROR);
     draw();
     return DIALOG_NONE;
 }
 uint8_t dialog_key(uint8_t key) {
-    uint8_t limit = confirm ? 1 : mode ? SAVE_SLOTS - 1 : 2;
+    uint8_t limit = confirm ? 1 : mode ? SAVE_SLOTS - 1 : 4;
     uint8_t previous = selection;
     switch(key) {
+        case 'V': case 'v': sound_event(SOUND_MUSIC_TOGGLE); if(!mode && !confirm) sound_event(SOUND_PAUSE + selection); return DIALOG_NONE;
+        case 'S': case 's': sound_event(SOUND_EFFECTS_TOGGLE); if(!mode && !confirm) sound_event(SOUND_PAUSE + selection); return DIALOG_NONE;
         case KEY_ESCAPE:
+            sound_sfx(SFX_MENU_BACK);
             if(confirm) { confirm = 0; message = 0; selection = 0; }
             else if(mode == 2) return DIALOG_MENU;
             else if(mode == 1) { mode = selection = 0; message = 0; }
             else return DIALOG_RESUME;
             draw();
             return DIALOG_NONE;
-        case KEY_UP: selection = selection ? selection - 1 : limit; break;
-        case KEY_DOWN: selection = selection == limit ? 0 : selection + 1; break;
+        case KEY_UP: sound_sfx(SFX_MENU_MOVE); selection = selection ? selection - 1 : limit; break;
+        case KEY_DOWN: sound_sfx(SFX_MENU_MOVE); selection = selection == limit ? 0 : selection + 1; break;
+        case KEY_LEFT: case KEY_RIGHT:
+            return !mode && !confirm && selection > 2 ? activate() : DIALOG_NONE;
         case KEY_RETURN: case KEY_SPACE: return activate();
         default:
             if(mode && !confirm && key >= '1' && key <= '9') selection = key - '1';
@@ -236,31 +258,30 @@ uint8_t dialog_key(uint8_t key) {
         message = 0;
         video_text_clear(19, 44, 38);
         if(mode && !confirm)
-            video_text_centered(304, 44, "CPU LEVEL W/B: E EASY N NORMAL H HARD", COL_INK);
+            video_text_centered(304, 44, "W/B: PLY OR B/E", COL_INK);
     }
     return DIALOG_NONE;
 }
+uint8_t gui_mouse_hit(uint16_t x, uint16_t y, uint8_t layout);
 uint8_t dialog_mouse(uint16_t x, uint16_t y, uint8_t buttons) {
-    uint8_t pressed = (buttons & 1) && !(last_buttons & 1), index;
+    static uint16_t last_x, last_y;
+    uint8_t pressed = (buttons & 1) && !(last_buttons & 1), index, previous;
+    uint8_t moved = x != last_x || y != last_y;
     last_buttons = buttons;
-    if(!pressed || x < (mode && !confirm ? 152 : 176) || x >= (mode && !confirm ? 456 : 432)) return DIALOG_NONE;
-    if(mode && !confirm && x >= 272 && x < 336 && y >= 384 && y < 400)
-        return dialog_key(KEY_ESCAPE);
-    if(confirm) {
-        if(y >= 184 && y < 200) selection = 0;
-        else if(y >= 224 && y < 240) selection = 1;
-        else return DIALOG_NONE;
-    } else if(mode) {
-        for(index = 0; index < SAVE_SLOTS; index++) {
-            if(y >= (17 + index * 3) * 8 && y < (19 + index * 3) * 8) break;
-        }
-        if(index == SAVE_SLOTS) return DIALOG_NONE;
-        selection = index;
-    } else {
-        if(y >= 176 && y < 192) selection = 0;
-        else if(y >= 216 && y < 232) selection = 1;
-        else if(y >= 256 && y < 272) selection = 2;
-        else return DIALOG_NONE;
+    last_x = x; last_y = y;
+    if(!pressed && !moved) return DIALOG_NONE;
+    index = gui_mouse_hit(x, y, confirm ? 7 : mode ? 6 : 5);
+    if(mode && !confirm && back_hover != (index == SAVE_SLOTS)) {
+        back_hover = index == SAVE_SLOTS;
+        video_text_centered(304, 48, "BACK", back_hover ? COL_RED : COL_INK);
     }
-    return activate();
+    if(index == 0xFF) return DIALOG_NONE;
+    if(index == SAVE_SLOTS) return pressed ? dialog_key(KEY_ESCAPE) : DIALOG_NONE;
+    previous = selection;
+    selection = index;
+    if(selection != previous) {
+        draw_choice(previous);
+        draw_choice(selection);
+    }
+    return pressed ? activate() : DIALOG_NONE;
 }

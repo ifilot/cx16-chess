@@ -1,0 +1,32 @@
+[
+  {
+    "workers": 1,
+    "searches": 32,
+    "wall_seconds": 51.06533822799997,
+    "aggregate_emulated_seconds_per_host_second": 6.579810036698543
+  },
+  {
+    "workers": 4,
+    "searches": 32,
+    "wall_seconds": 13.700143572999878,
+    "aggregate_emulated_seconds_per_host_second": 24.525306045856798
+  },
+  {
+    "workers": 8,
+    "searches": 32,
+    "wall_seconds": 7.610975176000011,
+    "aggregate_emulated_seconds_per_host_second": 44.14680200042207
+  },
+  {
+    "workers": 12,
+    "searches": 32,
+    "wall_seconds": 6.89601490400014,
+    "aggregate_emulated_seconds_per_host_second": 48.72382327728119
+  },
+  {
+    "workers": 16,
+    "searches": 32,
+    "wall_seconds": 6.38968008400002,
+    "aggregate_emulated_seconds_per_host_second": 52.58482511375745
+  }
+]

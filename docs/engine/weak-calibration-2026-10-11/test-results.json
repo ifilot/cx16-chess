@@ -1,0 +1,10 @@
+{
+  "native-tests": "PASS: rules/perft suite and 18 engine checks",
+  "ui": "PASS: menu/setup/about, disabled Continue, all sides and difficulties, keyboard/mouse, moves, pause/resume, flip/theme, 640x480 and palette",
+  "demo": "PASS: demo keyboard/mouse levels, independent 2/6-ply searches and no move time caps, automatic turns, responsive Escape, pause, saved levels and preferences, restart and automatic resume",
+  "menu-redraw": "PASS: main menu, all New Game layouts, shorter values, keyboard/mouse focus, disabled CPU, Options selectors/preferences, preview layers, and live clocks avoid transient clears",
+  "scorecard": "PASS: real 6-ply CPU search, animated figurines, target depth label, indicator clears after move",
+  "storage": "PASS: nine restart-persistent slots, castling/en passant/promotions/repetition/history/clocks, incremental dialog navigation, pause and Continue, overwrite confirmation, failed write, damaged-copy fallback, transactional malformed replay, persisted options",
+  "real-sd-storage": "PASS: real ROM CMDR-DOS SD save, overwrite generations, restart/load and persistent preferences",
+  "weakness-ui": "PASS: weak menu order, 350cp noise at search, 1-ply uncapped search, strong analysis, weak save and golden RAM stack guard"
+}

@@ -92,7 +92,10 @@ void main(void) {
             BRIDGE.status = STATUS_ERROR;
             continue;
         }
-        if(BRIDGE.flags & BRIDGE_FRESH) engine_new_game();
+        if(BRIDGE.flags & BRIDGE_FRESH) {
+            engine_new_game();
+            engine_set_weakness(BRIDGE.noise, BRIDGE.seed);
+        }
         engine_clear_history();
         engine_set_position(board, side, castling, ep_square, halfmove_clock);
         if(cmd == CMD_SEARCH) replay_moves();

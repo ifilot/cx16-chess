@@ -5,6 +5,8 @@ const play = document.getElementById('play');
 const player = document.getElementById('player');
 const viewport = document.getElementById('game-viewport');
 const screen = document.getElementById('screen');
+const audio = document.getElementById('audio');
+let sound = false;
 let started = false;
 function fail(message) {
   status.textContent = 'Unable to start the game';
@@ -40,6 +42,7 @@ var Module = {
     status.textContent = 'Game running · choose New Game to begin';
     document.getElementById('fullscreen').disabled = false;
     document.getElementById('restart').disabled = false;
+    audio.disabled = false;
     Module.ccall('j2c_start_audio', 'void', ['bool'], [false]);
     Module.SDL2?.audioContext?.suspend();
     document.querySelectorAll('[data-key]').forEach(button => { button.disabled = false; });
@@ -79,6 +82,22 @@ document.getElementById('fullscreen').addEventListener('click', async () => {
   } catch { status.textContent = 'Fullscreen is unavailable in this browser'; }
 });
 document.getElementById('restart').addEventListener('click', () => location.reload());
+audio.addEventListener('click', async () => {
+  try {
+    const enabled = !sound;
+    Module.ccall('j2c_start_audio', 'void', ['bool'], [enabled]);
+    const context = Module.SDL2?.audioContext;
+    if (enabled && !context) throw new Error('Audio context unavailable');
+    if (context) {
+      if (enabled) await context.resume();
+      else await context.suspend();
+    }
+    sound = enabled;
+    audio.textContent = sound ? 'Sound on' : 'Sound off';
+    audio.setAttribute('aria-pressed', String(sound));
+    canvas.focus({preventScroll: true});
+  } catch { status.textContent = 'Sound is unavailable in this browser'; }
+});
 fetch('build.json').then(response => response.json()).then(info => {
   document.getElementById('version').textContent = `v${info.version.replace(/^v/, '')} · ${info.commit.slice(0, 7)}`;
 }).catch(() => {});

@@ -1,0 +1,49 @@
+{
+  "source": "chipscore/assets/chess/project.yaml",
+  "files": {
+    "TITLE.ZSM": {
+      "bytes": 14820,
+      "sha256": "b01fa2fbacf4f8e215bbbba784eb2bef2b377fd974bd6f9f8968afe4e2a87f69"
+    },
+    "GAME.ZSM": {
+      "bytes": 25417,
+      "sha256": "7e297f84b21f5d6c79ac35a07bffa3039cdfa12ccf00fb19edaa8802344fc708"
+    },
+    "GAME2.ZSM": {
+      "bytes": 21185,
+      "sha256": "d949d632fa1c30e53d6e05ddc6c497253a8fce5473ee614131b264269dbd1452"
+    },
+    "GAME3.ZSM": {
+      "bytes": 18082,
+      "sha256": "31a4cb67ffc83b77336522e5acd56ea55ff41a893d30b39465056df42641f36e"
+    },
+    "GAME4.ZSM": {
+      "bytes": 23984,
+      "sha256": "398821e594a3ad5c2c225de235bf0ef89bc11208e28b87f1dd21bbcfed3ed587"
+    },
+    "WIN.ZSM": {
+      "bytes": 2269,
+      "sha256": "03884d4940aad2ec262d32d195097479b1c377d29e69b41ea5b6cbe150d29ca7"
+    },
+    "LOSE.ZSM": {
+      "bytes": 1585,
+      "sha256": "16b2d12edf852ab1d4d6c16fdc3f5afb60213f83cb1635cef044fb60aa266c0c"
+    },
+    "DRAW.ZSM": {
+      "bytes": 1498,
+      "sha256": "a65f3fa59e666d0cedab5c22020009e91538b79a84eff9ad3d63ec31913c2f27"
+    },
+    "SFX.BIN": {
+      "bytes": 2358,
+      "sha256": "accaf988536cf511b683edcf177a667811003c38b5f65831944009d00700fb66"
+    },
+    "music.h": {
+      "bytes": 1174,
+      "sha256": "a40fa538d366f52c706f9cf61afa5352fa33df0a232d4db2b16fadc5b5e84b82"
+    },
+    "sfx.h": {
+      "bytes": 1450,
+      "sha256": "6772a61dd98793fd77eda32181e7c297a9c07967dbfa777ed6844e1c837696df"
+    }
+  }
+}

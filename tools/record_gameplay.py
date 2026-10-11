@@ -1,4 +1,5 @@
 """Record a one-minute, 640x480 walkthrough using real emulator input/video."""
+from runtime_files import RUNTIME_FILES
 import argparse
 import json
 import math
@@ -87,7 +88,7 @@ def main():
     try:
         with tempfile.TemporaryDirectory(prefix='chess-recording-') as directory:
             runtime = Path(directory)
-            for name in ('CHESS.PRG', 'MENU.BIN', 'UI.BIN', 'CHESS.DAT'):
+            for name in RUNTIME_FILES:
                 shutil.copy2(ROOT / 'src' / name, runtime / name)
             with X16Agent(args.emulator.resolve(), args.rom.resolve(), fsroot=runtime,
                           options=['-prg', str(runtime / 'CHESS.PRG'), '-run']) as emu:
@@ -158,9 +159,9 @@ def main():
                 record(5)
                 click(620, 240)  # Continental chess set
                 record(10)
-                click(560, 288)  # Save preferences in disposable filesystem
+                click(560, 344)  # Save preferences in disposable filesystem
                 record(7)
-                click(560, 320)  # Done
+                click(560, 376)  # Done
                 record(5)
                 click(320, 376)  # New Game
                 record(12)

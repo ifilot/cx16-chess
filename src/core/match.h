@@ -59,15 +59,26 @@
 extern uint8_t match_state;
 extern uint8_t match_result;
 extern uint8_t match_computer;
-/* CPU difficulty: 0 easy, 1 normal, 2 hard; applied to computer moves. */
+/* Preserve depth IDs for old saves; the menu cycles in strength order. */
+#define DIFFICULTY_COUNT 10
+#define DIFFICULTY_SEVEN_PLY 8
+#define DIFFICULTY_EIGHT_PLY 9
+#define DIFFICULTY_ONE_PLY 5
+#define DIFFICULTY_EASY 6
+#define DIFFICULTY_BEGINNER 7
+#define EASY_NOISE 50
+#define BEGINNER_NOISE 350
+#define DEFAULT_DIFFICULTY 2
 extern uint8_t match_difficulty;
 /* Black's independent difficulty in computer-versus-computer mode. */
 extern uint8_t match_black_difficulty;
+extern uint8_t match_think_depth;
 /* Search budget and starting jiffy, for the thinking indicator. */
 extern uint16_t match_think_start, match_think_budget;
 extern uint16_t match_clock[2];         // seconds left, [0] white, [1] black
 extern uint8_t match_last_from;         // most recent move, NO_SQUARE if none
 extern uint8_t match_last_to;
+extern uint8_t match_last_flags;
 extern uint8_t match_eval_valid;        // match_eval holds an engine evaluation
 extern int16_t match_eval;              // centipawns, white's view (ENGINE_MATE scale)
 extern char match_best[8];              // SAN of the move suggested by match_analyse, or 

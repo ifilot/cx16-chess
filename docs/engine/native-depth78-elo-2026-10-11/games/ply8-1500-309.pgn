@@ -1,0 +1,14 @@
+[Event "X16 difficulty strength test"]
+[Site "Local AgentBridge / Stockfish"]
+[Date "2026.10.11"]
+[Round "310"]
+[White "Stockfish 16 UCI_Elo 1500"]
+[Black "CX16-CHESS ply8 (native C 8 ply)"]
+[Result "1/2-1/2"]
+[Termination "threefold_repetition"]
+[X16Clock "untimed fixed-depth native C; host time is not X16 time"]
+[StockfishMoveTime "0.1"]
+[OpeningPair "154"]
+
+1. c4 e5 2. Nc3 Nf6 3. d3 Nc6 4. Nf3 Bb4 5. e4 O-O 6. Be2 d6 7. Bd2 Bg4 8. Nd5 Bxd2+ 9. Qxd2 Nxd5 10. cxd5 Ne7 11. Nd4 Qd7 12. Bxg4 Qxg4 13. f3 Qh4+ 14. g3 Qh5 15. Nb5 Qxf3 16. Rf1 Qg4 17. Rc1 Qd7 18. Nxc7 Rac8 19. Qa5 Qd8 20. Rc3 a6 21. Qb6 Rb8 22. a3 Kh8 23. b4 Kg8 24. Kd2 h6 25. Ke2 Qd7 26. Kd2 Ng6 27. Rf2 Rfd8 28. b5 axb5 29. Kc2 b4 30. axb4 Ne7 31. Kb2 Nc8 32. Qb5 Qxb5 33. Nxb5 Nb6 34. Rc7 f6 35. Ka3 Na8 36. Rc4 Nb6 37. Rc3 Rd7 38. Rc1 Ra8+ 39. Kb3 Rad8 40. Rc3 Kh8 41. g4 Re7 42. Rfc2 Kh7 43. Rf2 Kg8 44. h3 Kh7 45. Rcc2 Kh8 46. Rc3 Red7 47. Rc1 Rf7 48. Rc3 Kh7 49. h4 Rfd7 50. h5 Re7 51. Rfc2 Kh8 52. Nc7 Rb8 53. Nb5 Rf8 54. Nxd6 Rd7 55. Nc4 Nxc4 56. dxc4 Rc8 57. c5 Kg8 58. Kc4 Rdd8 59. Kb5 Rd7 60. Rc1 Re8 61. Ra1 Rc8 62. Rf1 Kh7 63. d6 Rxd6 64. cxd6 Rxc3 65. Rd1 Rc8 66. d7 Rd8 67. Rd5 Kh8 68. Kb6 Kg8 69. Rd1 Kf7 70. b5 Ke7 71. Kc7 Rh8 72. d8=N Ke8 73. Ne6 Kf7 74. Nc5 Ra8 75. Rd7+ Kg8 76. Rd5 Ra1 77. Nd7 Rg1 78. Nc5 Ra1 79. Rd8+ Kh7 80. Nxb7 Rc1+ 81. Kb8 Rg1 82. Rd6 Rxg4 83. Rd5 Rxe4 84. Kc7 Rh4 85. Nd6 Rxh5 86. Rc5 Rh4 87. Kd7 Rb4 88. Kc6 e4 89. Rc2 e3 90. b6 h5 91. Ra2 Rb3 92. Nb5 Kg6 93. b7 h4 94. Rg2+ Kh7 95. Rh2 e2 96. Rxh4+ Kg6 97. Re4 e1=Q 98. Rxe1 Rg3 99. Re8 Rg2 100. Na3 Rb2 101. Re4 Kf5 102. Re3 Kg6 103. Rg3+ Kf7 104. Rc3 f5 105. Nb5 g5 106. Rc5 Kg6 107. Rc4 Re2 108. Rd4 Re8 109. Rd6+ Kg7 110. Rd5 g4 111. Nd6 Rh8 112. Rxf5 Kg6 113. Rf1 Rb8 114. Re1 g3 115. Rc1 g2 116. Nc8 Kg5 117. Kc7 Rxb7+ 118. Kxb7 Kf4 119. Nd6 Kf3 120. Rb1 g1=R 121. Rxg1 Kf2 122. Rg6 Kf3 123. Kc7 Ke3 124. Ne8 Ke4 125. Rd6 Ke5 126. Rc6 Kd5 127. Nd6 Kd4 128. Kb7 Ke5 129. Rb6 Kd5 130. Kc7 Kc5 131. Ne8 Kd5 132. Rb4 Ke5 133. Kc8 Kd5 134. Kc7 Ke5 135. Kb7 Kd5 1/2-1/2
+

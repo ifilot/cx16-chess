@@ -1,0 +1,1647 @@
+{
+  "baseline_sha256": "a2716a250a1c8d9c60b5234b502398c266db6cf93f7ee35384b9e6e5a4e9e5ec",
+  "candidate_sha256": "1291ec1908294c9c5a36774e48a1863fcb884cbaee2e462f79c6ca0386ecb310",
+  "engine_sha256": "32e97dbb244ceb52b200ce2fd07aefd71b2e2e076e30550320eaf6df9a6fd78b",
+  "baseline": [
+    {
+      "position": "opening",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.24114741899984438,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 561,
+        "move": "g1f3",
+        "depth": 3,
+        "score": 40,
+        "jiffies": 64,
+        "pv": [
+          "g1f3",
+          "d7d6",
+          "f1d3"
+        ],
+        "seconds": 1.50000075,
+        "nps": 373.99981300009347
+      }
+    },
+    {
+      "position": "opening",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.46938521700008096,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1231,
+        "move": "g1f3",
+        "depth": 3,
+        "score": 10,
+        "jiffies": 143,
+        "pv": [
+          "g1f3",
+          "b8c6",
+          "d2d3",
+          "d7d6"
+        ],
+        "seconds": 2.750002125,
+        "nps": 447.6360177358045
+      }
+    },
+    {
+      "position": "opening",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.85178866199999,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 5633,
+        "move": "g1f3",
+        "depth": 5,
+        "score": 10,
+        "jiffies": 628,
+        "pv": [
+          "g1f3",
+          "b8c6",
+          "f1c4",
+          "f8e7",
+          "d2d3",
+          "e8g8"
+        ],
+        "seconds": 10.750006875,
+        "nps": 523.9996648839352
+      }
+    },
+    {
+      "position": "opening",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.6253410350000195,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 10495,
+        "move": "g1f3",
+        "depth": 5,
+        "score": 10,
+        "jiffies": 1204,
+        "pv": [
+          "g1f3",
+          "b8c6",
+          "d2d4",
+          "d7d6",
+          "d4e5",
+          "d6e5"
+        ],
+        "seconds": 20.50001375,
+        "nps": 511.95087613050987
+      }
+    },
+    {
+      "position": "italian",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.33305112600010034,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 767,
+        "move": "e8g8",
+        "depth": 3,
+        "score": 0,
+        "jiffies": 101,
+        "pv": [
+          "e8g8",
+          "c1g5",
+          "c5b6"
+        ],
+        "seconds": 2.00000125,
+        "nps": 383.4997603126498
+      }
+    },
+    {
+      "position": "italian",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.4254014789999019,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1026,
+        "move": "e8g8",
+        "depth": 3,
+        "score": 0,
+        "jiffies": 133,
+        "pv": [
+          "e8g8",
+          "c1g5",
+          "c5b6",
+          "e1f1"
+        ],
+        "seconds": 2.500001375,
+        "nps": 410.3997742801241
+      }
+    },
+    {
+      "position": "italian",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.8115674470000158,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 4095,
+        "move": "e8g8",
+        "depth": 4,
+        "score": -25,
+        "jiffies": 615,
+        "pv": [
+          "e8g8",
+          "e1g1",
+          "c5b6",
+          "c1g5",
+          "d7d6"
+        ],
+        "seconds": 10.750006375,
+        "nps": 380.93000665778675
+      }
+    },
+    {
+      "position": "italian",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.5667860159999236,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 8704,
+        "move": "e8g8",
+        "depth": 4,
+        "score": -15,
+        "jiffies": 1214,
+        "pv": [
+          "e8g8",
+          "e1g1"
+        ],
+        "seconds": 20.750016625,
+        "nps": 419.46954343705255
+      }
+    },
+    {
+      "position": "sicilian",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.2841467350001494,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 493,
+        "move": "d4c6",
+        "depth": 3,
+        "score": 37,
+        "jiffies": 78,
+        "pv": [
+          "d4c6",
+          "b7c6",
+          "f1d3"
+        ],
+        "seconds": 1.750001375,
+        "nps": 281.71406436752085
+      }
+    },
+    {
+      "position": "sicilian",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.46051678800017726,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1043,
+        "move": "d4c6",
+        "depth": 3,
+        "score": 37,
+        "jiffies": 144,
+        "pv": [
+          "d4c6",
+          "b7c6",
+          "f1d3",
+          "d6d5"
+        ],
+        "seconds": 2.750001625,
+        "nps": 379.27250315715725
+      }
+    },
+    {
+      "position": "sicilian",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.8622916829999667,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 5376,
+        "move": "d4c6",
+        "depth": 5,
+        "score": 27,
+        "jiffies": 602,
+        "pv": [
+          "d4c6"
+        ],
+        "seconds": 10.500007625,
+        "nps": 511.9996281907462
+      }
+    },
+    {
+      "position": "sicilian",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.6229674950000117,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 10752,
+        "move": "d4c6",
+        "depth": 6,
+        "score": 42,
+        "jiffies": 1215,
+        "pv": [
+          "d4c6",
+          "b7c6",
+          "e1c1",
+          "d6d5",
+          "c1b1",
+          "e7e5",
+          "f1d3"
+        ],
+        "seconds": 20.75001575,
+        "nps": 518.1682813903407
+      }
+    },
+    {
+      "position": "qgd",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.5141844249999394,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1383,
+        "move": "e1g1",
+        "depth": 3,
+        "score": 40,
+        "jiffies": 162,
+        "pv": [
+          "e1g1",
+          "c6c5",
+          "c4d5"
+        ],
+        "seconds": 3.000001375,
+        "nps": 460.9997887084302
+      }
+    },
+    {
+      "position": "qgd",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.4280749019999348,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1177,
+        "move": "e1g1",
+        "depth": 2,
+        "score": 40,
+        "jiffies": 132,
+        "pv": [
+          "e1g1",
+          "c6c5",
+          "c4d5"
+        ],
+        "seconds": 2.500002375,
+        "nps": 470.7995527404249
+      }
+    },
+    {
+      "position": "qgd",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.818466737000108,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 5376,
+        "move": "e1g1",
+        "depth": 4,
+        "score": 25,
+        "jiffies": 600,
+        "pv": [
+          "e1g1",
+          "h7h6",
+          "g5h4",
+          "c6c5",
+          "c4d5"
+        ],
+        "seconds": 10.50000925,
+        "nps": 511.9995489527783
+      }
+    },
+    {
+      "position": "qgd",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.6174244050000652,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 10752,
+        "move": "e1g1",
+        "depth": 5,
+        "score": 10,
+        "jiffies": 1245,
+        "pv": [
+          "e1g1",
+          "h7h6",
+          "g5f6",
+          "d7f6",
+          "d1c2",
+          "c6c5"
+        ],
+        "seconds": 21.2500135,
+        "nps": 505.97614914456403
+      }
+    },
+    {
+      "position": "kiwipete",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.4287435109999933,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1176,
+        "move": "e2a6",
+        "depth": 3,
+        "score": 168,
+        "jiffies": 136,
+        "pv": [
+          "e2a6",
+          "b4c3",
+          "d2c3"
+        ],
+        "seconds": 2.500001875,
+        "nps": 470.39964720026455
+      }
+    },
+    {
+      "position": "kiwipete",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.4268241979998493,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1128,
+        "move": "e2a6",
+        "depth": 2,
+        "score": 168,
+        "jiffies": 131,
+        "pv": [
+          "e2a6",
+          "b4c3",
+          "d2c3"
+        ],
+        "seconds": 2.500002625,
+        "nps": 451.19952624049745
+      }
+    },
+    {
+      "position": "kiwipete",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.8010206540000127,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 5120,
+        "move": "e2a6",
+        "depth": 4,
+        "score": 70,
+        "jiffies": 611,
+        "pv": [
+          "e2a6",
+          "e6d5",
+          "c3d5",
+          "b6d5",
+          "e4d5"
+        ],
+        "seconds": 10.5000085,
+        "nps": 487.61865288013814
+      }
+    },
+    {
+      "position": "kiwipete",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.622213193000107,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 10497,
+        "move": "e2a6",
+        "depth": 5,
+        "score": 70,
+        "jiffies": 1223,
+        "pv": [
+          "e2a6",
+          "e6d5",
+          "c3d5",
+          "b6d5",
+          "e4d5",
+          "e7e5",
+          "e1f1"
+        ],
+        "seconds": 21.00001325,
+        "nps": 499.8568274712875
+      }
+    },
+    {
+      "position": "middlegame",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.4717080939999505,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1328,
+        "move": "d4e6",
+        "depth": 3,
+        "score": 297,
+        "jiffies": 146,
+        "pv": [
+          "d4e6",
+          "f7e6",
+          "b3e6",
+          "g8h8"
+        ],
+        "seconds": 2.75000225,
+        "nps": 482.90869580197614
+      }
+    },
+    {
+      "position": "middlegame",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.4144009439999081,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1231,
+        "move": "d4e6",
+        "depth": 2,
+        "score": 297,
+        "jiffies": 134,
+        "pv": [
+          "d1d3",
+          "e6e5",
+          "c3b5"
+        ],
+        "seconds": 2.500002125,
+        "nps": 492.39958146035576
+      }
+    },
+    {
+      "position": "middlegame",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.8221138809999502,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 5376,
+        "move": "d4e6",
+        "depth": 4,
+        "score": 312,
+        "jiffies": 616,
+        "pv": [
+          "d4e6",
+          "f7e6",
+          "b3e6",
+          "g8h8",
+          "d1d4",
+          "f6d7"
+        ],
+        "seconds": 10.75000675,
+        "nps": 500.09270924411277
+      }
+    },
+    {
+      "position": "middlegame",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.5101972610000303,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 10752,
+        "move": "f2f3",
+        "depth": 5,
+        "score": 330,
+        "jiffies": 1215,
+        "pv": [
+          "f2f3",
+          "b5b4"
+        ],
+        "seconds": 20.750012875,
+        "nps": 518.1683531846966
+      }
+    },
+    {
+      "position": "rook_end",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.15668432600000415,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 469,
+        "move": "g2f3",
+        "depth": 3,
+        "score": 140,
+        "jiffies": 36,
+        "pv": [
+          "g2f3",
+          "b4b2",
+          "f3e3"
+        ],
+        "seconds": 1.000001,
+        "nps": 468.99953100046906
+      }
+    },
+    {
+      "position": "rook_end",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.41413801399994554,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1579,
+        "move": "g2f3",
+        "depth": 4,
+        "score": 110,
+        "jiffies": 129,
+        "pv": [
+          "g2f3",
+          "g7f6",
+          "f3e3",
+          "f6e6",
+          "h4h5"
+        ],
+        "seconds": 2.500001375,
+        "nps": 631.599652620191
+      }
+    },
+    {
+      "position": "rook_end",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.7801252760000352,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 7681,
+        "move": "d5d6",
+        "depth": 5,
+        "score": 110,
+        "jiffies": 606,
+        "pv": [
+          "d5d6"
+        ],
+        "seconds": 10.500007125,
+        "nps": 731.5233131329899
+      }
+    },
+    {
+      "position": "rook_end",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.562154474999943,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 15615,
+        "move": "d5d6",
+        "depth": 6,
+        "score": 115,
+        "jiffies": 1217,
+        "pv": [
+          "d5d6",
+          "b4b3",
+          "g3g4",
+          "g7f8",
+          "d6d7",
+          "b3a3",
+          "g4g5"
+        ],
+        "seconds": 20.750012875,
+        "nps": 752.5296535508776
+      }
+    },
+    {
+      "position": "pawn_end",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.03621555199993054,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 104,
+        "move": "d2d3",
+        "depth": 3,
+        "score": 141,
+        "jiffies": 5,
+        "pv": [
+          "d2d3",
+          "c7d7",
+          "d3e3"
+        ],
+        "seconds": 0.250000625,
+        "nps": 415.99896000260003
+      }
+    },
+    {
+      "position": "pawn_end",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.379910615999961,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 2456,
+        "move": "d2d3",
+        "depth": 7,
+        "score": 161,
+        "jiffies": 121,
+        "pv": [
+          "d2d3",
+          "c7b7",
+          "d3c3",
+          "b7c7",
+          "c3b3",
+          "c7d8",
+          "b3c4",
+          "d8c7",
+          "c4b5",
+          "c7b8",
+          "b5a5",
+          "b8c7"
+        ],
+        "seconds": 2.2500005,
+        "nps": 1091.5553129877082
+      }
+    },
+    {
+      "position": "pawn_end",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.8116834719999133,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 12288,
+        "move": "d2d3",
+        "depth": 11,
+        "score": 141,
+        "jiffies": 607,
+        "pv": [
+          "d2d3",
+          "c7b7",
+          "d3e3",
+          "b7c7",
+          "e3d2",
+          "c7c8",
+          "d2c2",
+          "c8b8",
+          "c2b3",
+          "b8b7",
+          "b3c3",
+          "b7c7",
+          "c3d2"
+        ],
+        "seconds": 10.500008375,
+        "nps": 1170.2847808442818
+      }
+    },
+    {
+      "position": "pawn_end",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.567869524000116,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 25088,
+        "move": "d2d3",
+        "depth": 12,
+        "score": 141,
+        "jiffies": 1211,
+        "pv": [
+          "d2d3",
+          "c7b7",
+          "d3c4",
+          "b7b6",
+          "c4b3",
+          "b6c7",
+          "b3c3",
+          "c7b6",
+          "c3c4",
+          "b6a6",
+          "c4b3",
+          "a6b6",
+          "b3c3",
+          "b6a6",
+          "c3d2",
+          "a6a7"
+        ],
+        "seconds": 20.75001425,
+        "nps": 1209.0594106459469
+      }
+    },
+    {
+      "position": "repetition-True",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.8613743099999738,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 6144,
+        "move": "b1c3",
+        "depth": 5,
+        "score": 10,
+        "jiffies": 617,
+        "pv": [
+          "b1c3",
+          "g8f6",
+          "g1f3",
+          "d7d5",
+          "d2d4",
+          "b8c6"
+        ],
+        "seconds": 10.7500075,
+        "nps": 571.5344849759407
+      }
+    },
+    {
+      "position": "repetition-False",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.855558174999942,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 6144,
+        "move": "b1c3",
+        "depth": 6,
+        "score": 20,
+        "jiffies": 605,
+        "pv": [
+          "b1c3",
+          "g8f6",
+          "g1f3",
+          "b8c6",
+          "e2e4",
+          "d7d6",
+          "d2d4"
+        ],
+        "seconds": 10.500008,
+        "nps": 585.1424113200676
+      }
+    }
+  ],
+  "candidate": [
+    {
+      "position": "opening",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.22349287800011552,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 561,
+        "move": "g1f3",
+        "depth": 3,
+        "score": 40,
+        "jiffies": 64,
+        "pv": [
+          "g1f3",
+          "d7d6",
+          "f1d3"
+        ],
+        "seconds": 1.500001875,
+        "nps": 373.9995325005844
+      }
+    },
+    {
+      "position": "opening",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.4236891130001368,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1231,
+        "move": "g1f3",
+        "depth": 3,
+        "score": 10,
+        "jiffies": 143,
+        "pv": [
+          "g1f3",
+          "b8c6",
+          "d2d3",
+          "d7d6"
+        ],
+        "seconds": 2.750002125,
+        "nps": 447.6360177358045
+      }
+    },
+    {
+      "position": "opening",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.6862204940000538,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 5633,
+        "move": "g1f3",
+        "depth": 5,
+        "score": 10,
+        "jiffies": 628,
+        "pv": [
+          "g1f3",
+          "b8c6",
+          "f1c4",
+          "f8e7",
+          "d2d3",
+          "e8g8"
+        ],
+        "seconds": 10.750006875,
+        "nps": 523.9996648839352
+      }
+    },
+    {
+      "position": "opening",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.1439732819999335,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 10495,
+        "move": "g1f3",
+        "depth": 5,
+        "score": 10,
+        "jiffies": 1204,
+        "pv": [
+          "g1f3",
+          "b8c6",
+          "d2d4",
+          "d7d6",
+          "d4e5",
+          "d6e5"
+        ],
+        "seconds": 20.50001375,
+        "nps": 511.95087613050987
+      }
+    },
+    {
+      "position": "italian",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.29085968599997614,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 767,
+        "move": "e8g8",
+        "depth": 3,
+        "score": 0,
+        "jiffies": 101,
+        "pv": [
+          "e8g8",
+          "c1g5",
+          "c5b6"
+        ],
+        "seconds": 2.00000125,
+        "nps": 383.4997603126498
+      }
+    },
+    {
+      "position": "italian",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.37012349899987385,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1026,
+        "move": "e8g8",
+        "depth": 3,
+        "score": 0,
+        "jiffies": 133,
+        "pv": [
+          "e8g8",
+          "c1g5",
+          "c5b6",
+          "e1f1"
+        ],
+        "seconds": 2.500001375,
+        "nps": 410.3997742801241
+      }
+    },
+    {
+      "position": "italian",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.6408652149998488,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 4095,
+        "move": "e8g8",
+        "depth": 4,
+        "score": -25,
+        "jiffies": 615,
+        "pv": [
+          "e8g8",
+          "e1g1",
+          "c5b6",
+          "c1g5",
+          "d7d6"
+        ],
+        "seconds": 10.750007,
+        "nps": 380.92998451070775
+      }
+    },
+    {
+      "position": "italian",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.156648251999968,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 8704,
+        "move": "e8g8",
+        "depth": 4,
+        "score": -15,
+        "jiffies": 1214,
+        "pv": [
+          "e8g8",
+          "e1g1"
+        ],
+        "seconds": 20.750016,
+        "nps": 419.4695560716676
+      }
+    },
+    {
+      "position": "sicilian",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.26149115399994116,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 493,
+        "move": "d4c6",
+        "depth": 3,
+        "score": 37,
+        "jiffies": 78,
+        "pv": [
+          "d4c6",
+          "b7c6",
+          "f1d3"
+        ],
+        "seconds": 1.750001375,
+        "nps": 281.71406436752085
+      }
+    },
+    {
+      "position": "sicilian",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.4143315500000426,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1043,
+        "move": "d4c6",
+        "depth": 3,
+        "score": 37,
+        "jiffies": 144,
+        "pv": [
+          "d4c6",
+          "b7c6",
+          "f1d3",
+          "d6d5"
+        ],
+        "seconds": 2.750001625,
+        "nps": 379.27250315715725
+      }
+    },
+    {
+      "position": "sicilian",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.626793077000002,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 5376,
+        "move": "d4c6",
+        "depth": 5,
+        "score": 27,
+        "jiffies": 602,
+        "pv": [
+          "d4c6"
+        ],
+        "seconds": 10.500007,
+        "nps": 511.9996586668942
+      }
+    },
+    {
+      "position": "sicilian",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.1323981400000775,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 10752,
+        "move": "d4c6",
+        "depth": 6,
+        "score": 42,
+        "jiffies": 1215,
+        "pv": [
+          "d4c6",
+          "b7c6",
+          "e1c1",
+          "d6d5",
+          "c1b1",
+          "e7e5",
+          "f1d3"
+        ],
+        "seconds": 20.750016,
+        "nps": 518.1682751473542
+      }
+    },
+    {
+      "position": "qgd",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.44510644299998603,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1383,
+        "move": "e1g1",
+        "depth": 3,
+        "score": 40,
+        "jiffies": 162,
+        "pv": [
+          "e1g1",
+          "c6c5",
+          "c4d5"
+        ],
+        "seconds": 3.00000175,
+        "nps": 460.9997310834902
+      }
+    },
+    {
+      "position": "qgd",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.3668719429999783,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1177,
+        "move": "e1g1",
+        "depth": 2,
+        "score": 40,
+        "jiffies": 132,
+        "pv": [
+          "e1g1",
+          "c6c5",
+          "c4d5"
+        ],
+        "seconds": 2.500002375,
+        "nps": 470.7995527404249
+      }
+    },
+    {
+      "position": "qgd",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.5807780799998454,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 5376,
+        "move": "e1g1",
+        "depth": 4,
+        "score": 25,
+        "jiffies": 600,
+        "pv": [
+          "e1g1",
+          "h7h6",
+          "g5h4",
+          "c6c5",
+          "c4d5"
+        ],
+        "seconds": 10.50000925,
+        "nps": 511.9995489527783
+      }
+    },
+    {
+      "position": "qgd",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.247766189999993,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 10752,
+        "move": "e1g1",
+        "depth": 5,
+        "score": 10,
+        "jiffies": 1245,
+        "pv": [
+          "e1g1",
+          "h7h6",
+          "g5f6",
+          "d7f6",
+          "d1c2",
+          "c6c5"
+        ],
+        "seconds": 21.2500135,
+        "nps": 505.97614914456403
+      }
+    },
+    {
+      "position": "kiwipete",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.38251616000002286,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1176,
+        "move": "e2a6",
+        "depth": 3,
+        "score": 168,
+        "jiffies": 136,
+        "pv": [
+          "e2a6",
+          "b4c3",
+          "d2c3"
+        ],
+        "seconds": 2.500001875,
+        "nps": 470.39964720026455
+      }
+    },
+    {
+      "position": "kiwipete",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.3756665119999525,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1128,
+        "move": "e2a6",
+        "depth": 2,
+        "score": 168,
+        "jiffies": 131,
+        "pv": [
+          "e2a6",
+          "b4c3",
+          "d2c3"
+        ],
+        "seconds": 2.500002,
+        "nps": 451.1996390402888
+      }
+    },
+    {
+      "position": "kiwipete",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.610663648000127,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 5120,
+        "move": "e2a6",
+        "depth": 4,
+        "score": 70,
+        "jiffies": 611,
+        "pv": [
+          "e2a6",
+          "e6d5",
+          "c3d5",
+          "b6d5",
+          "e4d5"
+        ],
+        "seconds": 10.500009125,
+        "nps": 487.6186238552435
+      }
+    },
+    {
+      "position": "kiwipete",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.258554781000157,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 10497,
+        "move": "e2a6",
+        "depth": 5,
+        "score": 70,
+        "jiffies": 1223,
+        "pv": [
+          "e2a6",
+          "e6d5",
+          "c3d5",
+          "b6d5",
+          "e4d5",
+          "e7e5",
+          "e1f1"
+        ],
+        "seconds": 21.000012875,
+        "nps": 499.8568363972967
+      }
+    },
+    {
+      "position": "middlegame",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.409596540000166,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1328,
+        "move": "d4e6",
+        "depth": 3,
+        "score": 297,
+        "jiffies": 146,
+        "pv": [
+          "d4e6",
+          "f7e6",
+          "b3e6",
+          "g8h8"
+        ],
+        "seconds": 2.750001125,
+        "nps": 482.90889335545273
+      }
+    },
+    {
+      "position": "middlegame",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.3649049130001458,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1231,
+        "move": "d4e6",
+        "depth": 2,
+        "score": 297,
+        "jiffies": 134,
+        "pv": [
+          "d1d3",
+          "e6e5",
+          "c3b5"
+        ],
+        "seconds": 2.500001125,
+        "nps": 492.3997784200997
+      }
+    },
+    {
+      "position": "middlegame",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.593071160000136,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 5376,
+        "move": "d4e6",
+        "depth": 4,
+        "score": 312,
+        "jiffies": 616,
+        "pv": [
+          "d4e6",
+          "f7e6",
+          "b3e6",
+          "g8h8",
+          "d1d4",
+          "f6d7"
+        ],
+        "seconds": 10.75000675,
+        "nps": 500.09270924411277
+      }
+    },
+    {
+      "position": "middlegame",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.1649951489998784,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 10752,
+        "move": "f2f3",
+        "depth": 5,
+        "score": 330,
+        "jiffies": 1215,
+        "pv": [
+          "f2f3",
+          "b5b4"
+        ],
+        "seconds": 20.750012875,
+        "nps": 518.1683531846966
+      }
+    },
+    {
+      "position": "rook_end",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.14134503800005405,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 469,
+        "move": "g2f3",
+        "depth": 3,
+        "score": 140,
+        "jiffies": 36,
+        "pv": [
+          "g2f3",
+          "b4b2",
+          "f3e3"
+        ],
+        "seconds": 1.000001,
+        "nps": 468.99953100046906
+      }
+    },
+    {
+      "position": "rook_end",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.39732536199994684,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1579,
+        "move": "g2f3",
+        "depth": 4,
+        "score": 110,
+        "jiffies": 129,
+        "pv": [
+          "g2f3",
+          "g7f6",
+          "f3e3",
+          "f6e6",
+          "h4h5"
+        ],
+        "seconds": 2.500001375,
+        "nps": 631.599652620191
+      }
+    },
+    {
+      "position": "rook_end",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.6200558289999663,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 7681,
+        "move": "d5d6",
+        "depth": 5,
+        "score": 110,
+        "jiffies": 606,
+        "pv": [
+          "d5d6"
+        ],
+        "seconds": 10.500007125,
+        "nps": 731.5233131329899
+      }
+    },
+    {
+      "position": "rook_end",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.325232629999846,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 15615,
+        "move": "d5d6",
+        "depth": 6,
+        "score": 115,
+        "jiffies": 1217,
+        "pv": [
+          "d5d6",
+          "b4b3",
+          "g3g4",
+          "g7f8",
+          "d6d7",
+          "b3a3",
+          "g4g5"
+        ],
+        "seconds": 20.750012875,
+        "nps": 752.5296535508776
+      }
+    },
+    {
+      "position": "pawn_end",
+      "depth": 3,
+      "cap": 0,
+      "wall_seconds": 0.03359377800006769,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 104,
+        "move": "d2d3",
+        "depth": 3,
+        "score": 141,
+        "jiffies": 5,
+        "pv": [
+          "d2d3",
+          "c7d7",
+          "d3e3"
+        ],
+        "seconds": 0.250000625,
+        "nps": 415.99896000260003
+      }
+    },
+    {
+      "position": "pawn_end",
+      "depth": 0,
+      "cap": 2,
+      "wall_seconds": 0.3552994479998688,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 2456,
+        "move": "d2d3",
+        "depth": 7,
+        "score": 161,
+        "jiffies": 121,
+        "pv": [
+          "d2d3",
+          "c7b7",
+          "d3c3",
+          "b7c7",
+          "c3b3",
+          "c7d8",
+          "b3c4",
+          "d8c7",
+          "c4b5",
+          "c7b8",
+          "b5a5",
+          "b8c7"
+        ],
+        "seconds": 2.2500005,
+        "nps": 1091.5553129877082
+      }
+    },
+    {
+      "position": "pawn_end",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.6088766220000252,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 12288,
+        "move": "d2d3",
+        "depth": 11,
+        "score": 141,
+        "jiffies": 607,
+        "pv": [
+          "d2d3",
+          "c7b7",
+          "d3e3",
+          "b7c7",
+          "e3d2",
+          "c7c8",
+          "d2c2",
+          "c8b8",
+          "c2b3",
+          "b8b7",
+          "b3c3",
+          "b7c7",
+          "c3d2"
+        ],
+        "seconds": 10.500008375,
+        "nps": 1170.2847808442818
+      }
+    },
+    {
+      "position": "pawn_end",
+      "depth": 0,
+      "cap": 20,
+      "wall_seconds": 3.1814663239999845,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 25088,
+        "move": "d2d3",
+        "depth": 12,
+        "score": 141,
+        "jiffies": 1211,
+        "pv": [
+          "d2d3",
+          "c7b7",
+          "d3c4",
+          "b7b6",
+          "c4b3",
+          "b6c7",
+          "b3c3",
+          "c7b6",
+          "c3c4",
+          "b6a6",
+          "c4b3",
+          "a6b6",
+          "b3c3",
+          "b6a6",
+          "c3d2",
+          "a6a7"
+        ],
+        "seconds": 20.750013125,
+        "nps": 1209.0594761973193
+      }
+    },
+    {
+      "position": "repetition-True",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.6102933699999085,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 6144,
+        "move": "b1c3",
+        "depth": 5,
+        "score": 10,
+        "jiffies": 617,
+        "pv": [
+          "b1c3",
+          "g8f6",
+          "g1f3",
+          "d7d5",
+          "d2d4",
+          "b8c6"
+        ],
+        "seconds": 10.75000675,
+        "nps": 571.5345248504146
+      }
+    },
+    {
+      "position": "repetition-False",
+      "depth": 0,
+      "cap": 10,
+      "wall_seconds": 1.5777945719999025,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 6144,
+        "move": "b1c3",
+        "depth": 6,
+        "score": 20,
+        "jiffies": 605,
+        "pv": [
+          "b1c3",
+          "g8f6",
+          "g1f3",
+          "b8c6",
+          "e2e4",
+          "d7d6",
+          "d2d4"
+        ],
+        "seconds": 10.500007375,
+        "nps": 585.1424461499486
+      }
+    }
+  ],
+  "differences": [],
+  "baseline_wall_seconds": 52.855477046999795,
+  "candidate_wall_seconds": 47.02266083199993,
+  "throughput_ratio": 1.1240426660634761
+}

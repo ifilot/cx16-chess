@@ -10,6 +10,7 @@ and reads back results. Timing is measured in emulated CPU cycles (8 MHz).
 """
 import struct
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -37,17 +38,22 @@ def default_rom():
 class EngineBridge:
     def __init__(self, emu=None, rom=None, prg=ROOT / 'src/ENGINE.PRG'):
         emu = emu or ROOT.parent / 'x16-emulator/build/x16emu'
-        self.emu = X16Agent(emu, rom or default_rom(), fsroot=ROOT / 'src',
+        # A runtime AUTOBOOT.X16 would launch the GUI before the headless PRG.
+        # The harness needs no disk assets, so give it an empty boot directory.
+        self._boot_directory = tempfile.TemporaryDirectory(prefix='chess-engine-')
+        self.emu = X16Agent(emu, rom or default_rom(), fsroot=self._boot_directory.name,
                             options=['-prg', str(prg), '-run'], timeout=600)
         for _ in range(100):
             self.emu.advance(10)
             if self.emu.read_memory(MAILBOX + 1)[0] == READY:
                 break
         else:
+            self.close()
             raise RuntimeError('ENGINE.PRG did not start')
 
     def close(self):
         self.emu.close()
+        self._boot_directory.cleanup()
 
     def __enter__(self):
         return self
@@ -55,7 +61,7 @@ class EngineBridge:
     def __exit__(self, *exc):
         self.close()
 
-    def _run(self, cmd, fen, depth=0, time_limit=0.0, fresh=False, moves=(), max_seconds=3600):
+    def _run(self, cmd, fen, depth=0, time_limit=0.0, fresh=False, moves=(), max_seconds=3600, noise=0, seed=1):
         fen = STARTPOS if fen == 'startpos' else fen
         data = fen.encode('ascii')[:127] + b'\0'
         self.emu.write_memory(MAILBOX + 0x80, data)
@@ -64,6 +70,7 @@ class EngineBridge:
         self.emu.write_memory(MAILBOX + 2, bytes([depth, 1 if fresh else 0]) +
                               struct.pack('<H', min(65535, round(time_limit * 60))))
         self.emu.write_memory(MAILBOX + 1, bytes([BUSY]))
+        self.emu.write_memory(MAILBOX + 0x14, struct.pack('<HH', noise, seed))
         start = self.emu.request('status')['cycles']
         self.emu.write_memory(MAILBOX, bytes([cmd]))
         step = 2_000_000                                   # 1/4 emulated second
@@ -94,6 +101,7 @@ class EngineBridge:
             'move': square_name(frm) + square_name(to) + PROMO.get(promo, '') if frm != to else None,
             'depth': depth_done,
             'score': score,
+            'jiffies': jiffies,
             'pv': pv,
             'seconds': cycles / CPU_HZ,
             'nps': nodes / max(1e-9, cycles / CPU_HZ),
@@ -102,10 +110,10 @@ class EngineBridge:
     def perft(self, fen, depth):
         return self._run(CMD_PERFT, fen, depth=depth)
 
-    def search(self, fen, depth=0, time_limit=0.0, fresh=False, moves=()):
+    def search(self, fen, depth=0, time_limit=0.0, fresh=False, moves=(), noise=0, seed=1):
         """Search fen (after playing moves: (from, to, promo) 0x88 triples)."""
         return self._run(CMD_SEARCH, fen, depth=depth, time_limit=time_limit, fresh=fresh,
-                         moves=moves)
+                         moves=moves, noise=noise, seed=seed)
 
     def legal_moves(self, fen):
         self._run(CMD_LIST, fen)

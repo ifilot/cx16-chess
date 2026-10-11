@@ -1,0 +1,6 @@
+{
+  "workers": 16,
+  "opponent_move_time_seconds": 0.1,
+  "backend": "native",
+  "note": "Started after both earlier full runs completed and passed validation."
+}

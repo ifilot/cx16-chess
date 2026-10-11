@@ -18,6 +18,8 @@ MOVES_Y, MOVE_ROWS, MOVE_ROW_H = 128, 19, 16  # paired white/black moves
 # of character codes; unsupported codes show as blanks.
 FONT_RANGES = [(32, 127), (0x80, 0x80), (0x87, 0x87)]
 MENU_ARROW_LEFT, MENU_ARROW_RIGHT = 0x80, 0x87
+# Reuse the non-printing ASCII DEL slot; no extra resident tiles are needed.
+MENU_WARNING = 0x7F
 L1_FONT = 0
 L1_FIGURINES = 2 * sum(b - a + 1 for a, b in FONT_RANGES)
 L1_PIECES = L1_FIGURINES + 6 * 4    # 12 pieces x 49 tiles
@@ -33,6 +35,7 @@ VRAM_L0_MAP_PLAIN = 0x06000    # 128 x 64 entries
 VRAM_L0_MAP_INFO = 0x0A000
 VRAM_L1_TILES = 0x10000
 VRAM_L1_MAP = 0x18000          # 128 x 64 entries
+VRAM_DRAG = 0x1C000           # one 64x64 dragged piece, below resident sprites
 VRAM_SPRITES = 0x1D000
 VRAM_POINTER = VRAM_SPRITES
 VRAM_CURSOR = VRAM_SPRITES + 0x100

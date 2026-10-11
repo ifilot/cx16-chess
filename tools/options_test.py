@@ -93,7 +93,7 @@ def main():
         session.click(492, 240)
         visible()
         assert read('start_piece_set') == b'\1'
-        session.click(560, 320)  # DONE returns to the opening screen.
+        session.click(560, 376)  # DONE returns to the opening screen.
         visible()
         session.press('n')
         visible()

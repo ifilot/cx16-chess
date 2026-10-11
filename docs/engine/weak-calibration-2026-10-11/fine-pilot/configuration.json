@@ -1,0 +1,63 @@
+{
+  "stockfish": "/usr/games/stockfish",
+  "stockfish_id": {
+    "name": "Stockfish 16",
+    "author": "the Stockfish developers (see AUTHORS file)"
+  },
+  "sf_time": 0.1,
+  "date": "2026-10-11",
+  "games_per_opponent": 48,
+  "opponents": [
+    1320,
+    1500
+  ],
+  "levels": {
+    "noise0": 1,
+    "noise10": 1,
+    "noise25": 1,
+    "noise50": 1
+  },
+  "clock_seconds": null,
+  "engine_sha256": "9b5dd37b770b5bb2844634a33cc269e80cceb78e4218a83cac4650f2a4e30ee4",
+  "search_mode": "depth",
+  "noise_by_level": {
+    "noise0": 0,
+    "noise10": 10,
+    "noise25": 25,
+    "noise50": 50
+  },
+  "seed": 1,
+  "weakness_policy": "full-window root scores plus uniform integer noise 0..N; xorshift16",
+  "backend": "native",
+  "native_engine": "/mnt/d/PROGRAMMING/CX16/cx16-chess/tests/uci",
+  "native_engine_sha256": "6eb1875108e2d488064b59056a5076fb3f52a047e7fd2282cf5aa7948ec0d18f",
+  "stockfish_sha256": "00628bd9c9855c1b7ff93d7f8d51b413586cdc6336fe637f9a14a61531a05aca",
+  "timing_source": "host wall time; no X16 clock simulation",
+  "openings": [
+    "e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 d7d6 c2c3 g8f6",
+    "d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 g1f3 b8c6",
+    "e2e4 c7c5 g1f3 d7d6 h2h3 a7a6 b1c3 e7e6",
+    "e2e4 e7e6 d2d4 d7d5 e4e5 c8d7 c2c3 c7c5",
+    "g1f3 d7d5 g2g3 g8f6 d2d3 b8d7 d3d4 g7g6 b1a3 d7b6 c2c3 c7c6",
+    "d2d4 d7d5 g1f3 g8f6 e2e3 e7e6 c2c4 f8e7",
+    "e2e4 e7e5 f1c4 g8f6 d2d4 b8c6 g1f3 e5d4",
+    "d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 c1d2 e8g8 a1c1 c7c5",
+    "e2e4 d7d5 e4d5 d8d5 d2d4 e7e5 d4e5 d5e5 d1e2 f8b4",
+    "e2e4 c7c5 b1c3 b8c6 f1b5 g7g6 b5c6 b7c6",
+    "d2d4 f7f5 g2g3 g8f6 f1g2 d7d5 g1f3 e7e6 c2c4 f8e7 e1g1 f6e4",
+    "e2e4 g7g6 d2d4 f8g7 b1c3 d7d5 e4e5 c7c5 c1f4 c5d4",
+    "c2c4 c7c5 g1f3 g8f6 g2g3 b8c6 b1c3 e7e5 d1a4 h7h6 e2e4 f8e7",
+    "e2e4 e7e5 g1f3 b8c6 d2d4 d7d6 c1e3 e5d4",
+    "d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 e2e4 f8b4",
+    "e2e4 c7c5 g1f3 d7d6 d2d4 g8f6 d4c5 f6e4",
+    "d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 d1b3 d5c4 b3c4 b8c6 g1f3 f8g7",
+    "e2e4 e7e6 d2d4 d7d5 e4e5 c8d7 g1f3 a7a6 c1e3 g8e7",
+    "c2c4 e7e5 b1c3 g8f6 e2e3 f8b4 d1b3 a7a5 g1f3 d7d6",
+    "e2e4 c7c6 d2d4 d7d5 e4e5 d8b6 b1c3 c8f5 g2g4 f5g6",
+    "g1f3 d7d5 g2g3 g8f6 d2d4 a7a5 f1g2 e7e6",
+    "d2d4 d7d5 g1f3 g8f6 c2c4 d5c4 d1a4 c8d7",
+    "e2e4 e7e5 f1c4 g8f6 d2d4 e5d4 d1e2 d7d5",
+    "d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 c1g5 c7c5 d4c5 h7h6 g5d2 e8g8"
+  ],
+  "opening_suite_sha256": "b771d165aa6a870fd0d2bb919f1308e8f7f1ab80b97acd2b67e904fa943ef0a6"
+}

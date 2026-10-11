@@ -39,14 +39,14 @@ class Session:
         data = self.emu.read_memory(0x1FC02, 4, space='vram')
         return data[0] | data[1] << 8, data[2] | data[3] << 8
 
-    def move_mouse(self, x, y):
+    def move_mouse(self, x, y, buttons=0):
         """Steer the relative mouse until the KERNAL pointer reaches (x, y)."""
         for _ in range(40):
             cx, cy = self.read_mouse()
             dx, dy = x - cx, y - cy
             if dx == 0 and dy == 0:
                 return
-            self.emu.request('mouse', dx=max(-255, min(255, dx)), dy=max(-255, min(255, dy)))
+            self.emu.request('mouse', dx=max(-255, min(255, dx)), dy=max(-255, min(255, dy)), buttons=buttons)
             self.emu.advance(2)
         raise RuntimeError(f'mouse did not reach {(x, y)}')
 

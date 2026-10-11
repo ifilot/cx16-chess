@@ -1,0 +1,16 @@
+{
+  "games": 192,
+  "legal_pgns": 192,
+  "levels": {
+    "ply2": 96,
+    "ply3": 96
+  },
+  "terminations": {
+    "checkmate": 169,
+    "threefold_repetition": 20,
+    "fifty_moves": 2,
+    "stalemate": 1
+  },
+  "unique_opening_groups": 24,
+  "configuration_and_summary_match": true
+}

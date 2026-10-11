@@ -1,0 +1,15 @@
+{
+  "games": 2400,
+  "searches": 102807,
+  "binary_and_suite_hashes_match": {
+    "native_engine": true,
+    "stockfish": true,
+    "engine": true,
+    "opening_suite": true
+  },
+  "balanced_colours_and_opponents": true,
+  "early_stops_verified": {
+    "mate": 1434
+  },
+  "no_time_forfeits_or_move_limit_draws": true
+}

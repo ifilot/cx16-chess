@@ -1,0 +1,52 @@
+{
+  "cpu_hz": 8000000,
+  "source": "parity reports; identical 24 cold positions at each depth; warm times describe two short sequences only",
+  "summary": {
+    "6": {
+      "cold": {
+        "count": 24,
+        "mean": 25.125017510416665,
+        "median": 20.125014937499998,
+        "p90": 55.250037,
+        "maximum": 77.000052625,
+        "stopped_early": 3
+      }
+    },
+    "7": {
+      "cold": {
+        "count": 24,
+        "mean": 60.187541203125,
+        "median": 55.0000373125,
+        "p90": 107.0000765,
+        "maximum": 264.750170625,
+        "stopped_early": 4
+      },
+      "warm": {
+        "count": 12,
+        "mean": 326.6460629375,
+        "median": 239.8751669375,
+        "p90": 519.750371625,
+        "maximum": 1089.00074625,
+        "stopped_early": 0
+      }
+    },
+    "8": {
+      "cold": {
+        "count": 24,
+        "mean": 203.73972392708333,
+        "median": 115.00007962500001,
+        "p90": 458.000313,
+        "maximum": 1148.0007885,
+        "stopped_early": 4
+      },
+      "warm": {
+        "count": 12,
+        "mean": 997.9798724166667,
+        "median": 744.7505240625001,
+        "p90": 1880.751343125,
+        "maximum": 2047.251459625,
+        "stopped_early": 0
+      }
+    }
+  }
+}

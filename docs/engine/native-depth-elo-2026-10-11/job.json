@@ -1,0 +1,25 @@
+{
+  "started_utc": "2026-10-11T13:06:58.093146+00:00",
+  "command": [
+    "/usr/bin/python3",
+    "tools/rate_difficulties.py",
+    "--native-engine",
+    "tests/uci",
+    "--depths",
+    "2",
+    "3",
+    "--games-per-opponent",
+    "600",
+    "--workers",
+    "16",
+    "--date",
+    "2026-10-11",
+    "--openings",
+    "docs/engine/native-depth-elo-2026-10-11/openings.json",
+    "--out",
+    "docs/engine/native-depth-elo-2026-10-11"
+  ],
+  "log": "docs/engine/native-depth-elo-2026-10-11/run.log",
+  "total_games": 2400,
+  "exec_session_id": 9267
+}

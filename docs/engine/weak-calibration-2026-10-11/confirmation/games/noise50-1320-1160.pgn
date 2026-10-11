@@ -1,0 +1,16 @@
+[Event "X16 difficulty strength test"]
+[Site "Local AgentBridge / Stockfish"]
+[Date "2026.10.11"]
+[Round "1161"]
+[White "CX16-CHESS noise50 (native C 1 ply)"]
+[Black "Stockfish 16 UCI_Elo 1320"]
+[Result "0-1"]
+[Termination "checkmate"]
+[X16Clock "untimed fixed-depth native C; host time is not X16 time"]
+[StockfishMoveTime "0.1"]
+[OpeningPair "580"]
+[RootNoise "50"]
+[RandomSeed "52264"]
+
+1. d4 d5 2. c4 e6 3. Nc3 h6 4. cxd5 exd5 5. Bf4 c6 6. e3 Bf5 7. Nf3 Nf6 8. Bd3 Bg4 9. O-O Nbd7 10. Re1 Bb4 11. Rc1 O-O 12. Qa4 Be7 13. Bg3 Bxf3 14. gxf3 a6 15. e4 Nh5 16. exd5 c5 17. d6 Bf6 18. d5 Bd4 19. Rcd1 Nxg3 20. hxg3 Ne5 21. d7 Qxd7 22. Qxd7 Nxd7 23. d6 b5 24. Be4 Rae8 25. Rb1 Rb8 26. Bc6 Nf6 27. d7 Rb6 28. Re8 Nxd7 29. Bxd7 Rd6 30. Rxf8+ Kxf8 31. Bg4 g6 32. f4 b4 33. Ne2 Bg7 34. Ra1 f5 35. Bf3 Bxb2 36. Re1 Rd2 37. Bg2 c4 38. Bc6 h5 39. Bf3 Ba3 40. Ra1 a5 41. Kh1 c3 42. Kh2 Ke7 43. Kg1 Bb2 44. Rb1 Kd6 45. Rf1 Ke7 46. Re1 c2 47. Nc3+ Kd8 48. Ne2 Kc7 49. Rf1 Kd6 50. Kh2 Ba3 51. Kg1 Rd1 52. Bb7 b3 53. axb3 Kc7 54. Bf3 Rb1 55. Nc1 Rxc1 56. Rxc1 Bxc1 57. Kg2 Bd2 58. Bxh5 c1=R 59. Bxg6 Rc6 60. Bxf5 Be1 61. Kf3 Rc5 62. Be4 Bd2 63. f5 Kd6 64. f6 Bb4 65. f7 Ke7 66. Bg6 Rb5 67. Ke3 Rb8 68. Ke4 Rd8 69. g4 Kf6 70. Bh5 Rb8 71. Kd5 Rh8 72. Kc4 Bf8 73. Kd5 Be7 74. f3 Bf8 75. Kc4 Kg7 76. f4 Rh6 77. f5 Ba3 78. Kd5 Bb4 79. Bg6 Rh2 80. Ke4 Rh3 81. Kd5 Rg3 82. Bh5 Rh3 83. Kc4 Kf8 84. Bg6 Be7 85. Bh5 Bd8 86. Bg6 Bf6 87. Bh5 Bd8 88. b4 axb4 89. Kxb4 Kg7 90. Kc5 Rf3 91. Kd5 Re3 92. Bg6 Re1 93. Kd4 Rb1 94. Ke3 Rb3+ 95. Ke4 Bf6 96. Kf4 Bd8 97. g5 Rb4+ 98. Ke5 Bc7+ 99. Ke6 Kf8 100. f6 Rb6+ 101. Kd5 Bf4 102. Kc5 Be3+ 103. Kd5 Bxg5 104. Ke5 Rxf6 105. Bh5 Rf4 106. Bg6 Rf2 107. Kd5 Rf3 108. Kc5 Rf4 109. Kc6 Rf6+ 110. Kc5 Rxg6 111. Kd5 Kxf7 112. Kd4 Bh6 113. Ke5 Bd2 114. Ke4 Rg5 115. Kd3 Rg2 116. Ke4 Ke7 117. Kd5 Be1 118. Kd4 Rg3 119. Ke5 Bd2 120. Kd4 Ba5 121. Kc4 Kd6 122. Kd4 Rg5 123. Ke4 Ke6 124. Kf4 Rg2 125. Ke3 Ra2 126. Kf4 Rd2 127. Ke4 Bc3 128. Kf4 Bf6 129. Ke4 Bg5 130. Kf3 Ke5 131. Kg4 Bh6 132. Kf3 Rd5 133. Ke2 Bf4 134. Kf3 Rd2 135. Kg4 Ke4 136. Kh3 Ke5 137. Kg4 Ke4 138. Kh3 Kf5 139. Kh4 Rh2# 0-1
+

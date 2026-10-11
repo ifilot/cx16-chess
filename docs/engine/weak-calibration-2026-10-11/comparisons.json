@@ -1,0 +1,135 @@
+{
+  "source_runs": [
+    "docs/engine/weak-calibration-2026-10-11/confirmation",
+    "docs/engine/weak-calibration-2026-10-11/beginner-bracket"
+  ],
+  "games": 7200,
+  "levels": {
+    "noise50": 1,
+    "noise200": 1,
+    "noise300": 1
+  },
+  "noise_by_level": {
+    "noise50": 50,
+    "noise200": 200,
+    "noise300": 300
+  },
+  "summaries": {
+    "noise50": {
+      "games": 2400,
+      "points": 333.0,
+      "wins": 230,
+      "draws": 206,
+      "losses": 1964,
+      "score": 0.13875,
+      "estimated_elo": 1076,
+      "confidence_95": [
+        1057,
+        1094
+      ],
+      "confidence_score_95": [
+        0.12666666666666668,
+        0.15104166666666666
+      ],
+      "mean_depth": 1.0,
+      "mean_nodes": 111.06416692078534,
+      "mean_search_seconds": 0.0007487260918228152,
+      "per_opponent": {
+        "1320": {
+          "games": 1200,
+          "points": 205.5
+        },
+        "1500": {
+          "games": 1200,
+          "points": 127.5
+        }
+      },
+      "target_depth": 1
+    },
+    "noise200": {
+      "games": 2400,
+      "points": 143.0,
+      "wins": 78,
+      "draws": 130,
+      "losses": 2192,
+      "score": 0.059583333333333335,
+      "estimated_elo": 911,
+      "confidence_95": [
+        885,
+        934
+      ],
+      "confidence_score_95": [
+        0.051875,
+        0.0675
+      ],
+      "mean_depth": 1.0,
+      "mean_nodes": 122.27096704890297,
+      "mean_search_seconds": 0.0007563720856731452,
+      "per_opponent": {
+        "1320": {
+          "games": 1200,
+          "points": 93.5
+        },
+        "1500": {
+          "games": 1200,
+          "points": 49.5
+        }
+      },
+      "target_depth": 1
+    },
+    "noise300": {
+      "games": 2400,
+      "points": 97.5,
+      "wins": 42,
+      "draws": 111,
+      "losses": 2247,
+      "score": 0.040625,
+      "estimated_elo": 840,
+      "confidence_95": [
+        810,
+        868
+      ],
+      "confidence_score_95": [
+        0.034375,
+        0.04729166666666667
+      ],
+      "mean_depth": 1.0,
+      "mean_nodes": 125.42784788636749,
+      "mean_search_seconds": 0.0007323913214294815,
+      "per_opponent": {
+        "1320": {
+          "games": 1200,
+          "points": 55.0
+        },
+        "1500": {
+          "games": 1200,
+          "points": 42.5
+        }
+      },
+      "target_depth": 1
+    }
+  },
+  "paired_comparisons": {
+    "noise300_minus_noise50": {
+      "estimated_difference": -236,
+      "confidence_95": [
+        -272,
+        -202
+      ]
+    },
+    "noise300_minus_noise200": {
+      "estimated_difference": -71,
+      "confidence_95": [
+        -110,
+        -32
+      ]
+    },
+    "noise200_minus_noise50": {
+      "estimated_difference": -165,
+      "confidence_95": [
+        -196,
+        -136
+      ]
+    }
+  }
+}

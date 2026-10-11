@@ -1,0 +1,14 @@
+[Event "X16 difficulty strength test"]
+[Site "Local AgentBridge / Stockfish"]
+[Date "2026.10.11"]
+[Round "454"]
+[White "Stockfish 16 UCI_Elo 1320"]
+[Black "CX16-CHESS ply8 (native C 8 ply)"]
+[Result "1-0"]
+[Termination "checkmate"]
+[X16Clock "untimed fixed-depth native C; host time is not X16 time"]
+[StockfishMoveTime "0.1"]
+[OpeningPair "226"]
+
+1. d4 d5 2. c4 e6 3. Nc3 a6 4. g3 Nf6 5. Bg2 dxc4 6. Bg5 h6 7. Qa4+ Nbd7 8. Bf4 c5 9. d5 exd5 10. O-O-O d4 11. Ne4 Nxe4 12. Bxe4 b5 13. Qc2 Ra7 14. g4 Qf6 15. Bg3 Bd6 16. Nf3 Bxg3 17. hxg3 c3 18. bxc3 dxc3 19. g5 Qe6 20. Bd5 Qe7 21. Qxc3 f6 22. Rh4 Kf8 23. Re4 Qxe4 24. Bxe4 b4 25. Qd2 hxg5 26. Qd6+ Ke8 27. Bc6 b3 28. Qe6+ Kd8 29. Qxb3 Rc7 30. Be4 c4 31. Qb4 Re8 32. Bf5 c3 33. Bg6 a5 34. Qxa5 Re6 35. Qd5 c2 36. Rd2 Rcc6 37. Nd4 Rb6 38. Qa5 Rd6 39. Bxc2 Ke8 40. f3 Kf8 41. Bg6 Ba6 42. Qa3 Kg8 43. Bc2 Bc4 44. Be4 Ra6 45. Qb4 Bf7 46. a3 Rab6 47. Qc3 Rb8 48. a4 Nb6 49. Bc2 Nc4 50. Rd3 Nb2 51. Rd2 Nc4 52. Rd1 Nb2 53. Qxb2 Rxb2 54. Kxb2 Rd8 55. Ka1 Rc8 56. Kb2 Rd8 57. Nf5 Rb8+ 58. Ka1 Be6 59. Nd6 Rb6 60. Ne4 Rc6 61. Bd3 Bb3 62. Rb1 Bxa4 63. Rb8+ Kf7 64. Kb1 Rc7 65. Kb2 Bc6 66. Nc5 Bd5 67. Nb3 Bc4 68. Rb4 Bxd3 69. exd3 Re7 70. Kc3 Re8 71. g4 Kg8 72. Rd4 Re1 73. Kd2 Rf1 74. Rd8+ Kh7 75. Ke2 Rb1 76. Na5 Rb2+ 77. Ke3 Rc2 78. Rd7 Rc3 79. Nb7 Rc1 80. Nd8 Rb1 81. Ke2 Rb2+ 82. Kd1 Rb1+ 83. Kd2 Rb2+ 84. Ke3 Rb1 85. Ra7 Rf1 86. d4 Rd1 87. Ra8 Re1+ 88. Kd3 Rd1+ 89. Ke3 Re1+ 90. Kd2 Re8 91. Rb8 Re7 92. Rc8 Re8 93. Kd3 Kg8 94. Rb8 Kh7 95. Nc6 Re1 96. Rb2 Rf1 97. Rh2+ Kg8 98. Rc2 Rxf3+ 99. Ke4 Rf4+ 100. Kd3 Rf3+ 101. Kc4 Rg3 102. Kc5 Rxg4 103. Re2 Rh4 104. d5 Kh8 105. Rd2 g4 106. Rg2 Rh5 107. Rxg4 Kh7 108. Rb4 Rg5 109. Rd4 Kg8 110. Kb6 Rg1 111. d6 Rb1+ 112. Kc5 Rc1+ 113. Kb6 Rb1+ 114. Kc7 g5 115. Rc4 Kg7 116. Re4 f5 117. Re2 g4 118. d7 Rd1 119. Re6 g3 120. Ne5 Rc1+ 121. Rc6 Rxc6+ 122. Kxc6 g2 123. Nf3 g1=Q 124. Nxg1 Kg6 125. Kd6 Kg5 126. Nh3+ Kh4 127. d8=Q+ Kxh3 128. Qg5 f4 129. Ke5 Kh2 130. Kxf4 Kh1 131. Kf3 Kh2 132. Qh4+ Kg1 133. Qf4 Kh1 134. Qg4 Kh2 135. Qg5 Kh3 136. Qg4+ Kh2 137. Qg2# 1-0
+

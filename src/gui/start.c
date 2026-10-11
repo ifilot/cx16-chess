@@ -9,17 +9,29 @@
 #include "start.h"
 #include "build_info.h"
 #include "storage.h"
+#include "sound.h"
 #include <string.h>
 
 uint8_t start_computer = COMPUTER_BLACK;
-uint8_t start_difficulty = 1;
-uint8_t start_black_difficulty = 1;
+uint8_t start_difficulty = DEFAULT_DIFFICULTY;
+uint8_t start_black_difficulty = DEFAULT_DIFFICULTY;
 uint8_t start_piece_set;
 static uint8_t selection, setup, resumable, last_buttons, drawn_selection;
 static char field[35];
 static const char* preference_message;
 static const char* const sides[] = {"WHITE", "BLACK", "CPU VS CPU", "TWO PLAYERS"};
-static const char* const levels[] = {"EASY", "NORMAL", "HARD"};
+/* Local benchmark estimates rounded to 50 Elo. */
+static const char* const levels[] = {
+    "MEDIUM (~1350 ELO)", "CHALLENGING (~1400 ELO)", "STRONG (~1450 ELO)",
+    "5 PLY (~1400 ELO)", "DEEP (~1450 ELO)", "CASUAL (~1200 ELO)",
+    "EASY (~1100 ELO)", "BEGINNER (~800 ELO)",
+    "VERY HARD (~1600 ELO)", "ANALYSIS (~1750 ELO)"
+};
+/* Keep legacy 5-ply saves playable, but omit that depth from the new ladder. */
+#pragma rodata-name (push, "RODATA")
+static const uint8_t next_level[] = {1, 2, 4, 4, 8, 0, 5, 6, 9, 7};
+static const uint8_t previous_level[] = {5, 0, 1, 2, 2, 6, 7, 9, 4, 8};
+#pragma rodata-name (pop)
 static const uint8_t computers[] = {COMPUTER_BLACK, COMPUTER_WHITE, COMPUTER_BOTH, COMPUTER_NONE};
 static uint8_t player_side;
 static const char* const boards[] = {"FINE HATCH", "WOOD", "CROSSHATCH", "COARSE HATCH"};
@@ -37,8 +49,14 @@ static void text_field(uint8_t col, uint8_t row, uint8_t width, const char* valu
     field[width] = 0;
     video_text(col, row, field, color);
 }
+void start_draw_time(uint8_t white, uint8_t black, uint8_t players);
+
 static void setup_hint(void) {
-    text_field(44, 32, 32, player_side == 3 ? "LOCAL TWO PLAYER" : start_difficulty == 0 ? "2 SEC / MOVE" : start_difficulty == 1 ? "10 SEC / MOVE" : "20 SEC / MOVE", COL_GREY, 0);
+    uint8_t slow = player_side != 3 &&
+        (start_difficulty == 4 || start_difficulty >= DIFFICULTY_SEVEN_PLY ||
+         (player_side == 2 && (start_black_difficulty == 4 || start_black_difficulty >= DIFFICULTY_SEVEN_PLY)));
+    start_draw_time(start_difficulty, start_black_difficulty, player_side);
+    text_field(44, 44, 32, slow ? "\x7F VERY HIGH CALCULATION TIMES \x7F" : "", COL_RED, 1);
 }
 static void setup_values(void) {
     const char* level = levels[start_difficulty];
@@ -49,9 +67,11 @@ static void setup_values(void) {
     if(player_side == 2) {
         video_text(44, 34, "BLACK CPU", COL_RED);
         text_field(45, 37, 30, levels[start_black_difficulty], COL_INK, 1);
-    } else setup_hint();
+    }
+    setup_hint();
 }
 static void draw_focus(uint8_t index) {
+    const char* value;
     uint8_t color = selection == index ? COL_RED : COL_INK;
     uint8_t row;
     if(!setup) {
@@ -61,6 +81,11 @@ static void draw_focus(uint8_t index) {
         if(index < (player_side == 2 ? 3 : 2)) {
             row = index == 0 ? 20 : index == 1 ? 29 : 37;
             if(index == 1 && player_side == 3) color = COL_GREY;
+            if(index == 0) value = sides[player_side];
+            else if(index == 2) value = levels[start_black_difficulty];
+            else if(player_side == 3) value = "NOT USED";
+            else value = levels[start_difficulty];
+            text_field(45, row, 30, value, color, 1);
             video_text(44, row, arrow_left, color);
             video_text(75, row, arrow_right, color);
         } else {
@@ -71,9 +96,11 @@ static void draw_focus(uint8_t index) {
     } else if(setup == 2) {
         if(index < 2) {
             row = index ? 29 : 20;
+            text_field(62, row, 16, index ? pieces[start_piece_set] : boards[playfield_theme], color, 1);
             video_text(61, row, arrow_left, color);
             video_text(78, row, arrow_right, color);
-        } else video_text_centered(560, index == 2 ? 35 : 39, index == 2 ? "SAVE PREFERENCES" : "DONE", color);
+        } else if(index < 4) sound_event(SOUND_OPTIONS + selection);
+        else video_text_centered(560, index == 4 ? 42 : 46, index == 4 ? "SAVE PREFERENCES" : "DONE", color);
     }
 }
 static void update_focus(void) {
@@ -119,7 +146,7 @@ static void draw_menu(void) {
         video_text(43, 36, "Built " CHESS_BUILD_DATE, COL_INK);
         video_text(43, 41, "GITHUB REPOSITORY", COL_RED);
         video_text(43, 44, "github.com/ifilot/cx16-chess", COL_INK);
-        video_text_centered(480, 51, "BACK", COL_RED);
+        video_text_centered(480, 51, "BACK", COL_INK);
         video_text_centered(480, 57, "ENTER / ESC BACK", COL_INK);
         video_present();
         return;
@@ -130,12 +157,11 @@ static void draw_menu(void) {
         text_field(62, 20, 16, boards[playfield_theme], COL_INK, 1);
         video_text(61, 26, "CHESS SET", COL_RED);
         text_field(62, 29, 16, pieces[start_piece_set], COL_INK, 1);
-        for(i = 0; i < 4; i++) draw_focus(i);
-        if(preference_message) video_text_centered(560, 42, preference_message, COL_RED);
-        video_text_centered(560, 48, "UP/DOWN SELECT", COL_INK);
-        video_text_centered(560, 51, "LEFT/RIGHT CHANGE", COL_INK);
-        video_text_centered(560, 54, "ENTER SELECT", COL_INK);
-        video_text_centered(560, 57, "ESC BACK", COL_INK);
+        for(i = 0; i < 6; i++) draw_focus(i);
+        if(preference_message) video_text_centered(560, 49, preference_message, COL_RED);
+        video_text_centered(560, 52, "UP/DOWN SELECT", COL_INK);
+        video_text_centered(560, 55, "ENTER SELECT", COL_INK);
+        video_text_centered(560, 58, "ESC BACK", COL_INK);
         video_present();
         return;
     }
@@ -159,6 +185,7 @@ static void draw_menu(void) {
 }
 
 uint8_t start_open(uint8_t can_continue) {
+    sound_event(SOUND_MENU);
     resumable = can_continue;
     selection = setup = last_buttons = 0;
     preference_message = 0;
@@ -170,18 +197,22 @@ uint8_t start_open(uint8_t can_continue) {
 
 static uint8_t change(uint8_t backward) {
     uint8_t previous_side = player_side, i;
+    sound_sfx(SFX_MENU_SELECT);
     update_focus();
     if(setup == 2) {
         if(selection == 0) {
             playfield_theme = backward ? (playfield_theme == 0 ? THEMES - 1 : playfield_theme - 1) : (playfield_theme + 1) % THEMES;
             draw_preview(1, 0);
-            text_field(62, 20, 16, boards[playfield_theme], COL_INK, 1);
+            text_field(62, 20, 16, boards[playfield_theme], COL_RED, 1);
         } else if(selection == 1) {
             start_piece_set = backward ? (start_piece_set == 0 ? 2 : start_piece_set - 1) : (start_piece_set + 1) % 3;
             if(!video_load_piece_set()) return START_ERROR;
             draw_preview(0, 1);
-            text_field(62, 29, 16, pieces[start_piece_set], COL_INK, 1);
+            text_field(62, 29, 16, pieces[start_piece_set], COL_RED, 1);
             video_present();
+        } else if(selection < 4) {
+            sound_event(selection == 2 ? SOUND_MUSIC_TOGGLE : SOUND_EFFECTS_TOGGLE);
+            sound_event(SOUND_OPTIONS + selection);
         }
         return START_NONE;
     }
@@ -198,26 +229,29 @@ static uint8_t change(uint8_t backward) {
         setup_values();
         for(i = 0; i <= (player_side == 2 ? 3 : 2); i++) draw_focus(i);
     } else if(selection == 1 && player_side != 3) {
-        start_difficulty = backward ? (start_difficulty == 0 ? 2 : start_difficulty - 1) : (start_difficulty + 1) % 3;
-        text_field(45, 29, 30, levels[start_difficulty], COL_INK, 1);
-        if(player_side != 2) setup_hint();
+        start_difficulty = backward ? previous_level[start_difficulty] : next_level[start_difficulty];
+        text_field(45, 29, 30, levels[start_difficulty], COL_RED, 1);
+        setup_hint();
     } else if(selection == 2 && player_side == 2) {
-        start_black_difficulty = backward ? (start_black_difficulty == 0 ? 2 : start_black_difficulty - 1) : (start_black_difficulty + 1) % 3;
-        text_field(45, 37, 30, levels[start_black_difficulty], COL_INK, 1);
+        start_black_difficulty = backward ? previous_level[start_black_difficulty] : next_level[start_black_difficulty];
+        text_field(45, 37, 30, levels[start_black_difficulty], COL_RED, 1);
+        setup_hint();
     }
     return START_NONE;
 }
 
 static uint8_t activate(void) {
+    sound_sfx(SFX_MENU_SELECT);
     if(setup == 3) {
         setup = selection = 0;
         if(!video_show_start()) return START_ERROR;
         draw_menu();
     } else if(setup == 2) {
-        if(selection < 2) return change(0);
-        if(selection == 2) {
+        if(selection < 4) return change(0);
+        if(selection == 4) {
             preference_message = preferences_save() ? "PREFERENCES SAVED" : "SAVE FAILED";
-            text_field(61, 42, 19, preference_message, COL_RED, 1);
+            sound_sfx(preference_message[0] == 'P' ? SFX_SAVE : SFX_ERROR);
+            text_field(61, 49, 19, preference_message, COL_RED, 1);
             return START_NONE;
         }
         setup = selection = 0;
@@ -253,14 +287,18 @@ static uint8_t activate(void) {
 
 uint8_t start_key(uint8_t key) {
     switch(key) {
+        case 'V': case 'v': sound_event(SOUND_MUSIC_TOGGLE); if(setup == 2) sound_event(SOUND_OPTIONS + selection); return START_NONE;
+        case 'S': case 's': sound_event(SOUND_EFFECTS_TOGGLE); if(setup == 2) sound_event(SOUND_OPTIONS + selection); return START_NONE;
         case KEY_UP:
+            sound_sfx(SFX_MENU_MOVE);
             if(setup == 3) return START_NONE;
-            selection = selection == 0 ? (setup == 2 ? 3 : setup ? (player_side == 2 ? 3 : 2) : 4) : selection - 1;
+            selection = selection == 0 ? (setup == 2 ? 5 : setup ? (player_side == 2 ? 3 : 2) : 4) : selection - 1;
             if(!setup && !resumable && selection == 1) selection = 0;
             break;
         case KEY_DOWN:
+            sound_sfx(SFX_MENU_MOVE);
             if(setup == 3) return START_NONE;
-            selection = selection == (setup == 2 ? 3 : setup ? (player_side == 2 ? 3 : 2) : 4) ? 0 : selection + 1;
+            selection = selection == (setup == 2 ? 5 : setup ? (player_side == 2 ? 3 : 2) : 4) ? 0 : selection + 1;
             if(!setup && !resumable && selection == 1) selection = 2;
             break;
         case KEY_LEFT: case KEY_RIGHT:
@@ -270,6 +308,7 @@ uint8_t start_key(uint8_t key) {
             if(setup == 1) selection = player_side == 2 ? 3 : 2;
             return activate();
         case KEY_ESCAPE:
+            sound_sfx(SFX_MENU_BACK);
             if(setup) {
                 setup = selection = 0;
                 if(!video_show_start()) return START_ERROR;
@@ -298,39 +337,25 @@ uint8_t start_key(uint8_t key) {
     return START_NONE;
 }
 
+uint8_t gui_mouse_hit(uint16_t x, uint16_t y, uint8_t layout);
 uint8_t start_mouse(uint16_t x, uint16_t y, uint8_t buttons) {
-    uint8_t pressed = (buttons & 1) && !(last_buttons & 1);
+    static uint16_t last_x, last_y;
+    uint8_t pressed = (buttons & 1) && !(last_buttons & 1), index;
+    uint8_t moved = x != last_x || y != last_y;
     last_buttons = buttons;
-    if(!pressed) return START_NONE;
+    last_x = x; last_y = y;
+    if(!pressed && !moved) return START_NONE;
+    index = gui_mouse_hit(x, y, setup == 3 ? 4 : setup == 2 ? 3 :
+                         setup == 1 ? (player_side == 2 ? 2 : 1) : 0);
     if(setup == 3) {
-        if(x < 440 || x >= 520 || y < 400 || y >= 424) return START_NONE;
-    } else if(setup == 2) {
-        if(x < 488 || x >= 632) return START_NONE;
-        if(y >= 136 && y < 184) selection = 0;
-        else if(y >= 208 && y < 248) selection = 1;
-        else if(y >= 280 && y < 296) selection = 2;
-        else if(y >= 312 && y < 328) selection = 3;
-        else return START_NONE;
-        if(selection < 2) return change(x < 512);
-    } else if(setup == 1) {
-        if(x < 344 || x >= 616) return START_NONE;
-        if(y >= 136 && y < 184) selection = 0;
-        else if(y >= 208 && y < 248) selection = 1;
-        else if(player_side == 2 && y >= 272 && y < 312) selection = 2;
-        else if(player_side == 2 && y >= 320 && y < 344) selection = 3;
-        else if(player_side != 2 && y >= 304 && y < 336) selection = 2;
-        else return START_NONE;
-        if(selection < (player_side == 2 ? 3 : 2)) {
-            return change(x < 376);  /* left triangle decrements, right/value increments */
-        }
-    } else {
-        if(x < 288 || x >= 360) return START_NONE;
-        if(y >= 368 && y < 448) {
-            if((y - 368) / 16 == 1 && !resumable) return START_NONE;
-            selection = (y - 368) / 16;
-        }
-        else return START_NONE;
+        video_text_centered(480, 51, "BACK", index == 0 ? COL_RED : COL_INK);
     }
+    if(index == 0xFF || (!setup && index == 1 && !resumable) ||
+       (setup == 1 && index == 1 && player_side == 3 && !pressed)) return START_NONE;
+    selection = index;
     update_focus();
+    if(!pressed) return START_NONE;
+    if(setup == 2 && selection < 2) return change(x < 512);
+    if(setup == 1 && selection < (player_side == 2 ? 3 : 2)) return change(x < 376);
     return activate();
 }

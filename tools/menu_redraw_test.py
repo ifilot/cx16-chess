@@ -1,4 +1,5 @@
 """Catch transient menu clears and unnecessary preview redraws in AgentBridge."""
+from runtime_files import RUNTIME_FILES
 from contextlib import contextmanager
 from pathlib import Path
 import os
@@ -15,7 +16,7 @@ def main():
     rom = next(p for p in (ROOT.parent / 'emulator/rom.bin', ROOT.parent / 'emulator-win/rom.bin') if p.exists())
     runtime = Path(os.environ.get('CHESS_FSROOT', ROOT / 'src'))
     with tempfile.TemporaryDirectory(prefix='chess-menu-redraw-') as folder:
-        for name in ('CHESS.PRG', 'MENU.BIN', 'UI.BIN', 'CHESS.DAT'):
+        for name in RUNTIME_FILES:
             shutil.copyfile(runtime / name, Path(folder) / name)
         session = Session(ROOT.parent / 'x16-emulator/build/x16emu', rom, fsroot=folder)
 
@@ -60,6 +61,12 @@ def main():
             if color is not None:
                 assert all(v >> 4 == color for v in data[1::2]), (row, expected, 'wrong focus color')
 
+        def warning(visible):
+            value = '\x7f VERY HIGH CALCULATION TIMES \x7f' if visible else ''
+            offset = (32 - len(value) + 1) // 2
+            expected = ' ' * offset + value + ' ' * (32 - offset - len(value))
+            text(44, 44, expected, 7)
+
         def centered(row, expected, color=None, cx=480):
             text((cx - len(expected) * 4 + 4) // 8, row, expected, color)
 
@@ -75,23 +82,56 @@ def main():
                 key('Up'); text(44, 39, 'START GAME', 7)
                 key('Down'); text(44, 39, 'START GAME', 1)
                 key('Right'); centered(20, 'BLACK')
-                key('Down'); key('Right'); centered(29, 'HARD')
-                key('Left'); key('Left'); centered(29, 'EASY')
-                text(44, 32, '2 SEC / MOVE' + ' ' * 2)
+                key('Down'); key('Right'); centered(29, 'DEEP (~1450 ELO)')
+                warning(True)
+                key('Left'); key('Left'); centered(29, 'CHALLENGING (~1400 ELO)')
+                # Check every approximate rating and clearing after longer labels.
+                for label, seconds in (('STRONG (~1450 ELO)', '4'), ('DEEP (~1450 ELO)', '26'),
+                                       ('VERY HARD (~1600 ELO)', '60'), ('ANALYSIS (~1750 ELO)', '204'),
+                                       ('BEGINNER (~800 ELO)', '0.4'), ('EASY (~1100 ELO)', '0.4'),
+                                       ('CASUAL (~1200 ELO)', '0.4'), ('MEDIUM (~1350 ELO)', '0.7'),
+                                       ('CHALLENGING (~1400 ELO)', '1.5')):
+                    key('Right')
+                    offset = (30 - len(label) + 1) // 2
+                    text(45, 29, ' ' * offset + label + ' ' * (30 - offset - len(label)))
+                    warning(label.startswith(('DEEP', 'VERY HARD', 'ANALYSIS')))
+                    text(44, 32, f'AVG. ~{seconds} SEC / MOVE'.ljust(32), 10)
+                text(44, 32, 'AVG. ~1.5 SEC / MOVE'.ljust(32), 10)
                 key('Up'); key('Right'); centered(20, 'CPU VS CPU')
                 text(44, 26, 'WHITE CPU' + ' ' * 5)
                 text(44, 34, 'BLACK CPU')
-                key('Down'); key('Down'); key('Right'); centered(37, 'HARD')
+                text(44, 32, 'AVG: W ~1.5S / B ~4S PER MOVE'.ljust(32), 10)
+                key('Down'); key('Down'); key('Right'); centered(37, 'DEEP (~1450 ELO)')
+                text(44, 32, 'AVG: W ~1.5S / B ~26S PER MOVE'.ljust(32), 10)
+                warning(True)
+                key('Right'); centered(37, 'VERY HARD (~1600 ELO)')
+                text(44, 32, 'AVG: W ~1.5S / B ~60S PER MOVE'.ljust(32), 10)
+                key('Right'); centered(37, 'ANALYSIS (~1750 ELO)')
+                text(44, 32, 'AVG: W ~1.5S / B ~204S PER MOVE'.ljust(32), 10)
+                key('Right'); centered(37, 'BEGINNER (~800 ELO)')
+                text(44, 32, 'AVG: W ~1.5S / B ~0.4S PER MOVE'.ljust(32), 10)
+                warning(False)
+                key('Left'); warning(True)
                 key('Down'); text(44, 41, 'START GAME', 7)
                 click(604, 168); centered(20, 'TWO PLAYERS')
                 centered(29, 'NOT USED', 10)
+                warning(False)
                 for row in (34, 37, 41):
                     text(42, row, ' ' * 34)
-                text(44, 32, 'LOCAL TWO PLAYER')
+                text(44, 32, 'LOCAL TWO PLAYER'.ljust(32), 10)
                 click(604, 240); centered(29, 'NOT USED', 10)
                 key('Left'); centered(29, 'NOT USED', 10)
                 key('Up'); key('Left'); centered(20, 'CPU VS CPU')
+                warning(True)
+                key('Down')
+                for _ in range(4): key('Right')
+                text(44, 32, 'AVG: W ~204S / B ~204S PER MOVE'.ljust(32), 10)
+                for _ in range(4): key('Left')
+                key('Up')
+                session.move_mouse(639, 479)
+                session.shot(ROOT / 'build/difficulty-warning.png')
                 key('Left'); centered(20, 'BLACK')
+                warning(False)
                 text(44, 26, 'CPU DIFFICULTY')
             key('Escape'); session.emu.advance(120)
             key('o'); session.emu.advance(120)
@@ -104,8 +144,8 @@ def main():
             with guard(pieces=True, assets=True):
                 key('Right'); centered(29, 'CONTINENTAL', cx=560)
             with guard():
-                key('Down'); key('Return')
-                centered(42, 'PREFERENCES SAVED', 7, cx=560)
+                key('Down'); key('Down'); key('Down'); key('Return')
+                centered(49, 'PREFERENCES SAVED', 7, cx=560)
                 key('Up'); key('Down')
             key('Escape'); session.emu.advance(120)
             key('n'); session.emu.advance(120)

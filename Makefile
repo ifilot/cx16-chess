@@ -34,9 +34,15 @@ test:
 
 test-ui: all
 	python3 tools/startup_test.py
+	python3 tools/startup_input_test.py
 	python3 tools/transitions_test.py
 	python3 tools/ui_test.py
+	python3 tools/drag_test.py
 	python3 tools/menu_redraw_test.py
+	python3 tools/menu_hover_test.py
+	python3 tools/audio_test.py
+	python3 tools/audio_options_test.py
+	python3 tools/difficulty_levels_test.py
 	python3 tools/scorecard_test.py
 	python3 tools/options_test.py
 	python3 tools/indicators_test.py

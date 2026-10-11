@@ -1,0 +1,21 @@
+{
+  "games": 480,
+  "legal_pgns": 480,
+  "searches": 12379,
+  "early_stops_verified": {},
+  "levels": {
+    "noise1000": 96,
+    "noise2000": 96,
+    "noise300": 96,
+    "noise600": 96,
+    "noise100": 96
+  },
+  "terminations": {
+    "checkmate": 465,
+    "threefold_repetition": 11,
+    "stalemate": 2,
+    "fifty_moves": 2
+  },
+  "unique_opening_groups": 24,
+  "configuration_and_summary_match": true
+}

@@ -2,6 +2,7 @@
 
 Creates an isolated FAT32 image, never accesses a physical disk.
 """
+from runtime_files import RUNTIME_FILES
 import os
 from pathlib import Path
 import shutil
@@ -25,7 +26,7 @@ def main():
         folder = Path(temporary)
         runtime = folder / 'runtime'
         runtime.mkdir()
-        for name in ('CHESS.PRG', 'MENU.BIN', 'UI.BIN', 'CHESS.DAT'):
+        for name in RUNTIME_FILES:
             shutil.copyfile(ROOT / 'src' / name, runtime / name)
         image = folder / 'card.img'
         create_sdcard(runtime, image)
@@ -55,7 +56,7 @@ def main():
             session.close()
         for name, generation in [('CHESS9A.SAV', 1), ('CHESS9B.SAV', 2)]:
             data = copy(name)
-            assert data[:8] == b'X16SAVE1'
+            assert data[:8] == b'X16SAVE4'
             assert digest(data[:26] + data[28:]) == int.from_bytes(data[26:28], 'little')
             assert int.from_bytes(data[8:10], 'little') == generation
         session = Session(emu, rom, fsroot=runtime)
@@ -64,7 +65,7 @@ def main():
             keys('l', '9', 'Return', 'Escape')
             assert read('board', 128)[4] == 6 and read('match_clock', 4) != b'\0' * 4
             session.shot(output / 'sd-loaded.png')
-            keys('Down', 'Down', 'Return', 'o', 'Right', 'Down', 'Right', 'Down', 'Return')
+            keys('Down', 'Down', 'Return', 'o', 'Right', 'Down', 'Right', 'Down', 'Down', 'Down', 'Return')
         finally:
             session.close()
         assert copy('CHESSOPT.DAT')[5:7] == b'\x01\x01'

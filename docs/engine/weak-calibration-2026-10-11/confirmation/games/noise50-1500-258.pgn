@@ -1,0 +1,16 @@
+[Event "X16 difficulty strength test"]
+[Site "Local AgentBridge / Stockfish"]
+[Date "2026.10.11"]
+[Round "259"]
+[White "CX16-CHESS noise50 (native C 1 ply)"]
+[Black "Stockfish 16 UCI_Elo 1500"]
+[Result "1/2-1/2"]
+[Termination "fifty_moves"]
+[X16Clock "untimed fixed-depth native C; host time is not X16 time"]
+[StockfishMoveTime "0.1"]
+[OpeningPair "129"]
+[RootNoise "50"]
+[RandomSeed "61778"]
+
+1. d4 d5 2. Nf3 Nf6 3. c4 c6 4. Nc3 e6 5. Ne5 Be7 6. c5 b6 7. Be3 Nfd7 8. Nf3 Ba6 9. Qd2 O-O 10. Qc2 bxc5 11. dxc5 Qa5 12. Qd2 Nxc5 13. Rc1 Re8 14. Rc2 Nbd7 15. Bf4 Bf8 16. e3 e5 17. Bxa6 Nxa6 18. Bg3 f6 19. O-O Rac8 20. Rfc1 Rb8 21. h3 Nb6 22. Qd3 Nb4 23. Qd1 Nxc2 24. Qxc2 Rbc8 25. Re1 Kh8 26. e4 Kg8 27. Rb1 Qa6 28. Ra1 Qa5 29. Rb1 Nd7 30. Qb3 Rb8 31. Qc2 Qc5 32. Qd3 d4 33. Nxd4 exd4 34. Bxb8 Rxb8 35. b3 Ne5 36. b4 Nxd3 37. bxc5 Rb4 38. Rxb4 Nxb4 39. a3 dxc3 40. axb4 Kh8 41. Kh2 h5 42. Kg3 f5 43. exf5 c2 44. Kh4 Kh7 45. Kxh5 c1=R 46. Kg5 a6 47. Kf4 Kg8 48. Ke4 Kh8 49. Kd4 Rg1 50. g3 Rd1+ 51. Ke3 Rc1 52. Ke4 Rc4+ 53. Ke5 a5 54. bxa5 Rxc5+ 55. Ke6 Rd5 56. a6 Rd8 57. a7 Bc5 58. f6 gxf6 59. Kxf6 Bxa7 60. f4 Rf8+ 61. Ke5 Ra8 62. g4 Rb8 63. f5 Kg8 64. f6 Re8+ 65. Kf5 Rd8 66. Ke5 Rb8 67. g5 Bb6 68. g6 Bf2 69. f7+ Kf8 70. Kd6 Bg3+ 71. Kxc6 Bf4 72. Kd5 Bg3 73. Kc6 Be5 74. h4 Ke7 75. h5 Bf6 76. h6 Rd8 77. h7 Be5 78. Kc5 Bg7 79. Kc4 Kf6 80. Kc3 Kxg6+ 81. Kc4 Bh8 82. f8=Q Rxf8 83. Kd5 Kxh7 84. Ke4 Rf7 85. Kd3 Ba1 86. Ke3 Rf6 87. Ke4 Kh8 88. Kd3 Be5 89. Kc4 Kh7 90. Kd5 Bb8 91. Kc4 Ra6 92. Kd5 Kg8 93. Ke4 Bc7 94. Kd5 Bd6 95. Kd4 Kf7 96. Kd5 Kf6 97. Ke4 Kg7 98. Kd4 Bh2 99. Kc4 Bc7 100. Kd4 Rd6+ 101. Kc4 Rd8 102. Kc5 Bf4 103. Kc4 Rd2 104. Kc3 Rd6 105. Kc4 Bh6 106. Kc5 Ra6 107. Kd5 Ra8 108. Ke4 Ra7 109. Kd4 Bc1 110. Kc5 Bb2 111. Kd5 Ra4 112. Kc5 Rd4 113. Kc6 Kf8 114. Kc5 Ra4 115. Kd5 Ba1 116. Kd6 Rb4 117. Kd5 Rb8 118. Ke6 Rb3 119. Kd5 Kf7 120. Ke4 Rc3 121. Kd4 Rc8+ 122. Ke4 Kf6 123. Kd3 Kf5 124. Ke3 Ke5 125. Kf3 Rc5 126. Kf2 Kf4 127. Ke2 Be5 128. Kd2 Rc4 129. Kd3 Rb4 130. Kc2 Bb2 131. Kd3 Ra4 132. Kd2 Ra5 133. Kd3 1/2-1/2
+

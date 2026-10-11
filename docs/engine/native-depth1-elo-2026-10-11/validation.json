@@ -1,0 +1,18 @@
+{
+  "games": 1200,
+  "legal_pgns": 1200,
+  "searches": 43027,
+  "early_stops_verified": {},
+  "levels": {
+    "ply1": 1200
+  },
+  "terminations": {
+    "checkmate": 963,
+    "threefold_repetition": 220,
+    "stalemate": 10,
+    "insufficient_material": 3,
+    "fifty_moves": 4
+  },
+  "unique_opening_groups": 300,
+  "configuration_and_summary_match": true
+}

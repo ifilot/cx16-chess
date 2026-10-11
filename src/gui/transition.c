@@ -10,7 +10,8 @@
 #define COVER_MAP 0x1E000UL
 #define COVER_TILE 0x1E800UL
 #define LABEL 0x1EA00UL
-#define FIGURES 0x1EE00UL
+/* Six 512-byte images end at $1F800, below PSG registers at $1F9C0. */
+#define FIGURES 0x1EC00UL
 static const uint16_t positions[][2] = {
     {72,64}, {256,96}, {480,48}, {568,152}, {128,200}, {408,168},
     {48,352}, {216,304}, {496,336}, {352,400}, {136,424}, {568,424}

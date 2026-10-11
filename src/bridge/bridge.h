@@ -70,7 +70,9 @@ typedef struct {
     uint8_t depth_done;         // $040F last completed iteration
     int16_t score;              // $0410 centipawns, side to move's view
     uint16_t jiffies;           // $0412 time used
-    uint8_t reserved2[12];      // $0414
+    uint16_t noise;             // $0414 root move noise, centipawns
+    uint16_t seed;              // $0416 reset random sequence on BRIDGE_FRESH
+    uint8_t reserved2[8];       // $0418
     uint8_t pv[32];             // $0420 principal variation, from/to pairs
     uint8_t reserved3[64];      // $0440
     char fen[128];              // $0480 input position

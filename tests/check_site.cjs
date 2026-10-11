@@ -116,9 +116,14 @@ assert np.array_equal(actual[232:288,248:304],colors[pawn]),'Pawn did not arrive
     await page.screenshot({path:path.join(captures,'website.png'),fullPage:true});
     await boot(page);
     const manifest=JSON.parse(fs.readFileSync(path.join(site,'game/manifest.json')));
-    assert.deepEqual(manifest.resources,['CHESS.DAT','CHESS.PRG','MENU.BIN','UI.BIN']);
+    assert.deepEqual(manifest.resources,['AUDIO.BIN','CHESS.DAT','CHESS.PRG','DRAG.BIN','DRAW.ZSM','GAME.ZSM','GAME2.ZSM','GAME3.ZSM','GAME4.ZSM','LOSE.ZSM','MENU.BIN','SFX.BIN','TITLE.ZSM','UI.BIN','WIN.ZSM']);
     const loaded=await page.evaluate(()=>FS.readdir('/'));
     for(const file of manifest.resources)assert(loaded.includes(file),`${file} missing from emulator filesystem`);
+    await page.locator('#audio').click();
+    assert.equal(await page.locator('#audio').getAttribute('aria-pressed'),'true');
+    assert.equal(await page.evaluate(()=>Module.SDL2.audioContext.state),'running');
+    await page.locator('#audio').click();
+    assert.equal(await page.locator('#audio').getAttribute('aria-pressed'),'false');
     assert(!loaded.includes('CHESSOPT.DAT'),'Developer preferences leaked into browser game');
     await key(page,'a');
     await captureScene(page,'about','about',[0,8,616,128]);

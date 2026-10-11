@@ -1,0 +1,17 @@
+{
+  "exec_session_id": 75565,
+  "started_utc": "2026-10-11T17:00:33.225246+00:00",
+  "depths": [
+    7,
+    8
+  ],
+  "total_games": 2400,
+  "workers": 16,
+  "native": true,
+  "parity_session_id": 60052,
+  "note": "First concurrent pilot excluded; final run starts while one emulator worker completes the last two warm parity searches on the 20-logical-CPU host.",
+  "game_phase_seconds": 1580.6336033344269,
+  "validated_utc": "2026-10-11T17:27:33.617869+00:00",
+  "exit_code": 0,
+  "command": "PYTHONPATH=build/test-python python3 tools/rate_difficulties.py --native-engine tests/uci --depths 7 8 --games-per-opponent 600 --workers 16 --openings docs/engine/native-depth-elo-2026-10-11/openings.json --out docs/engine/native-depth78-elo-2026-10-11"
+}

@@ -1,0 +1,12 @@
+{
+  "exec_session_id": 33784,
+  "started_utc": "2026-10-11T16:05:58.797904+00:00",
+  "depth": 6,
+  "total_games": 1200,
+  "workers": 16,
+  "native": true,
+  "command": "PYTHONPATH=build/test-python python3 tools/rate_difficulties.py --native-engine tests/uci --depths 6 --games-per-opponent 600 --workers 16 --openings docs/engine/native-depth-elo-2026-10-11/openings.json --out docs/engine/native-depth6-elo-2026-10-11",
+  "game_phase_seconds": 414.60214400291443,
+  "validated_utc": "2026-10-11T16:13:11.219962+00:00",
+  "exit_code": 0
+}

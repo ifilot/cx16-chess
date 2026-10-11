@@ -6,6 +6,7 @@ import shutil
 import tempfile
 
 from screenshot import ROOT, Session
+from runtime_files import RUNTIME_FILES
 
 
 def main():
@@ -19,7 +20,7 @@ def main():
     resources = json.loads((ROOT / 'build/graphics/runtime-manifest.json').read_text())
     with tempfile.TemporaryDirectory(prefix='chess-assets-') as temporary:
         folder = Path(temporary)
-        for name in ('CHESS.PRG', 'MENU.BIN', 'UI.BIN'):
+        for name in (name for name in RUNTIME_FILES if name != 'CHESS.DAT'):
             shutil.copyfile(runtime / name, folder / name)
         for case in ('missing', 'wrong-build', 'truncated-font', 'truncated-setup'):
             data = original

@@ -1,4 +1,5 @@
 """Check the visible loading cover on every frame of scene and piece changes."""
+from runtime_files import RUNTIME_FILES
 from pathlib import Path
 import shutil
 import tempfile
@@ -13,15 +14,32 @@ def main():
             symbols[parts[2].lstrip('.')] = int(parts[1], 16)
     rom = next(p for p in (ROOT.parent / 'emulator/rom.bin', ROOT.parent / 'emulator-win/rom.bin') if p.exists())
     with tempfile.TemporaryDirectory(prefix='chess-transitions-') as folder:
-        for name in ('CHESS.PRG', 'MENU.BIN', 'UI.BIN', 'CHESS.DAT'):
+        for name in RUNTIME_FILES:
             shutil.copyfile(ROOT / 'src' / name, Path(folder) / name)
         session = Session(ROOT.parent / 'x16-emulator/build/x16emu', rom, fsroot=folder)
         def memory(address, size=1, space='cpu'):
             return bytes(session.emu.read_memory(address, size, space=space))
+        # Expand each resident 16x16 figurine exactly as the loading cover does.
+        # Check bitmap contents as well as attributes: PSG registers occupy
+        # $1F9C0-$1F9FF and must never be used as sprite image memory.
+        def expected_figures():
+            tiles = memory(0x10000 + 196 * 32, 6 * 128, 'vram')
+            images = []
+            for piece in range(6):
+                image = bytearray()
+                for y in range(32):
+                    for half in range(2):
+                        offset = piece * 128 + (y >> 4) * 64 + half * 32 + ((y >> 1) & 7) * 4
+                        for value in tiles[offset:offset + 4]:
+                            image.extend((0x11 if value & 0xF0 else 0, 0x11 if value & 0x0F else 0))
+                images.append(bytes(image))
+            return images
+
         def transition(key, name):
             seen = False
             seen_figures = False
             frames = 0
+            expected = expected_figures()
             session.emu.request('key', key=key, down=True)
             try:
                 for frames in range(300):
@@ -62,6 +80,10 @@ def main():
                             assert attributes[1] == 0xA5
                             assert attributes[0] in (0, 12 | (index & 1))
                             depths.append(attributes[0])
+                            sprite = memory(0x1FC18 + index * 8, 2, 'vram')
+                            source = (sprite[0] | ((sprite[1] & 15) << 8)) << 5
+                            assert source + 512 <= 0x1F9C0, (name, 'Figurine overlaps sound registers', index, hex(source))
+                            assert memory(source, 512, 'vram') == expected[index % 6], (name, 'Corrupted loading figurine', index)
                         seen_figures |= all(depths)
                         assert memory(0x1FA04, 2, 'vram') == b'\xdb\x0e', (name, 'Paper color changed')
                         assert memory(0x1FAE2, 2, 'vram') == b'\x11\x09', (name, 'Label color changed')
@@ -93,7 +115,7 @@ def main():
             transition('Return', 'Setup to board')
             transition('m', 'Board to menu')
             transition('c', 'Menu to board')
-            print('PASS: every transition keeps paper and native Loading sprite visible, with no black frame or scene layers exposed')
+            print('PASS: every transition keeps paper and native Loading sprite visible, with intact figurine pixels, no sound-register overlap, no black frame or scene layers exposed')
         finally:
             session.close()
 

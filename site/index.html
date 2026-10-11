@@ -35,18 +35,18 @@
           </div>
           <p class="mobile-hint">Swipe to pan; tap a piece, then its destination. Landscape gives you more room. <button type="button" id="exit-fullscreen">Exit fullscreen</button></p>
           <div class="touch-keys" id="touch-keys" aria-label="Game keyboard">
-            <button type="button" data-key="ArrowUp" aria-label="Up" disabled>↑</button><button type="button" data-key="ArrowDown" aria-label="Down" disabled>↓</button><button type="button" data-key="ArrowLeft" aria-label="Left" disabled>←</button><button type="button" data-key="ArrowRight" aria-label="Right" disabled>→</button><button type="button" data-key="Enter" disabled>Enter</button><button type="button" data-key="Escape" disabled>Esc</button><button type="button" data-key="m" disabled>Menu</button><button type="button" data-key="f" disabled>Flip</button><button type="button" data-key="i" disabled>Scores</button><button type="button" data-key="t" disabled>Theme</button>
+            <button type="button" data-key="ArrowUp" aria-label="Up" disabled>↑</button><button type="button" data-key="ArrowDown" aria-label="Down" disabled>↓</button><button type="button" data-key="ArrowLeft" aria-label="Left" disabled>←</button><button type="button" data-key="ArrowRight" aria-label="Right" disabled>→</button><button type="button" data-key="Enter" disabled>Enter</button><button type="button" data-key="Escape" disabled>Esc</button><button type="button" data-key="m" disabled>Menu</button><button type="button" data-key="f" disabled>Flip</button><button type="button" data-key="i" disabled>Scores</button><button type="button" data-key="t" disabled>Theme</button><button type="button" data-key="v" disabled>Music</button><button type="button" data-key="s" disabled>Effects</button>
           </div>
         </div>
-        <div class="toolbar"><p>Click the board to focus. <kbd>Esc</kbd> pauses play.</p><div class="tools"><button id="fullscreen" type="button" disabled>Fullscreen ↗</button><button id="restart" type="button" disabled>Restart</button></div></div>
+        <div class="toolbar"><p>Click the board to focus. <kbd>Esc</kbd> pauses play.</p><div class="tools"><button id="audio" type="button" aria-pressed="false" disabled>Sound off</button><button id="fullscreen" type="button" disabled>Fullscreen ↗</button><button id="restart" type="button" disabled>Restart</button></div></div>
         <noscript><p>Enable JavaScript to play here, or download the X16 game below.</p></noscript>
         <p id="error" class="error" role="alert" hidden></p>
       </div>
       <aside class="play-guide" aria-label="Getting started">
         <p class="eyebrow">AT THE BOARD</p><h3>Your move.</h3>
         <ol><li><strong>Choose New Game.</strong> Play White or Black, select Two Players, or choose CPU vs CPU for a demonstration.</li><li><strong>Set the thinking time.</strong> Easy, Normal, and Hard give the same engine different search budgets.</li><li><strong>Make your move.</strong> Click a piece, then its destination. Or use the arrows and <kbd>Enter</kbd> to select squares.</li></ol>
-        <dl class="controls"><div><dt><kbd>Esc</kbd></dt><dd>Pause, save, or return</dd></div><div><dt><kbd>M</kbd></dt><dd>Open the main menu</dd></div><div><dt><kbd>F</kbd></dt><dd>Flip the board</dd></div><div><dt><kbd>I</kbd></dt><dd>Toggle the scorecard</dd></div><div><dt><kbd>T</kbd></dt><dd>Change board theme</dd></div></dl>
-        <p class="small">Options offers three engraved piece sets and four board styles. Browser saves and preferences last for this page session; restarting or reloading clears them.</p>
+        <dl class="controls"><div><dt><kbd>Esc</kbd></dt><dd>Pause, save, or return</dd></div><div><dt><kbd>M</kbd></dt><dd>Open the main menu</dd></div><div><dt><kbd>F</kbd></dt><dd>Flip the board</dd></div><div><dt><kbd>I</kbd></dt><dd>Toggle the scorecard</dd></div><div><dt><kbd>T</kbd></dt><dd>Change board theme</dd></div><div><dt><kbd>V</kbd> / <kbd>S</kbd></dt><dd>Toggle music / effects</dd></div></dl>
+        <p class="small">Use Sound on to hear the chamber music and wooden piece effects. Options offers three engraved piece sets and four board styles. Browser saves and preferences last for this page session; restarting or reloading clears them.</p>
       </aside>
     </div>
   </section>
@@ -67,9 +67,9 @@
     <div class="rating-notes"><p><strong>Read these as estimates.</strong> These numbers use Stockfish’s UCI_Elo scale, rather than a measured FIDE rating. Their intervals overlap: Normal scored below Easy in this sample, so this run does not establish a clear strength ordering.</p><p>Each level played the same twelve openings in both colours against Stockfish settings 1320 and 1500. The intervals describe sampling uncertainty; values below 1320 are extrapolated. <a href="research/RESULTS.md">Full test report ↓</a> · <a href="research/summary.json">Results data ↓</a></p></div>
   </section>
   <section class="download-section" id="download">
-    <div><p class="eyebrow">TAKE IT TO THE MACHINE</p><h2>Play on your own Commander X16.</h2><p>Download the program and its runtime files. Keep the CHESS directory together on your SD card and load <code>CHESS.PRG</code>, or run it in a desktop X16 emulator. Native saves stay on your card.</p></div><a class="download-link" href="CHESS.ZIP" download>DOWNLOAD THE GAME ↓<span>Program + artwork + menu overlays</span></a>
+    <div><p class="eyebrow">TAKE IT TO THE MACHINE</p><h2>Play on your own Commander X16.</h2><p>Download the program and its runtime files. Keep the CHESS directory together on your SD card and load <code>CHESS.PRG</code>, or run it in a desktop X16 emulator. Native saves stay on your card.</p></div><a class="download-link" href="CHESS.ZIP" download>DOWNLOAD THE GAME ↓<span>Program + artwork + music + effects</span></a>
   </section>
 </main>
-<footer><p>Made by <a href="https://github.com/ifilot">Ivo Filot</a> · <span id="version">CX16 Chess</span><br><a href="https://github.com/ifilot/cx16-chess">Source &amp; GPL-3.0-or-later</a></p><p>Powered by the <a href="https://github.com/X16Community/x16-emulator/releases/tag/r49">Commander X16 emulator r49</a><br><a href="emulator-license.txt">Emulator license</a> · <a href="rom-license.txt">ROM notices</a> · <a href="fonts/LICENSE.txt">PT Serif license</a></p></footer>
+<footer><p>Made by <a href="https://github.com/ifilot">Ivo Filot</a> · <span id="version">CX16 Chess</span><br><a href="https://github.com/ifilot/cx16-chess">Source &amp; GPL-3.0-or-later</a></p><p>Powered by the <a href="https://github.com/X16Community/x16-emulator/releases/tag/r49">Commander X16 emulator r49</a><br><a href="emulator-license.txt">Emulator license</a> · <a href="rom-license.txt">ROM notices</a> · <a href="fonts/LICENSE.txt">PT Serif license</a> · <a href="game/ZSMKIT.TXT">ZSMKit license</a></p></footer>
 </body>
 </html>

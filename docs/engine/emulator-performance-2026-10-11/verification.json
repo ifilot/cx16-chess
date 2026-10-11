@@ -1,0 +1,16 @@
+{
+  "emulator_base_commit": "464e447f4fba9151d1446f07750635812f40adfc",
+  "emulator_tests": {
+    "agent_api": "passed",
+    "agent_json": "passed",
+    "agent_input": "passed",
+    "psg_idle": "300 scalar/optimized comparisons passed"
+  },
+  "engine_comparisons": 34,
+  "max_elapsed_cycle_delta": 9,
+  "notes": [
+    "CPU instruction-boundary polling introduces a few cycles of elapsed-time rounding.",
+    "PSG optimization preserves all channel and shared noise state; Yamaha and PCM synthesis remain unchanged.",
+    "Pixel composition was already skipped outside capture; raster timing and collision IRQ handling remain unchanged."
+  ]
+}

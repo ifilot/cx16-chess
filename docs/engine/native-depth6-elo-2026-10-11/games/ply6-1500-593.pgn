@@ -1,0 +1,14 @@
+[Event "X16 difficulty strength test"]
+[Site "Local AgentBridge / Stockfish"]
+[Date "2026.10.11"]
+[Round "594"]
+[White "Stockfish 16 UCI_Elo 1500"]
+[Black "CX16-CHESS ply6 (native C 6 ply)"]
+[Result "1/2-1/2"]
+[Termination "fifty_moves"]
+[X16Clock "untimed fixed-depth native C; host time is not X16 time"]
+[StockfishMoveTime "0.1"]
+[OpeningPair "296"]
+
+1. e4 c5 2. Nc3 Nc6 3. Nf3 e5 4. b3 Nf6 5. a4 d5 6. exd5 Nxd5 7. Nxd5 Qxd5 8. Bc4 Qe4+ 9. Qe2 Qxe2+ 10. Bxe2 Bd6 11. d3 Nb4 12. Kd1 O-O 13. Bd2 Nd5 14. h3 Re8 15. a5 h6 16. Nh4 e4 17. dxe4 Rxe4 18. g3 Be5 19. Bf3 Bxa1 20. Bxe4 Nf6 21. Bd3 Be6 22. Nf5 Rd8 23. Ke2 Be5 24. Re1 Kh8 25. g4 Nd5 26. Kf3 Bxf5 27. Bxf5 Bf6 28. a6 bxa6 29. Rd1 Nc3 30. Re1 Nb5 31. Ba5 Nd4+ 32. Kg3 Nxf5+ 33. gxf5 Rf8 34. Bc7 Ra8 35. Kg4 Kh7 36. h4 c4 37. h5 cxb3 38. cxb3 Bd4 39. b4 Bxf2 40. Re5 Kg8 41. Kf3 Bh4 42. Ra5 Be7 43. Ra4 Rc8 44. Ba5 Bf6 45. Ke3 Rc3+ 46. Ke2 Rh3 47. Bc7 Rxh5 48. Ra5 Kh7 49. Rxa6 Rxf5 50. Bd6 Bd4 51. Bb8 Kg8 52. Kd2 Rd5 53. Kc2 Bb6 54. Bxa7 Bc7 55. Bc5 f5 56. Ra8+ Kh7 57. Kc3 f4 58. Ra7 Be5+ 59. Kc4 Rd8 60. b5 Bf6 61. b6 Rd2 62. Ra8 Rb2 63. Ra7 Kg6 64. Ra3 Kg5 65. Rb3 Rxb3 66. Kxb3 Ba1 67. b7 Be5 68. Ba7 f3 69. Kc4 Kf5 70. Bd4 Bg3 71. Kd3 g5 72. Bf2 Bb8 73. Kd2 g4 74. Ke3 g3 75. Bxg3 Bxg3 76. b8=R Bxb8 77. Kxf3 Ba7 78. Kg3 Ke4 79. Kg2 h5 80. Kg3 Kf5 81. Kg2 h4 82. Kh2 Kf4 83. Kh1 h3 84. Kh2 Kg4 85. Kh1 Bc5 86. Kh2 Bd6+ 87. Kh1 Kg5 88. Kg1 h2+ 89. Kg2 Kg4 90. Kh1 Kf5 91. Kg2 Kg5 92. Kh1 Bf4 93. Kg2 Kf5 94. Kh1 Bc7 95. Kg2 Ke4 96. Kh1 Ke3 97. Kg2 Be5 98. Kh1 Ke2 99. Kg2 Kd1 100. Kh1 Kd2 101. Kg2 Bg3 102. Kh1 Bd6 103. Kg2 Ke3 104. Kh1 Bf4 105. Kg2 Kd3 106. Kh1 Kd4 107. Kg2 Ke4 108. Kh1 Kd3 109. Kg2 Bd6 110. Kh1 Kd4 111. Kg2 Ke4 112. Kh1 Kd3 113. Kg2 Bg3 114. Kh1 Kd2 115. Kg2 Bf4 116. Kh1 Kc3 117. Kg2 Kb2 118. Kh1 Kb3 119. Kg2 Kc4 120. Kh1 Kd5 121. Kg2 Kc6 122. Kh1 Kc5 123. Kg2 Kd4 124. Kh1 Be5 125. Kg2 Ke4 126. Kh1 Bc7 127. Kg2 Kd3 128. Kh1 Kc3 129. Kg2 Kd2 130. Kh1 Kd3 131. Kg2 Kc2 132. Kh1 Bd6 133. Kg2 Bb8 134. Kh1 Kc3 135. Kg2 Kd4 136. Kh1 Kd3 137. Kg2 Be5 138. Kh1 1/2-1/2
+

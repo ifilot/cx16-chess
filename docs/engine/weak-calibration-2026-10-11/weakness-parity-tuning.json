@@ -1,0 +1,7498 @@
+{
+  "searches": 376,
+  "differences": 0,
+  "cases": [
+    {
+      "noise": 1,
+      "seed": 1,
+      "fen": "r1bqkb1r/ppp2ppp/2np1n2/8/2BpP3/2P2N2/PP3PPP/RNBQK2R w KQkq - 1 6",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 320,
+        "move": "e1g1",
+        "depth": 1,
+        "score": -108,
+        "jiffies": 38,
+        "pv": [
+          "e1g1"
+        ],
+        "seconds": 1.0000005,
+        "nps": 319.99984000008
+      }
+    },
+    {
+      "noise": 1,
+      "seed": 32768,
+      "fen": "r1bqk1nr/ppp1bppp/2n1p3/3p4/2PP4/2N2N2/PP2PPPP/R1BQKB1R w KQkq - 4 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 108,
+        "move": "c4d5",
+        "depth": 1,
+        "score": 35,
+        "jiffies": 13,
+        "pv": [
+          "c4d5"
+        ],
+        "seconds": 0.50000025,
+        "nps": 215.999892000054
+      }
+    },
+    {
+      "noise": 1,
+      "seed": 65535,
+      "fen": "rnbqkbnr/1p3ppp/p2pp3/2p5/4P3/2N2N1P/PPPP1PP1/R1BQKB1R w KQkq - 0 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 55,
+        "move": "f1d3",
+        "depth": 1,
+        "score": 105,
+        "jiffies": 7,
+        "pv": [
+          "f1d3"
+        ],
+        "seconds": 0.5000005,
+        "nps": 109.99989000011001
+      }
+    },
+    {
+      "noise": 10,
+      "seed": 1,
+      "fen": "rn1qkbnr/pp1b1ppp/4p3/2ppP3/3P4/2P5/PP3PPP/RNBQKBNR w KQkq - 0 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 139,
+        "move": "g1f3",
+        "depth": 1,
+        "score": 30,
+        "jiffies": 17,
+        "pv": [
+          "g1f3"
+        ],
+        "seconds": 0.5000005,
+        "nps": 277.99972200027804
+      }
+    },
+    {
+      "noise": 10,
+      "seed": 32768,
+      "fen": "r1bqkb1r/pp2pp1p/1np2np1/3p4/3P4/N1P2NP1/PP2PP1P/R1BQKB1R w KQkq - 0 7",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 43,
+        "move": "a3c2",
+        "depth": 1,
+        "score": -15,
+        "jiffies": 6,
+        "pv": [
+          "a3c2"
+        ],
+        "seconds": 0.50000075,
+        "nps": 85.9998710001935
+      }
+    },
+    {
+      "noise": 10,
+      "seed": 65535,
+      "fen": "rnbqk2r/ppp1bppp/4pn2/3p4/2PP4/4PN2/PP3PPP/RNBQKB1R w KQkq - 1 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 123,
+        "move": "b1c3",
+        "depth": 1,
+        "score": 20,
+        "jiffies": 15,
+        "pv": [
+          "b1c3"
+        ],
+        "seconds": 0.5000005,
+        "nps": 245.999754000246
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 1,
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/8/2BpP3/5N2/PPP2PPP/RNBQK2R w KQkq - 0 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 115,
+        "move": "f3d4",
+        "depth": 1,
+        "score": -81,
+        "jiffies": 16,
+        "pv": [
+          "f3d4"
+        ],
+        "seconds": 0.5000005,
+        "nps": 229.99977000023003
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 32768,
+      "fen": "rnbq1rk1/pp1p1ppp/4pn2/2p5/1bPP4/2N5/PP1BPPPP/2RQKBNR w K - 0 6",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 191,
+        "move": "g1f3",
+        "depth": 1,
+        "score": 0,
+        "jiffies": 21,
+        "pv": [
+          "g1f3"
+        ],
+        "seconds": 0.7500005,
+        "nps": 254.66649688900208
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 65535,
+      "fen": "rnb1k1nr/ppp2ppp/8/4q3/1b6/8/PPP1QPPP/RNB1KBNR w KQkq - 2 6",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 21,
+        "move": "b1c3",
+        "depth": 1,
+        "score": 20,
+        "jiffies": 3,
+        "pv": [
+          "b1c3"
+        ],
+        "seconds": 0.25,
+        "nps": 84.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 1,
+      "fen": "r1bqkbnr/p2ppp1p/2p3p1/2p5/4P3/2N5/PPPP1PPP/R1BQK1NR w KQkq - 0 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 35,
+        "move": "g1f3",
+        "depth": 1,
+        "score": 114,
+        "jiffies": 5,
+        "pv": [
+          "g1f3"
+        ],
+        "seconds": 0.5000005,
+        "nps": 69.99993000007001
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 32768,
+      "fen": "rnbqk2r/ppp1b1pp/4p3/3p1p2/2PPn3/5NP1/PP2PPBP/RNBQ1RK1 w kq - 3 7",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 160,
+        "move": "b1d2",
+        "depth": 1,
+        "score": 55,
+        "jiffies": 18,
+        "pv": [
+          "b1d2"
+        ],
+        "seconds": 0.500000125,
+        "nps": 319.99992000002
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 65535,
+      "fen": "rnbqk1nr/pp2ppbp/6p1/3pP3/3p1B2/2N5/PPP2PPP/R2QKBNR w KQkq - 0 6",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 154,
+        "move": "d1d4",
+        "depth": 1,
+        "score": 90,
+        "jiffies": 20,
+        "pv": [
+          "d1d4"
+        ],
+        "seconds": 0.7500005,
+        "nps": 205.3331964445357
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 1,
+      "fen": "r1bqk2r/pp1pbpp1/2n2n1p/2p1p3/Q1P1P3/2N2NP1/PP1P1P1P/R1B1KB1R w KQkq - 1 7",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 70,
+        "move": "a4b5",
+        "depth": 1,
+        "score": -30,
+        "jiffies": 10,
+        "pv": [
+          "a4b5"
+        ],
+        "seconds": 0.5,
+        "nps": 140.0
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 32768,
+      "fen": "r1bqkbnr/ppp2ppp/2np4/8/3pP3/4BN2/PPP2PPP/RN1QKB1R w KQkq - 0 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 144,
+        "move": "f3d4",
+        "depth": 1,
+        "score": 25,
+        "jiffies": 17,
+        "pv": [
+          "f3d4"
+        ],
+        "seconds": 0.50000025,
+        "nps": 287.999856000072
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 65535,
+      "fen": "rnbqk1nr/pp3ppp/2p1p3/3p4/1bPPP3/2N5/PP3PPP/R1BQKBNR w KQkq - 1 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 192,
+        "move": "f1d3",
+        "depth": 1,
+        "score": 60,
+        "jiffies": 23,
+        "pv": [
+          "f1d3"
+        ],
+        "seconds": 0.75000125,
+        "nps": 255.99957333404447
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 1,
+      "fen": "rnbqkb1r/pp2pppp/3p4/2P5/4n3/5N2/PPP2PPP/RNBQKB1R w KQkq - 0 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 268,
+        "move": "c5d6",
+        "depth": 1,
+        "score": 7,
+        "jiffies": 29,
+        "pv": [
+          "c5d6"
+        ],
+        "seconds": 0.750000125,
+        "nps": 357.33327377778767
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 32768,
+      "fen": "r1bqk2r/ppp1ppbp/2n2np1/8/2QP4/2N2N2/PP2PPPP/R1B1KB1R w KQkq - 3 7",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 64,
+        "move": "e2e3",
+        "depth": 1,
+        "score": 30,
+        "jiffies": 11,
+        "pv": [
+          "e2e3"
+        ],
+        "seconds": 0.5000005,
+        "nps": 127.99987200012801
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 65535,
+      "fen": "rn1qkb1r/1ppbnppp/p3p3/3pP3/3P4/4BN2/PPP2PPP/RN1QKB1R w KQkq - 2 6",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 43,
+        "move": "b1d2",
+        "depth": 1,
+        "score": 60,
+        "jiffies": 6,
+        "pv": [
+          "b1d2"
+        ],
+        "seconds": 0.500000375,
+        "nps": 85.99993550004837
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 1,
+      "fen": "rnbqk2r/1pp2ppp/3p1n2/p3p3/1bP5/1QN1PN2/PP1P1PPP/R1B1KB1R w KQkq - 0 6",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 59,
+        "move": "d2d3",
+        "depth": 1,
+        "score": 25,
+        "jiffies": 9,
+        "pv": [
+          "d2d3"
+        ],
+        "seconds": 0.50000025,
+        "nps": 117.9999410000295
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 32768,
+      "fen": "rn2kbnr/pp2pppp/1qp3b1/3pP3/3P2P1/2N5/PPP2P1P/R1BQKBNR w KQkq - 1 6",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 81,
+        "move": "f1h3",
+        "depth": 1,
+        "score": 50,
+        "jiffies": 12,
+        "pv": [
+          "f1h3"
+        ],
+        "seconds": 0.50000025,
+        "nps": 161.99991900004048
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 65535,
+      "fen": "rnbqkb1r/1pp2ppp/4pn2/p2p4/3P4/5NP1/PPP1PPBP/RNBQK2R w KQkq - 0 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 40,
+        "move": "d1d3",
+        "depth": 1,
+        "score": -15,
+        "jiffies": 6,
+        "pv": [
+          "d1d3"
+        ],
+        "seconds": 0.5,
+        "nps": 80.0
+      }
+    },
+    {
+      "noise": 600,
+      "seed": 1,
+      "fen": "rn1qkb1r/pppbpppp/5n2/8/Q1pP4/5N2/PP2PPPP/RNB1KB1R w KQkq - 2 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 90,
+        "move": "a4c4",
+        "depth": 1,
+        "score": 0,
+        "jiffies": 11,
+        "pv": [
+          "a4c4"
+        ],
+        "seconds": 0.500000125,
+        "nps": 179.99995500001125
+      }
+    },
+    {
+      "noise": 600,
+      "seed": 32768,
+      "fen": "rnbqkb1r/ppp2ppp/5n2/3p4/2BpP3/8/PPP1QPPP/RNB1K1NR w KQkq - 0 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 209,
+        "move": "e4d5",
+        "depth": 1,
+        "score": -25,
+        "jiffies": 27,
+        "pv": [
+          "e4d5"
+        ],
+        "seconds": 0.750000625,
+        "nps": 278.66643444463796
+      }
+    },
+    {
+      "noise": 600,
+      "seed": 65535,
+      "fen": "rnbq1rk1/pp1p1pp1/4pn1p/2P5/1bP5/2N5/PP1BPPPP/R2QKBNR w KQ - 2 7",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 103,
+        "move": "d2e3",
+        "depth": 1,
+        "score": 48,
+        "jiffies": 13,
+        "pv": [
+          "d2e3"
+        ],
+        "seconds": 0.50000075,
+        "nps": 205.9996910004635
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 1,
+      "fen": "rnbqkb1r/ppp1pppp/5n2/8/3P4/5N2/PPP2PPP/RNBQKB1R w KQkq - 1 5",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 48,
+        "move": "b2b4",
+        "depth": 1,
+        "score": 5,
+        "jiffies": 7,
+        "pv": [
+          "b2b4"
+        ],
+        "seconds": 0.5000005,
+        "nps": 95.99990400009601
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 32768,
+      "fen": "r2qkbnr/pp3ppp/2npp3/2p5/4P1b1/2NP1N2/PPP1BPPP/R1BQK2R w KQkq - 0 6",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 104,
+        "move": "c1e3",
+        "depth": 1,
+        "score": 70,
+        "jiffies": 12,
+        "pv": [
+          "c1e3"
+        ],
+        "seconds": 0.50000025,
+        "nps": 207.999896000052
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 65535,
+      "fen": "r1bqkb1r/pp1np1pp/2p2n2/3p1p2/2PP1B2/5NP1/PP2PP1P/RN1QKB1R w KQkq - 2 6",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 142,
+        "move": "b1d2",
+        "depth": 1,
+        "score": 30,
+        "jiffies": 16,
+        "pv": [
+          "b1d2"
+        ],
+        "seconds": 0.500000625,
+        "nps": 283.99964500044376
+      }
+    },
+    {
+      "noise": 2000,
+      "seed": 1,
+      "fen": "rnb1k1nr/ppq1ppbp/2pp2p1/8/P2PP3/5N2/1PP1BPPP/RNBQK2R w KQkq - 1 6",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 55,
+        "move": "c1g5",
+        "depth": 1,
+        "score": 100,
+        "jiffies": 9,
+        "pv": [
+          "c1g5"
+        ],
+        "seconds": 0.50000025,
+        "nps": 109.9999450000275
+      }
+    },
+    {
+      "noise": 2000,
+      "seed": 32768,
+      "fen": "rnb2rk1/pp1pppbp/5np1/q1P5/2P5/2N2N2/PP1BPPPP/R2QKB1R w KQ - 3 7",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 76,
+        "move": "c3e4",
+        "depth": 1,
+        "score": 128,
+        "jiffies": 10,
+        "pv": [
+          "c3e4"
+        ],
+        "seconds": 0.500000375,
+        "nps": 151.9998860000855
+      }
+    },
+    {
+      "noise": 2000,
+      "seed": 65535,
+      "fen": "r1bqkb1r/pp2nppp/2pp1n2/3Pp3/P1P1P3/5N2/1P3PPP/RNBQKB1R w KQkq - 1 7",
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 341,
+        "move": "f3h4",
+        "depth": 1,
+        "score": -190,
+        "jiffies": 38,
+        "pv": [
+          "f3h4"
+        ],
+        "seconds": 1.00000125,
+        "nps": 340.9995737505328
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "warm_ply": 0,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 20,
+        "move": "g1f3",
+        "depth": 1,
+        "score": 40,
+        "jiffies": 3,
+        "pv": [
+          "g1f3"
+        ],
+        "seconds": 0.250000625,
+        "nps": 79.9998000005
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/5N2/PPPPPPPP/RNBQKB1R b KQkq - 1 1",
+      "warm_ply": 1,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 22,
+        "move": "g8f6",
+        "depth": 1,
+        "score": -10,
+        "jiffies": 4,
+        "pv": [
+          "g8f6"
+        ],
+        "seconds": 0.2500005,
+        "nps": 87.99982400035199
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "rnbqkb1r/pppppppp/5n2/8/8/5N2/PPPPPPPP/RNBQKB1R w KQkq - 2 2",
+      "warm_ply": 2,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 24,
+        "move": "b1c3",
+        "depth": 1,
+        "score": 40,
+        "jiffies": 4,
+        "pv": [
+          "b1c3"
+        ],
+        "seconds": 0.25,
+        "nps": 96.0
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "rnbqkb1r/pppppppp/5n2/8/8/2N2N2/PPPPPPPP/R1BQKB1R b KQkq - 3 2",
+      "warm_ply": 3,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 27,
+        "move": "b8c6",
+        "depth": 1,
+        "score": -10,
+        "jiffies": 3,
+        "pv": [
+          "b8c6"
+        ],
+        "seconds": 0.250000375,
+        "nps": 107.999838000243
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "r1bqkb1r/pppppppp/2n2n2/8/8/2N2N2/PPPPPPPP/R1BQKB1R w KQkq - 4 3",
+      "warm_ply": 4,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 30,
+        "move": "e2e4",
+        "depth": 1,
+        "score": 15,
+        "jiffies": 4,
+        "pv": [
+          "e2e4"
+        ],
+        "seconds": 0.250000125,
+        "nps": 119.99994000003
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "r1bqkb1r/pppppppp/2n2n2/8/4P3/2N2N2/PPPP1PPP/R1BQKB1R b KQkq - 0 3",
+      "warm_ply": 5,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 33,
+        "move": "e7e5",
+        "depth": 1,
+        "score": -10,
+        "jiffies": 5,
+        "pv": [
+          "e7e5"
+        ],
+        "seconds": 0.250000125,
+        "nps": 131.999934000033
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/4P3/2N2N2/PPPP1PPP/R1BQKB1R w KQkq - 0 4",
+      "warm_ply": 6,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 45,
+        "move": "f1d3",
+        "depth": 1,
+        "score": 10,
+        "jiffies": 7,
+        "pv": [
+          "f1d3"
+        ],
+        "seconds": 0.250000375,
+        "nps": 179.999730000405
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "r1bqkb1r/pppp1ppp/2n2n2/4p3/4P3/2NB1N2/PPPP1PPP/R1BQK2R b KQkq - 1 4",
+      "warm_ply": 7,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 48,
+        "move": "f8c5",
+        "depth": 1,
+        "score": -10,
+        "jiffies": 7,
+        "pv": [
+          "f8c5"
+        ],
+        "seconds": 0.25000025,
+        "nps": 191.99980800019202
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/4P3/2NB1N2/PPPP1PPP/R1BQK2R w KQkq - 2 5",
+      "warm_ply": 8,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 40,
+        "move": "e1g1",
+        "depth": 1,
+        "score": 35,
+        "jiffies": 6,
+        "pv": [
+          "e1g1"
+        ],
+        "seconds": 0.25000025,
+        "nps": 159.99984000016002
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "r1bqk2r/pppp1ppp/2n2n2/2b1p3/4P3/2NB1N2/PPPP1PPP/R1BQ1RK1 b kq - 3 5",
+      "warm_ply": 9,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 65,
+        "move": "e8g8",
+        "depth": 1,
+        "score": -10,
+        "jiffies": 9,
+        "pv": [
+          "e8g8"
+        ],
+        "seconds": 0.50000075,
+        "nps": 129.9998050002925
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "r1bq1rk1/pppp1ppp/2n2n2/2b1p3/4P3/2NB1N2/PPPP1PPP/R1BQ1RK1 w - - 4 6",
+      "warm_ply": 10,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 37,
+        "move": "a2a3",
+        "depth": 1,
+        "score": -10,
+        "jiffies": 5,
+        "pv": [
+          "a2a3"
+        ],
+        "seconds": 0.5000005,
+        "nps": 73.99992600007401
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "r1bq1rk1/pppp1ppp/2n2n2/2b1p3/4P3/P1NB1N2/1PPP1PPP/R1BQ1RK1 b - - 0 6",
+      "warm_ply": 11,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 69,
+        "move": "d7d6",
+        "depth": 1,
+        "score": 10,
+        "jiffies": 10,
+        "pv": [
+          "d7d6"
+        ],
+        "seconds": 0.25000025,
+        "nps": 275.99972400027605
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "r1bq1rk1/ppp2ppp/2np1n2/2b1p3/4P3/P1NB1N2/1PPP1PPP/R1BQ1RK1 w - - 0 7",
+      "warm_ply": 12,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 38,
+        "move": "d1e2",
+        "depth": 1,
+        "score": -25,
+        "jiffies": 6,
+        "pv": [
+          "d1e2"
+        ],
+        "seconds": 0.25,
+        "nps": 152.0
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "r1bq1rk1/ppp2ppp/2np1n2/2b1p3/4P3/P1NB1N2/1PPPQPPP/R1B2RK1 b - - 1 7",
+      "warm_ply": 13,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 68,
+        "move": "c8e6",
+        "depth": 1,
+        "score": 25,
+        "jiffies": 10,
+        "pv": [
+          "c8e6"
+        ],
+        "seconds": 0.250000375,
+        "nps": 271.999592000612
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "r2q1rk1/ppp2ppp/2npbn2/2b1p3/4P3/P1NB1N2/1PPPQPPP/R1B2RK1 w - - 2 8",
+      "warm_ply": 14,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 48,
+        "move": "f3g5",
+        "depth": 1,
+        "score": -50,
+        "jiffies": 7,
+        "pv": [
+          "f3g5"
+        ],
+        "seconds": 0.25,
+        "nps": 192.0
+      }
+    },
+    {
+      "noise": 25,
+      "seed": 19377,
+      "fen": "r2q1rk1/ppp2ppp/2npbn2/2b1p1N1/4P3/P1NB4/1PPPQPPP/R1B2RK1 b - - 3 8",
+      "warm_ply": 15,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 208,
+        "move": "c6d4",
+        "depth": 1,
+        "score": 40,
+        "jiffies": 24,
+        "pv": [
+          "c6d4"
+        ],
+        "seconds": 0.7500005,
+        "nps": 277.3331484445677
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "warm_ply": 0,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 20,
+        "move": "b1c3",
+        "depth": 1,
+        "score": 40,
+        "jiffies": 3,
+        "pv": [
+          "b1c3"
+        ],
+        "seconds": 0.25000025,
+        "nps": 79.99992000008001
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq - 1 1",
+      "warm_ply": 1,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 21,
+        "move": "b8c6",
+        "depth": 1,
+        "score": -10,
+        "jiffies": 3,
+        "pv": [
+          "b8c6"
+        ],
+        "seconds": 0.25,
+        "nps": 84.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r1bqkbnr/pppppppp/2n5/8/8/2N5/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+      "warm_ply": 2,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 23,
+        "move": "d2d3",
+        "depth": 1,
+        "score": 10,
+        "jiffies": 3,
+        "pv": [
+          "d2d3"
+        ],
+        "seconds": 0.250000375,
+        "nps": 91.999862000207
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r1bqkbnr/pppppppp/2n5/8/8/2NP4/PPP1PPPP/R1BQKBNR b KQkq - 0 2",
+      "warm_ply": 3,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 24,
+        "move": "g8f6",
+        "depth": 1,
+        "score": 20,
+        "jiffies": 4,
+        "pv": [
+          "g8f6"
+        ],
+        "seconds": 0.25,
+        "nps": 96.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r1bqkb1r/pppppppp/2n2n2/8/8/2NP4/PPP1PPPP/R1BQKBNR w KQkq - 1 3",
+      "warm_ply": 4,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 34,
+        "move": "e2e4",
+        "depth": 1,
+        "score": -15,
+        "jiffies": 5,
+        "pv": [
+          "e2e4"
+        ],
+        "seconds": 0.2500005,
+        "nps": 135.999728000544
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r1bqkb1r/pppppppp/2n2n2/8/4P3/2NP4/PPP2PPP/R1BQKBNR b KQkq - 0 3",
+      "warm_ply": 5,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 33,
+        "move": "d7d6",
+        "depth": 1,
+        "score": 15,
+        "jiffies": 5,
+        "pv": [
+          "d7d6"
+        ],
+        "seconds": 0.25000025,
+        "nps": 131.999868000132
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r1bqkb1r/ppp1pppp/2np1n2/8/4P3/2NP4/PPP2PPP/R1BQKBNR w KQkq - 0 4",
+      "warm_ply": 6,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 43,
+        "move": "c1g5",
+        "depth": 1,
+        "score": -20,
+        "jiffies": 6,
+        "pv": [
+          "c1g5"
+        ],
+        "seconds": 0.25,
+        "nps": 172.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r1bqkb1r/ppp1pppp/2np1n2/6B1/4P3/2NP4/PPP2PPP/R2QKBNR b KQkq - 1 4",
+      "warm_ply": 7,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 40,
+        "move": "e7e5",
+        "depth": 1,
+        "score": 25,
+        "jiffies": 6,
+        "pv": [
+          "e7e5"
+        ],
+        "seconds": 0.25000025,
+        "nps": 159.99984000016002
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r1bqkb1r/ppp2ppp/2np1n2/4p1B1/4P3/2NP4/PPP2PPP/R2QKBNR w KQkq - 0 5",
+      "warm_ply": 8,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 59,
+        "move": "g1f3",
+        "depth": 1,
+        "score": 5,
+        "jiffies": 8,
+        "pv": [
+          "g1f3"
+        ],
+        "seconds": 0.25,
+        "nps": 236.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r1bqkb1r/ppp2ppp/2np1n2/4p1B1/4P3/2NP1N2/PPP2PPP/R2QKB1R b KQkq - 1 5",
+      "warm_ply": 9,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 70,
+        "move": "c8d7",
+        "depth": 1,
+        "score": -15,
+        "jiffies": 9,
+        "pv": [
+          "c8d7"
+        ],
+        "seconds": 0.25000025,
+        "nps": 279.99972000028004
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r2qkb1r/pppb1ppp/2np1n2/4p1B1/4P3/2NP1N2/PPP2PPP/R2QKB1R w KQkq - 2 6",
+      "warm_ply": 10,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 54,
+        "move": "d1e2",
+        "depth": 1,
+        "score": 0,
+        "jiffies": 7,
+        "pv": [
+          "d1e2"
+        ],
+        "seconds": 0.250000375,
+        "nps": 215.999676000486
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r2qkb1r/pppb1ppp/2np1n2/4p1B1/4P3/2NP1N2/PPP1QPPP/R3KB1R b KQkq - 3 6",
+      "warm_ply": 11,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 74,
+        "move": "d7e6",
+        "depth": 1,
+        "score": -10,
+        "jiffies": 9,
+        "pv": [
+          "d7e6"
+        ],
+        "seconds": 0.500000625,
+        "nps": 147.99981500023125
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r2qkb1r/ppp2ppp/2npbn2/4p1B1/4P3/2NP1N2/PPP1QPPP/R3KB1R w KQkq - 4 7",
+      "warm_ply": 12,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 53,
+        "move": "e1c1",
+        "depth": 1,
+        "score": 20,
+        "jiffies": 7,
+        "pv": [
+          "e1c1"
+        ],
+        "seconds": 0.50000075,
+        "nps": 105.9998410002385
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r2qkb1r/ppp2ppp/2npbn2/4p1B1/4P3/2NP1N2/PPP1QPPP/2KR1B1R b kq - 5 7",
+      "warm_ply": 13,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 99,
+        "move": "h8g8",
+        "depth": 1,
+        "score": -40,
+        "jiffies": 12,
+        "pv": [
+          "h8g8"
+        ],
+        "seconds": 0.500000125,
+        "nps": 197.99995050001237
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r2qkbr1/ppp2ppp/2npbn2/4p1B1/4P3/2NP1N2/PPP1QPPP/2KR1B1R w q - 6 8",
+      "warm_ply": 14,
+      "result": {
+        "replayed": 6,
+        "illegal": 0,
+        "nodes": 53,
+        "move": "h2h3",
+        "depth": 1,
+        "score": 20,
+        "jiffies": 7,
+        "pv": [
+          "h2h3"
+        ],
+        "seconds": 0.500000375,
+        "nps": 105.99992050005962
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 19377,
+      "fen": "r2qkbr1/ppp2ppp/2npbn2/4p1B1/4P3/2NP1N1P/PPP1QPP1/2KR1B1R b q - 0 8",
+      "warm_ply": 15,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 107,
+        "move": "f8e7",
+        "depth": 1,
+        "score": -30,
+        "jiffies": 14,
+        "pv": [
+          "f8e7"
+        ],
+        "seconds": 0.500000375,
+        "nps": 213.99983950012034
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "warm_ply": 0,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 20,
+        "move": "b1c3",
+        "depth": 1,
+        "score": 40,
+        "jiffies": 3,
+        "pv": [
+          "b1c3"
+        ],
+        "seconds": 0.250000375,
+        "nps": 79.99988000018
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq - 1 1",
+      "warm_ply": 1,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 21,
+        "move": "b8c6",
+        "depth": 1,
+        "score": -10,
+        "jiffies": 4,
+        "pv": [
+          "b8c6"
+        ],
+        "seconds": 0.2500005,
+        "nps": 83.999832000336
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1bqkbnr/pppppppp/2n5/8/8/2N5/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+      "warm_ply": 2,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 23,
+        "move": "d2d4",
+        "depth": 1,
+        "score": 15,
+        "jiffies": 3,
+        "pv": [
+          "d2d4"
+        ],
+        "seconds": 0.250000375,
+        "nps": 91.999862000207
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1bqkbnr/pppppppp/2n5/8/3P4/2N5/PPP1PPPP/R1BQKBNR b KQkq - 0 2",
+      "warm_ply": 3,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 28,
+        "move": "d7d5",
+        "depth": 1,
+        "score": -10,
+        "jiffies": 4,
+        "pv": [
+          "d7d5"
+        ],
+        "seconds": 0.250000375,
+        "nps": 111.999832000252
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1bqkbnr/ppp1pppp/2n5/3p4/3P4/2N5/PPP1PPPP/R1BQKBNR w KQkq - 0 3",
+      "warm_ply": 4,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 38,
+        "move": "c1e3",
+        "depth": 1,
+        "score": 10,
+        "jiffies": 5,
+        "pv": [
+          "c1e3"
+        ],
+        "seconds": 0.25000025,
+        "nps": 151.999848000152
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1bqkbnr/ppp1pppp/2n5/3p4/3P4/2N1B3/PPP1PPPP/R2QKBNR b KQkq - 1 3",
+      "warm_ply": 5,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 39,
+        "move": "d8d6",
+        "depth": 1,
+        "score": -20,
+        "jiffies": 6,
+        "pv": [
+          "d8d6"
+        ],
+        "seconds": 0.25,
+        "nps": 156.0
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1b1kbnr/ppp1pppp/2nq4/3p4/3P4/2N1B3/PPP1PPPP/R2QKBNR w KQkq - 2 4",
+      "warm_ply": 6,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 40,
+        "move": "d1d3",
+        "depth": 1,
+        "score": 10,
+        "jiffies": 6,
+        "pv": [
+          "d1d3"
+        ],
+        "seconds": 0.25,
+        "nps": 160.0
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1b1kbnr/ppp1pppp/2nq4/3p4/3P4/2NQB3/PPP1PPPP/R3KBNR b KQkq - 3 4",
+      "warm_ply": 7,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 76,
+        "move": "d6e6",
+        "depth": 1,
+        "score": -30,
+        "jiffies": 11,
+        "pv": [
+          "d6e6"
+        ],
+        "seconds": 0.500001,
+        "nps": 151.999696000608
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1b1kbnr/ppp1pppp/2n1q3/3p4/3P4/2NQB3/PPP1PPPP/R3KBNR w KQkq - 4 5",
+      "warm_ply": 8,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 58,
+        "move": "e3f4",
+        "depth": 1,
+        "score": 10,
+        "jiffies": 9,
+        "pv": [
+          "e3f4"
+        ],
+        "seconds": 0.500001,
+        "nps": 115.99976800046399
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1b1kbnr/ppp1pppp/2n1q3/3p4/3P1B2/2NQ4/PPP1PPPP/R3KBNR b KQkq - 5 5",
+      "warm_ply": 9,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 150,
+        "move": "e6d7",
+        "depth": 1,
+        "score": -35,
+        "jiffies": 20,
+        "pv": [
+          "e6d7"
+        ],
+        "seconds": 0.75000025,
+        "nps": 199.99993333335556
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1b1kbnr/pppqpppp/2n5/3p4/3P1B2/2NQ4/PPP1PPPP/R3KBNR w KQkq - 6 6",
+      "warm_ply": 10,
+      "result": {
+        "replayed": 6,
+        "illegal": 0,
+        "nodes": 113,
+        "move": "e2e3",
+        "depth": 1,
+        "score": 35,
+        "jiffies": 16,
+        "pv": [
+          "e2e3"
+        ],
+        "seconds": 0.750000375,
+        "nps": 150.666591333371
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1b1kbnr/pppqpppp/2n5/3p4/3P1B2/2NQP3/PPP2PPP/R3KBNR b KQkq - 0 6",
+      "warm_ply": 11,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 53,
+        "move": "h7h6",
+        "depth": 1,
+        "score": -55,
+        "jiffies": 8,
+        "pv": [
+          "h7h6"
+        ],
+        "seconds": 0.2500005,
+        "nps": 211.99957600084798
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1b1kbnr/pppqppp1/2n4p/3p4/3P1B2/2NQP3/PPP2PPP/R3KBNR w KQkq - 0 7",
+      "warm_ply": 12,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 78,
+        "move": "g1f3",
+        "depth": 1,
+        "score": 85,
+        "jiffies": 12,
+        "pv": [
+          "g1f3"
+        ],
+        "seconds": 0.250000125,
+        "nps": 311.999844000078
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1b1kbnr/pppqppp1/2n4p/3p4/3P1B2/2NQPN2/PPP2PPP/R3KB1R b KQkq - 1 7",
+      "warm_ply": 13,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 53,
+        "move": "e7e6",
+        "depth": 1,
+        "score": -85,
+        "jiffies": 7,
+        "pv": [
+          "e7e6"
+        ],
+        "seconds": 0.250000375,
+        "nps": 211.999682000477
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1b1kbnr/pppq1pp1/2n1p2p/3p4/3P1B2/2NQPN2/PPP2PPP/R3KB1R w KQkq - 0 8",
+      "warm_ply": 14,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 79,
+        "move": "c3b5",
+        "depth": 1,
+        "score": 60,
+        "jiffies": 11,
+        "pv": [
+          "c3b5"
+        ],
+        "seconds": 0.50000025,
+        "nps": 157.99992100003948
+      }
+    },
+    {
+      "noise": 100,
+      "seed": 19377,
+      "fen": "r1b1kbnr/pppq1pp1/2n1p2p/1N1p4/3P1B2/3QPN2/PPP2PPP/R3KB1R b KQkq - 1 8",
+      "warm_ply": 15,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 62,
+        "move": "g8f6",
+        "depth": 1,
+        "score": -30,
+        "jiffies": 10,
+        "pv": [
+          "g8f6"
+        ],
+        "seconds": 0.250000375,
+        "nps": 247.999628000558
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "warm_ply": 0,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 20,
+        "move": "b1c3",
+        "depth": 1,
+        "score": 40,
+        "jiffies": 3,
+        "pv": [
+          "b1c3"
+        ],
+        "seconds": 0.250000125,
+        "nps": 79.99996000002
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/2N5/PPPPPPPP/R1BQKBNR b KQkq - 1 1",
+      "warm_ply": 1,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 21,
+        "move": "b8c6",
+        "depth": 1,
+        "score": -10,
+        "jiffies": 3,
+        "pv": [
+          "b8c6"
+        ],
+        "seconds": 0.25000025,
+        "nps": 83.99991600008401
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r1bqkbnr/pppppppp/2n5/8/8/2N5/PPPPPPPP/R1BQKBNR w KQkq - 2 2",
+      "warm_ply": 2,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 23,
+        "move": "d2d3",
+        "depth": 1,
+        "score": 10,
+        "jiffies": 3,
+        "pv": [
+          "d2d3"
+        ],
+        "seconds": 0.250000375,
+        "nps": 91.999862000207
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r1bqkbnr/pppppppp/2n5/8/8/2NP4/PPP1PPPP/R1BQKBNR b KQkq - 0 2",
+      "warm_ply": 3,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 24,
+        "move": "d7d6",
+        "depth": 1,
+        "score": -10,
+        "jiffies": 4,
+        "pv": [
+          "d7d6"
+        ],
+        "seconds": 0.250000125,
+        "nps": 95.999952000024
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r1bqkbnr/ppp1pppp/2np4/8/8/2NP4/PPP1PPPP/R1BQKBNR w KQkq - 0 3",
+      "warm_ply": 4,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 32,
+        "move": "e2e4",
+        "depth": 1,
+        "score": 15,
+        "jiffies": 5,
+        "pv": [
+          "e2e4"
+        ],
+        "seconds": 0.250000125,
+        "nps": 127.999936000032
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r1bqkbnr/ppp1pppp/2np4/8/4P3/2NP4/PPP2PPP/R1BQKBNR b KQkq - 0 3",
+      "warm_ply": 5,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 37,
+        "move": "c6e5",
+        "depth": 1,
+        "score": -25,
+        "jiffies": 5,
+        "pv": [
+          "c6e5"
+        ],
+        "seconds": 0.2500005,
+        "nps": 147.999704000592
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r1bqkbnr/ppp1pppp/3p4/4n3/4P3/2NP4/PPP2PPP/R1BQKBNR w KQkq - 1 4",
+      "warm_ply": 6,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 43,
+        "move": "c1f4",
+        "depth": 1,
+        "score": 25,
+        "jiffies": 7,
+        "pv": [
+          "c1f4"
+        ],
+        "seconds": 0.250000375,
+        "nps": 171.999742000387
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r1bqkbnr/ppp1pppp/3p4/4n3/4PB2/2NP4/PPP2PPP/R2QKBNR b KQkq - 2 4",
+      "warm_ply": 7,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 55,
+        "move": "c8e6",
+        "depth": 1,
+        "score": -25,
+        "jiffies": 9,
+        "pv": [
+          "c8e6"
+        ],
+        "seconds": 0.500000375,
+        "nps": 109.99991750006187
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r2qkbnr/ppp1pppp/3pb3/4n3/4PB2/2NP4/PPP2PPP/R2QKBNR w KQkq - 3 5",
+      "warm_ply": 8,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 48,
+        "move": "g1e2",
+        "depth": 1,
+        "score": 50,
+        "jiffies": 8,
+        "pv": [
+          "g1e2"
+        ],
+        "seconds": 0.50000075,
+        "nps": 95.999856000216
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r2qkbnr/ppp1pppp/3pb3/4n3/4PB2/2NP4/PPP1NPPP/R2QKB1R b KQkq - 4 5",
+      "warm_ply": 9,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 63,
+        "move": "g8f6",
+        "depth": 1,
+        "score": -20,
+        "jiffies": 10,
+        "pv": [
+          "g8f6"
+        ],
+        "seconds": 0.50000025,
+        "nps": 125.9999370000315
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r2qkb1r/ppp1pppp/3pbn2/4n3/4PB2/2NP4/PPP1NPPP/R2QKB1R w KQkq - 5 6",
+      "warm_ply": 10,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 40,
+        "move": "e1d2",
+        "depth": 1,
+        "score": 0,
+        "jiffies": 7,
+        "pv": [
+          "e1d2"
+        ],
+        "seconds": 0.500000125,
+        "nps": 79.999980000005
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r2qkb1r/ppp1pppp/3pbn2/4n3/4PB2/2NP4/PPPKNPPP/R2Q1B1R b kq - 6 6",
+      "warm_ply": 11,
+      "result": {
+        "replayed": 6,
+        "illegal": 0,
+        "nodes": 74,
+        "move": "g7g6",
+        "depth": 1,
+        "score": -35,
+        "jiffies": 12,
+        "pv": [
+          "g7g6"
+        ],
+        "seconds": 0.50000075,
+        "nps": 147.999778000333
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r2qkb1r/ppp1pp1p/3pbnp1/4n3/4PB2/2NP4/PPPKNPPP/R2Q1B1R w kq - 0 7",
+      "warm_ply": 12,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 40,
+        "move": "d1b1",
+        "depth": 1,
+        "score": 10,
+        "jiffies": 7,
+        "pv": [
+          "d1b1"
+        ],
+        "seconds": 0.250000125,
+        "nps": 159.99992000004
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r2qkb1r/ppp1pp1p/3pbnp1/4n3/4PB2/2NP4/PPPKNPPP/RQ3B1R b kq - 1 7",
+      "warm_ply": 13,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 80,
+        "move": "e8d7",
+        "depth": 1,
+        "score": -30,
+        "jiffies": 12,
+        "pv": [
+          "e8d7"
+        ],
+        "seconds": 0.500000125,
+        "nps": 159.99996000001
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r2q1b1r/pppkpp1p/3pbnp1/4n3/4PB2/2NP4/PPPKNPPP/RQ3B1R w - - 2 8",
+      "warm_ply": 14,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 39,
+        "move": "b1d1",
+        "depth": 1,
+        "score": 15,
+        "jiffies": 6,
+        "pv": [
+          "b1d1"
+        ],
+        "seconds": 0.2500005,
+        "nps": 155.999688000624
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 19377,
+      "fen": "r2q1b1r/pppkpp1p/3pbnp1/4n3/4PB2/2NP4/PPPKNPPP/R2Q1B1R b - - 3 8",
+      "warm_ply": 15,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 75,
+        "move": "f6g4",
+        "depth": 1,
+        "score": -40,
+        "jiffies": 12,
+        "pv": [
+          "f6g4"
+        ],
+        "seconds": 0.500000125,
+        "nps": 149.99996250000936
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "warm_ply": 0,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 20,
+        "move": "g1h3",
+        "depth": 1,
+        "score": 0,
+        "jiffies": 3,
+        "pv": [
+          "g1h3"
+        ],
+        "seconds": 0.25000025,
+        "nps": 79.99992000008001
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/7N/PPPPPPPP/RNBQKB1R b KQkq - 1 1",
+      "warm_ply": 1,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 21,
+        "move": "g8f6",
+        "depth": 1,
+        "score": 30,
+        "jiffies": 3,
+        "pv": [
+          "g8f6"
+        ],
+        "seconds": 0.25000025,
+        "nps": 83.99991600008401
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "rnbqkb1r/pppppppp/5n2/8/8/7N/PPPPPPPP/RNBQKB1R w KQkq - 2 2",
+      "warm_ply": 2,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 22,
+        "move": "h3g5",
+        "depth": 1,
+        "score": -15,
+        "jiffies": 3,
+        "pv": [
+          "h3g5"
+        ],
+        "seconds": 0.250000125,
+        "nps": 87.999956000022
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "rnbqkb1r/pppppppp/5n2/6N1/8/8/PPPPPPPP/RNBQKB1R b KQkq - 3 2",
+      "warm_ply": 3,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 22,
+        "move": "a7a6",
+        "depth": 1,
+        "score": -5,
+        "jiffies": 4,
+        "pv": [
+          "a7a6"
+        ],
+        "seconds": 0.2500005,
+        "nps": 87.99982400035199
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "rnbqkb1r/1ppppppp/p4n2/6N1/8/8/PPPPPPPP/RNBQKB1R w KQkq - 0 3",
+      "warm_ply": 4,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 32,
+        "move": "d2d3",
+        "depth": 1,
+        "score": 5,
+        "jiffies": 5,
+        "pv": [
+          "d2d3"
+        ],
+        "seconds": 0.2500005,
+        "nps": 127.999744000512
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "rnbqkb1r/1ppppppp/p4n2/6N1/8/3P4/PPP1PPPP/RNBQKB1R b KQkq - 0 3",
+      "warm_ply": 5,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 22,
+        "move": "d7d6",
+        "depth": 1,
+        "score": -5,
+        "jiffies": 4,
+        "pv": [
+          "d7d6"
+        ],
+        "seconds": 0.250000125,
+        "nps": 87.999956000022
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "rnbqkb1r/1pp1pppp/p2p1n2/6N1/8/3P4/PPP1PPPP/RNBQKB1R w KQkq - 0 4",
+      "warm_ply": 6,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 39,
+        "move": "c1e3",
+        "depth": 1,
+        "score": 5,
+        "jiffies": 6,
+        "pv": [
+          "c1e3"
+        ],
+        "seconds": 0.250000125,
+        "nps": 155.999922000039
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "rnbqkb1r/1pp1pppp/p2p1n2/6N1/8/3PB3/PPP1PPPP/RN1QKB1R b KQkq - 1 4",
+      "warm_ply": 7,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 36,
+        "move": "c8f5",
+        "depth": 1,
+        "score": -5,
+        "jiffies": 5,
+        "pv": [
+          "c8f5"
+        ],
+        "seconds": 0.250000375,
+        "nps": 143.999784000324
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "rn1qkb1r/1pp1pppp/p2p1n2/5bN1/8/3PB3/PPP1PPPP/RN1QKB1R w KQkq - 2 5",
+      "warm_ply": 8,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 47,
+        "move": "b1d2",
+        "depth": 1,
+        "score": 30,
+        "jiffies": 7,
+        "pv": [
+          "b1d2"
+        ],
+        "seconds": 0.250000125,
+        "nps": 187.999906000047
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "rn1qkb1r/1pp1pppp/p2p1n2/5bN1/8/3PB3/PPPNPPPP/R2QKB1R b KQkq - 3 5",
+      "warm_ply": 9,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 49,
+        "move": "e7e6",
+        "depth": 1,
+        "score": -30,
+        "jiffies": 7,
+        "pv": [
+          "e7e6"
+        ],
+        "seconds": 0.5,
+        "nps": 98.0
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "rn1qkb1r/1pp2ppp/p2ppn2/5bN1/8/3PB3/PPPNPPPP/R2QKB1R w KQkq - 0 6",
+      "warm_ply": 10,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 51,
+        "move": "b2b3",
+        "depth": 1,
+        "score": -5,
+        "jiffies": 8,
+        "pv": [
+          "b2b3"
+        ],
+        "seconds": 0.250000125,
+        "nps": 203.999898000051
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "rn1qkb1r/1pp2ppp/p2ppn2/5bN1/8/1P1PB3/P1PNPPPP/R2QKB1R b KQkq - 0 6",
+      "warm_ply": 11,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 46,
+        "move": "b8d7",
+        "depth": 1,
+        "score": 30,
+        "jiffies": 7,
+        "pv": [
+          "b8d7"
+        ],
+        "seconds": 0.250000125,
+        "nps": 183.999908000046
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "r2qkb1r/1ppn1ppp/p2ppn2/5bN1/8/1P1PB3/P1PNPPPP/R2QKB1R w KQkq - 1 7",
+      "warm_ply": 12,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 51,
+        "move": "d2c4",
+        "depth": 1,
+        "score": -40,
+        "jiffies": 7,
+        "pv": [
+          "d2c4"
+        ],
+        "seconds": 0.25000025,
+        "nps": 203.99979600020401
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "r2qkb1r/1ppn1ppp/p2ppn2/5bN1/2N5/1P1PB3/P1P1PPPP/R2QKB1R b KQkq - 2 7",
+      "warm_ply": 13,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 49,
+        "move": "d7c5",
+        "depth": 1,
+        "score": 30,
+        "jiffies": 7,
+        "pv": [
+          "d7c5"
+        ],
+        "seconds": 0.250000125,
+        "nps": 195.999902000049
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "r2qkb1r/1pp2ppp/p2ppn2/2n2bN1/2N5/1P1PB3/P1P1PPPP/R2QKB1R w KQkq - 3 8",
+      "warm_ply": 14,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 62,
+        "move": "h2h3",
+        "depth": 1,
+        "score": -50,
+        "jiffies": 9,
+        "pv": [
+          "h2h3"
+        ],
+        "seconds": 0.500000625,
+        "nps": 123.99984500019376
+      }
+    },
+    {
+      "noise": 300,
+      "seed": 19377,
+      "fen": "r2qkb1r/1pp2ppp/p2ppn2/2n2bN1/2N5/1P1PB2P/P1P1PPP1/R2QKB1R b KQkq - 0 8",
+      "warm_ply": 15,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 69,
+        "move": "d8d7",
+        "depth": 1,
+        "score": 35,
+        "jiffies": 11,
+        "pv": [
+          "d8d7"
+        ],
+        "seconds": 0.250000125,
+        "nps": 275.99986200006896
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "warm_ply": 0,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 20,
+        "move": "f2f4",
+        "depth": 1,
+        "score": -35,
+        "jiffies": 3,
+        "pv": [
+          "f2f4"
+        ],
+        "seconds": 0.25,
+        "nps": 80.0
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbqkbnr/pppppppp/8/8/5P2/8/PPPPP1PP/RNBQKBNR b KQkq - 0 1",
+      "warm_ply": 1,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 22,
+        "move": "b7b5",
+        "depth": 1,
+        "score": 5,
+        "jiffies": 4,
+        "pv": [
+          "b7b5"
+        ],
+        "seconds": 0.250000375,
+        "nps": 87.999868000198
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbqkbnr/p1pppppp/8/1p6/5P2/8/PPPPP1PP/RNBQKBNR w KQkq - 0 2",
+      "warm_ply": 2,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 23,
+        "move": "e2e4",
+        "depth": 1,
+        "score": 0,
+        "jiffies": 4,
+        "pv": [
+          "e2e4"
+        ],
+        "seconds": 0.25,
+        "nps": 92.0
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbqkbnr/p1pppppp/8/1p6/4PP2/8/PPPP2PP/RNBQKBNR b KQkq - 0 2",
+      "warm_ply": 3,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 47,
+        "move": "e7e5",
+        "depth": 1,
+        "score": -108,
+        "jiffies": 6,
+        "pv": [
+          "e7e5"
+        ],
+        "seconds": 0.250000125,
+        "nps": 187.999906000047
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbqkbnr/p1pp1ppp/8/1p2p3/4PP2/8/PPPP2PP/RNBQKBNR w KQkq - 0 3",
+      "warm_ply": 4,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 91,
+        "move": "g2g4",
+        "depth": 1,
+        "score": -35,
+        "jiffies": 11,
+        "pv": [
+          "g2g4"
+        ],
+        "seconds": 0.25000025,
+        "nps": 363.99963600036403
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbqkbnr/p1pp1ppp/8/1p2p3/4PPP1/8/PPPP3P/RNBQKBNR b KQkq - 0 3",
+      "warm_ply": 5,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 130,
+        "move": "f8b4",
+        "depth": 1,
+        "score": -83,
+        "jiffies": 15,
+        "pv": [
+          "f8b4"
+        ],
+        "seconds": 0.500001125,
+        "nps": 259.9994150013162
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbqk1nr/p1pp1ppp/8/1p2p3/1b2PPP1/8/PPPP3P/RNBQKBNR w KQkq - 1 4",
+      "warm_ply": 6,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 74,
+        "move": "f4e5",
+        "depth": 1,
+        "score": 83,
+        "jiffies": 9,
+        "pv": [
+          "f4e5"
+        ],
+        "seconds": 0.25000025,
+        "nps": 295.99970400029605
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbqk1nr/p1pp1ppp/8/1p2P3/1b2P1P1/8/PPPP3P/RNBQKBNR b KQkq - 0 4",
+      "warm_ply": 7,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 110,
+        "move": "a7a6",
+        "depth": 1,
+        "score": -103,
+        "jiffies": 14,
+        "pv": [
+          "a7a6"
+        ],
+        "seconds": 0.50000125,
+        "nps": 219.999450001375
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbqk1nr/2pp1ppp/p7/1p2P3/1b2P1P1/8/PPPP3P/RNBQKBNR w KQkq - 0 5",
+      "warm_ply": 8,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 33,
+        "move": "b1c3",
+        "depth": 1,
+        "score": 133,
+        "jiffies": 5,
+        "pv": [
+          "b1c3"
+        ],
+        "seconds": 0.25000025,
+        "nps": 131.999868000132
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbqk1nr/2pp1ppp/p7/1p2P3/1b2P1P1/2N5/PPPP3P/R1BQKBNR b KQkq - 1 5",
+      "warm_ply": 9,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 55,
+        "move": "e8e7",
+        "depth": 1,
+        "score": -153,
+        "jiffies": 8,
+        "pv": [
+          "e8e7"
+        ],
+        "seconds": 0.250000125,
+        "nps": 219.999890000055
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbq2nr/2ppkppp/p7/1p2P3/1b2P1P1/2N5/PPPP3P/R1BQKBNR w KQ - 2 6",
+      "warm_ply": 10,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 50,
+        "move": "f1e2",
+        "depth": 1,
+        "score": 143,
+        "jiffies": 7,
+        "pv": [
+          "f1e2"
+        ],
+        "seconds": 0.25000025,
+        "nps": 199.99980000020003
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbq2nr/2ppkppp/p7/1p2P3/1b2P1P1/2N5/PPPPB2P/R1BQK1NR b KQ - 3 6",
+      "warm_ply": 11,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 45,
+        "move": "f7f6",
+        "depth": 1,
+        "score": -183,
+        "jiffies": 6,
+        "pv": [
+          "f7f6"
+        ],
+        "seconds": 0.2500005,
+        "nps": 179.99964000071998
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbq2nr/2ppk1pp/p4p2/1p2P3/1b2P1P1/2N5/PPPPB2P/R1BQK1NR w KQ - 0 7",
+      "warm_ply": 12,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 123,
+        "move": "d2d4",
+        "depth": 1,
+        "score": 149,
+        "jiffies": 14,
+        "pv": [
+          "d2d4"
+        ],
+        "seconds": 0.50000025,
+        "nps": 245.99987700006147
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbq2nr/2ppk1pp/p4p2/1p2P3/1b1PP1P1/2N5/PPP1B2P/R1BQK1NR b KQ - 0 7",
+      "warm_ply": 13,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 113,
+        "move": "e7f7",
+        "depth": 1,
+        "score": -208,
+        "jiffies": 14,
+        "pv": [
+          "e7f7"
+        ],
+        "seconds": 0.500000875,
+        "nps": 225.99960450069213
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbq2nr/2pp1kpp/p4p2/1p2P3/1b1PP1P1/2N5/PPP1B2P/R1BQK1NR w KQ - 1 8",
+      "warm_ply": 14,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 122,
+        "move": "e2f3",
+        "depth": 1,
+        "score": 159,
+        "jiffies": 15,
+        "pv": [
+          "e2f3"
+        ],
+        "seconds": 0.50000075,
+        "nps": 243.999634000549
+      }
+    },
+    {
+      "noise": 1000,
+      "seed": 19377,
+      "fen": "rnbq2nr/2pp1kpp/p4p2/1p2P3/1b1PP1P1/2N2B2/PPP4P/R1BQK1NR b KQ - 2 8",
+      "warm_ply": 15,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 126,
+        "move": "f7f8",
+        "depth": 1,
+        "score": -208,
+        "jiffies": 15,
+        "pv": [
+          "f7f8"
+        ],
+        "seconds": 0.50000025,
+        "nps": 251.999874000063
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 12,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 103,
+        "move": "d4d5",
+        "depth": 1,
+        "score": -30,
+        "jiffies": 15,
+        "pv": [
+          "d4d5"
+        ],
+        "seconds": 0.500000375,
+        "nps": 205.99984550011587
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 14,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 139,
+        "move": "d1a4",
+        "depth": 1,
+        "score": 102,
+        "jiffies": 18,
+        "pv": [
+          "d1a4"
+        ],
+        "seconds": 0.5000005,
+        "nps": 277.99972200027804
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 16,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 151,
+        "move": "a4b4",
+        "depth": 1,
+        "score": 173,
+        "jiffies": 20,
+        "pv": [
+          "a4b4"
+        ],
+        "seconds": 0.750001,
+        "nps": 201.3330648892468
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 18,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 97,
+        "move": "f3d2",
+        "depth": 1,
+        "score": 290,
+        "jiffies": 13,
+        "pv": [
+          "f3d2"
+        ],
+        "seconds": 0.500000375,
+        "nps": 193.9998545001091
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 20,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 80,
+        "move": "d5c6",
+        "depth": 1,
+        "score": 297,
+        "jiffies": 10,
+        "pv": [
+          "d5c6"
+        ],
+        "seconds": 0.25,
+        "nps": 320.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 22,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 424,
+        "move": "c6b7",
+        "depth": 1,
+        "score": 617,
+        "jiffies": 47,
+        "pv": [
+          "c6b7"
+        ],
+        "seconds": 1.00000075,
+        "nps": 423.99968200023847
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 24,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 199,
+        "move": "b4e7",
+        "depth": 1,
+        "score": 864,
+        "jiffies": 23,
+        "pv": [
+          "b4e7"
+        ],
+        "seconds": 0.500000375,
+        "nps": 397.9997015002238
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 26,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 138,
+        "move": "b7a8q",
+        "depth": 1,
+        "score": 894,
+        "jiffies": 15,
+        "pv": [
+          "b7a8"
+        ],
+        "seconds": 0.500000375,
+        "nps": 275.9997930001552
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 28,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 63,
+        "move": "d2c4",
+        "depth": 1,
+        "score": 977,
+        "jiffies": 8,
+        "pv": [
+          "d2c4"
+        ],
+        "seconds": 0.250000375,
+        "nps": 251.999622000567
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 30,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 98,
+        "move": "a8e8",
+        "depth": 1,
+        "score": 1017,
+        "jiffies": 12,
+        "pv": [
+          "a8e8"
+        ],
+        "seconds": 0.5000005,
+        "nps": 195.999804000196
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 32,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 77,
+        "move": "c4d2",
+        "depth": 1,
+        "score": 987,
+        "jiffies": 9,
+        "pv": [
+          "c4d2"
+        ],
+        "seconds": 0.25,
+        "nps": 308.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 34,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 29,
+        "move": "h1f1",
+        "depth": 1,
+        "score": 962,
+        "jiffies": 4,
+        "pv": [
+          "h1f1"
+        ],
+        "seconds": 0.25,
+        "nps": 116.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 36,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 25,
+        "move": "g2g3",
+        "depth": 1,
+        "score": 947,
+        "jiffies": 3,
+        "pv": [
+          "g2g3"
+        ],
+        "seconds": 0.2500005,
+        "nps": 99.9998000004
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 38,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 26,
+        "move": "a2a3",
+        "depth": 1,
+        "score": 952,
+        "jiffies": 3,
+        "pv": [
+          "a2a3"
+        ],
+        "seconds": 0.2500005,
+        "nps": 103.999792000416
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 40,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 69,
+        "move": "f1g1",
+        "depth": 1,
+        "score": 972,
+        "jiffies": 5,
+        "pv": [
+          "f1g1"
+        ],
+        "seconds": 0.25,
+        "nps": 276.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 42,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 28,
+        "move": "b1c3",
+        "depth": 1,
+        "score": 1002,
+        "jiffies": 4,
+        "pv": [
+          "b1c3"
+        ],
+        "seconds": 0.25000025,
+        "nps": 111.99988800011201
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 44,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 57,
+        "move": "e1f1",
+        "depth": 1,
+        "score": 992,
+        "jiffies": 6,
+        "pv": [
+          "e1f1"
+        ],
+        "seconds": 0.500000375,
+        "nps": 113.99991450006411
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 46,
+      "result": {
+        "replayed": 7,
+        "illegal": 0,
+        "nodes": 55,
+        "move": "g1g2",
+        "depth": 1,
+        "score": 1037,
+        "jiffies": 5,
+        "pv": [
+          "g1g2"
+        ],
+        "seconds": 0.5000005,
+        "nps": 109.99989000011001
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 48,
+      "result": {
+        "replayed": 9,
+        "illegal": 0,
+        "nodes": 29,
+        "move": "h2h3",
+        "depth": 1,
+        "score": 1047,
+        "jiffies": 4,
+        "pv": [
+          "h2h3"
+        ],
+        "seconds": 0.50000025,
+        "nps": 57.9999710000145
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 50,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 10,
+        "move": "f2e3",
+        "depth": 1,
+        "score": 1239,
+        "jiffies": 1,
+        "pv": [
+          "f2e3"
+        ],
+        "seconds": 0.250000125,
+        "nps": 39.99998000001
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 52,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 66,
+        "move": "d2c4",
+        "depth": 1,
+        "score": 1044,
+        "jiffies": 6,
+        "pv": [
+          "d2c4"
+        ],
+        "seconds": 0.25000025,
+        "nps": 263.999736000264
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 54,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 114,
+        "move": "c4d2",
+        "depth": 1,
+        "score": 1029,
+        "jiffies": 9,
+        "pv": [
+          "c4d2"
+        ],
+        "seconds": 0.25,
+        "nps": 456.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 56,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 68,
+        "move": "d2c4",
+        "depth": 1,
+        "score": 1039,
+        "jiffies": 7,
+        "pv": [
+          "d2c4"
+        ],
+        "seconds": 0.5000005,
+        "nps": 135.999864000136
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 58,
+      "result": {
+        "replayed": 6,
+        "illegal": 0,
+        "nodes": 92,
+        "move": "a1b1",
+        "depth": 1,
+        "score": 1034,
+        "jiffies": 8,
+        "pv": [
+          "a1b1"
+        ],
+        "seconds": 0.5000005,
+        "nps": 183.999816000184
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 60,
+      "result": {
+        "replayed": 8,
+        "illegal": 0,
+        "nodes": 85,
+        "move": "b2b4",
+        "depth": 1,
+        "score": 1029,
+        "jiffies": 7,
+        "pv": [
+          "b2b4"
+        ],
+        "seconds": 0.500000125,
+        "nps": 169.99995750001062
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 62,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 98,
+        "move": "f1f2",
+        "depth": 1,
+        "score": 1044,
+        "jiffies": 8,
+        "pv": [
+          "f1f2"
+        ],
+        "seconds": 0.250000375,
+        "nps": 391.999412000882
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 64,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 38,
+        "move": "c1b2",
+        "depth": 1,
+        "score": 1219,
+        "jiffies": 4,
+        "pv": [
+          "c1b2"
+        ],
+        "seconds": 0.250000125,
+        "nps": 151.999924000038
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 66,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 41,
+        "move": "a3a4",
+        "depth": 1,
+        "score": 1209,
+        "jiffies": 5,
+        "pv": [
+          "a3a4"
+        ],
+        "seconds": 0.25,
+        "nps": 164.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 68,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 41,
+        "move": "f2f1",
+        "depth": 1,
+        "score": 1229,
+        "jiffies": 5,
+        "pv": [
+          "f2f1"
+        ],
+        "seconds": 0.25,
+        "nps": 164.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 70,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 94,
+        "move": "b1e1",
+        "depth": 1,
+        "score": 1064,
+        "jiffies": 8,
+        "pv": [
+          "b1e1"
+        ],
+        "seconds": 0.250000125,
+        "nps": 375.999812000094
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 72,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 101,
+        "move": "f1g1",
+        "depth": 1,
+        "score": 1069,
+        "jiffies": 9,
+        "pv": [
+          "f1g1"
+        ],
+        "seconds": 0.5,
+        "nps": 202.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 74,
+      "result": {
+        "replayed": 6,
+        "illegal": 0,
+        "nodes": 114,
+        "move": "g2d2",
+        "depth": 1,
+        "score": 1239,
+        "jiffies": 11,
+        "pv": [
+          "g2d2"
+        ],
+        "seconds": 0.50000075,
+        "nps": 227.999658000513
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 76,
+      "result": {
+        "replayed": 8,
+        "illegal": 0,
+        "nodes": 95,
+        "move": "c4d6",
+        "depth": 1,
+        "score": 1239,
+        "jiffies": 10,
+        "pv": [
+          "c4d6"
+        ],
+        "seconds": 0.5000005,
+        "nps": 189.99981000019002
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 78,
+      "result": {
+        "replayed": 10,
+        "illegal": 0,
+        "nodes": 49,
+        "move": "a4a5",
+        "depth": 1,
+        "score": 1244,
+        "jiffies": 6,
+        "pv": [
+          "a4a5"
+        ],
+        "seconds": 0.500000625,
+        "nps": 97.99987750015313
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 80,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 53,
+        "move": "a5a6",
+        "depth": 1,
+        "score": 1249,
+        "jiffies": 6,
+        "pv": [
+          "a5a6"
+        ],
+        "seconds": 0.250000125,
+        "nps": 211.999894000053
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 82,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 113,
+        "move": "g3h4",
+        "depth": 1,
+        "score": 1250,
+        "jiffies": 12,
+        "pv": [
+          "g3h4"
+        ],
+        "seconds": 0.250000625,
+        "nps": 451.998870002825
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 84,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 52,
+        "move": "e1e2",
+        "depth": 1,
+        "score": 1225,
+        "jiffies": 6,
+        "pv": [
+          "e1e2"
+        ],
+        "seconds": 0.250000375,
+        "nps": 207.999688000468
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 86,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 51,
+        "move": "c3d5",
+        "depth": 1,
+        "score": 1215,
+        "jiffies": 6,
+        "pv": [
+          "c3d5"
+        ],
+        "seconds": 0.25000025,
+        "nps": 203.99979600020401
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 88,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 59,
+        "move": "d5c7",
+        "depth": 1,
+        "score": 1715,
+        "jiffies": 7,
+        "pv": [
+          "d5c7"
+        ],
+        "seconds": 0.50000025,
+        "nps": 117.9999410000295
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 90,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 108,
+        "move": "e2f2",
+        "depth": 1,
+        "score": 1720,
+        "jiffies": 10,
+        "pv": [
+          "e2f2"
+        ],
+        "seconds": 0.250000125,
+        "nps": 431.999784000108
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 92,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 79,
+        "move": "c7e6",
+        "depth": 1,
+        "score": 1909,
+        "jiffies": 10,
+        "pv": [
+          "c7e6"
+        ],
+        "seconds": 0.25,
+        "nps": 316.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 94,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 222,
+        "move": "e4f5",
+        "depth": 1,
+        "score": 1939,
+        "jiffies": 22,
+        "pv": [
+          "e4f5"
+        ],
+        "seconds": 0.5000005,
+        "nps": 443.99955600044404
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 96,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 199,
+        "move": "e6c7",
+        "depth": 1,
+        "score": 1757,
+        "jiffies": 19,
+        "pv": [
+          "e6c7"
+        ],
+        "seconds": 0.500000375,
+        "nps": 397.9997015002238
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41819,
+      "game": "noise200-1320-00.pgn",
+      "warm_ply": 98,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 75,
+        "move": "d6c8",
+        "depth": 1,
+        "score": 29999,
+        "jiffies": 10,
+        "pv": [
+          "d6c8"
+        ],
+        "seconds": 0.500000125,
+        "nps": 149.99996250000936
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 13,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 50,
+        "move": "e8g8",
+        "depth": 1,
+        "score": 60,
+        "jiffies": 7,
+        "pv": [
+          "e8g8"
+        ],
+        "seconds": 0.50000025,
+        "nps": 99.999950000025
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 15,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 47,
+        "move": "g7g6",
+        "depth": 1,
+        "score": -5,
+        "jiffies": 6,
+        "pv": [
+          "g7g6"
+        ],
+        "seconds": 0.5000005,
+        "nps": 93.999906000094
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 17,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 55,
+        "move": "d8d7",
+        "depth": 1,
+        "score": 0,
+        "jiffies": 8,
+        "pv": [
+          "d8d7"
+        ],
+        "seconds": 0.250000375,
+        "nps": 219.999670000495
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 19,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 59,
+        "move": "h7h5",
+        "depth": 1,
+        "score": -40,
+        "jiffies": 7,
+        "pv": [
+          "h7h5"
+        ],
+        "seconds": 0.250000125,
+        "nps": 235.999882000059
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 21,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 61,
+        "move": "d7d8",
+        "depth": 1,
+        "score": -50,
+        "jiffies": 8,
+        "pv": [
+          "d7d8"
+        ],
+        "seconds": 0.25,
+        "nps": 244.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 23,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 57,
+        "move": "f6d7",
+        "depth": 1,
+        "score": -115,
+        "jiffies": 7,
+        "pv": [
+          "f6d7"
+        ],
+        "seconds": 0.5,
+        "nps": 114.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 25,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 52,
+        "move": "h5h4",
+        "depth": 1,
+        "score": -110,
+        "jiffies": 7,
+        "pv": [
+          "h5h4"
+        ],
+        "seconds": 0.500000125,
+        "nps": 103.9999740000065
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 27,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 50,
+        "move": "a7a6",
+        "depth": 1,
+        "score": -115,
+        "jiffies": 6,
+        "pv": [
+          "a7a6"
+        ],
+        "seconds": 0.250000125,
+        "nps": 199.99990000005
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 29,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 67,
+        "move": "e7f6",
+        "depth": 1,
+        "score": -85,
+        "jiffies": 8,
+        "pv": [
+          "e7f6"
+        ],
+        "seconds": 0.25000025,
+        "nps": 267.999732000268
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 31,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 193,
+        "move": "a8a7",
+        "depth": 1,
+        "score": -120,
+        "jiffies": 21,
+        "pv": [
+          "a8a7"
+        ],
+        "seconds": 0.5,
+        "nps": 386.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 33,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 257,
+        "move": "f6e7",
+        "depth": 1,
+        "score": -130,
+        "jiffies": 24,
+        "pv": [
+          "f6e7"
+        ],
+        "seconds": 0.500000625,
+        "nps": 513.9993575008032
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 35,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 61,
+        "move": "d8e7",
+        "depth": 1,
+        "score": -130,
+        "jiffies": 5,
+        "pv": [
+          "d8e7"
+        ],
+        "seconds": 0.25,
+        "nps": 244.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 37,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 159,
+        "move": "g8h8",
+        "depth": 1,
+        "score": -145,
+        "jiffies": 17,
+        "pv": [
+          "g8h8"
+        ],
+        "seconds": 0.500000625,
+        "nps": 317.9996025004969
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 39,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 456,
+        "move": "f8d8",
+        "depth": 1,
+        "score": -123,
+        "jiffies": 44,
+        "pv": [
+          "f8d8"
+        ],
+        "seconds": 1.00000075,
+        "nps": 455.99965800025643
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 41,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 271,
+        "move": "h8h7",
+        "depth": 1,
+        "score": -153,
+        "jiffies": 29,
+        "pv": [
+          "h8h7"
+        ],
+        "seconds": 0.750000375,
+        "nps": 361.333152666757
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 43,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 118,
+        "move": "e7e6",
+        "depth": 1,
+        "score": -210,
+        "jiffies": 15,
+        "pv": [
+          "e7e6"
+        ],
+        "seconds": 0.5000005,
+        "nps": 235.999764000236
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 45,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 292,
+        "move": "e6e7",
+        "depth": 1,
+        "score": -469,
+        "jiffies": 32,
+        "pv": [
+          "e6e7"
+        ],
+        "seconds": 0.75000075,
+        "nps": 389.3329440003893
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 47,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 10,
+        "move": "h7g8",
+        "depth": 1,
+        "score": -765,
+        "jiffies": 2,
+        "pv": [
+          "h7g8"
+        ],
+        "seconds": 0.250000375,
+        "nps": 39.99994000009
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 49,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 305,
+        "move": "c6e7",
+        "depth": 1,
+        "score": -765,
+        "jiffies": 28,
+        "pv": [
+          "c6e7"
+        ],
+        "seconds": 0.750000625,
+        "nps": 406.6663277780602
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 41818,
+      "game": "noise200-1320-01.pgn",
+      "warm_ply": 51,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 82,
+        "move": "d6e5",
+        "depth": 1,
+        "score": -610,
+        "jiffies": 9,
+        "pv": [
+          "d6e5"
+        ],
+        "seconds": 0.2500005,
+        "nps": 327.99934400131195
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 12,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 103,
+        "move": "b1c3",
+        "depth": 1,
+        "score": 15,
+        "jiffies": 14,
+        "pv": [
+          "b1c3"
+        ],
+        "seconds": 0.500000125,
+        "nps": 205.99994850001286
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 14,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 94,
+        "move": "c1d2",
+        "depth": 1,
+        "score": 25,
+        "jiffies": 14,
+        "pv": [
+          "c1d2"
+        ],
+        "seconds": 0.500000125,
+        "nps": 187.99995300001174
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 16,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 126,
+        "move": "d1b3",
+        "depth": 1,
+        "score": 20,
+        "jiffies": 17,
+        "pv": [
+          "d1b3"
+        ],
+        "seconds": 0.50000075,
+        "nps": 251.999622000567
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 18,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 334,
+        "move": "b3b7",
+        "depth": 1,
+        "score": 132,
+        "jiffies": 36,
+        "pv": [
+          "b3b7"
+        ],
+        "seconds": 0.75000125,
+        "nps": 445.33259111234815
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 20,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 204,
+        "move": "c4d5",
+        "depth": 1,
+        "score": 239,
+        "jiffies": 27,
+        "pv": [
+          "c4d5"
+        ],
+        "seconds": 0.750000625,
+        "nps": 271.9997733335222
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 22,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 171,
+        "move": "d5c6",
+        "depth": 1,
+        "score": 189,
+        "jiffies": 22,
+        "pv": [
+          "d5c6"
+        ],
+        "seconds": 0.50000075,
+        "nps": 341.9994870007695
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 24,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 130,
+        "move": "c6b7",
+        "depth": 1,
+        "score": 189,
+        "jiffies": 15,
+        "pv": [
+          "c6b7"
+        ],
+        "seconds": 0.500000625,
+        "nps": 259.9996750004063
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 26,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 366,
+        "move": "b7a6",
+        "depth": 1,
+        "score": 280,
+        "jiffies": 34,
+        "pv": [
+          "b7a6"
+        ],
+        "seconds": 0.75000025,
+        "nps": 487.9998373333875
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 28,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 227,
+        "move": "e4e5",
+        "depth": 1,
+        "score": 150,
+        "jiffies": 24,
+        "pv": [
+          "e4e5"
+        ],
+        "seconds": 0.5,
+        "nps": 454.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 30,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1649,
+        "move": "f3d4",
+        "depth": 1,
+        "score": 150,
+        "jiffies": 138,
+        "pv": [
+          "f3d4"
+        ],
+        "seconds": 2.500001375,
+        "nps": 659.5996372201995
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 32,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 184,
+        "move": "f2f3",
+        "depth": 1,
+        "score": 95,
+        "jiffies": 21,
+        "pv": [
+          "f2f3"
+        ],
+        "seconds": 0.500000375,
+        "nps": 367.999724000207
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 34,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 203,
+        "move": "f3g4",
+        "depth": 1,
+        "score": 123,
+        "jiffies": 19,
+        "pv": [
+          "f3g4"
+        ],
+        "seconds": 0.50000025,
+        "nps": 405.99979700010147
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 36,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 14,
+        "move": "e1f1",
+        "depth": 1,
+        "score": 55,
+        "jiffies": 2,
+        "pv": [
+          "e1f1"
+        ],
+        "seconds": 0.250000125,
+        "nps": 55.999972000014
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 38,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 9,
+        "move": "f1e1",
+        "depth": 1,
+        "score": -212,
+        "jiffies": 2,
+        "pv": [
+          "f1e1"
+        ],
+        "seconds": 0.25,
+        "nps": 36.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 40,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 60,
+        "move": "a1b1",
+        "depth": 1,
+        "score": -305,
+        "jiffies": 7,
+        "pv": [
+          "a1b1"
+        ],
+        "seconds": 0.25000025,
+        "nps": 239.99976000024003
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 42,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 38,
+        "move": "b2b4",
+        "depth": 1,
+        "score": -320,
+        "jiffies": 4,
+        "pv": [
+          "b2b4"
+        ],
+        "seconds": 0.25,
+        "nps": 152.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 44,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 44,
+        "move": "d2e3",
+        "depth": 1,
+        "score": -370,
+        "jiffies": 5,
+        "pv": [
+          "d2e3"
+        ],
+        "seconds": 0.25,
+        "nps": 176.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 46,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 48,
+        "move": "e1d2",
+        "depth": 1,
+        "score": -385,
+        "jiffies": 6,
+        "pv": [
+          "e1d2"
+        ],
+        "seconds": 0.500000625,
+        "nps": 95.99988000015
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 48,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 11,
+        "move": "d2c1",
+        "depth": 1,
+        "score": -700,
+        "jiffies": 3,
+        "pv": [
+          "d2c1"
+        ],
+        "seconds": 0.500000875,
+        "nps": 21.999961500067375
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 50,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 3,
+        "move": "c1c2",
+        "depth": 1,
+        "score": -730,
+        "jiffies": 1,
+        "pv": [
+          "c1c2"
+        ],
+        "seconds": 0.250000375,
+        "nps": 11.999982000027
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 52,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 4,
+        "move": "c2b3",
+        "depth": 1,
+        "score": -822,
+        "jiffies": 2,
+        "pv": [
+          "c2b3"
+        ],
+        "seconds": 0.25000025,
+        "nps": 15.999984000016001
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44879,
+      "game": "noise200-1500-00.pgn",
+      "warm_ply": 54,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 4,
+        "move": "b3a3",
+        "depth": 1,
+        "score": -1015,
+        "jiffies": 1,
+        "pv": [
+          "b3a3"
+        ],
+        "seconds": 0.250000125,
+        "nps": 15.999992000004
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 13,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 59,
+        "move": "f6d7",
+        "depth": 1,
+        "score": -40,
+        "jiffies": 8,
+        "pv": [
+          "f6d7"
+        ],
+        "seconds": 0.500000875,
+        "nps": 117.99979350036138
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 15,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 66,
+        "move": "e8g8",
+        "depth": 1,
+        "score": 5,
+        "jiffies": 9,
+        "pv": [
+          "e8g8"
+        ],
+        "seconds": 0.250000375,
+        "nps": 263.999604000594
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 17,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 62,
+        "move": "d8e8",
+        "depth": 1,
+        "score": 15,
+        "jiffies": 7,
+        "pv": [
+          "d8e8"
+        ],
+        "seconds": 0.250000375,
+        "nps": 247.999628000558
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 19,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 53,
+        "move": "e7f6",
+        "depth": 1,
+        "score": -35,
+        "jiffies": 6,
+        "pv": [
+          "e7f6"
+        ],
+        "seconds": 0.500000125,
+        "nps": 105.99997350000662
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 21,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 73,
+        "move": "e8e7",
+        "depth": 1,
+        "score": -30,
+        "jiffies": 9,
+        "pv": [
+          "e8e7"
+        ],
+        "seconds": 0.25,
+        "nps": 292.0
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 23,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 73,
+        "move": "e7d8",
+        "depth": 1,
+        "score": -40,
+        "jiffies": 9,
+        "pv": [
+          "e7d8"
+        ],
+        "seconds": 0.500000375,
+        "nps": 145.9998905000821
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 25,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 72,
+        "move": "d7b6",
+        "depth": 1,
+        "score": -60,
+        "jiffies": 9,
+        "pv": [
+          "d7b6"
+        ],
+        "seconds": 0.5000005,
+        "nps": 143.999856000144
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 27,
+      "result": {
+        "replayed": 6,
+        "illegal": 0,
+        "nodes": 72,
+        "move": "g8h8",
+        "depth": 1,
+        "score": -70,
+        "jiffies": 9,
+        "pv": [
+          "g8h8"
+        ],
+        "seconds": 0.500000375,
+        "nps": 143.999892000081
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 29,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 78,
+        "move": "c8d7",
+        "depth": 1,
+        "score": -50,
+        "jiffies": 10,
+        "pv": [
+          "c8d7"
+        ],
+        "seconds": 0.250000125,
+        "nps": 311.999844000078
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 31,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 73,
+        "move": "d8b8",
+        "depth": 1,
+        "score": -45,
+        "jiffies": 9,
+        "pv": [
+          "d8b8"
+        ],
+        "seconds": 0.500000375,
+        "nps": 145.9998905000821
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 33,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 71,
+        "move": "b8c8",
+        "depth": 1,
+        "score": -45,
+        "jiffies": 10,
+        "pv": [
+          "b8c8"
+        ],
+        "seconds": 0.500000625,
+        "nps": 141.99982250022188
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 35,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 212,
+        "move": "g7g5",
+        "depth": 1,
+        "score": -84,
+        "jiffies": 25,
+        "pv": [
+          "g7g5"
+        ],
+        "seconds": 0.500000375,
+        "nps": 423.99968200023847
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 37,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 150,
+        "move": "f6e7",
+        "depth": 1,
+        "score": -204,
+        "jiffies": 20,
+        "pv": [
+          "f6e7"
+        ],
+        "seconds": 0.5000005,
+        "nps": 299.99970000030004
+      }
+    },
+    {
+      "noise": 200,
+      "seed": 44878,
+      "game": "noise200-1500-01.pgn",
+      "warm_ply": 39,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 267,
+        "move": "d6d5",
+        "depth": 1,
+        "score": -184,
+        "jiffies": 33,
+        "pv": [
+          "d6d5"
+        ],
+        "seconds": 0.75000075,
+        "nps": 355.999644000356
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 12,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 103,
+        "move": "b1c3",
+        "depth": 1,
+        "score": 15,
+        "jiffies": 15,
+        "pv": [
+          "b1c3"
+        ],
+        "seconds": 0.500000125,
+        "nps": 205.99994850001286
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 14,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 86,
+        "move": "e1g1",
+        "depth": 1,
+        "score": 30,
+        "jiffies": 13,
+        "pv": [
+          "e1g1"
+        ],
+        "seconds": 0.5000005,
+        "nps": 171.99982800017202
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 16,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 82,
+        "move": "d1d2",
+        "depth": 1,
+        "score": 35,
+        "jiffies": 12,
+        "pv": [
+          "d1d2"
+        ],
+        "seconds": 0.500000375,
+        "nps": 163.99987700009223
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 18,
+      "result": {
+        "replayed": 7,
+        "illegal": 0,
+        "nodes": 119,
+        "move": "c4e2",
+        "depth": 1,
+        "score": 65,
+        "jiffies": 15,
+        "pv": [
+          "c4e2"
+        ],
+        "seconds": 0.7500005,
+        "nps": 158.66656088895942
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 20,
+      "result": {
+        "replayed": 9,
+        "illegal": 0,
+        "nodes": 158,
+        "move": "e2d3",
+        "depth": 1,
+        "score": 60,
+        "jiffies": 17,
+        "pv": [
+          "e2d3"
+        ],
+        "seconds": 0.750000375,
+        "nps": 210.666561333386
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 22,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 69,
+        "move": "g2f3",
+        "depth": 1,
+        "score": 36,
+        "jiffies": 9,
+        "pv": [
+          "g2f3"
+        ],
+        "seconds": 0.250000125,
+        "nps": 275.99986200006896
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 24,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 191,
+        "move": "e4d5",
+        "depth": 1,
+        "score": 81,
+        "jiffies": 21,
+        "pv": [
+          "e4d5"
+        ],
+        "seconds": 0.50000025,
+        "nps": 381.99980900009547
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 26,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 126,
+        "move": "d3b5",
+        "depth": 1,
+        "score": 210,
+        "jiffies": 15,
+        "pv": [
+          "d3b5"
+        ],
+        "seconds": 0.50000025,
+        "nps": 251.999874000063
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 28,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 221,
+        "move": "b5d3",
+        "depth": 1,
+        "score": 104,
+        "jiffies": 22,
+        "pv": [
+          "b5d3"
+        ],
+        "seconds": 0.500000125,
+        "nps": 441.9998895000276
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 30,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 195,
+        "move": "c3e4",
+        "depth": 1,
+        "score": 114,
+        "jiffies": 22,
+        "pv": [
+          "c3e4"
+        ],
+        "seconds": 0.500000375,
+        "nps": 389.99970750021936
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 32,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 80,
+        "move": "a2a3",
+        "depth": 1,
+        "score": 134,
+        "jiffies": 10,
+        "pv": [
+          "a2a3"
+        ],
+        "seconds": 0.250000125,
+        "nps": 319.99984000008
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 34,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 239,
+        "move": "e4c5",
+        "depth": 1,
+        "score": 154,
+        "jiffies": 25,
+        "pv": [
+          "e4c5"
+        ],
+        "seconds": 0.5000005,
+        "nps": 477.99952200047807
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 36,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 81,
+        "move": "f1e1",
+        "depth": 1,
+        "score": 149,
+        "jiffies": 11,
+        "pv": [
+          "f1e1"
+        ],
+        "seconds": 0.500000375,
+        "nps": 161.9998785000911
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 38,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 380,
+        "move": "c5b3",
+        "depth": 1,
+        "score": 124,
+        "jiffies": 38,
+        "pv": [
+          "c5b3"
+        ],
+        "seconds": 1.00000075,
+        "nps": 379.9997150002137
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 40,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 134,
+        "move": "d3c4",
+        "depth": 1,
+        "score": 429,
+        "jiffies": 16,
+        "pv": [
+          "d3c4"
+        ],
+        "seconds": 0.500000625,
+        "nps": 267.99966500041876
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 42,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 1,
+        "move": "g1f1",
+        "depth": 1,
+        "score": 291,
+        "jiffies": 1,
+        "pv": [
+          "g1f1"
+        ],
+        "seconds": 0.2500005,
+        "nps": 3.999992000016
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 44,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 145,
+        "move": "e1e8",
+        "depth": 1,
+        "score": 301,
+        "jiffies": 16,
+        "pv": [
+          "e1e8"
+        ],
+        "seconds": 0.5000005,
+        "nps": 289.99971000029
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 46,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 2,
+        "move": "f1e2",
+        "depth": 1,
+        "score": 301,
+        "jiffies": 1,
+        "pv": [
+          "f1e2"
+        ],
+        "seconds": 0.250000125,
+        "nps": 7.999996000002
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 48,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 6,
+        "move": "e2d3",
+        "depth": 1,
+        "score": 220,
+        "jiffies": 2,
+        "pv": [
+          "e2d3"
+        ],
+        "seconds": 0.250000125,
+        "nps": 23.999988000006
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 50,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 5,
+        "move": "d3c2",
+        "depth": 1,
+        "score": -94,
+        "jiffies": 1,
+        "pv": [
+          "d3c2"
+        ],
+        "seconds": 0.250000375,
+        "nps": 19.999970000045
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 52,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 9,
+        "move": "c2b1",
+        "depth": 1,
+        "score": -369,
+        "jiffies": 2,
+        "pv": [
+          "c2b1"
+        ],
+        "seconds": 0.2500005,
+        "nps": 35.999928000143996
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 54,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 63,
+        "move": "f3f4",
+        "depth": 1,
+        "score": -379,
+        "jiffies": 6,
+        "pv": [
+          "f3f4"
+        ],
+        "seconds": 0.25,
+        "nps": 252.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 56,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 48,
+        "move": "d2c2",
+        "depth": 1,
+        "score": -379,
+        "jiffies": 6,
+        "pv": [
+          "d2c2"
+        ],
+        "seconds": 0.250000125,
+        "nps": 191.999904000048
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 58,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 87,
+        "move": "c2c6",
+        "depth": 1,
+        "score": -281,
+        "jiffies": 10,
+        "pv": [
+          "c2c6"
+        ],
+        "seconds": 0.50000075,
+        "nps": 173.99973900039151
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 60,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 350,
+        "move": "c1f4",
+        "depth": 1,
+        "score": -110,
+        "jiffies": 36,
+        "pv": [
+          "c1f4"
+        ],
+        "seconds": 0.7500005,
+        "nps": 466.666355555763
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 62,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 14,
+        "move": "b1a2",
+        "depth": 1,
+        "score": -307,
+        "jiffies": 2,
+        "pv": [
+          "b1a2"
+        ],
+        "seconds": 0.2500005,
+        "nps": 55.999888000224
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 64,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 5,
+        "move": "a3b4",
+        "depth": 1,
+        "score": -593,
+        "jiffies": 1,
+        "pv": [
+          "a3b4"
+        ],
+        "seconds": 0.25000025,
+        "nps": 19.999980000020003
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 66,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 58,
+        "move": "a1c1",
+        "depth": 1,
+        "score": -613,
+        "jiffies": 6,
+        "pv": [
+          "a1c1"
+        ],
+        "seconds": 0.25,
+        "nps": 232.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 68,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 3,
+        "move": "a2b1",
+        "depth": 1,
+        "score": -721,
+        "jiffies": 1,
+        "pv": [
+          "a2b1"
+        ],
+        "seconds": 0.2500005,
+        "nps": 11.999976000048
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 70,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 97,
+        "move": "c1c8",
+        "depth": 1,
+        "score": -674,
+        "jiffies": 10,
+        "pv": [
+          "c1c8"
+        ],
+        "seconds": 0.250000375,
+        "nps": 387.999418000873
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41819,
+      "game": "noise50-1320-00.pgn",
+      "warm_ply": 72,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 101,
+        "move": "f4e3",
+        "depth": 1,
+        "score": -694,
+        "jiffies": 11,
+        "pv": [
+          "f4e3"
+        ],
+        "seconds": 0.50000025,
+        "nps": 201.99989900005048
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 13,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 59,
+        "move": "e8g8",
+        "depth": 1,
+        "score": 10,
+        "jiffies": 8,
+        "pv": [
+          "e8g8"
+        ],
+        "seconds": 0.50000075,
+        "nps": 117.99982300026551
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 15,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 59,
+        "move": "f8e8",
+        "depth": 1,
+        "score": -45,
+        "jiffies": 8,
+        "pv": [
+          "f8e8"
+        ],
+        "seconds": 0.5000005,
+        "nps": 117.999882000118
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 17,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 64,
+        "move": "a7a6",
+        "depth": 1,
+        "score": -45,
+        "jiffies": 9,
+        "pv": [
+          "a7a6"
+        ],
+        "seconds": 0.25000025,
+        "nps": 255.99974400025602
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 19,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 50,
+        "move": "c8e6",
+        "depth": 1,
+        "score": -25,
+        "jiffies": 8,
+        "pv": [
+          "c8e6"
+        ],
+        "seconds": 0.25,
+        "nps": 200.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 21,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 67,
+        "move": "d8b8",
+        "depth": 1,
+        "score": -35,
+        "jiffies": 9,
+        "pv": [
+          "d8b8"
+        ],
+        "seconds": 0.500000875,
+        "nps": 133.99976550041038
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 23,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 68,
+        "move": "e8c8",
+        "depth": 1,
+        "score": -40,
+        "jiffies": 10,
+        "pv": [
+          "e8c8"
+        ],
+        "seconds": 0.25,
+        "nps": 272.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 25,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 67,
+        "move": "e6c4",
+        "depth": 1,
+        "score": -25,
+        "jiffies": 9,
+        "pv": [
+          "e6c4"
+        ],
+        "seconds": 0.50000025,
+        "nps": 133.99993300003348
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 27,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 290,
+        "move": "d6e5",
+        "depth": 1,
+        "score": 10,
+        "jiffies": 31,
+        "pv": [
+          "d6e5"
+        ],
+        "seconds": 0.75,
+        "nps": 386.6666666666667
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 29,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 281,
+        "move": "e5d4",
+        "depth": 1,
+        "score": 287,
+        "jiffies": 30,
+        "pv": [
+          "e5d4"
+        ],
+        "seconds": 0.75000075,
+        "nps": 374.66629200037465
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 31,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 89,
+        "move": "d4c3",
+        "depth": 1,
+        "score": 287,
+        "jiffies": 12,
+        "pv": [
+          "d4c3"
+        ],
+        "seconds": 0.250000125,
+        "nps": 355.99982200008895
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 33,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 62,
+        "move": "e7c5",
+        "depth": 1,
+        "score": 312,
+        "jiffies": 8,
+        "pv": [
+          "e7c5"
+        ],
+        "seconds": 0.250000125,
+        "nps": 247.999876000062
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 35,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 77,
+        "move": "c8e8",
+        "depth": 1,
+        "score": 322,
+        "jiffies": 10,
+        "pv": [
+          "c8e8"
+        ],
+        "seconds": 0.500000125,
+        "nps": 153.99996150000962
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 37,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 291,
+        "move": "b8d8",
+        "depth": 1,
+        "score": 312,
+        "jiffies": 33,
+        "pv": [
+          "b8d8"
+        ],
+        "seconds": 1.00000075,
+        "nps": 290.99978175016366
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 39,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 12,
+        "move": "d8e8",
+        "depth": 1,
+        "score": 312,
+        "jiffies": 3,
+        "pv": [
+          "d8e8"
+        ],
+        "seconds": 0.250000125,
+        "nps": 47.999976000012
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 41,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 151,
+        "move": "f6e4",
+        "depth": 1,
+        "score": 312,
+        "jiffies": 20,
+        "pv": [
+          "f6e4"
+        ],
+        "seconds": 0.500000125,
+        "nps": 301.9999245000189
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 43,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 218,
+        "move": "e8e4",
+        "depth": 1,
+        "score": -18,
+        "jiffies": 23,
+        "pv": [
+          "e8e4"
+        ],
+        "seconds": 0.50000075,
+        "nps": 435.999346000981
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 45,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 78,
+        "move": "h7h6",
+        "depth": 1,
+        "score": -38,
+        "jiffies": 9,
+        "pv": [
+          "h7h6"
+        ],
+        "seconds": 0.25,
+        "nps": 312.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 47,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 114,
+        "move": "c5e3",
+        "depth": 1,
+        "score": 44,
+        "jiffies": 11,
+        "pv": [
+          "c5e3"
+        ],
+        "seconds": 0.5,
+        "nps": 228.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 49,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 105,
+        "move": "e3b6",
+        "depth": 1,
+        "score": 337,
+        "jiffies": 11,
+        "pv": [
+          "e3b6"
+        ],
+        "seconds": 0.250000375,
+        "nps": 419.999370000945
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 51,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 50,
+        "move": "a8f8",
+        "depth": 1,
+        "score": 332,
+        "jiffies": 6,
+        "pv": [
+          "a8f8"
+        ],
+        "seconds": 0.25,
+        "nps": 200.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 53,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 58,
+        "move": "b7c6",
+        "depth": 1,
+        "score": 262,
+        "jiffies": 6,
+        "pv": [
+          "b7c6"
+        ],
+        "seconds": 0.250000125,
+        "nps": 231.999884000058
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 55,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 47,
+        "move": "c6c5",
+        "depth": 1,
+        "score": 262,
+        "jiffies": 5,
+        "pv": [
+          "c6c5"
+        ],
+        "seconds": 0.250000125,
+        "nps": 187.999906000047
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 57,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 34,
+        "move": "f8e8",
+        "depth": 1,
+        "score": 267,
+        "jiffies": 4,
+        "pv": [
+          "f8e8"
+        ],
+        "seconds": 0.250000375,
+        "nps": 135.999796000306
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 59,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 102,
+        "move": "b6a5",
+        "depth": 1,
+        "score": 196,
+        "jiffies": 9,
+        "pv": [
+          "b6a5"
+        ],
+        "seconds": 0.25,
+        "nps": 408.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 61,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 48,
+        "move": "a5b6",
+        "depth": 1,
+        "score": 153,
+        "jiffies": 5,
+        "pv": [
+          "a5b6"
+        ],
+        "seconds": 0.250000125,
+        "nps": 191.999904000048
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 63,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 113,
+        "move": "b6d4",
+        "depth": 1,
+        "score": 211,
+        "jiffies": 9,
+        "pv": [
+          "b6d4"
+        ],
+        "seconds": 0.25000025,
+        "nps": 451.999548000452
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 65,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 57,
+        "move": "e8a8",
+        "depth": 1,
+        "score": 246,
+        "jiffies": 6,
+        "pv": [
+          "e8a8"
+        ],
+        "seconds": 0.250000375,
+        "nps": 227.999658000513
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 67,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 40,
+        "move": "a8a7",
+        "depth": 1,
+        "score": 246,
+        "jiffies": 5,
+        "pv": [
+          "a8a7"
+        ],
+        "seconds": 0.25,
+        "nps": 160.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 69,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 27,
+        "move": "a7a8",
+        "depth": 1,
+        "score": 291,
+        "jiffies": 3,
+        "pv": [
+          "a7a8"
+        ],
+        "seconds": 0.250000125,
+        "nps": 107.999946000027
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 71,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 52,
+        "move": "d4f6",
+        "depth": 1,
+        "score": 241,
+        "jiffies": 4,
+        "pv": [
+          "d4f6"
+        ],
+        "seconds": 0.25,
+        "nps": 208.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 73,
+      "result": {
+        "replayed": 6,
+        "illegal": 0,
+        "nodes": 37,
+        "move": "a8e8",
+        "depth": 1,
+        "score": 246,
+        "jiffies": 3,
+        "pv": [
+          "a8e8"
+        ],
+        "seconds": 0.25,
+        "nps": 148.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 75,
+      "result": {
+        "replayed": 8,
+        "illegal": 0,
+        "nodes": 58,
+        "move": "e8e6",
+        "depth": 1,
+        "score": 241,
+        "jiffies": 6,
+        "pv": [
+          "e8e6"
+        ],
+        "seconds": 0.500000875,
+        "nps": 115.99979700035524
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 77,
+      "result": {
+        "replayed": 10,
+        "illegal": 0,
+        "nodes": 46,
+        "move": "f6e5",
+        "depth": 1,
+        "score": 251,
+        "jiffies": 5,
+        "pv": [
+          "f6e5"
+        ],
+        "seconds": 0.500000375,
+        "nps": 91.99993100005175
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 79,
+      "result": {
+        "replayed": 12,
+        "illegal": 0,
+        "nodes": 82,
+        "move": "e5d4",
+        "depth": 1,
+        "score": 236,
+        "jiffies": 7,
+        "pv": [
+          "e5d4"
+        ],
+        "seconds": 0.500001,
+        "nps": 163.99967200065598
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 81,
+      "result": {
+        "replayed": 14,
+        "illegal": 0,
+        "nodes": 95,
+        "move": "e6g6",
+        "depth": 1,
+        "score": 236,
+        "jiffies": 10,
+        "pv": [
+          "e6g6"
+        ],
+        "seconds": 0.75000075,
+        "nps": 126.66654000012667
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 83,
+      "result": {
+        "replayed": 16,
+        "illegal": 0,
+        "nodes": 1,
+        "move": "g8h7",
+        "depth": 1,
+        "score": 226,
+        "jiffies": 0,
+        "pv": [
+          "g8h7"
+        ],
+        "seconds": 0.500001,
+        "nps": 1.999996000008
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 85,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 50,
+        "move": "c3c2",
+        "depth": 1,
+        "score": 281,
+        "jiffies": 6,
+        "pv": [
+          "c3c2"
+        ],
+        "seconds": 0.2500005,
+        "nps": 199.9996000008
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 87,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 133,
+        "move": "g6f6",
+        "depth": 1,
+        "score": 261,
+        "jiffies": 13,
+        "pv": [
+          "g6f6"
+        ],
+        "seconds": 0.500000125,
+        "nps": 265.9999335000166
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 89,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 117,
+        "move": "c2c1b",
+        "depth": 1,
+        "score": 168,
+        "jiffies": 11,
+        "pv": [
+          "c2c1"
+        ],
+        "seconds": 0.500000375,
+        "nps": 233.9998245001316
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 91,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 45,
+        "move": "d4f2",
+        "depth": 1,
+        "score": 175,
+        "jiffies": 5,
+        "pv": [
+          "d4f2"
+        ],
+        "seconds": 0.250000125,
+        "nps": 179.999910000045
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 93,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 49,
+        "move": "f6c6",
+        "depth": 1,
+        "score": -167,
+        "jiffies": 4,
+        "pv": [
+          "f6c6"
+        ],
+        "seconds": 0.250000375,
+        "nps": 195.999706000441
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 95,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 20,
+        "move": "h7g8",
+        "depth": 1,
+        "score": -145,
+        "jiffies": 2,
+        "pv": [
+          "h7g8"
+        ],
+        "seconds": 0.250000125,
+        "nps": 79.99996000002
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 97,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 23,
+        "move": "c6f6",
+        "depth": 1,
+        "score": -150,
+        "jiffies": 3,
+        "pv": [
+          "c6f6"
+        ],
+        "seconds": 0.25,
+        "nps": 92.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 99,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 34,
+        "move": "f6g6",
+        "depth": 1,
+        "score": -195,
+        "jiffies": 3,
+        "pv": [
+          "f6g6"
+        ],
+        "seconds": 0.25,
+        "nps": 136.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 101,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 31,
+        "move": "g8h8",
+        "depth": 1,
+        "score": -205,
+        "jiffies": 4,
+        "pv": [
+          "g8h8"
+        ],
+        "seconds": 0.25000025,
+        "nps": 123.999876000124
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 103,
+      "result": {
+        "replayed": 6,
+        "illegal": 0,
+        "nodes": 29,
+        "move": "g6c6",
+        "depth": 1,
+        "score": -205,
+        "jiffies": 3,
+        "pv": [
+          "g6c6"
+        ],
+        "seconds": 0.250000375,
+        "nps": 115.999826000261
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 105,
+      "result": {
+        "replayed": 8,
+        "illegal": 0,
+        "nodes": 1,
+        "move": "h8h7",
+        "depth": 1,
+        "score": -205,
+        "jiffies": 0,
+        "pv": [
+          "h8h7"
+        ],
+        "seconds": 0.25000025,
+        "nps": 3.9999960000040002
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 107,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 24,
+        "move": "c6g6",
+        "depth": 1,
+        "score": -195,
+        "jiffies": 2,
+        "pv": [
+          "c6g6"
+        ],
+        "seconds": 0.25,
+        "nps": 96.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 109,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 27,
+        "move": "g6f6",
+        "depth": 1,
+        "score": -195,
+        "jiffies": 3,
+        "pv": [
+          "g6f6"
+        ],
+        "seconds": 0.25,
+        "nps": 108.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 111,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 35,
+        "move": "f6g6",
+        "depth": 1,
+        "score": -195,
+        "jiffies": 3,
+        "pv": [
+          "f6g6"
+        ],
+        "seconds": 0.250000375,
+        "nps": 139.999790000315
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 113,
+      "result": {
+        "replayed": 6,
+        "illegal": 0,
+        "nodes": 30,
+        "move": "g6f6",
+        "depth": 1,
+        "score": -165,
+        "jiffies": 3,
+        "pv": [
+          "g6f6"
+        ],
+        "seconds": 0.250000125,
+        "nps": 119.99994000003
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 115,
+      "result": {
+        "replayed": 8,
+        "illegal": 0,
+        "nodes": 29,
+        "move": "f6g6",
+        "depth": 1,
+        "score": 0,
+        "jiffies": 2,
+        "pv": [
+          "f6g6"
+        ],
+        "seconds": 0.5,
+        "nps": 58.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 117,
+      "result": {
+        "replayed": 10,
+        "illegal": 0,
+        "nodes": 29,
+        "move": "f7f5",
+        "depth": 1,
+        "score": -205,
+        "jiffies": 3,
+        "pv": [
+          "f7f5"
+        ],
+        "seconds": 0.50000075,
+        "nps": 57.9999130001305
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 119,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 84,
+        "move": "f5g4",
+        "depth": 1,
+        "score": -158,
+        "jiffies": 7,
+        "pv": [
+          "f5g4"
+        ],
+        "seconds": 0.25000025,
+        "nps": 335.99966400033605
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 121,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 80,
+        "move": "g4h3",
+        "depth": 1,
+        "score": 108,
+        "jiffies": 6,
+        "pv": [
+          "g4h3"
+        ],
+        "seconds": 0.25,
+        "nps": 320.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 123,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 55,
+        "move": "h3h2",
+        "depth": 1,
+        "score": 183,
+        "jiffies": 5,
+        "pv": [
+          "h3h2"
+        ],
+        "seconds": 0.25,
+        "nps": 220.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 125,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 47,
+        "move": "h2h1q",
+        "depth": 1,
+        "score": 247,
+        "jiffies": 3,
+        "pv": [
+          "h2h1"
+        ],
+        "seconds": 0.250000125,
+        "nps": 187.999906000047
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 127,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 113,
+        "move": "h1h2",
+        "depth": 1,
+        "score": 512,
+        "jiffies": 11,
+        "pv": [
+          "h1h2"
+        ],
+        "seconds": 0.250000375,
+        "nps": 451.999322001017
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 129,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 119,
+        "move": "h2g1",
+        "depth": 1,
+        "score": 567,
+        "jiffies": 11,
+        "pv": [
+          "h2g1"
+        ],
+        "seconds": 0.500000125,
+        "nps": 237.99994050001487
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 131,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 145,
+        "move": "g1g6",
+        "depth": 1,
+        "score": 567,
+        "jiffies": 14,
+        "pv": [
+          "g1g6"
+        ],
+        "seconds": 0.50000025,
+        "nps": 289.9998550000725
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 133,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 111,
+        "move": "g6a6",
+        "depth": 1,
+        "score": 1070,
+        "jiffies": 10,
+        "pv": [
+          "g6a6"
+        ],
+        "seconds": 0.250000125,
+        "nps": 443.99977800011095
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 135,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 90,
+        "move": "a6a8",
+        "depth": 1,
+        "score": 1070,
+        "jiffies": 7,
+        "pv": [
+          "a6a8"
+        ],
+        "seconds": 0.250000375,
+        "nps": 359.99946000081
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 137,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 53,
+        "move": "a8a5",
+        "depth": 1,
+        "score": 1110,
+        "jiffies": 4,
+        "pv": [
+          "a8a5"
+        ],
+        "seconds": 0.25,
+        "nps": 212.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 139,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 50,
+        "move": "a5c5",
+        "depth": 1,
+        "score": 1317,
+        "jiffies": 4,
+        "pv": [
+          "a5c5"
+        ],
+        "seconds": 0.25000025,
+        "nps": 199.99980000020003
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 141,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 68,
+        "move": "c5b6",
+        "depth": 1,
+        "score": 1283,
+        "jiffies": 5,
+        "pv": [
+          "c5b6"
+        ],
+        "seconds": 0.2500005,
+        "nps": 271.999456001088
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 143,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 48,
+        "move": "b6e3",
+        "depth": 1,
+        "score": 1317,
+        "jiffies": 4,
+        "pv": [
+          "b6e3"
+        ],
+        "seconds": 0.25,
+        "nps": 192.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 145,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 59,
+        "move": "h7g6",
+        "depth": 1,
+        "score": 1311,
+        "jiffies": 6,
+        "pv": [
+          "h7g6"
+        ],
+        "seconds": 0.25,
+        "nps": 236.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 147,
+      "result": {
+        "replayed": 7,
+        "illegal": 0,
+        "nodes": 47,
+        "move": "g6f5",
+        "depth": 1,
+        "score": 1377,
+        "jiffies": 5,
+        "pv": [
+          "g6f5"
+        ],
+        "seconds": 0.5,
+        "nps": 94.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 41818,
+      "game": "noise50-1320-01.pgn",
+      "warm_ply": 149,
+      "result": {
+        "replayed": 9,
+        "illegal": 0,
+        "nodes": 38,
+        "move": "e3h3",
+        "depth": 1,
+        "score": 29999,
+        "jiffies": 5,
+        "pv": [
+          "e3h3"
+        ],
+        "seconds": 0.50000025,
+        "nps": 75.999962000019
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 12,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 103,
+        "move": "b1d2",
+        "depth": 1,
+        "score": 10,
+        "jiffies": 15,
+        "pv": [
+          "b1d2"
+        ],
+        "seconds": 0.500000375,
+        "nps": 205.99984550011587
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 14,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 153,
+        "move": "e4d5",
+        "depth": 1,
+        "score": 94,
+        "jiffies": 18,
+        "pv": [
+          "e4d5"
+        ],
+        "seconds": 0.50000075,
+        "nps": 305.9995410006885
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 16,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 46,
+        "move": "e1g1",
+        "depth": 1,
+        "score": 43,
+        "jiffies": 7,
+        "pv": [
+          "e1g1"
+        ],
+        "seconds": 0.25,
+        "nps": 184.0
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 18,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 45,
+        "move": "a2a3",
+        "depth": 1,
+        "score": 23,
+        "jiffies": 6,
+        "pv": [
+          "a2a3"
+        ],
+        "seconds": 0.250000375,
+        "nps": 179.999730000405
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 20,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 110,
+        "move": "c4e2",
+        "depth": 1,
+        "score": 53,
+        "jiffies": 13,
+        "pv": [
+          "c4e2"
+        ],
+        "seconds": 0.5000005,
+        "nps": 219.99978000022003
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 22,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 39,
+        "move": "e2d3",
+        "depth": 1,
+        "score": 3,
+        "jiffies": 6,
+        "pv": [
+          "e2d3"
+        ],
+        "seconds": 0.500000125,
+        "nps": 77.99998050000487
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 24,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 48,
+        "move": "d2c4",
+        "depth": 1,
+        "score": -27,
+        "jiffies": 8,
+        "pv": [
+          "d2c4"
+        ],
+        "seconds": 0.50000025,
+        "nps": 95.999952000024
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 26,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 76,
+        "move": "d1d2",
+        "depth": 1,
+        "score": -22,
+        "jiffies": 11,
+        "pv": [
+          "d1d2"
+        ],
+        "seconds": 0.25000025,
+        "nps": 303.999696000304
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 28,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 94,
+        "move": "f1e1",
+        "depth": 1,
+        "score": -22,
+        "jiffies": 12,
+        "pv": [
+          "f1e1"
+        ],
+        "seconds": 0.500000125,
+        "nps": 187.99995300001174
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 30,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 110,
+        "move": "d2c2",
+        "depth": 1,
+        "score": -27,
+        "jiffies": 14,
+        "pv": [
+          "d2c2"
+        ],
+        "seconds": 0.50000025,
+        "nps": 219.999890000055
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 32,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 193,
+        "move": "d3h7",
+        "depth": 1,
+        "score": -95,
+        "jiffies": 23,
+        "pv": [
+          "d3h7"
+        ],
+        "seconds": 0.50000025,
+        "nps": 385.9998070000965
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 34,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 223,
+        "move": "f3d4",
+        "depth": 1,
+        "score": -95,
+        "jiffies": 27,
+        "pv": [
+          "f3d4"
+        ],
+        "seconds": 0.75000075,
+        "nps": 297.33303600029734
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 36,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 219,
+        "move": "c2e4",
+        "depth": 1,
+        "score": -115,
+        "jiffies": 23,
+        "pv": [
+          "c2e4"
+        ],
+        "seconds": 0.500000625,
+        "nps": 437.9994525006844
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 38,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 251,
+        "move": "a1b1",
+        "depth": 1,
+        "score": -125,
+        "jiffies": 25,
+        "pv": [
+          "a1b1"
+        ],
+        "seconds": 0.75,
+        "nps": 334.6666666666667
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 40,
+      "result": {
+        "replayed": 4,
+        "illegal": 0,
+        "nodes": 688,
+        "move": "e4b7",
+        "depth": 1,
+        "score": -256,
+        "jiffies": 62,
+        "pv": [
+          "e4b7"
+        ],
+        "seconds": 1.50000125,
+        "nps": 458.666284444763
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 42,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 347,
+        "move": "e1e8",
+        "depth": 1,
+        "score": -226,
+        "jiffies": 31,
+        "pv": [
+          "e1e8"
+        ],
+        "seconds": 0.750001,
+        "nps": 462.66604977860027
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44879,
+      "game": "noise50-1500-00.pgn",
+      "warm_ply": 44,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 316,
+        "move": "b7c7",
+        "depth": 1,
+        "score": -198,
+        "jiffies": 31,
+        "pv": [
+          "b7c7"
+        ],
+        "seconds": 0.750000625,
+        "nps": 421.33298222251483
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 13,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 78,
+        "move": "f6e4",
+        "depth": 1,
+        "score": 97,
+        "jiffies": 11,
+        "pv": [
+          "f6e4"
+        ],
+        "seconds": 0.500000375,
+        "nps": 155.99988300008772
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 15,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 145,
+        "move": "c8f5",
+        "depth": 1,
+        "score": 57,
+        "jiffies": 16,
+        "pv": [
+          "c8f5"
+        ],
+        "seconds": 0.500000875,
+        "nps": 289.9994925008881
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 17,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 635,
+        "move": "e4c3",
+        "depth": 1,
+        "score": 92,
+        "jiffies": 60,
+        "pv": [
+          "e4c3"
+        ],
+        "seconds": 1.250000875,
+        "nps": 507.99964440024894
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 19,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 339,
+        "move": "c3d5",
+        "depth": 1,
+        "score": 190,
+        "jiffies": 35,
+        "pv": [
+          "c3d5"
+        ],
+        "seconds": 0.75000025,
+        "nps": 451.9998493333835
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 21,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 144,
+        "move": "c6b4",
+        "depth": 1,
+        "score": 500,
+        "jiffies": 15,
+        "pv": [
+          "c6b4"
+        ],
+        "seconds": 0.500000625,
+        "nps": 287.99964000045003
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 23,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 162,
+        "move": "b4d5",
+        "depth": 1,
+        "score": 225,
+        "jiffies": 17,
+        "pv": [
+          "b4d5"
+        ],
+        "seconds": 0.500000625,
+        "nps": 323.99959500050625
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 25,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 658,
+        "move": "e7g5",
+        "depth": 1,
+        "score": 530,
+        "jiffies": 61,
+        "pv": [
+          "e7g5"
+        ],
+        "seconds": 1.25000125,
+        "nps": 526.3994736005264
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 27,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 164,
+        "move": "g7g6",
+        "depth": 1,
+        "score": 393,
+        "jiffies": 18,
+        "pv": [
+          "g7g6"
+        ],
+        "seconds": 0.50000025,
+        "nps": 327.999836000082
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 29,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 103,
+        "move": "d8g5",
+        "depth": 1,
+        "score": 393,
+        "jiffies": 13,
+        "pv": [
+          "d8g5"
+        ],
+        "seconds": 0.500000875,
+        "nps": 205.99963950063088
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 31,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 98,
+        "move": "a8b8",
+        "depth": 1,
+        "score": 490,
+        "jiffies": 14,
+        "pv": [
+          "a8b8"
+        ],
+        "seconds": 0.500000625,
+        "nps": 195.99975500030627
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 33,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 104,
+        "move": "a7a6",
+        "depth": 1,
+        "score": 495,
+        "jiffies": 14,
+        "pv": [
+          "a7a6"
+        ],
+        "seconds": 0.500000375,
+        "nps": 207.99984400011698
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 35,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 15,
+        "move": "e8e7",
+        "depth": 1,
+        "score": 261,
+        "jiffies": 2,
+        "pv": [
+          "e8e7"
+        ],
+        "seconds": 0.250000125,
+        "nps": 59.999970000015
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 37,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 128,
+        "move": "h8b8",
+        "depth": 1,
+        "score": 373,
+        "jiffies": 15,
+        "pv": [
+          "h8b8"
+        ],
+        "seconds": 0.50000075,
+        "nps": 255.999616000576
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 39,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 159,
+        "move": "b8b2",
+        "depth": 1,
+        "score": 403,
+        "jiffies": 20,
+        "pv": [
+          "b8b2"
+        ],
+        "seconds": 0.50000025,
+        "nps": 317.99984100007947
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 41,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 115,
+        "move": "b2b7",
+        "depth": 1,
+        "score": 500,
+        "jiffies": 16,
+        "pv": [
+          "b2b7"
+        ],
+        "seconds": 0.5000005,
+        "nps": 229.99977000023003
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 43,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 91,
+        "move": "g5f4",
+        "depth": 1,
+        "score": 630,
+        "jiffies": 11,
+        "pv": [
+          "g5f4"
+        ],
+        "seconds": 0.25000025,
+        "nps": 363.99963600036403
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 45,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 141,
+        "move": "f4e5",
+        "depth": 1,
+        "score": 645,
+        "jiffies": 20,
+        "pv": [
+          "f4e5"
+        ],
+        "seconds": 0.500000375,
+        "nps": 281.9997885001586
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 47,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 238,
+        "move": "b7b1",
+        "depth": 1,
+        "score": 533,
+        "jiffies": 25,
+        "pv": [
+          "b7b1"
+        ],
+        "seconds": 0.750000375,
+        "nps": 317.333174666746
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 49,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 14,
+        "move": "e7f8",
+        "depth": 1,
+        "score": 508,
+        "jiffies": 2,
+        "pv": [
+          "e7f8"
+        ],
+        "seconds": 0.25000025,
+        "nps": 55.999944000056004
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 51,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 14,
+        "move": "f5c8",
+        "depth": 1,
+        "score": 928,
+        "jiffies": 2,
+        "pv": [
+          "f5c8"
+        ],
+        "seconds": 0.25000025,
+        "nps": 55.999944000056004
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 53,
+      "result": {
+        "replayed": 0,
+        "illegal": 0,
+        "nodes": 60,
+        "move": "f8g8",
+        "depth": 1,
+        "score": 943,
+        "jiffies": 8,
+        "pv": [
+          "f8g8"
+        ],
+        "seconds": 0.250000125,
+        "nps": 239.99988000006
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 55,
+      "result": {
+        "replayed": 2,
+        "illegal": 0,
+        "nodes": 62,
+        "move": "d6d5",
+        "depth": 1,
+        "score": 973,
+        "jiffies": 9,
+        "pv": [
+          "d6d5"
+        ],
+        "seconds": 0.2500005,
+        "nps": 247.99950400099198
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 57,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 57,
+        "move": "c8e6",
+        "depth": 1,
+        "score": 993,
+        "jiffies": 7,
+        "pv": [
+          "c8e6"
+        ],
+        "seconds": 0.250000125,
+        "nps": 227.999886000057
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 59,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 51,
+        "move": "d5d4",
+        "depth": 1,
+        "score": 1013,
+        "jiffies": 7,
+        "pv": [
+          "d5d4"
+        ],
+        "seconds": 0.25000025,
+        "nps": 203.99979600020401
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 61,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 76,
+        "move": "e6a2",
+        "depth": 1,
+        "score": 1096,
+        "jiffies": 9,
+        "pv": [
+          "e6a2"
+        ],
+        "seconds": 0.250000625,
+        "nps": 303.99924000190003
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 63,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 80,
+        "move": "a2d5",
+        "depth": 1,
+        "score": 1151,
+        "jiffies": 9,
+        "pv": [
+          "a2d5"
+        ],
+        "seconds": 0.25000025,
+        "nps": 319.99968000032004
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 65,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 90,
+        "move": "e5h5",
+        "depth": 1,
+        "score": 1146,
+        "jiffies": 11,
+        "pv": [
+          "e5h5"
+        ],
+        "seconds": 0.500000125,
+        "nps": 179.99995500001125
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 67,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 63,
+        "move": "d5b7",
+        "depth": 1,
+        "score": 1106,
+        "jiffies": 7,
+        "pv": [
+          "d5b7"
+        ],
+        "seconds": 0.500000125,
+        "nps": 125.99996850000787
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 69,
+      "result": {
+        "replayed": 7,
+        "illegal": 0,
+        "nodes": 43,
+        "move": "h5c5",
+        "depth": 1,
+        "score": 1116,
+        "jiffies": 6,
+        "pv": [
+          "h5c5"
+        ],
+        "seconds": 0.500000375,
+        "nps": 85.99993550004837
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 71,
+      "result": {
+        "replayed": 9,
+        "illegal": 0,
+        "nodes": 51,
+        "move": "d4d3",
+        "depth": 1,
+        "score": 1226,
+        "jiffies": 7,
+        "pv": [
+          "d4d3"
+        ],
+        "seconds": 0.50000025,
+        "nps": 101.9999490000255
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 73,
+      "result": {
+        "replayed": 1,
+        "illegal": 0,
+        "nodes": 70,
+        "move": "c5e3",
+        "depth": 1,
+        "score": 1226,
+        "jiffies": 10,
+        "pv": [
+          "c5e3"
+        ],
+        "seconds": 0.250000375,
+        "nps": 279.99958000063
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 75,
+      "result": {
+        "replayed": 3,
+        "illegal": 0,
+        "nodes": 60,
+        "move": "e3e2",
+        "depth": 1,
+        "score": 1616,
+        "jiffies": 9,
+        "pv": [
+          "e3e2"
+        ],
+        "seconds": 0.5000005,
+        "nps": 119.99988000012002
+      }
+    },
+    {
+      "noise": 50,
+      "seed": 44878,
+      "game": "noise50-1500-01.pgn",
+      "warm_ply": 77,
+      "result": {
+        "replayed": 5,
+        "illegal": 0,
+        "nodes": 78,
+        "move": "e2c2",
+        "depth": 1,
+        "score": 29999,
+        "jiffies": 10,
+        "pv": [
+          "e2c2"
+        ],
+        "seconds": 0.500000625,
+        "nps": 155.99980500024375
+      }
+    }
+  ],
+  "native_sha256": "d15394410235666002f8ed2b0c339174f088df0f6e45784f6a5359286097d4cd",
+  "x16_sha256": "f3137d0cebad55176b2ef1fa9a18e946c430ae799a59273d7f1836e714f7e756"
+}

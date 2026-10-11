@@ -29,6 +29,7 @@
 
 #include <ascii_charmap.h>
 #include <cbm.h>
+#include <cx16.h>
 #pragma static-locals (on)
 #include <string.h>
 #include <time.h>
@@ -40,6 +41,9 @@
 #include "match.h"
 #include "strings.h"
 #include "playfield.h"
+#include "sound.h"
+#pragma code-name ("DRAGCODE")
+#pragma rodata-name ("DRAGCODE")
 
 #define CLOCK_START     (30 * 60)       // seconds per player
 #define BOARD_PIXELS    (8 * SQUARE)
@@ -66,7 +70,10 @@ uint8_t playfield_flipped;           // black at the bottom
 uint8_t playfield_theme = THEME_NEWSPRINT;
 uint8_t playfield_info = 1;          // score sheet shown
 static uint16_t thinking_frame;
+#pragma bss-name ("DRAGBSS")
 static uint8_t thinking;                // the engine is busy
+static uint8_t dragging;
+void playfield_cancel_drag(void);       // resident bank-switching entry point
 static uint8_t selected;                // square of the selected piece
 static uint8_t check_square;            // king in check
 static uint8_t marks[128];              // legal destinations of the selection
@@ -124,6 +131,7 @@ static void board_refresh(void) {
                 state = SQ_SELECTED;
             }
 
+            if(dragging && sq == selected) piece = EMPTY;
             idx = (r << 3) | f;
             col = playfield_flipped ? 7 - f : f;
             row = playfield_flipped ? r : 7 - r;
@@ -293,7 +301,7 @@ static void draw_thinking(uint16_t now) {
     thinking_frame = frame;
     percent = match_think_budget ?
               ((uint32_t)elapsed * 100 / match_think_budget) : 0;
-    if(elapsed >= match_think_budget || percent > 99) percent = 99;
+    if(match_think_budget && (elapsed >= match_think_budget || percent > 99)) percent = 99;
     phase = frame % 6;
     /* Each moving figurine and its adjacent space occupy three cells. */
     icon[2] = 0;
@@ -302,9 +310,14 @@ static void draw_thinking(uint16_t now) {
     video_text(61, 55, icon, COL_INK);
     icon[phase & 1] = FIGURINE_CODE + 1 + (phase + 3) % 6;
     video_text(64, 55, icon, COL_RED);
-    strcpy(buf, "TIME 00%");
-    buf[5] = '0' + percent / 10;
-    buf[6] = '0' + percent % 10;
+    if(match_think_depth) {
+        strcpy(buf, "PLY 0   ");
+        buf[4] = '0' + match_think_depth;
+    } else {
+        strcpy(buf, "TIME 00%");
+        buf[5] = '0' + percent / 10;
+        buf[6] = '0' + percent % 10;
+    }
     video_text(69, 55, buf, COL_INK);
 }
 
@@ -368,12 +381,14 @@ static void refresh_all(void) {
  *****************************************************************************/
 
 static void clear_selection(void) {
+    if(dragging) playfield_cancel_drag();
     selected = NO_SQUARE;
     memset(marks, 0, sizeof(marks));
 }
 
 static void select_square(uint8_t sq) {
     uint8_t i;
+    sound_sfx(SFX_PICKUP);
 
     clear_selection();
     selected = sq;
@@ -388,6 +403,7 @@ static void play(const move_t* m) {
     input_phase = INPUT_MOVE;
     clear_selection();
     match_play(m);
+    sound_event(SOUND_MOVE);
     refresh_all();
 }
 
@@ -435,6 +451,7 @@ static void activate(uint8_t sq) {
     if(board[sq] != EMPTY && COLOR(board[sq]) == side && sq != selected) {
         select_square(sq);
     } else {
+        if(selected != NO_SQUARE) sound_sfx(SFX_ILLEGAL);
         clear_selection();
     }
     board_refresh();
@@ -445,8 +462,11 @@ static void activate(uint8_t sq) {
  */
 /* Let a demo finish its current search early when Escape is pressed. */
 extern uint8_t search_aborted;
+#pragma bss-name (push, "BSS")
 uint8_t playfield_pending_key;
-static void demo_poll(void) {
+#pragma bss-name (pop)
+void demo_poll(void);  /* Resident callback: the engine can select any RAM bank. */
+void playfield_demo_poll(void) {
     uint8_t key;
     playfield_tick();
     if(match_computer == COMPUTER_BOTH) {
@@ -459,6 +479,7 @@ static void demo_poll(void) {
 }
 
 static void engine_turn(uint8_t analyse) {
+    uint16_t previous_ply = ply;
     thinking = 1;
     thinking_frame = 0xFFFF;
     video_text_clear(61, 55, 19);
@@ -470,6 +491,7 @@ static void engine_turn(uint8_t analyse) {
         match_analyse(playfield_tick);
     } else {
         match_computer_move(demo_poll);
+        sound_event(ply != previous_ply ? SOUND_CPU_MOVE : SOUND_RESULT);
     }
     thinking = 0;
     refresh_all();
@@ -505,9 +527,10 @@ static void cycle_computer(void) {
  * PUBLIC INTERFACE
  *****************************************************************************/
 
-void playfield_new(void) {
+void playfield_new_banked(void) {
     playfield_new_requested = 0;
     match_new(CLOCK_START, match_computer);
+    sound_event(SOUND_NEW);
     input_phase = INPUT_MOVE;
     playfield_flipped = (match_computer == COMPUTER_WHITE);
     thinking = 0;
@@ -526,7 +549,8 @@ void playfield_new(void) {
     update_cursor();
 }
 
-void playfield_resume(void) {
+void playfield_resume_banked(void) {
+    sound_event(SOUND_RESUME);
     last_clock = clock();
     video_clear_layer1();
     draw_labels();
@@ -537,7 +561,7 @@ void playfield_resume(void) {
     update_cursor();
 }
 
-void playfield_loaded(void) {
+void playfield_loaded_banked(void) {
     input_phase = INPUT_MOVE;
     thinking = 0;
     cursor_visible = 0;
@@ -547,13 +571,15 @@ void playfield_loaded(void) {
     playfield_resume();
 }
 
-void playfield_tick(void) {
+void playfield_tick_banked(void) {
     clock_t now = clock();
     clock_t delta = now - last_clock;
 
     last_clock = now;
     if(thinking && match_state == MATCH_PLAYING) draw_thinking((uint16_t)now);
     if(match_tick(delta > 120 ? 120 : (uint8_t)delta)) {
+        sound_event(SOUND_CLOCK);
+        sound_event(SOUND_RESULT);
         draw_clocks();
         if(match_state == MATCH_OVER) {
             input_phase = INPUT_MOVE;
@@ -563,12 +589,15 @@ void playfield_tick(void) {
     }
 }
 
-void playfield_update(void) {
+void playfield_update_banked(void) {
     if(match_computer_to_move()) engine_turn(0);
 }
 
-void playfield_key(uint8_t key) {
+void playfield_key_banked(uint8_t key) {
+    if(dragging) { clear_selection(); board_refresh(); }
     switch(key) {
+        case 'V': case 'v': sound_event(SOUND_MUSIC_TOGGLE); return;
+        case 'S': case 's': sound_event(SOUND_EFFECTS_TOGGLE); return;
         case KEY_UP:
             if(cursor_visible && cursor_row > 0) cursor_row--;
             break;
@@ -619,10 +648,69 @@ void playfield_key(uint8_t key) {
     update_cursor();
 }
 
-void playfield_mouse(uint16_t x, uint16_t y, uint8_t buttons) {
-    static uint16_t last_x, last_y;
-    static uint8_t last_buttons;
+/* Board UI, drag input and VRAM copying run in bank 23. Sprite 15 is above the board;
+ * sprites 0/1 belong to the pointer/cursor and 2..14 to the loading cover. */
+#pragma code-name ("DRAGCODE")
+#pragma bss-name ("DRAGBSS")
+#define DRAG_ATTR 0xFC78
+static uint8_t grab_x, grab_y, drag_toggle, last_buttons;
+static uint16_t last_x, last_y;
+
+static void drag_address(uint16_t address) {
+    VERA.control = 0;
+    VERA.address = address;
+    VERA.address_hi = 0x11;
+}
+void playfield_drag_stop(void) {
+    drag_address(DRAG_ATTR + 6);
+    VERA.data0 = 0;
+    dragging = 0;
+}
+void playfield_drag_init(void) {
+    last_buttons = 0;
+    last_x = last_y = 0;
+    playfield_drag_stop();
+}
+static void drag_position(uint16_t x, uint16_t y) {
+    x -= grab_x;
+    y -= grab_y;
+    drag_address(DRAG_ATTR + 2);
+    VERA.data0 = x;
+    VERA.data0 = x >> 8;
+    VERA.data0 = y;
+    VERA.data0 = y >> 8;
+    VERA.data0 = 12;
+}
+/* Assemble the current set's 49 resident piece tiles into a padded 64x64
+ * sprite. Both VERA ports stream VRAM; no disk access or RAM image is needed. */
+static void drag_image(uint8_t piece) {
+    uint16_t n, tile;
+    uint8_t y, x, b;
+    tile = L1_PIECES + ((COLOR(piece) ? 6 : 0) + TYPE(piece) - 1) * 49;
+    drag_address((uint16_t)VRAM_DRAG);
+    for(n = 0; n < 2048; n++) VERA.data0 = 0;
+    for(y = 0; y < SQUARE; y++) {
+        drag_address((uint16_t)VRAM_DRAG + (y + 4) * 32 + 2);
+        for(x = 0; x < 7; x++) {
+            VERA.control = 1;
+            VERA.address = (uint16_t)VRAM_L1_TILES + (tile + (y >> 3) * 7 + x) * 32 + (y & 7) * 4;
+            VERA.address_hi = 0x11;
+            VERA.control = 0;
+            for(b = 0; b < 4; b++) VERA.data0 = VERA.data1;
+        }
+    }
+    drag_address(DRAG_ATTR);
+    VERA.data0 = (uint8_t)(VRAM_DRAG >> 5);
+    VERA.data0 = (uint8_t)(VRAM_DRAG >> 13);
+    drag_address(DRAG_ATTR + 6);
+    VERA.data0 = 0;
+    VERA.data0 = 0xF0;           // 64x64, 4bpp, palette 0
+}
+void playfield_drag_mouse(uint16_t x, uint16_t y, uint8_t buttons) {
     uint8_t pressed = (buttons & 1) && !(last_buttons & 1);
+    uint8_t inside = x >= BOARD_X && x < BOARD_X + BOARD_PIXELS &&
+                     y >= BOARD_Y && y < BOARD_Y + BOARD_PIXELS;
+    uint8_t sq;
 
     if(x != last_x || y != last_y) {
         if(cursor_visible) {
@@ -633,11 +721,39 @@ void playfield_mouse(uint16_t x, uint16_t y, uint8_t buttons) {
         last_y = y;
     }
     last_buttons = buttons;
-    if(!pressed) return;
-
-    if(x >= BOARD_X && x < BOARD_X + BOARD_PIXELS && y >= BOARD_Y && y < BOARD_Y + BOARD_PIXELS) {
+    if(inside) {
         cursor_col = (x - BOARD_X) / SQUARE;
         cursor_row = (y - BOARD_Y) / SQUARE;
-        activate(square_at(cursor_col, cursor_row));
+        sq = square_at(cursor_col, cursor_row);
     }
+    if(dragging) {
+        if(buttons & 1) {
+            drag_position(x, y);
+            return;
+        }
+        playfield_drag_stop();
+        if(inside && sq == selected) {
+            if(drag_toggle) clear_selection();
+            board_refresh();          // a click still selects/deselects
+        } else if(inside && marks[sq]) {
+            activate(sq);             // captures, castling, en passant, promotion
+        } else {
+            sound_sfx(SFX_ILLEGAL);
+            clear_selection();
+            board_refresh();          // illegal/off-board drop returns the piece
+        }
+        return;
+    }
+    if(!pressed || !inside) return;
+    if(input_phase == INPUT_MOVE && match_state == MATCH_PLAYING &&
+       !match_computer_to_move() && board[sq] != EMPTY && COLOR(board[sq]) == side) {
+        drag_toggle = sq == selected;
+        select_square(sq);
+        grab_x = x - (BOARD_X + cursor_col * SQUARE) + 4;
+        grab_y = y - (BOARD_Y + cursor_row * SQUARE) + 4;
+        drag_image(board[sq]);
+        drag_position(x, y);
+        dragging = 1;
+        board_refresh();
+    } else activate(sq);
 }

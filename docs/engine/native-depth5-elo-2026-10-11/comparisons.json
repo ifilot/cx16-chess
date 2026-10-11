@@ -1,0 +1,88 @@
+{
+  "source_runs": [
+    "docs/engine/native-depth4-elo-2026-10-11",
+    "docs/engine/native-depth5-elo-2026-10-11"
+  ],
+  "games": 2400,
+  "engine_compatibility_reports": [
+    "docs/engine/native-depth5-elo-2026-10-11/depth4-compatibility.json"
+  ],
+  "levels": {
+    "ply4": 4,
+    "ply5": 5
+  },
+  "noise_by_level": {},
+  "summaries": {
+    "ply4": {
+      "games": 1200,
+      "points": 636.0,
+      "wins": 564,
+      "draws": 144,
+      "losses": 492,
+      "score": 0.53,
+      "estimated_elo": 1432,
+      "confidence_95": [
+        1413,
+        1452
+      ],
+      "confidence_score_95": [
+        0.50375,
+        0.5566666666666666
+      ],
+      "mean_depth": 3.9265157811322213,
+      "mean_nodes": 1906.7277488934847,
+      "mean_search_seconds": 0.002453146629374174,
+      "per_opponent": {
+        "1320": {
+          "games": 600,
+          "points": 370.5
+        },
+        "1500": {
+          "games": 600,
+          "points": 265.5
+        }
+      },
+      "target_depth": 4
+    },
+    "ply5": {
+      "games": 1200,
+      "points": 594.0,
+      "wins": 519,
+      "draws": 150,
+      "losses": 531,
+      "score": 0.495,
+      "estimated_elo": 1406,
+      "confidence_95": [
+        1387,
+        1425
+      ],
+      "confidence_score_95": [
+        0.4691666666666667,
+        0.5208333333333334
+      ],
+      "mean_depth": 4.8702829752188475,
+      "mean_nodes": 5777.925471471138,
+      "mean_search_seconds": 0.007437737646230567,
+      "per_opponent": {
+        "1320": {
+          "games": 600,
+          "points": 348.5
+        },
+        "1500": {
+          "games": 600,
+          "points": 245.5
+        }
+      },
+      "target_depth": 5
+    }
+  },
+  "paired_comparisons": {
+    "ply5_minus_ply4": {
+      "estimated_difference": -26,
+      "confidence_95": [
+        -54,
+        2
+      ]
+    }
+  }
+}

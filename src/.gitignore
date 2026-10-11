@@ -1,5 +1,6 @@
 *.DAT
 *.PRG
+AUTOBOOT.X16
 *.o
 *.sym
 *.map
@@ -14,5 +15,8 @@ setup.png
 assets.h
 assets.inc
 build_info.h
+*.ZSM
+music.h
+sfx.h
 *.SAV
 CHESSOPT.DAT

@@ -1,0 +1,234 @@
+--- a/src/agent.h
++++ b/src/agent.h
+@@ -4,6 +4,8 @@
+ #include <stdbool.h>
+ #include <stdint.h>
+ extern bool agent_mode;
++// Main-loop fast path: requests are only read while execution is paused.
++extern bool agent_running;
+ bool agent_open(void);
+ void agent_close(void);
+ bool agent_before_step(uint32_t *old_clock);
+--- a/src/agent.c
++++ b/src/agent.c
+@@ -29,13 +29,14 @@
+ #define RUN_MAX_CYCLES 100000000
+ #define BREAKPOINT_MAX 32
+ bool agent_mode;
++bool agent_running;
+ static FILE *output;
+ static char line[LINE_MAX_BYTES + 2], capture_path[LINE_MAX_BYTES];
+ static uint64_t cycles, instructions, frames;
+ static uint64_t start_cycles, start_instructions, start_frames, target, budget;
+ static uint32_t last_clock;
+ static int64_t request_id;
+-static bool has_id, running, quitting, halted, capturing;
++static bool has_id, quitting, halted, capturing;
+ static enum { RUN_CYCLES, RUN_INSTRUCTIONS, RUN_FRAMES } unit;
+ static const char *stop_reason = "reset";
+ typedef struct { uint16_t address; int bank; } breakpoint;
+@@ -108,6 +109,7 @@
+     *value = f->integer != 0; return true;
+ }
+ static bool at_breakpoint(void) {
++    if (!breakpoint_count) return false;
+     int bank = regs.k ? regs.k : (regs.pc >= 0xc000 ? memory_get_rom_bank() :
+         (regs.pc >= 0xa000 ? memory_get_ram_bank() : 0));
+     for (size_t i = 0; i < breakpoint_count; ++i)
+@@ -121,7 +123,7 @@
+ static void finish(const char *reason) {
+     // Resolve pending chip time before any observer reads PCM/YM state.
+     audio_render();
+-    running = false;
++    agent_running = false;
+     stop_reason = reason;
+     bool captured = false;
+     if (capturing && !strcmp(reason, "target")) {
+@@ -141,7 +143,7 @@
+     last_clock = clockticks6502;
+     instructions += instruction;
+     frames += frame;
+-    if (!running) return;
++    if (!agent_running) return;
+     if (halted) { finish(stop_reason); return; }
+     if (at_breakpoint()) { finish("breakpoint"); return; }
+     uint64_t elapsed = unit == RUN_CYCLES ? cycles - start_cycles :
+@@ -319,7 +321,7 @@
+         }
+         target = count; budget = max;
+         start_cycles = cycles; start_instructions = instructions; start_frames = frames;
+-        running = true;
++        agent_running = true;
+         if (halted) finish(stop_reason);
+         else if (at_breakpoint()) finish("breakpoint");
+     } else if (!strcmp(cmd, "breakpoint")) {
+@@ -380,7 +382,7 @@
+     fflush(output);
+ }
+ bool agent_before_step(uint32_t *old_clock) {
+-    while (!running && !quitting) {
++    while (!agent_running && !quitting) {
+         // Drain overlong requests to the next newline; never execute a truncated command.
+         size_t n = 0;
+         bool too_long = false, nul = false;
+--- a/src/main.c
++++ b/src/main.c
+@@ -1618,7 +1618,7 @@
+ {
+ 	uint32_t old_clockticks6502 = clockticks6502;
+ 	for (;;) {
+-		if (agent_mode && !agent_before_step(&old_clockticks6502)) break;
++		if (agent_mode && !agent_running && !agent_before_step(&old_clockticks6502)) break;
+ 		if (smc_requested_reset) machine_reset();
+ 
+ 		if (testbench && regs.pc == 0xfffd){
+@@ -1765,9 +1765,9 @@
+ 			new_frame |= video_step(MHZ, clocks, false);
+ 		}
+ 
+-		for (uint32_t i = 0; i < clocks; i++) {
+-			i2c_step();
+-		}
++		// I2C inputs only change on bus accesses, not as a function of time.
++		// Repeating this call for every CPU cycle cannot produce another edge.
++		i2c_step();
+ 		rtc_step(clocks);
+ 
+ 		if (!headless || agent_mode) {
+--- a/src/vera_psg.c
++++ b/src/vera_psg.c
+@@ -37,12 +37,49 @@
+ };
+ 
+ static uint16_t noise_state;
++static uint16_t enabled_channels;
++// Columns of the linear noise-LFSR transforms for 16 * 2^n steps.
++static uint16_t noise_jump[32][16];
++static bool noise_jump_ready;
++
++static uint16_t noise_next(uint16_t value)
++{
++    return (value << 1) | (((value >> 1) ^ (value >> 2) ^
++                           (value >> 4) ^ (value >> 15)) & 1);
++}
++
++static uint16_t noise_apply(const uint16_t transform[16], uint16_t value)
++{
++    uint16_t result = 0;
++    for (unsigned bit = 0; bit < 16; bit++)
++        if (value & (1u << bit)) result ^= transform[bit];
++    return result;
++}
++
++static void noise_advance(unsigned samples)
++{
++    if (!noise_jump_ready) {
++        for (unsigned bit = 0; bit < 16; bit++) {
++            uint16_t value = 1u << bit;
++            for (unsigned i = 0; i < 16; i++) value = noise_next(value);
++            noise_jump[0][bit] = value;
++        }
++        for (unsigned power = 1; power < 32; power++)
++            for (unsigned bit = 0; bit < 16; bit++)
++                noise_jump[power][bit] = noise_apply(noise_jump[power - 1],
++                                                    noise_jump[power - 1][bit]);
++        noise_jump_ready = true;
++    }
++    for (unsigned power = 0; samples; power++, samples >>= 1)
++        if (samples & 1) noise_state = noise_apply(noise_jump[power], noise_state);
++}
+ 
+ void
+ psg_reset(void)
+ {
+ 	memset(channels, 0, sizeof(channels));
+ 	noise_state = 1;
++	enabled_channels = 0;
+ }
+ 
+ void
+@@ -60,6 +97,8 @@
+ 			channels[ch].right  = (val & 0x80) != 0;
+ 			channels[ch].left   = (val & 0x40) != 0;
+ 			channels[ch].volume = volume_lut[val & 0x3F];
++            if (val & 0xC0) enabled_channels |= 1u << ch;
++            else enabled_channels &= ~(1u << ch);
+ 			break;
+ 		}
+ 		case 3: {
+@@ -80,7 +119,7 @@
+ 		// In FPGA implementation, noise values are generated every system clock and
+ 		// the channel update is run sequentially. So, even if both two channels are
+ 		// fetching a noise value in the same sample, they should have different values
+-		noise_state = (noise_state << 1) | (((noise_state >> 1) ^ (noise_state >> 2) ^ (noise_state >> 4) ^ (noise_state >> 15)) & 1);
++		noise_state = noise_next(noise_state);
+ 
+ 		struct channel *ch = &channels[i];
+ 
+@@ -119,6 +158,14 @@
+ void
+ psg_render(int16_t *buf, unsigned num_samples)
+ {
++    if (!enabled_channels && num_samples) {
++        // Resolve phase reset and any wrap-triggered noise latch on the first
++        // sample. Later disabled samples only advance the shared noise LFSR.
++        render(&buf[0], &buf[1]);
++        noise_advance(num_samples - 1);
++        memset(buf, 0, num_samples * 2 * sizeof(*buf));
++        return;
++    }
+ 	while (num_samples--) {
+ 		render(&buf[0], &buf[1]);
+ 		buf += 2;
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -369,6 +369,8 @@
+ 
+ include(CTest)
+ if(BUILD_TESTING AND NOT EMSCRIPTEN)
++    add_executable(psg_idle_test tests/psg_idle_test.c)
++    add_test(NAME psg_idle COMMAND psg_idle_test)
+     add_executable(agent_json_test tests/agent_json_test.c src/agent_json.c)
+     target_include_directories(agent_json_test PRIVATE src)
+     add_test(NAME agent_json COMMAND agent_json_test)
+--- /dev/null
++++ b/tests/psg_idle_test.c
+@@ -0,0 +1,38 @@
++// Compare the optimized idle path with scalar synthesis, including hidden
++// oscillator/noise state that affects sound after channels are enabled again.
++#include <stdio.h>
++#include <stdlib.h>
++#include "../src/vera_psg.c"
++
++static uint32_t seed = 16;
++static uint32_t random_value(void) {
++    seed = seed * 1664525u + 1013904223u;
++    return seed;
++}
++int main(void) {
++    const unsigned sizes[] = {0, 1, 2, 3, 17, 127, 255, 256, 511, 1000};
++    int16_t scalar[2000], fast[2000];
++    struct channel initial[16], expected[16];
++    for (unsigned trial = 0; trial < 300; trial++) {
++        psg_reset();
++        for (unsigned reg = 0; reg < 64; reg++) psg_writereg(reg, random_value() >> 24);
++        psg_render(fast, 100);
++        for (unsigned ch = 0; ch < 16; ch++) psg_writereg(ch * 4 + 2, random_value() & 63);
++        memcpy(initial, channels, sizeof(channels));
++        uint16_t initial_noise = noise_state;
++        unsigned count = sizes[trial % (sizeof(sizes) / sizeof(sizes[0]))];
++        for (unsigned i = 0; i < count; i++) render(&scalar[2 * i], &scalar[2 * i + 1]);
++        memcpy(expected, channels, sizeof(channels));
++        uint16_t expected_noise = noise_state;
++        memcpy(channels, initial, sizeof(channels));
++        noise_state = initial_noise;
++        psg_render(fast, count);
++        if (memcmp(scalar, fast, count * 2 * sizeof(*fast)) ||
++            memcmp(expected, channels, sizeof(channels)) || noise_state != expected_noise) {
++            fprintf(stderr, "idle PSG mismatch: trial %u, samples %u\n", trial, count);
++            return 1;
++        }
++    }
++    puts("300 idle PSG output/state comparisons passed");
++    return 0;
++}

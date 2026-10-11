@@ -8,7 +8,7 @@ import subprocess
 import urllib.request
 from zipfile import ZipFile
 
-from package_graphics import RUNTIME
+from runtime_files import RUNTIME_FILES
 
 ROOT = Path(__file__).resolve().parents[1]
 ARCHIVE = 'x16emu_wasm-r49.zip'
@@ -40,12 +40,13 @@ def main():
             (output / 'emulator' / name).write_bytes(package.read(name))
 
     # Only distribution runtime files: never publish local save slots or defaults.
-    names = ('CHESS.PRG', 'MENU.BIN', 'UI.BIN') + RUNTIME
+    names = RUNTIME_FILES
     (output / 'game').mkdir()
     with ZipFile(ROOT / 'build/dist/CHESS.ZIP') as package:
         for name in names:
             (output / 'game' / name).write_bytes(package.read('CHESS/' + name))
     (output / 'game/manifest.json').write_text(json.dumps({'resources': sorted(names)}, indent=2) + '\n')
+    (output / 'game/ZSMKIT.TXT').write_text((ROOT / 'src/vendor/zsmkit/LICENSE').read_text())
     shutil.copy2(ROOT / 'build/dist/CHESS.ZIP', output / 'CHESS.ZIP')
     shutil.copy2(ROOT / 'build/graphics/splash.png', output / 'start.png')
 

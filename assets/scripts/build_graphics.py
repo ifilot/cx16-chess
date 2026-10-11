@@ -401,6 +401,17 @@ def build_layer1(pieces=PIECES):
                 g[4 + y, 2:2 + width] = INK
             if code == L.MENU_ARROW_LEFT:
                 g = g[:, ::-1]
+        if code == L.MENU_WARNING:
+            # Outlined warning triangle with an exclamation mark, in an 8x16 cell.
+            g = np.zeros((16, 8), np.uint8)
+            g[3, 3] = INK
+            for y in range(4, 11):
+                radius = (y - 2) // 2
+                radius = min(radius, 3)
+                g[y, 3 - radius] = g[y, 3 + radius] = INK
+            g[11, :7] = INK
+            g[6:9, 3] = INK
+            g[10, 3] = INK
         cut(g, 0, 0)
         cut(g, 0, 8)
     assert len(tiles) == L.L1_FIGURINES
@@ -473,7 +484,7 @@ def write_header(path, tiles):
     for side in ('top', 'bottom'):
         out.append(f'#define PLATE_Y_{side.upper():<12} {L.PLATE_Y[side]}')
     for name in ('VRAM_L0_TILES', 'VRAM_L0_MAP_PLAIN', 'VRAM_L0_MAP_INFO', 'VRAM_L1_TILES',
-                 'VRAM_L1_MAP', 'VRAM_SPRITES', 'VRAM_POINTER', 'VRAM_CURSOR'):
+                 'VRAM_L1_MAP', 'VRAM_DRAG', 'VRAM_SPRITES', 'VRAM_POINTER', 'VRAM_CURSOR'):
         out.append(f'#define {name:<20} 0x{getattr(L, name):05X}UL')
     out.append(f'#define L0_TILE_COUNT        {len(tiles.tiles)}')
     out.append('')
@@ -493,6 +504,7 @@ def write_header(path, tiles):
         slot += b - a + 1
     out.append(f'#define MENU_ARROW_LEFT      {L.MENU_ARROW_LEFT}')
     out.append(f'#define MENU_ARROW_RIGHT     {L.MENU_ARROW_RIGHT}')
+    out.append(f'#define MENU_WARNING         {L.MENU_WARNING}')
     out.append('')
     out.append('#endif')
     path.write_text('\n'.join(out) + '\n')

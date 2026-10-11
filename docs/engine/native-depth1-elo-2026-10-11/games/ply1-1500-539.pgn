@@ -1,0 +1,14 @@
+[Event "X16 difficulty strength test"]
+[Site "Local AgentBridge / Stockfish"]
+[Date "2026.10.11"]
+[Round "540"]
+[White "Stockfish 16 UCI_Elo 1500"]
+[Black "CX16-CHESS ply1 (native C 1 ply)"]
+[Result "1/2-1/2"]
+[Termination "fifty_moves"]
+[X16Clock "untimed fixed-depth native C; host time is not X16 time"]
+[StockfishMoveTime "0.1"]
+[OpeningPair "269"]
+
+1. c4 c5 2. Nf3 Nf6 3. g3 Nc6 4. Bg2 d5 5. d4 dxc4 6. Be3 g6 7. O-O cxd4 8. Bxd4 Nxd4 9. Qxd4 Qxd4 10. Nxd4 e5 11. Nb5 Bc5 12. Nc7+ Kf8 13. Nxa8 Kg8 14. Nc3 e4 15. e3 Be6 16. h3 Bd6 17. Rfd1 Bc5 18. Nxe4 Nxe4 19. Bxe4 Bxh3 20. Rac1 Bg4 21. Rd8+ Kg7 22. Rxh8 Kxh8 23. Rxc4 b6 24. Bb7 Bf5 25. Bh1 Kg8 26. Bf3 Bd6 27. g4 b5 28. Rc6 Bxg4 29. Bxg4 Be5 30. Bf3 Bxb2 31. Be4 Be5 32. f4 Bg7 33. Bd5 b4 34. Rc2 Bf6 35. Rc7 a6 36. Ra7 h6 37. Rxa6 Bg7 38. Ra5 Bf6 39. Ra7 Bg7 40. Bb3 Bf6 41. Ra4 Bc3 42. Ra6 Bg7 43. Kh2 Bc3 44. f5 Be5+ 45. Kg2 Kg7 46. Ra7 gxf5 47. Rxf7+ Kg6 48. Ra7 h5 49. Kg1 h4 50. Bc2 h3 51. Bb3 h2+ 52. Kh1 Kh6 53. Rb7 Bd6 54. Bc2 Kg6 55. Bd3 Kf6 56. Rb5 Kg6 57. Rb7 Kf6 58. Bb5 Be5 59. Bd7 Bd6 60. Rb5 Kg6 61. e4 fxe4 62. Bf5+ Kh6 63. Bxe4 Kg7 64. Rb6 b3 65. a4 Bc5 66. Rg6+ Kh7 67. Rg2+ Kh8 68. Rb2 Bd6 69. Rb1 b2 70. Nb6 Be5 71. Na8 Bd6 72. Bc2 Be5 73. a5 Kg8 74. Be4 Kh8 75. Bc2 Kg8 76. Re1 Bd6 77. Bb1 Kh8 78. Re2 Bc5 79. Rxh2+ Kg8 80. Ba2+ Kg7 81. Bb1 Kg8 82. Nb6 Bd4 83. a6 Bxb6 84. Rxb2 Bc5 85. Rb7 Kf8 86. a7 Bxa7 87. Rxa7 Ke8 88. Ba2 Kd8 89. Kg2 Ke8 90. Be6 Kd8 91. Bd7 Ke7 92. Kg1 Kd6 93. Kg2 Ke7 94. Kh2 Kd6 95. Bh3 Kd5 96. Bd7 Kd6 97. Rb7 Kd5 98. Rb2 Ke5 99. Rb7 Kd5 100. Kh3 Ke5 101. Kg3 Kd5 102. Rb6 Ke5 103. Kg4 Kd5 104. Kh3 Ke5 105. Rb4 Kd5 106. Kg4 Ke5 107. Ba4 Kd5 108. Rf4 Ke5 109. Bd1 Kd5 110. Rf8 Ke5 111. Bf3 Kd4 112. Ba8 Ke5 113. Rf3 Kd4 114. Kg3 Ke5 115. Bb7 Kd4 116. Bc8 Kd5 117. Kg2 Ke5 118. Rf2 Kd5 119. Rf7 Ke5 120. Kf3 Kd5 121. Kf2 Ke5 122. Rg7 Kd5 123. Re7 Kd4 124. Bb7 Kc5 125. Re6 Kd4 126. Re2 Kc5 127. Ba8 Kd4 128. Rc2 Ke5 129. Kf3 Kd4 130. Kg3 Ke5 131. Rc1 Kd4 132. Kf4 Kd3 133. Rc7 Kd4 134. Rf7 Kc5 135. Ke5 Kc4 136. Rf3 Kc5 1/2-1/2
+

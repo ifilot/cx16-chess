@@ -1,0 +1,14 @@
+[Event "X16 difficulty strength test"]
+[Site "Local AgentBridge / Stockfish"]
+[Date "2026.10.11"]
+[Round "186"]
+[White "Stockfish 16 UCI_Elo 1320"]
+[Black "CX16-CHESS ply4 (native C 4 ply)"]
+[Result "0-1"]
+[Termination "checkmate"]
+[X16Clock "untimed fixed-depth native C; host time is not X16 time"]
+[StockfishMoveTime "0.1"]
+[OpeningPair "92"]
+
+1. e4 e6 2. d4 d5 3. e5 Bd7 4. c3 c5 5. a3 Qa5 6. Nd2 Nc6 7. Be2 cxd4 8. b4 Qb6 9. Bb2 d3 10. Bxd3 Nxe5 11. Bc2 Nf6 12. Qe2 Nfg4 13. c4 Bd6 14. h3 Nd3+ 15. Bxd3 Nf6 16. Rb1 Qc6 17. Ngf3 Bxb4 18. axb4 O-O 19. Bxf6 gxf6 20. Nh4 f5 21. c5 a5 22. Qe3 axb4 23. O-O Ra7 24. Rxb4 Rd8 25. Nxf5 Kf8 26. Nd6 Rb8 27. Qh6+ Ke7 28. Qh4+ f6 29. Qxh7+ Kd8 30. Rfb1 e5 31. Rb6 Qxc5 32. Nf1 Qxb6 33. Rxb6 Kc7 34. Rb1 Kxd6 35. Qf7 d4 36. Rb3 f5 37. Qf6+ Kd5 38. Qb6 Rba8 39. Ne3+ dxe3 40. Be4+ fxe4 41. Qxe3 Ra1+ 42. Kh2 Bc6 43. Rb2 Rh8 44. Rd2+ Ke6 45. Qc3 Raa8 46. Qg3 Rhg8 47. Qe3 Rad8 48. Qb3+ Kf6 49. Qe3 Rxd2 50. Qh6+ Rg6 51. Qxd2 Rxg2+ 52. Kh1 e3 53. Qxe3 Rg3+ 54. f3 Rxh3+ 55. Kg2 Rxf3 56. Qc1 Rc3+ 57. Kh2 Rxc1 58. Kg3 Rc2 59. Kh3 Kf5 60. Kg3 b5 61. Kh4 Rc3 62. Kh5 Rh3# 0-1
+

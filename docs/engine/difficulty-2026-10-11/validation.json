@@ -1,0 +1,19 @@
+{
+  "games": 1200,
+  "legal_pgns": 1200,
+  "levels": {
+    "easy": 400,
+    "normal": 400,
+    "hard": 400
+  },
+  "terminations": {
+    "checkmate": 1060,
+    "threefold_repetition": 126,
+    "insufficient_material": 1,
+    "fifty_moves": 10,
+    "time forfeit": 2,
+    "stalemate": 1
+  },
+  "unique_opening_groups": 100,
+  "configuration_and_summary_match": true
+}

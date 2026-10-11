@@ -50,10 +50,31 @@ uint8_t killer_to[2][MAX_PLY];
 
 
 // root move list (survives the move stack being reused by the search)
+#if defined(__CC65__) && defined(NO_TEST_HOOKS)
+#pragma bss-name (push, "GOLDENBSS")
+#endif
 static uint8_t root_from[MAX_MOVES];
 static uint8_t root_to[MAX_MOVES];
+#if defined(__CC65__) && defined(NO_TEST_HOOKS)
+#pragma bss-name (pop)
+#endif
 static uint8_t root_flags[MAX_MOVES];
 static uint8_t root_count;
+static uint16_t weakness, random_state = 1;
+
+void engine_set_weakness(uint16_t noise, uint16_t seed) {
+    weakness = noise > 2000 ? 2000 : noise;
+    if(seed) random_state = seed;
+}
+
+static uint16_t move_noise(void) {
+    /* 16-bit xorshift; explicit truncation gives identical arithmetic on
+     * cc65 and x64. No use of the platform's rand() or clock in tests. */
+    random_state ^= (uint16_t)(random_state << 7);
+    random_state ^= random_state >> 9;
+    random_state ^= (uint16_t)(random_state << 8);
+    return random_state % (weakness + 1);
+}
 
 /*****************************************************************************
  * TIME
@@ -527,7 +548,7 @@ static void collect_pv(engine_result_t* result) {
 void engine_search(uint8_t max_depth, uint16_t time_lim, uint32_t node_lim,
                    engine_result_t* result) {
     uint8_t depth, i, j, best_index, root_recorded;
-    int16_t alpha, beta, score, best_score;
+    int16_t alpha, beta, score, best_score, noisy_best, noisy_score;
     uint16_t first, last;
     ENTER_ENGINE;
 
@@ -585,10 +606,13 @@ void engine_search(uint8_t max_depth, uint16_t time_lim, uint32_t node_lim,
         alpha = -ENGINE_MATE - 1;
         beta = ENGINE_MATE + 1;
         best_score = -ENGINE_MATE - 1;
+        noisy_best = -ENGINE_MATE - 1;
         best_index = 0;
         for(i=0; i<root_count; i++) {
             MAKE(root_from[i], root_to[i], root_flags[i]);
-            if(i == 0) {
+            if(weakness) {
+                score = -SEARCH(depth - 1, -ENGINE_MATE - 1, ENGINE_MATE + 1, 1);
+            } else if(i == 0) {
                 score = -SEARCH(depth - 1, -beta, -alpha, 1);
             } else {
                 score = -SEARCH(depth - 1, -alpha - 1, -alpha, 1);
@@ -596,16 +620,30 @@ void engine_search(uint8_t max_depth, uint16_t time_lim, uint32_t node_lim,
             }
             unmake_move();
             if(aborted) break;
+            if(weakness) {
+                /* Full-window scores above avoid ranking PVS bounds as if
+                 * they were exact. Noise changes selection, never legality. */
+                noisy_score = score + move_noise();
+                if(noisy_score > noisy_best) {
+                    noisy_best = noisy_score;
+                    result->from = root_from[i];
+                    result->to = root_to[i];
+                    result->promo = root_flags[i] & F_PROMO_MASK;
+                    result->score = score;
+                }
+            }
             if(score > best_score) {
                 best_score = score;
                 best_index = i;
                 if(score > alpha) alpha = score;
                 // a fully searched improvement is safe to play even if the
                 // iteration does not finish
-                result->from = root_from[i];
-                result->to = root_to[i];
-                result->promo = root_flags[i] & F_PROMO_MASK;
-                result->score = score;
+                if(!weakness) {
+                    result->from = root_from[i];
+                    result->to = root_to[i];
+                    result->promo = root_flags[i] & F_PROMO_MASK;
+                    result->score = score;
+                }
             }
         }
         if(aborted && best_index == 0) break;
@@ -624,7 +662,7 @@ void engine_search(uint8_t max_depth, uint16_t time_lim, uint32_t node_lim,
         }
         if(aborted) break;
         result->depth = depth;
-        result->score = best_score;
+        if(!weakness) result->score = best_score;
         tt_store(depth, best_score, TT_EXACT, root_from[0], root_to[0], root_flags[0]);
         // a forced mate has been found: deeper search cannot improve it
         if(best_score > ENGINE_MATE - 512 || best_score < -ENGINE_MATE + 512) {
@@ -635,6 +673,11 @@ void engine_search(uint8_t max_depth, uint16_t time_lim, uint32_t node_lim,
     result->nodes = nodes;
     result->time = now() - time_start;
     collect_pv(result);
+    if(weakness) {
+        memset(result->pv, 0, sizeof(result->pv));
+        result->pv[0] = result->from;
+        result->pv[1] = result->to;
+    }
     if(root_recorded) history_restore_root();
     LEAVE_ENGINE;
 }

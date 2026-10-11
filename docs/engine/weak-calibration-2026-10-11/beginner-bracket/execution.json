@@ -1,0 +1,6 @@
+{
+  "workers": 8,
+  "opponent_move_time_seconds": 0.1,
+  "backend": "native",
+  "note": "Confirmation and beginner-bracket game phases overlap; opponent time is a host wall-clock limit."
+}

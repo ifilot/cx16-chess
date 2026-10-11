@@ -1,0 +1,22 @@
+{
+  "games": 2400,
+  "legal_pgns": 2400,
+  "searches": 105323,
+  "early_stops_verified": {
+    "mate": 7257,
+    "forced move": 523
+  },
+  "levels": {
+    "ply7": 1200,
+    "ply8": 1200
+  },
+  "terminations": {
+    "checkmate": 2181,
+    "threefold_repetition": 171,
+    "insufficient_material": 10,
+    "fifty_moves": 36,
+    "stalemate": 2
+  },
+  "unique_opening_groups": 300,
+  "configuration_and_summary_match": true
+}

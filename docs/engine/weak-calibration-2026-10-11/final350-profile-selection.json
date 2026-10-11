@@ -1,0 +1,8 @@
+{
+  "frozen_at_utc": "2026-10-11T15:18:11.335343+00:00",
+  "depth": 1,
+  "noise": 350,
+  "assessment_openings_seed": 19,
+  "random_seed": 31415,
+  "reason": "Noise 300 above target; noise 400 below target in fresh trial. Check midpoint 350 on disjoint openings."
+}

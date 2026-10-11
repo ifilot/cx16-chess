@@ -1,0 +1,14 @@
+[Event "X16 difficulty strength test"]
+[Site "Local AgentBridge / Stockfish"]
+[Date "2026.10.11"]
+[Round "502"]
+[White "Stockfish 16 UCI_Elo 1500"]
+[Black "CX16-CHESS ply3 (native C 3 ply)"]
+[Result "1/2-1/2"]
+[Termination "fifty_moves"]
+[X16Clock "untimed fixed-depth native C; host time is not X16 time"]
+[StockfishMoveTime "0.1"]
+[OpeningPair "250"]
+
+1. d4 Nf6 2. c4 e6 3. g3 h6 4. Nf3 Be7 5. Bg2 Nc6 6. a3 d6 7. b4 e5 8. O-O e4 9. Nfd2 Bf5 10. e3 a5 11. b5 Nb4 12. axb4 axb4 13. Ra4 d5 14. c5 Bg4 15. Qb3 Rxa4 16. Qxa4 O-O 17. f3 exf3 18. Nxf3 b6 19. Qxb4 bxc5 20. Qa4 cxd4 21. Nxd4 Qa8 22. Qc2 Qa5 23. Nc6 Qxb5 24. Nxe7+ Kh8 25. Nc3 Qc5 26. Nexd5 Nxd5 27. Kh1 Nxc3 28. Rf4 Be6 29. Bb2 Na4 30. Qxa4 Qxe3 31. Qa1 f6 32. Re4 Qb3 33. Kg1 Bd5 34. Ba3 Rg8 35. Re2 Bxg2 36. Kxg2 f5 37. Bc5 Qd5+ 38. Kf2 Qxc5+ 39. Kg2 Qc6+ 40. Kg1 Rd8 41. Qb1 Qc5+ 42. Rf2 Rd5 43. Qb8+ Kh7 44. Kg2 Re5 45. Qb3 Qc6+ 46. Qf3 Qb6 47. Qa8 Qe3 48. Qc6 Qe4+ 49. Qxe4 fxe4 50. h4 Re7 51. h5 e3 52. Re2 g6 53. g4 gxh5 54. gxh5 c5 55. Kf3 Re5 56. Ra2 Re7 57. Rc2 c4 58. Ke2 Re4 59. Rc3 Re5 60. Rc2 Rxh5 61. Rxc4 Re5 62. Rc8 Re4 63. Rc3 Kg6 64. Rb3 Kf5 65. Ke1 Re8 66. Ke2 Kf4 67. Rb6 h5 68. Rb1 Re6 69. Rc1 Ke4 70. Rf1 Ra6 71. Rf7 Ra2+ 72. Kd1 e2+ 73. Ke1 Kd3 74. Kf2 h4 75. Rd7+ Kc4 76. Rh7 Rb2 77. Rxh4+ Kd5 78. Rg4 Ke5 79. Ke1 Kf5 80. Rc4 Ra2 81. Rc5+ Ke4 82. Rc6 Kd5 83. Rc3 Kd4 84. Rg3 Rb2 85. Ra3 Rc2 86. Rb3 Kc4 87. Rb7 Kd5 88. Ra7 Ke4 89. Rd7 Ke3 90. Re7+ Kf3 91. Rf7+ Kg3 92. Rg7+ Kf4 93. Rg8 Kf3 94. Rf8+ Kg3 95. Rd8 Ra2 96. Rc8 Kf3 97. Rc1 Ke3 98. Rc3+ Kf4 99. Rc1 Kf3 100. Rc3+ Ke4 101. Re3+ Kf4 102. Re6 Rc2 103. Rxe2 Rc1+ 104. Kd2 Rc8 105. Rh2 Rd8+ 106. Kc2 Ke3 107. Rh3+ Ke4 108. Kc1 Rd5 109. Rh6 Rd8 110. Rc6 Kd5 111. Rc3 Ke5 112. Rf3 Rc8+ 113. Kb2 Rc1 114. Rd3 Rc5 115. Rd8 Ke4 116. Rh8 Kd4 117. Rh4+ Kd3 118. Rh2 Rb5+ 119. Ka2 Kc3 120. Rh4 Ra5+ 121. Kb1 Rf5 122. Rh7 Rf1+ 123. Ka2 Rf2+ 124. Ka1 Kd3 125. Rd7+ Ke3 126. Kb1 Ke4 127. Re7+ Kd4 128. Rb7 Kd5 129. Ka1 Rg2 130. Rh7 Kc5 131. Rh3 Kd6 132. Rh1 Rh2 133. Rxh2 Kd5 134. Rg2 Ke4 135. Rg1 Kd4 136. Rg3 Ke4 137. Rc3 Kd4 138. Rf3 Ke4 139. Ra3 Kd4 140. Kb2 Kc4 141. Rb3 Kd4 142. Kb1 Ke4 143. Rb2 Kd4 144. Rb6 Kc5 145. Rh6 Kd5 146. Rh7 Kd4 147. Kb2 Ke4 148. Rb7 Kd4 149. Ra7 Kc5 150. Rf7 Kd4 151. Ra7 Kc5 152. Kb1 Kb6 153. Rf7 Kc5 154. Rh7 Kd4 155. Rh6 Kd5 156. Rh4 Ke6 157. Rh1 Kd5 158. Rh3 Kd6 159. Kc1 Kc5 160. Rh7 Kd5 161. Rh2 Kd6 162. Kd1 Ke6 163. Rh4 Kd6 164. Kc1 Kd5 165. Kb1 Ke6 166. Ra4 Kf5 167. Ra7 Ke4 168. Rb7 Kd3 169. Rb6 Kc3 170. Rg6 Kd3 171. Rc6 Ke4 172. Rg6 Kd3 173. Kc1 Ke3 174. Rh6 Kd3 175. Re6 Kc3 176. Rg6 Kd3 177. Kb1 Ke3 178. Rd6 Ke4 179. Rb6 Kd3 180. Rb4 Kd2 181. Ka1 Kc3 182. Rf4 Kd3 1/2-1/2
+

@@ -1,0 +1,56 @@
+{
+  "recorded_at": "2026-10-11T19:29:34.799161+02:00",
+  "provisional": true,
+  "completed": 2400,
+  "planned": 2400,
+  "current": {
+    "ply7": {
+      "games": 1200,
+      "points": 906.0,
+      "wins": 843,
+      "draws": 126,
+      "losses": 231,
+      "score_percent": 75.5,
+      "provisional_elo": 1617
+    },
+    "ply8": {
+      "games": 1200,
+      "points": 1021.5,
+      "wins": 975,
+      "draws": 93,
+      "losses": 132,
+      "score_percent": 85.1,
+      "provisional_elo": 1729
+    }
+  },
+  "matched_complete_openings": 300,
+  "matched_openings": {
+    "ply6": {
+      "games": 1200,
+      "points": 687.0,
+      "wins": 612,
+      "draws": 150,
+      "losses": 438,
+      "score_percent": 57.2,
+      "provisional_elo": 1464
+    },
+    "ply7": {
+      "games": 1200,
+      "points": 906.0,
+      "wins": 843,
+      "draws": 126,
+      "losses": 231,
+      "score_percent": 75.5,
+      "provisional_elo": 1617
+    },
+    "ply8": {
+      "games": 1200,
+      "points": 1021.5,
+      "wins": 975,
+      "draws": 93,
+      "losses": 132,
+      "score_percent": 85.1,
+      "provisional_elo": 1729
+    }
+  }
+}

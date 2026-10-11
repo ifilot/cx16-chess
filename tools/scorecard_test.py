@@ -102,19 +102,20 @@ def main():
                 expected_bar[:, 56] = rgb(1)
             np.testing.assert_array_equal(pixels[58:62, 504:616], expected_bar)
         print('PASS: evaluation bar direction, proportional width, mate saturation and unavailable evaluation')
-        # A genuine normal-difficulty CPU search: status animates and its
-        # percentage increases against the actual 600-jiffy search budget.
+        # A genuine 6-ply CPU search: status animates and reports the target
+        # depth rather than inventing a percentage for a search without a cap.
         session.emu.write_memory(symbols['_ply'], b'\0\0')
         session.press('m')
         session.emu.advance(300)
         session.press('c')
         session.emu.advance(300)
-        session.emu.write_memory(symbols['_match_difficulty'], b'\1')
+        session.emu.write_memory(symbols['_match_difficulty'], b'\4')
         session.emu.write_memory(symbols['_match_computer'], b'\1')
         session.emu.advance(45)
-        assert int.from_bytes(session.emu.read_memory(symbols['_match_think_budget'], 2), 'little') == 600
+        assert int.from_bytes(session.emu.read_memory(symbols['_match_think_budget'], 2), 'little') == 0
+        assert session.emu.read_memory(symbols['_match_think_depth'], 1)[0] == 6
         glyphs = {index * 2: chr(code) for index, code in enumerate(font_codes())}
-        snapshots, percentages = [], []
+        snapshots = []
         clear = symbols['_video_clear_block']
         session.emu.request('breakpoint', address=clear, bank=0)
         try:
@@ -128,19 +129,17 @@ def main():
                 cells = session.emu.read_memory(0x18000 + (55 * 128 + 69) * 2, 16, space='vram')
                 tiles = np.frombuffer(cells, dtype='<u2') & 1023
                 label = ''.join(glyphs[int(tile)] for tile in tiles)
-                assert label.startswith('TIME ') and label.endswith('%'), label
-                percentages.append(int(label[5:7]))
+                assert label == 'PLY 6   ', label
                 assert set(Image.open(path).getdata()) <= {rgb(i, colors) for i in range(len(colors))}
         finally:
             session.emu.request('breakpoint', action='remove', address=clear, bank=0)
-        assert percentages[0] < percentages[-1] < 100, percentages
         assert any(not np.array_equal(snapshots[0], frame) for frame in snapshots[1:]), 'Figurines did not animate'
-        session.emu.advance(650)
+        session.emu.advance(6000)
         assert int.from_bytes(session.emu.read_memory(symbols['_ply'], 2), 'little') == 1
         session.shot(ROOT / 'build/scorecard-after-thinking.png')
         pixels = np.asarray(Image.open(ROOT / 'build/scorecard-after-thinking.png').convert('RGB'))
         assert np.all(pixels[440:456, 488:632] == rgb(2)), 'Thinking indicator did not clear'
-        print(f'PASS: real CPU search, animated figurines, increasing budget percentages {percentages}, indicator clears after move')
+        print('PASS: real 6-ply CPU search, animated figurines, target depth label, indicator clears after move')
     finally:
         session.close()
 

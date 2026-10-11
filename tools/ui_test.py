@@ -141,7 +141,7 @@ def main():
         session.emu.advance(300)
         shot('setup')
         session.click(356, 168)  # left triangle: white -> two players
-        # Disabled difficulty triangles must not alter the stored normal level.
+        # Disabled difficulty triangles must not alter the stored 4-ply level.
         session.click(604, 240)
         keys('Down', 'Return')
         session.emu.advance(300)
@@ -196,12 +196,12 @@ def main():
         # Choose black and easy: the CPU must play the first white move.
         keys('n')
         session.emu.advance(300)
-        keys('Left', 'Left', 'Down', 'Left', 'Down', 'Return')
+        keys('Left', 'Left', 'Down', 'Left', 'Left', 'Down', 'Return')
         session.emu.advance(480)
         assert read('match_computer') == b'\x01'
         assert read('match_difficulty') == b'\x00'
         assert number('ply') >= 1
-        assert int.from_bytes(read('match_clock', 4)[:2], 'little') >= 1797, 'Easy must limit CPU thinking to about two seconds'
+        assert int.from_bytes(read('match_clock', 4)[:2], 'little') >= 1797, '2-ply CPU search should finish promptly'
         shot('black-easy')
         # Configure hard and white using mouse input; setup changes only
         # the next match, so cancelling must preserve the live difficulty.

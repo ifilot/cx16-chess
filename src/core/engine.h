@@ -59,6 +59,10 @@ void engine_init(void);
  */
 void engine_new_game(void);
 
+/* Root move score noise, 0 disables weakening; maximum 2000 centipawns.
+ * Nonzero seeds start a reproducible stream; zero preserves its state. */
+void engine_set_weakness(uint16_t noise, uint16_t seed);
+
 /**
  * @brief Forget the recorded game positions (before replaying a game)
  */

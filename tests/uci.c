@@ -12,6 +12,7 @@
 #include "../src/core/engine.h"
 
 static unsigned long nps = 0;       /* 0: ignore time, use depth/nodes only */
+static uint16_t noise, seed = 1;
 
 static void sync_engine(void) {
     engine_set_position(board, side, castling, ep_square, halfmove_clock);
@@ -105,13 +106,21 @@ int main(void) {
     while(fgets(line, sizeof(line), stdin)) {
         if(strncmp(line, "uci", 3) == 0 && (line[3] == '\n' || line[3] == '\r')) {
             printf("id name CX16-CHESS\nid author Ivo Filot\n"
-                   "option name NPS type spin default 0 min 0 max 100000000\nuciok\n");
+                   "option name NPS type spin default 0 min 0 max 100000000\n"
+                   "option name Noise type spin default 0 min 0 max 2000\n"
+                   "option name Seed type spin default 1 min 1 max 65535\nuciok\n");
         } else if(strncmp(line, "isready", 7) == 0) {
             printf("readyok\n");
         } else if(strncmp(line, "ucinewgame", 10) == 0) {
             engine_new_game();
         } else if(strncmp(line, "setoption name NPS value", 24) == 0) {
             nps = atol(line + 25);
+        } else if(strncmp(line, "setoption name Noise value ", 26) == 0) {
+            noise = atoi(line + 26);
+            engine_set_weakness(noise, seed);
+        } else if(strncmp(line, "setoption name Seed value ", 25) == 0) {
+            seed = atoi(line + 25);
+            engine_set_weakness(noise, seed);
         } else if(strncmp(line, "position", 8) == 0) {
             engine_clear_history();
             position(line + 9);

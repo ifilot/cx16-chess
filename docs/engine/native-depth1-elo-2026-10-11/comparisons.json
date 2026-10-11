@@ -1,0 +1,184 @@
+{
+  "source_runs": [
+    "docs/engine/native-depth1-elo-2026-10-11",
+    "docs/engine/native-depth-elo-2026-10-11",
+    "docs/engine/native-depth4-elo-2026-10-11"
+  ],
+  "games": 4800,
+  "levels": {
+    "ply1": 1,
+    "ply2": 2,
+    "ply3": 3,
+    "ply4": 4
+  },
+  "summaries": {
+    "ply1": {
+      "games": 1200,
+      "points": 272.5,
+      "wins": 154,
+      "draws": 237,
+      "losses": 809,
+      "score": 0.22708333333333333,
+      "estimated_elo": 1184,
+      "confidence_95": [
+        1163,
+        1205
+      ],
+      "confidence_score_95": [
+        0.20708333333333334,
+        0.2475
+      ],
+      "mean_depth": 1.0,
+      "mean_nodes": 48.332000836683946,
+      "mean_search_seconds": 0.0005492756294783298,
+      "per_opponent": {
+        "1320": {
+          "games": 600,
+          "points": 156.5
+        },
+        "1500": {
+          "games": 600,
+          "points": 116.0
+        }
+      },
+      "target_depth": 1
+    },
+    "ply2": {
+      "games": 1200,
+      "points": 511.0,
+      "wins": 415,
+      "draws": 192,
+      "losses": 593,
+      "score": 0.42583333333333334,
+      "estimated_elo": 1355,
+      "confidence_95": [
+        1335,
+        1374
+      ],
+      "confidence_score_95": [
+        0.40041666666666664,
+        0.45166666666666666
+      ],
+      "mean_depth": 2.0,
+      "mean_nodes": 191.8891928329979,
+      "mean_search_seconds": 0.0005996703993111365,
+      "per_opponent": {
+        "1320": {
+          "games": 600,
+          "points": 303.0
+        },
+        "1500": {
+          "games": 600,
+          "points": 208.0
+        }
+      },
+      "target_depth": 2
+    },
+    "ply3": {
+      "games": 1200,
+      "points": 592.0,
+      "wins": 512,
+      "draws": 160,
+      "losses": 528,
+      "score": 0.49333333333333335,
+      "estimated_elo": 1405,
+      "confidence_95": [
+        1386,
+        1424
+      ],
+      "confidence_score_95": [
+        0.4675,
+        0.5191666666666667
+      ],
+      "mean_depth": 2.9722243743704966,
+      "mean_nodes": 598.2698148291624,
+      "mean_search_seconds": 0.0010557033477798568,
+      "per_opponent": {
+        "1320": {
+          "games": 600,
+          "points": 348.5
+        },
+        "1500": {
+          "games": 600,
+          "points": 243.5
+        }
+      },
+      "target_depth": 3
+    },
+    "ply4": {
+      "games": 1200,
+      "points": 636.0,
+      "wins": 564,
+      "draws": 144,
+      "losses": 492,
+      "score": 0.53,
+      "estimated_elo": 1432,
+      "confidence_95": [
+        1413,
+        1452
+      ],
+      "confidence_score_95": [
+        0.50375,
+        0.5566666666666666
+      ],
+      "mean_depth": 3.9265157811322213,
+      "mean_nodes": 1906.7277488934847,
+      "mean_search_seconds": 0.002453146629374174,
+      "per_opponent": {
+        "1320": {
+          "games": 600,
+          "points": 370.5
+        },
+        "1500": {
+          "games": 600,
+          "points": 265.5
+        }
+      },
+      "target_depth": 4
+    }
+  },
+  "paired_comparisons": {
+    "ply4_minus_ply1": {
+      "estimated_difference": 248,
+      "confidence_95": [
+        219,
+        278
+      ]
+    },
+    "ply4_minus_ply2": {
+      "estimated_difference": 77,
+      "confidence_95": [
+        50,
+        106
+      ]
+    },
+    "ply4_minus_ply3": {
+      "estimated_difference": 27,
+      "confidence_95": [
+        1,
+        54
+      ]
+    },
+    "ply3_minus_ply1": {
+      "estimated_difference": 221,
+      "confidence_95": [
+        193,
+        248
+      ]
+    },
+    "ply3_minus_ply2": {
+      "estimated_difference": 50,
+      "confidence_95": [
+        24,
+        77
+      ]
+    },
+    "ply2_minus_ply1": {
+      "estimated_difference": 171,
+      "confidence_95": [
+        141,
+        199
+      ]
+    }
+  }
+}

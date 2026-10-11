@@ -1,0 +1,14 @@
+[Event "X16 difficulty strength test"]
+[Site "Local AgentBridge / Stockfish"]
+[Date "2026.10.11"]
+[Round "360"]
+[White "Stockfish 16 UCI_Elo 1500"]
+[Black "CX16-CHESS ply8 (native C 8 ply)"]
+[Result "1/2-1/2"]
+[Termination "fifty_moves"]
+[X16Clock "untimed fixed-depth native C; host time is not X16 time"]
+[StockfishMoveTime "0.1"]
+[OpeningPair "179"]
+
+1. e4 e5 2. Nf3 Nc6 3. d4 exd4 4. Bb5 a6 5. Bxc6 dxc6 6. Qxd4 Qxd4 7. Nxd4 Nf6 8. Nc3 Bb4 9. O-O Bxc3 10. bxc3 c5 11. Nb3 c4 12. Nc5 b6 13. Na4 Nxe4 14. Re1 f5 15. f3 Bb7 16. fxe4 fxe4 17. Nb2 b5 18. Nd1 O-O 19. Be3 Rfe8 20. Bd4 Rac8 21. a4 c6 22. axb5 cxb5 23. Ne3 Rf8 24. h3 Kh8 25. h4 Rf4 26. Reb1 Rf7 27. Re1 Rf4 28. Red1 Rf7 29. Be5 Re8 30. Bg3 h6 31. Rd6 Kg8 32. h5 Kh7 33. Rf1 Rxf1+ 34. Kxf1 Bc8 35. Rb6 Kh8 36. Ke1 Rf8 37. Be5 Kg8 38. Bd4 Rd8 39. Be5 Rf8 40. Bd4 Rd8 41. Rg6 Rd7 42. Nf5 Rxd4 43. Nxh6+ Kf8 44. cxd4 gxh6 45. Rxh6 Kg7 46. Rb6 Kf7 47. d5 Bf5 48. Rb7+ Kf6 49. Rb6+ Kf7 50. h6 e3 51. Ke2 Bxc2 52. Kxe3 Bf5 53. h7 Bxh7 54. Kd4 Bg6 55. g4 Bd3 56. g5 b4 57. Rxa6 b3 58. Kc3 Ke8 59. g6 Kf8 60. Rb6 Kg7 61. d6 Bf5 62. Rb7+ Kxg6 63. Re7 Kf6 64. Re3 Be6 65. Kb2 Kf5 66. Re1 Kf6 67. Re3 Kf5 68. Re2 Bd7 69. Re7 Bb5 70. d7 Bxd7 71. Rxd7 Ke5 72. Rd1 Ke4 73. Rd8 Ke5 74. Kc3 Ke6 75. Rb8 Kd5 76. Rb4 Kc5 77. Rb7 Kc6 78. Rb4 Kc5 79. Rb7 Kc6 80. Rb8 Kd5 81. Rd8+ Ke6 82. Rd1 Ke5 83. Kxc4 b2 84. Re1+ Kf4 85. Kb4 Kf3 86. Kb5 Kf2 87. Rb1 Ke3 88. Kc4 Ke4 89. Rh1 Ke3 90. Rd1 Kf4 91. Kb3 Ke3 92. Kc3 Ke4 93. Kc2 Ke5 94. Kxb2 Ke4 95. Kb3 Kf3 96. Rg1 Kf2 97. Rc1 Ke3 98. Rc8 Kd4 99. Rg8 Ke5 100. Rg2 Kd5 101. Rg4 Kc5 102. Rg6 Kd4 103. Rg8 Ke5 104. Ra8 Kf6 105. Ra3 Ke5 106. Kc3 Kd5 107. Kd2 Kd4 108. Ra4+ Ke5 109. Rh4 Kd5 110. Kc1 Kd6 111. Kd2 Kd5 112. Ke3 Ke5 113. Rh5+ Kf6 114. Rh4 Ke5 115. Rh2 Kd5 116. Rd2+ Ke5 117. Rc2 Kd5 118. Kd3 Ke5 119. Kc4 Ke4 120. Rf2 Ke3 121. Ra2 Ke4 122. Kb3 Ke3 123. Kc3 Ke4 124. Rg2 Kf3 125. Rg8 Ke4 126. Kc4 Ke5 127. Rh8 Ke6 128. Kd3 Ke5 129. Ra8 Kd5 130. Ke2 Kc5 131. Re8 Kd4 132. Kd1 Kd3 133. Ra8 Ke3 134. Rd8 Ke4 135. Ke2 Ke5 136. Kd2 Ke6 137. Kd3 Ke5 138. Kc3 Ke4 139. Kb2 Ke5 140. Rf8 Kd6 141. Kc2 Ke7 142. Rb8 Ke6 143. Kc1 Kd5 1/2-1/2
+

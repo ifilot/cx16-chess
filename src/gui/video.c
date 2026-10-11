@@ -35,6 +35,7 @@
 #define SQUARE_TABLE    ((const uint16_t*)0xA000)   // SQTILES.DAT in GUI_BANK
 
 static uint8_t game_tables_loaded;
+void playfield_drag_init(void);         // called with RAM bank 23 selected
 
 /**
  * @brief Point data port 0 at an entry of a 128-column map
@@ -75,6 +76,12 @@ uint8_t video_init(void) {
     sprite_setup(SPRITE_POINTER, VRAM_POINTER, 0, 0x50);   // hide KERNAL pointer
 
     /* Load banked loader/menu code before reading the graphics container. */
+    RAM_BANK = 23;
+    cbm_k_setnam("DRAG.BIN");
+    cbm_k_setlfs(0, 8, 2);
+    ok = cbm_k_load(0, 0xA000) != 0;
+    if(!ok) { RAM_BANK = saved; return 0; }
+    playfield_drag_init();
     RAM_BANK = 22;
     cbm_k_setnam("UI.BIN");
     cbm_k_setlfs(0, 8, 2);

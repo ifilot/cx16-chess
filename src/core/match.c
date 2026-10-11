@@ -32,12 +32,14 @@
 uint8_t match_state;
 uint8_t match_result;
 uint8_t match_computer;
-uint8_t match_difficulty = 1;
-uint8_t match_black_difficulty = 1;
+uint8_t match_difficulty = DEFAULT_DIFFICULTY;
+uint8_t match_black_difficulty = DEFAULT_DIFFICULTY;
+uint8_t match_think_depth;
 uint16_t match_clock[2];
 uint16_t match_think_start, match_think_budget;
 uint8_t match_last_from;
 uint8_t match_last_to;
+uint8_t match_last_flags;
 uint8_t match_eval_valid;
 int16_t match_eval;
 char match_best[8];
@@ -163,6 +165,7 @@ void match_init(void) {
 void match_new(uint16_t seconds, uint8_t computer) {
     rules_new_game();
     engine_new_game();
+    engine_set_weakness(0, (uint16_t)clock() | 1);
     engine_sync();
     rules_generate_legal();
     match_state = MATCH_PLAYING;
@@ -170,6 +173,7 @@ void match_new(uint16_t seconds, uint8_t computer) {
     match_computer = computer;
     match_clock[0] = match_clock[1] = seconds;
     match_last_from = match_last_to = NO_SQUARE;
+    match_last_flags = 0;
     match_eval_valid = 0;
     match_best[0] = 0;
     jiffy_count = 0;
@@ -189,6 +193,7 @@ void match_play(const move_t* m) {
     match_best[0] = 0;
     match_last_from = mv.from;
     match_last_to = mv.to;
+    match_last_flags = mv.flags;
     engine_sync();
     check_end();
 }
@@ -233,18 +238,10 @@ uint8_t match_computer_to_move(void) {
 }
 
 /**
- * @brief Thinking time for the engine: a 30th of the remaining time,
- *        capped at 2/10/20 seconds for easy/normal/hard (in jiffies).
- *        Remaining clock time can shorten the normal and hard budgets.
+ * @brief Requested search depth, independently selectable for each CPU.
  */
-static uint16_t think_time(void) {
-    uint16_t secs = match_clock[side >> 3] / 30;
-    uint8_t difficulty = match_computer == COMPUTER_BOTH && side == BLACK ? match_black_difficulty : match_difficulty;
-    uint8_t limit = difficulty == 0 ? 2 : difficulty == 1 ? 10 : 20;
-
-    if(secs < 2) secs = 2;
-    if(secs > limit) secs = limit;
-    return secs * 60;
+static uint8_t cpu_difficulty(void) {
+    return match_computer == COMPUTER_BOTH && side == BLACK ? match_black_difficulty : match_difficulty;
 }
 
 static engine_result_t result;
@@ -252,11 +249,12 @@ static engine_result_t result;
 /**
  * @brief Search the current position; keeps the evaluation (white's view)
  */
-static void think(void (*poll)(void), uint16_t jiffies) {
+static void think(void (*poll)(void), uint8_t depth, uint16_t jiffies) {
     match_think_start = (uint16_t)clock();
     match_think_budget = jiffies;
+    match_think_depth = depth;
     engine_poll = poll;
-    engine_search(0, jiffies, 0, &result);
+    engine_search(depth, jiffies, 0, &result);
     engine_poll = 0;
     match_eval = (side == WHITE) ? result.score : -result.score;
     match_eval_valid = 1;
@@ -267,7 +265,8 @@ void match_analyse(void (*poll)(void)) {
     move_t mv;
 
     if(match_state != MATCH_PLAYING) return;
-    think(poll, ANALYSIS_TIME);
+    engine_set_weakness(0, 0);
+    think(poll, 0, ANALYSIS_TIME);
     m = match_find_move(result.from, result.to, result.promo ? result.promo : EMPTY);
     if(m) {
         mv = *m;
@@ -278,8 +277,12 @@ void match_analyse(void (*poll)(void)) {
 
 void match_computer_move(void (*poll)(void)) {
     const move_t* m;
+    uint8_t difficulty = cpu_difficulty();
 
-    think(poll, think_time());
+    engine_set_weakness(difficulty == DIFFICULTY_BEGINNER ? BEGINNER_NOISE :
+                       difficulty == DIFFICULTY_EASY ? EASY_NOISE : 0, 0);
+    think(poll, difficulty >= DIFFICULTY_SEVEN_PLY ? difficulty - 1 :
+          difficulty < DIFFICULTY_ONE_PLY ? difficulty + 2 : 1, 0);
     m = match_find_move(result.from, result.to, result.promo ? result.promo : EMPTY);
     if(!m && legal_count) m = &legal_moves[0];  // never stall the game
     if(m) match_play(m);

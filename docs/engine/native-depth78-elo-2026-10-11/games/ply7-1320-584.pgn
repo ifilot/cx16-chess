@@ -1,0 +1,14 @@
+[Event "X16 difficulty strength test"]
+[Site "Local AgentBridge / Stockfish"]
+[Date "2026.10.11"]
+[Round "585"]
+[White "CX16-CHESS ply7 (native C 7 ply)"]
+[Black "Stockfish 16 UCI_Elo 1320"]
+[Result "0-1"]
+[Termination "checkmate"]
+[X16Clock "untimed fixed-depth native C; host time is not X16 time"]
+[StockfishMoveTime "0.1"]
+[OpeningPair "292"]
+
+1. d4 d5 2. Nf3 Nf6 3. c4 c6 4. cxd5 cxd5 5. Bf4 Qb6 6. Qd2 e6 7. Nc3 Be7 8. e3 a6 9. h4 Bd7 10. Ne5 Qa5 11. Bd3 O-O 12. O-O Nc6 13. Nxd7 Nxd7 14. Bg3 Bb4 15. Qc2 Kh8 16. Ne2 Qd8 17. a3 Be7 18. h5 h6 19. Nf4 Qb6 20. Rfe1 Bd6 21. Red1 Rac8 22. Rdc1 Ne7 23. Qb1 Kg8 24. Rd1 Nc6 25. Nxd5 Qa7 26. Bxd6 exd5 27. Bh7+ Kh8 28. Be7 Nxe7 29. Bf5 Nxf5 30. Qxf5 b6 31. Qxd5 b5 32. Qf5 Qb7 33. d5 Qc7 34. d6 Qc6 35. e4 f6 36. Rab1 Rfe8 37. Rd4 Re5 38. Qg4 Rce8 39. Ra1 Rb8 40. Rb1 Rf8 41. Qd1 Rfe8 42. Rc1 Rc5 43. Rxc5 Qxc5 44. Kh1 a5 45. f4 Rc8 46. Kh2 Qa7 47. f5 Kh7 48. Rd5 Qb6 49. Qg1 Qc6 50. Qd1 Kh8 51. Qd3 b4 52. Rxa5 Qc1 53. axb4 Kh7 54. Qg3 Qd1 55. Qg6+ Kh8 56. Rd5 Qc2 57. Qg4 Rg8 58. Qf3 Qxb2 59. Qe3 Ne5 60. Kh3 Nd7 61. b5 Rc8 62. Qd2 Qa1 63. Kh2 Kh7 64. Qe3 Rc1 65. Qd2 Rh1+ 66. Kg3 Qg1 67. Kg4 Qf1 68. Kg3 Qg1 69. Kg4 Qb1 70. Qd4 Qa2 71. Kg3 Qe2 72. Qf2 Qxh5 73. b6 Qh4+ 74. Kf3 Qh5+ 75. Kg3 Qh4+ 76. Kf3 Qg5 77. b7 Rb1 78. b8=Q Rxb8 79. g3 Rb1 80. Kg2 Qc1 81. Kh3 Rb3 82. Qe2 Qh1+ 83. Qh2 Qe1 84. Rd4 Re3 85. Rd2 Kh8 86. Ra2 Rxe4 87. Qg2 Re8 88. Rf2 Rb8 89. Rf1 Qe8 90. Qd2 Qh5+ 91. Kg2 Kh7 92. Kg1 Rg8 93. Qf4 Ne5 94. Qa4 Qe8 95. Qxe8 Rxe8 96. Kh1 Ra8 97. Rd1 Rd8 98. Rd5 Rd7 99. Rd4 Rd8 100. Rd5 h5 101. Rd4 Nf7 102. d7 Ne5 103. Rd1 Rxd7 104. Rxd7 Nxd7 105. Kg2 Kh8 106. Kf3 Ne5+ 107. Ke4 Kh7 108. Kd5 Kh8 109. Ke4 Kh7 110. Kd5 Ng4 111. Kd4 Kh6 112. Kd5 Kg5 113. Ke4 Ne5 114. Kd4 Nd7 115. Kd5 Nb6+ 116. Kc5 Nd7+ 117. Kd5 Kg4 118. Ke6 Ne5 119. Kd6 Kxg3 120. Ke7 Nd7 121. Kxd7 h4 122. Ke6 Kf3 123. Kf7 Kf4 124. Ke7 h3 125. Kd7 Kxf5 126. Kc8 h2 127. Kb7 g5 128. Kc6 h1=Q+ 129. Kc5 Ke4 130. Kd6 Kf5 131. Kc5 Ke4 132. Kd6 g4 133. Ke6 g3 134. Kxf6 Qd1 135. Ke7 g2 136. Ke8 g1=Q 137. Kf8 Qd6+ 138. Kf7 Qgg6# 0-1
+

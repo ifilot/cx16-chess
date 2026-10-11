@@ -2,6 +2,7 @@
 
 Uses a private filesystem so tests never read or overwrite a player's saves.
 """
+from runtime_files import RUNTIME_FILES
 from pathlib import Path
 import os
 import shutil
@@ -30,7 +31,7 @@ def main():
 
     with tempfile.TemporaryDirectory(prefix='chess-storage-') as temporary:
         fsroot = Path(temporary)
-        for name in ('CHESS.PRG', 'MENU.BIN', 'UI.BIN', 'CHESS.DAT'):
+        for name in RUNTIME_FILES:
             shutil.copyfile(Path(os.environ.get('CHESS_FSROOT', ROOT / 'src')) / name, fsroot / name)
         session = None
 
@@ -128,8 +129,11 @@ def main():
             keys('Escape')
             snapshot = paused()
             shot('pause')
+            navigate('Up', 33, 42, 'SOUNDS: ON ')
+            navigate('Up', 33, 37, 'MUSIC: ON ')
             navigate('Up', 34, 32, 'MAIN MENU')
-            navigate('Down', 33, 22, 'RESUME GAME')
+            navigate('Up', 34, 27, 'SAVE GAME')
+            navigate('Up', 33, 22, 'RESUME GAME')
             navigate('Down', 34, 27, 'SAVE GAME')
             navigate('Up', 33, 22, 'RESUME GAME')
             session.emu.advance(600)
@@ -144,7 +148,7 @@ def main():
             for slot in range(1, 10):
                 save(slot)
                 data = (fsroot / f'CHESS{slot}A.SAV').read_bytes()
-                assert len(data) == 28 + 9 * 3 and data[:8] == b'X16SAVE1'
+                assert len(data) == 28 + 9 * 3 and data[:8] == b'X16SAVE4'
                 assert digest(data[:26] + data[28:]) == int.from_bytes(data[26:28], 'little')
                 assert paused() == snapshot
             text_at(26, 17, 'LOCAL')
@@ -152,7 +156,7 @@ def main():
             text_at(45, 17, '9')
             shot('saved')
             navigate('1', 26, 17, 'LOCAL', clear_message=True)
-            text_at(20, 44, 'CPU LEVEL W/B: E EASY N NORMAL H HARD')
+            text_at(31, 44, 'W/B: PLY OR B/E')
             navigate('Down', 35, 20, 'BOTH')
             navigate('Up', 45, 17, '9')
             keys('Return')
@@ -185,9 +189,9 @@ def main():
             assert paused()['board'] == snapshot['board']
             keys('Down', 'Down', 'Return')
             # Change and explicitly persist board/pieces.
-            keys('o', 'Right', 'Down', 'Right', 'Down', 'Return')
+            keys('o', 'Right', 'Down', 'Right', 'Down', 'Down', 'Down', 'Return')
             assert (fsroot / 'CHESSOPT.DAT').exists()
-            session.click(560, 288)  # Save Preferences also supports the mouse.
+            session.click(560, 344)  # Save Preferences also supports the mouse.
             session.emu.advance(120)
             assert read('playfield_theme') == b'\x01' and read('start_piece_set') == b'\x01'
             shot('preferences')
@@ -261,6 +265,7 @@ def main():
                 record = bytearray(first[:28]) + first[28:28 + (slot - 1) * 3]
                 record[10:12] = (slot - 1).to_bytes(2, 'little')
                 record[16] = (slot - 1) // 3
+                record[7] = ord('1')  # Legacy levels must migrate without changing checksums.
                 record[17] = (slot - 1) % 3
                 record[26:28] = digest(record[:26] + record[28:]).to_bytes(2, 'little')
                 (fsroot / f'CHESS{slot}A.SAV').write_bytes(record)
@@ -272,13 +277,26 @@ def main():
             text_at(45, 14, 'MOVES')
             for index in range(9):
                 row = 17 + index * 3
-                text_at(26, row, 'LOCAL' if index < 3 else ('EASY', 'NORMAL', 'HARD')[index % 3])
+                text_at(26, row, 'LOCAL' if index < 3 else ('2', '4', '6')[index % 3])
                 text_at(35, row, ('BOTH', 'BLACK', 'WHITE')[index // 3])
                 text_at(45, row, str(index))
             shot('metadata')
+            # Hover may select a slot underneath the initial pointer.
+            keys('1')
             navigate('Down', 26, 20, 'LOCAL')
-            navigate('9', 26, 41, 'HARD')
+            navigate('9', 26, 41, '6')
             navigate('Down', 35, 17, 'BOTH')
+            keys('9', 'Return')
+            assert read('match_difficulty') == b'\x04', 'Legacy Hard save must load as 6 ply'
+            # Preference formats use different packing bases. Exercise legacy
+            # independent levels and the highest new level for both computers.
+            for magic, packed, white, black in ((b'X16P1', 7, 2, 4), (b'X16P2', 24, 4, 4), (b'X16P3', 62, 6, 7), (b'X16P4', 98, 8, 9)):
+                preferences = bytearray(magic + bytes((0, 0, 3, packed, 0)))
+                preferences[9] = digest(preferences[:9]) & 255
+                (fsroot / 'CHESSOPT.DAT').write_bytes(preferences)
+                boot()
+                assert read('start_difficulty') == bytes((white,))
+                assert read('start_black_difficulty') == bytes((black,))
             print('PASS: nine restart-persistent slots, castling/en passant/promotions/repetition/history/clocks, incremental dialog navigation, pause and Continue, overwrite confirmation, failed write, damaged-copy fallback, transactional malformed replay, persisted options')
         finally:
             if session:

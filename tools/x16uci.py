@@ -22,12 +22,14 @@ def sq88(square):
 
 
 class X16Engine:
-    def __init__(self, time_per_move=10.0, depth=0):
-        self.bridge = EngineBridge()
+    def __init__(self, time_per_move=10.0, depth=0, emu=None):
+        self.bridge = EngineBridge(emu=emu)
         self.time_per_move = time_per_move
         self.depth = depth
         self.last = None
         self.fresh = True
+        self.noise = 0
+        self.seed = 1
 
     def new_game(self):
         self.fresh = True
@@ -42,7 +44,7 @@ class X16Engine:
             moves.append((sq88(m.from_square), sq88(m.to_square), PROMO.get(m.promotion, 0)))
         moves.reverse()
         self.last = self.bridge.search(base.fen(), depth=self.depth, time_limit=self.time_per_move,
-                                       fresh=self.fresh, moves=moves)
+                                       fresh=self.fresh, moves=moves, noise=self.noise, seed=self.seed)
         self.fresh = False
         if self.last['replayed'] != len(moves):
             raise RuntimeError(f'X16 replayed {self.last["replayed"]} of {len(moves)} moves '

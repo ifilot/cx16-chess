@@ -1,0 +1,8 @@
+{
+  "frozen_at_utc": "2026-10-11T15:10:20.848276+00:00",
+  "depth": 1,
+  "noise": 400,
+  "assessment_openings_seed": 18,
+  "random_seed": 27183,
+  "reason": "Noise 300 too strong on first holdout observations; test 400 on a disjoint fresh opening suite."
+}

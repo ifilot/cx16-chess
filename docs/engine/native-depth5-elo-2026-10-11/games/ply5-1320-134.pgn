@@ -1,0 +1,14 @@
+[Event "X16 difficulty strength test"]
+[Site "Local AgentBridge / Stockfish"]
+[Date "2026.10.11"]
+[Round "135"]
+[White "CX16-CHESS ply5 (native C 5 ply)"]
+[Black "Stockfish 16 UCI_Elo 1320"]
+[Result "1/2-1/2"]
+[Termination "threefold_repetition"]
+[X16Clock "untimed fixed-depth native C; host time is not X16 time"]
+[StockfishMoveTime "0.1"]
+[OpeningPair "67"]
+
+1. e4 e5 2. Bc4 Nf6 3. Nc3 Bc5 4. Nf3 Qe7 5. Ng5 O-O 6. O-O h6 7. Nf3 Nc6 8. d3 Re8 9. Bd2 b6 10. Nd5 Qd8 11. Qe1 Bf8 12. Bc3 a5 13. Qe2 Rb8 14. Rfb1 Bc5 15. Nxc7 Qxc7 16. d4 exd4 17. Bd2 Rxe4 18. Bxf7+ Kh8 19. Qf1 d5 20. Bxd5 Rg4 21. Bxc6 Qxc6 22. h3 Re4 23. c3 dxc3 24. Bxc3 Bb7 25. Qd3 Ra8 26. Qd1 Rae8 27. Qc2 Rf8 28. Rd1 Qe8 29. Bd4 a4 30. Bxc5 bxc5 31. Re1 Qc6 32. Qd2 Qb5 33. Ne5 Kg8 34. Qc1 Rxe1+ 35. Qxe1 Rd8 36. Qf1 Qxf1+ 37. Rxf1 Re8 38. Nd3 Ba6 39. Nxc5 Bxf1 40. Kxf1 a3 41. bxa3 h5 42. a4 Ra8 43. Ke2 Kh7 44. Kd3 Nd5 45. Kd4 Ne7 46. Kd3 g6 47. a3 h4 48. Ke3 Nd5+ 49. Ke4 Nb6 50. Kd3 g5 51. Kc3 Rb8 52. a5 Nd5+ 53. Kc4 Ne7 54. a6 Nc8 55. Ne4 Kg6 56. Kc3 Na7 57. Kc4 Rb6 58. a4 Rxa6 59. Nc5 Ra5 60. f4 Kh7 61. fxg5 Kh8 62. Kd4 Nc6+ 63. Kd5 Ne5 64. Kd6 Kh7 65. g3 Nc4+ 66. Kd5 Nb2 67. Kc6 hxg3 68. Ne4 Kg7 69. Nxg3 Kg8 70. Ne4 Kh8 71. Nc5 Kg8 72. Ne4 Nxa4 73. h4 Rf5 74. h5 Re5 75. Nf6+ Kh8 76. g6 Re6+ 77. Kb5 Rb6+ 78. Kxa4 Rxf6 79. Kb3 Kg7 80. Kc3 Rf4 81. Kc2 Rf3 82. Kd1 Rf4 83. Kc2 Rf5 84. Kd2 Re5 85. h6+ Kxg6 86. Kc3 Re1 87. Kd2 Re8 88. Kc3 Rc8+ 89. Kb4 Kf6 90. Kb3 Kf5 91. h7 Ke4 92. Ka4 Rh8 93. Kb5 Kf5 94. Kc6 Ke6 95. Kb5 Kd6 96. Kc4 Rxh7 97. Kd4 Rh2 98. Ke4 Rg2 99. Kf3 Rh2 100. Ke4 Rh1 101. Kd4 Kc7 102. Ke4 Rb1 103. Kd5 Kb8 104. Kd4 Rh1 105. Ke3 Kc7 106. Ke4 Kd7 107. Ke5 Rh6 108. Kd5 Rg6 109. Ke5 Ke8 110. Kf5 Rb6 111. Ke4 Rb5 112. Kd4 Rb8 113. Ke5 Rb3 114. Kd6 Re3 115. Kd5 Ra3 116. Kd4 Rh3 117. Kd5 Rf3 118. Ke6 Kf8 119. Kd5 Rg3 120. Kd6 Kf7 121. Ke5 Rg8 122. Kd5 Rf8 123. Ke5 Ke7 124. Kd5 Kd8 125. Ke5 Kd7 126. Kd5 Rb8 127. Ke5 Rg8 128. Kd5 Rg6 129. Ke5 Kc6 130. Kf5 Rg1 131. Ke4 Ra1 132. Kd4 Rh1 133. Ke4 Kd6 134. Kd4 Rg1 135. Ke4 1/2-1/2
+

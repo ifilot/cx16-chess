@@ -6,6 +6,7 @@
 #include "match.h"
 #include "playfield.h"
 #include "start.h"
+#include "sound.h"
 void asset_close(void);
 #pragma static-locals (on)
 #pragma code-name ("UICODE")
@@ -16,12 +17,26 @@ void asset_close(void);
  * Each slot alternates two generations. A failed write leaves the other
  * generation intact; a checksum rejects interrupted or damaged records. */
 #define HEADER 28
-static uint8_t header[HEADER], moves[MAX_HISTORY * 3], prefs[10];
+/* Small metadata buffers stay in main RAM; the large replay buffer is banked. */
+#pragma bss-name (push, "BSS")
+static uint8_t header[HEADER], prefs[10];
+#pragma bss-name (pop)
+static uint8_t moves[MAX_HISTORY * 3];
 static rules_position_t previous;
 static char filename[24];
 static uint16_t count, generation;
 static uint8_t chosen;
 static move_t move;
+
+/* Legacy time-based levels map to depths 2, 4 and 6. Keep their bytes intact
+ * until after checksum verification, including latest-generation selection. */
+static uint8_t level_count(uint8_t version) {
+    return version == '1' ? 3 : version == '2' ? 5 : version == '3' ? 8 : DIFFICULTY_COUNT;
+}
+
+static uint8_t saved_level(uint8_t level) {
+    return header[7] == '1' ? level * 2 : level;
+}
 
 static uint16_t word(uint8_t offset) {
     return header[offset] | ((uint16_t)header[offset + 1] << 8);
@@ -60,11 +75,11 @@ static uint8_t read_copy(uint8_t slot, uint8_t copy) {
     ok = read_exact(header, HEADER);
     if(ok) {
         count = word(10);
-        ok = !memcmp(header, "X16SAVE1", 8) && count < MAX_HISTORY &&
-             header[16] <= COMPUTER_BOTH && header[17] < 3 &&
+        ok = !memcmp(header, "X16SAVE", 7) && (header[7] >= '1' && header[7] <= '4') && count < MAX_HISTORY &&
+             header[16] <= COMPUTER_BOTH && header[17] < level_count(header[7]) &&
              header[18] <= MATCH_OVER && header[19] <= RESULT_LENGTH &&
              header[20] < THEMES && header[21] < 3 && header[22] < 2 &&
-             header[23] < 2 && header[24] < 60 && header[25] < 3 &&
+             header[23] < 2 && header[24] < 60 && header[25] < level_count(header[7]) &&
              ((header[18] == MATCH_PLAYING) == (header[19] == RESULT_NONE));
     }
     if(ok) ok = read_exact(moves, count * 3) && digest() == word(26);
@@ -89,8 +104,8 @@ uint8_t storage_probe(uint8_t slot, save_info_t* info) {
     if(!latest(slot)) return 0;
     info->moves = count;
     info->computer = header[16];
-    info->difficulty = header[17];
-    info->black_difficulty = header[25];
+    info->difficulty = saved_level(header[17]);
+    info->black_difficulty = saved_level(header[25]);
     return 1;
 }
 
@@ -116,7 +131,7 @@ uint8_t storage_save(uint8_t slot) {
     generation = ok ? generation + 1 : 1;
     /* latest() uses the candidate buffer; fill it only after choosing a copy. */
     memset(header, 0, HEADER);
-    memcpy(header, "X16SAVE1", 8);
+    memcpy(header, "X16SAVE4", 8);
     put_word(8, generation);
     count = ply;
     put_word(10, count);
@@ -186,8 +201,8 @@ uint8_t storage_load(uint8_t slot) {
     }
     match_clock[0] = word(12);
     match_clock[1] = word(14);
-    match_difficulty = header[17];
-    match_black_difficulty = header[25];
+    match_difficulty = saved_level(header[17]);
+    match_black_difficulty = saved_level(header[25]);
     match_state = header[18];
     match_result = header[19];
     match_restore_fraction(header[24]);
@@ -198,28 +213,37 @@ uint8_t storage_load(uint8_t slot) {
     return 1;
 }
 void storage_preferences_load(void) {
-    uint8_t ok;
+    uint8_t ok, levels;
     asset_close();
     if(cbm_open(3, 8, 3, "CHESSOPT.DAT,S,R")) { cbm_close(3); return; }
     ok = read_exact(prefs, sizeof(prefs));
     cbm_close(3);
-    if(!ok || memcmp(prefs, "X16P1", 5) || prefs[5] >= THEMES || prefs[6] >= 3 ||
-       prefs[7] > COMPUTER_BOTH || prefs[8] >= (prefs[7] == COMPUTER_BOTH ? 9 : 3) ||
+    levels = level_count(prefs[4]);
+    if(!ok || memcmp(prefs, "X16P", 4) || (prefs[4] < '1' || prefs[4] > '5') || prefs[5] >= THEMES || prefs[6] >= 3 ||
+       prefs[7] > (prefs[4] == '5' ? 15 : COMPUTER_BOTH) || prefs[8] >= ((prefs[7] & 3) == COMPUTER_BOTH ? levels * levels : levels) ||
        prefs[9] != (uint8_t)checksum(prefs, 9, 0xA761)) return;
     playfield_theme = prefs[5];
     start_piece_set = prefs[6];
-    start_computer = prefs[7];
-    start_difficulty = prefs[8] % 3;
-    start_black_difficulty = prefs[7] == COMPUTER_BOTH ? prefs[8] / 3 : 1;
+    start_computer = prefs[7] & 3;
+    start_difficulty = prefs[8] % levels;
+    start_black_difficulty = start_computer == COMPUTER_BOTH ? prefs[8] / levels : DEFAULT_DIFFICULTY;
+    sound_music_enabled = !(prefs[7] & 4);
+    sound_effects_enabled = !(prefs[7] & 8);
+    sound_event(SOUND_APPLY);
+    if(prefs[4] == '1') {
+        start_difficulty *= 2;
+        if(prefs[7] == COMPUTER_BOTH) start_black_difficulty *= 2;
+    }
 }
 uint8_t storage_preferences_save(void) {
     uint8_t ok;
     asset_close();
-    memcpy(prefs, "X16P1", 5);
+    memcpy(prefs, "X16P5", 5);
     prefs[5] = playfield_theme;
     prefs[6] = start_piece_set;
-    prefs[7] = start_computer;
-    prefs[8] = start_difficulty + (start_computer == COMPUTER_BOTH ? start_black_difficulty * 3 : 0);
+    /* Version 5 keeps the ten-byte record: bits 2/3 mute music/effects. */
+    prefs[7] = start_computer | (sound_music_enabled ? 0 : 4) | (sound_effects_enabled ? 0 : 8);
+    prefs[8] = start_difficulty + (start_computer == COMPUTER_BOTH ? start_black_difficulty * DIFFICULTY_COUNT : 0);
     prefs[9] = checksum(prefs, 9, 0xA761);
     if(cbm_open(3, 8, 3, "@:CHESSOPT.DAT,S,W")) { cbm_close(3); return 0; }
     ok = cbm_write(3, prefs, sizeof(prefs)) == sizeof(prefs);

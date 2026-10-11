@@ -1,0 +1,50 @@
+{
+  "stockfish": "/usr/games/stockfish",
+  "stockfish_id": {
+    "name": "Stockfish 16",
+    "author": "the Stockfish developers (see AUTHORS file)"
+  },
+  "sf_time": 0.1,
+  "date": "2026-10-11",
+  "games_per_opponent": 48,
+  "opponents": [
+    1320,
+    1500
+  ],
+  "levels": {
+    "ply2": 2,
+    "ply3": 3
+  },
+  "clock_seconds": 1800,
+  "engine_sha256": "32e97dbb244ceb52b200ce2fd07aefd71b2e2e076e30550320eaf6df9a6fd78b",
+  "search_mode": "depth",
+  "emulator": "/mnt/d/PROGRAMMING/CX16/x16-emulator/build/x16emu",
+  "emulator_sha256": "1291ec1908294c9c5a36774e48a1863fcb884cbaee2e462f79c6ca0386ecb310",
+  "openings": [
+    "e2e4 e7e5 g1f3 b8c6 d2d4 e5d4 f1c4 d7d6 c2c3 g8f6",
+    "d2d4 d7d5 c2c4 e7e6 b1c3 f8e7 g1f3 b8c6",
+    "e2e4 c7c5 g1f3 d7d6 h2h3 a7a6 b1c3 e7e6",
+    "e2e4 e7e6 d2d4 d7d5 e4e5 c8d7 c2c3 c7c5",
+    "g1f3 d7d5 g2g3 g8f6 d2d3 b8d7 d3d4 g7g6 b1a3 d7b6 c2c3 c7c6",
+    "d2d4 d7d5 g1f3 g8f6 e2e3 e7e6 c2c4 f8e7",
+    "e2e4 e7e5 f1c4 g8f6 d2d4 b8c6 g1f3 e5d4",
+    "d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 c1d2 e8g8 a1c1 c7c5",
+    "e2e4 d7d5 e4d5 d8d5 d2d4 e7e5 d4e5 d5e5 d1e2 f8b4",
+    "e2e4 c7c5 b1c3 b8c6 f1b5 g7g6 b5c6 b7c6",
+    "d2d4 f7f5 g2g3 g8f6 f1g2 d7d5 g1f3 e7e6 c2c4 f8e7 e1g1 f6e4",
+    "e2e4 g7g6 d2d4 f8g7 b1c3 d7d5 e4e5 c7c5 c1f4 c5d4",
+    "c2c4 c7c5 g1f3 g8f6 g2g3 b8c6 b1c3 e7e5 d1a4 h7h6 e2e4 f8e7",
+    "e2e4 e7e5 g1f3 b8c6 d2d4 d7d6 c1e3 e5d4",
+    "d2d4 d7d5 c2c4 e7e6 b1c3 c7c6 e2e4 f8b4",
+    "e2e4 c7c5 g1f3 d7d6 d2d4 g8f6 d4c5 f6e4",
+    "d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 d1b3 d5c4 b3c4 b8c6 g1f3 f8g7",
+    "e2e4 e7e6 d2d4 d7d5 e4e5 c8d7 g1f3 a7a6 c1e3 g8e7",
+    "c2c4 e7e5 b1c3 g8f6 e2e3 f8b4 d1b3 a7a5 g1f3 d7d6",
+    "e2e4 c7c6 d2d4 d7d5 e4e5 d8b6 b1c3 c8f5 g2g4 f5g6",
+    "g1f3 d7d5 g2g3 g8f6 d2d4 a7a5 f1g2 e7e6",
+    "d2d4 d7d5 g1f3 g8f6 c2c4 d5c4 d1a4 c8d7",
+    "e2e4 e7e5 f1c4 g8f6 d2d4 e5d4 d1e2 d7d5",
+    "d2d4 g8f6 c2c4 e7e6 b1c3 f8b4 c1g5 c7c5 d4c5 h7h6 g5d2 e8g8"
+  ],
+  "opening_suite_sha256": "5f6ebeef5588d00a86de82cfe7aaaa71f2185dd50fba5bb79b55060118dd97a8"
+}

@@ -30,6 +30,7 @@
 #include "start.h"
 #include "storage.h"
 #include "dialog.h"
+#include "sound.h"
 
 // KERNAL mouse_get stores the pointer position in r0 (x) and r1 (y)
 #define MOUSE_X     (*(volatile uint16_t*)0x02)
@@ -73,15 +74,19 @@ static void mouse_read(void) {
 }
 
 void main(void) {
-    uint8_t key, action, menu = 1, has_game = 0, release_mouse = 0, dialog = 0, initialized = 0;
+    uint8_t key, action, menu = 1, has_game = 0, release_mouse = 1, dialog = 0, initialized = 0;
 
     mouse_init();
     if(!video_init()) {
         return;
     }
+    sound_init();
     *(volatile uint8_t*)0x00 = 22;
     storage_preferences_load();
     *(volatile uint8_t*)0x00 = 21;
+    /* AUTOBOOT plus emulator -prg/-run can leave LOAD/RUN keystrokes queued.
+     * Drain them before the first menu; later input remains untouched. */
+    while(cbm_k_getin());
     if(!start_open(0)) return;
 
     while(1) {
@@ -111,7 +116,8 @@ void main(void) {
                 release_mouse = 1;
             }
         } else if(menu) {
-            action = start_mouse(MOUSE_X, MOUSE_Y, mouse_buttons);
+            if(!(mouse_buttons & 1)) release_mouse = 0;
+            action = release_mouse ? START_NONE : start_mouse(MOUSE_X, MOUSE_Y, mouse_buttons);
             if(!action && key) action = start_key(key);
             if(action == START_ERROR) return;
             if(action == START_LOAD) {
@@ -143,6 +149,7 @@ void main(void) {
             dialog_open(0);
             dialog = release_mouse = 1;
         } else if(key == 'M' || key == 'm') {
+            playfield_key(KEY_ESCAPE);
             *(volatile uint8_t*)0x00 = 21;
             if(!start_open(has_game)) return;
             menu = 1;

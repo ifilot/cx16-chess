@@ -1,0 +1,146 @@
+[
+  {
+    "game": "ply6-1320-00.pgn",
+    "ply": 12,
+    "result": {
+      "move": "e1g1",
+      "depth": 8,
+      "score": -45,
+      "nodes": 207225,
+      "seconds": 0.1417981900012819,
+      "jiffies": null
+    }
+  },
+  {
+    "game": "ply6-1320-00.pgn",
+    "ply": 14,
+    "result": {
+      "move": "c3d4",
+      "depth": 8,
+      "score": 12,
+      "nodes": 329089,
+      "seconds": 0.21341655700234696,
+      "jiffies": null
+    }
+  },
+  {
+    "game": "ply6-1320-00.pgn",
+    "ply": 16,
+    "result": {
+      "move": "c1f4",
+      "depth": 8,
+      "score": -25,
+      "nodes": 733331,
+      "seconds": 0.47812760200031335,
+      "jiffies": null
+    }
+  },
+  {
+    "game": "ply6-1320-00.pgn",
+    "ply": 18,
+    "result": {
+      "move": "f7h8",
+      "depth": 8,
+      "score": 100,
+      "nodes": 107900,
+      "seconds": 0.06725510500109522,
+      "jiffies": null
+    }
+  },
+  {
+    "game": "ply6-1320-00.pgn",
+    "ply": 20,
+    "result": {
+      "move": "b3b7",
+      "depth": 8,
+      "score": 230,
+      "nodes": 157216,
+      "seconds": 0.09577494499535533,
+      "jiffies": null
+    }
+  },
+  {
+    "game": "ply6-1320-00.pgn",
+    "ply": 22,
+    "result": {
+      "move": "c3d4",
+      "depth": 8,
+      "score": 240,
+      "nodes": 332985,
+      "seconds": 0.2222997499993653,
+      "jiffies": null
+    }
+  },
+  {
+    "game": "ply6-1320-01.pgn",
+    "ply": 13,
+    "result": {
+      "move": "e4f6",
+      "depth": 8,
+      "score": 20,
+      "nodes": 268528,
+      "seconds": 0.18037175499921432,
+      "jiffies": null
+    }
+  },
+  {
+    "game": "ply6-1320-01.pgn",
+    "ply": 15,
+    "result": {
+      "move": "f8e7",
+      "depth": 8,
+      "score": 58,
+      "nodes": 124109,
+      "seconds": 0.08809642699634423,
+      "jiffies": null
+    }
+  },
+  {
+    "game": "ply6-1320-01.pgn",
+    "ply": 17,
+    "result": {
+      "move": "c7c6",
+      "depth": 8,
+      "score": 12,
+      "nodes": 784885,
+      "seconds": 0.5325953700012178,
+      "jiffies": null
+    }
+  },
+  {
+    "game": "ply6-1320-01.pgn",
+    "ply": 19,
+    "result": {
+      "move": "c3b2",
+      "depth": 8,
+      "score": 254,
+      "nodes": 494070,
+      "seconds": 0.368694687000243,
+      "jiffies": null
+    }
+  },
+  {
+    "game": "ply6-1320-01.pgn",
+    "ply": 21,
+    "result": {
+      "move": "a8b8",
+      "depth": 8,
+      "score": 25,
+      "nodes": 796750,
+      "seconds": 0.6196211909991689,
+      "jiffies": null
+    }
+  },
+  {
+    "game": "ply6-1320-01.pgn",
+    "ply": 23,
+    "result": {
+      "move": "d8b8",
+      "depth": 8,
+      "score": 10,
+      "nodes": 737468,
+      "seconds": 0.6074187270060065,
+      "jiffies": null
+    }
+  }
+]
