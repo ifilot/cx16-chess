@@ -40,6 +40,11 @@ RGB12 = [
 ]
 
 
+# Row 15 retains its text ink at index 1, but reserves four otherwise unused
+# artwork entries for masthead edge coverage between red ink and paper.
+MASTHEAD_BANK = 15
+MASTHEAD_EDGES = (0xDB9, 0xC87, 0xB65, 0xA33)
+
 # The black-and-paper opening portrait uses the standard palette.
 # Keep its palette separate so switching views always restores their colors.
 SPLASH_RGB12 = RGB12.copy()
@@ -60,7 +65,7 @@ def rgb(index, colors=RGB12):
 def pil_palette(colors=RGB12):
     """Palette list for PIL 'P' images (unused entries are black)."""
     flat = []
-    for i in range(16):
+    for i in range(len(colors)):
         flat.extend(rgb(i, colors))
     return flat + [0] * (768 - len(flat))
 
@@ -72,12 +77,21 @@ def vera_palette(colors=RGB12):
     Row 0 preserves the complete base palette for artwork. Other rows repeat
     the base palette but replace index 1 by colour k. Text and
     digit glyphs are drawn with index 1, so the tilemap palette offset selects
-    their colour while the screen still only ever shows the same 16 colours.
+    their colour. Row 15 also reserves four entries for masthead edge shades;
+    ordinary artwork and all text ink colors retain their original values.
 
     """
     out = bytearray()
     for row in range(16):
         for i in range(16):
             value = colors[row] if i == INK and row != 0 else colors[i]
+            if row == MASTHEAD_BANK and 3 <= i <= 6:
+                value = MASTHEAD_EDGES[i - 3]
             out += bytes([value & 0xFF, value >> 8])
     return bytes(out)
+
+
+def splash_colors(colors=SPLASH_RGB12):
+    """All hardware colors, including the masthead's separate tile palette."""
+    data = vera_palette(colors)
+    return [int.from_bytes(data[i:i + 2], 'little') for i in range(0, len(data), 2)]

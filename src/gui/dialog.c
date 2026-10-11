@@ -96,6 +96,34 @@ static void column(uint8_t col) {
     rule(col, 13, LINE_LEFT | LINE_RIGHT | LINE_DOWN);
     rule(col, 43, LINE_LEFT | LINE_RIGHT | LINE_UP);
 }
+/* Selection changes overwrite only the labels; the paper and rules stay put. */
+static void draw_choice(uint8_t index) {
+    uint8_t color = selection == index ? COL_RED : COL_INK;
+    uint8_t row = 17 + index * 3;
+    if(confirm) {
+        video_text_centered(304, index ? 28 : 23, index ? "REPLACE" : "CANCEL", color);
+    } else if(!mode) {
+        video_text_centered(304, 22 + index * 5, choices[index], color);
+    } else {
+        label[0] = '1' + index;
+        label[1] = 0;
+        video_text(21, row, label, color);
+        if(occupied[index]) {
+            if(info[index].computer == COMPUTER_BOTH) {
+                label[0] = levels[info[index].difficulty][0];
+                label[1] = '/';
+                label[2] = levels[info[index].black_difficulty][0];
+                label[3] = 0;
+                video_text(26, row, label, color);
+            } else if(info[index].computer) video_text(26, row, levels[info[index].difficulty], color);
+            else video_text(26, row, "LOCAL", color);
+            video_text(35, row, players[info[index].computer], color);
+            utoa(info[index].moves, label, 10);
+            video_text(45, row, label, color);
+        } else video_text(26, row, "EMPTY", color);
+    }
+}
+
 static void draw(void) {
     uint8_t index;
     paper();
@@ -103,8 +131,8 @@ static void draw(void) {
         frame(23, 21, 53, 31);
         separator(23, 53, 26);
         video_text_centered(304, 15, "REPLACE SAVED GAME?", COL_RED);
-        video_text_centered(304, 23, "CANCEL", selection == 0 ? COL_RED : COL_INK);
-        video_text_centered(304, 28, "REPLACE", selection == 1 ? COL_RED : COL_INK);
+        draw_choice(0);
+        draw_choice(1);
         video_text_centered(304, 44, "ENTER SELECT / ESC CANCEL", COL_INK);
     } else if(!mode) {
         frame(23, 20, 53, 35);
@@ -112,7 +140,7 @@ static void draw(void) {
         separator(23, 53, 30);
         video_text_centered(304, 14, "GAME PAUSED", COL_RED);
         for(index = 0; index < 3; index++)
-            video_text_centered(304, 22 + index * 5, choices[index], selection == index ? COL_RED : COL_INK);
+            draw_choice(index);
         video_text_centered(304, 44, "ESC RESUME", COL_INK);
     } else {
         video_text_centered(304, 11, mode == 1 ? "SAVE GAME" : "LOAD GAME", COL_RED);
@@ -126,26 +154,7 @@ static void draw(void) {
         video_text(26, 14, "LEVEL", COL_INK);
         video_text(35, 14, "PLAYER", COL_INK);
         video_text(45, 14, "MOVES", COL_INK);
-        for(index = 0; index < SAVE_SLOTS; index++) {
-            uint8_t color = selection == index ? COL_RED : COL_INK;
-            uint8_t row = 17 + index * 3;
-            label[0] = '1' + index;
-            label[1] = 0;
-            video_text(21, row, label, color);
-            if(occupied[index]) {
-                if(info[index].computer == COMPUTER_BOTH) {
-                    label[0] = levels[info[index].difficulty][0];
-                    label[1] = '/';
-                    label[2] = levels[info[index].black_difficulty][0];
-                    label[3] = 0;
-                    video_text(26, row, label, color);
-                } else if(info[index].computer) video_text(26, row, levels[info[index].difficulty], color);
-                else video_text(26, row, "LOCAL", color);
-                video_text(35, row, players[info[index].computer], color);
-                utoa(info[index].moves, label, 10);
-                video_text(45, row, label, color);
-            } else video_text(26, row, "EMPTY", color);
-        }
+        for(index = 0; index < SAVE_SLOTS; index++) draw_choice(index);
         if(!message) video_text_centered(304, 44, "CPU LEVEL W/B: E EASY N NORMAL H HARD", COL_INK);
         video_text_centered(304, 46, "1-9 SELECT / ESC BACK", COL_INK);
         video_text_centered(304, 48, "BACK", COL_RED);
@@ -203,13 +212,15 @@ static uint8_t activate(void) {
 }
 uint8_t dialog_key(uint8_t key) {
     uint8_t limit = confirm ? 1 : mode ? SAVE_SLOTS - 1 : 2;
+    uint8_t previous = selection;
     switch(key) {
         case KEY_ESCAPE:
             if(confirm) { confirm = 0; message = 0; selection = 0; }
             else if(mode == 2) return DIALOG_MENU;
             else if(mode == 1) { mode = selection = 0; message = 0; }
             else return DIALOG_RESUME;
-            break;
+            draw();
+            return DIALOG_NONE;
         case KEY_UP: selection = selection ? selection - 1 : limit; break;
         case KEY_DOWN: selection = selection == limit ? 0 : selection + 1; break;
         case KEY_RETURN: case KEY_SPACE: return activate();
@@ -217,8 +228,16 @@ uint8_t dialog_key(uint8_t key) {
             if(mode && !confirm && key >= '1' && key <= '9') selection = key - '1';
             else return DIALOG_NONE;
     }
-    message = 0;
-    draw();
+    if(previous != selection) {
+        draw_choice(previous);
+        draw_choice(selection);
+    }
+    if(message) {
+        message = 0;
+        video_text_clear(19, 44, 38);
+        if(mode && !confirm)
+            video_text_centered(304, 44, "CPU LEVEL W/B: E EASY N NORMAL H HARD", COL_INK);
+    }
     return DIALOG_NONE;
 }
 uint8_t dialog_mouse(uint16_t x, uint16_t y, uint8_t buttons) {

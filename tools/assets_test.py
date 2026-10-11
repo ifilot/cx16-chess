@@ -45,12 +45,14 @@ def main():
                     session.press('Return')
                 result = session.emu.advance(600)
                 assert result['reason'] == 'breakpoint', (case, result)
-                assert session.emu.read_memory(0x9F29)[0] & 0x70 == 0, case
+                assert session.emu.read_memory(0x9F29)[0] & 0x70 == 0x50, case
+                assert session.emu.read_memory(0x9F2D, 3) == bytes((2, 0xF0, 0xF4)), case
                 session.emu.request('breakpoint', action='remove', address=symbols['asset_abort'], bank=0)
                 session.emu.advance(120)
                 assert session.emu.read_memory(symbols['asset_opened'])[0] == 0
-                assert session.emu.read_memory(0x9F29)[0] & 0x70 == 0
-                print(f'PASS: {case} rejected; display stays hidden and file channels close')
+                assert session.emu.read_memory(0x9F29)[0] & 0x70 == 0x50
+                assert session.emu.read_memory(0x1FC16, 2, space='vram') == b'\x0c\x77'
+                print(f'PASS: {case} rejected; loading cover stays visible and file channels close')
             finally:
                 session.emu.close()
         file.write_bytes(original)

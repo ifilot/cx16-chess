@@ -75,6 +75,7 @@ def verify_artwork(dest, prefix, expected, palette_data=None, expected_palette=R
     # Return the verified palette indices to build the preview from the
     # reconstructed output, rather than bypassing the exporter.
     result = np.empty_like(expected)
-    for index, color in enumerate(expected_palette):
+    for index in reversed(range(len(expected_palette))):
+        color = expected_palette[index]
         result[actual == color] = index
     return result

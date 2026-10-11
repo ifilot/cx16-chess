@@ -276,7 +276,7 @@ static void draw_clocks(void) {
         active = (match_state == MATCH_PLAYING && side == color);
         strcpy(buf, color == WHITE ? "WHITE  " : "BLACK  ");
         format_clock(color, 7);
-        video_text_clear(61, row, 19);
+        /* Clock labels have a fixed width; overwrite without blanking them. */
         video_text_centered(LEFT_CX, row, buf, active ? COL_RED : COL_INK);
         if(color == BLACK) break;
     }
@@ -287,7 +287,7 @@ static void draw_thinking(uint16_t now) {
     uint16_t frame = now / 15;
     uint16_t elapsed = now - match_think_start;
     uint8_t percent, phase;
-    char icon[2];
+    char icon[3];
 
     if(frame == thinking_frame) return;
     thinking_frame = frame;
@@ -295,12 +295,13 @@ static void draw_thinking(uint16_t now) {
               ((uint32_t)elapsed * 100 / match_think_budget) : 0;
     if(elapsed >= match_think_budget || percent > 99) percent = 99;
     phase = frame % 6;
-    video_text_clear(61, 55, 19);
-    icon[1] = 0;
-    icon[0] = FIGURINE_CODE + 1 + phase;
-    video_text(61 + (phase & 1), 55, icon, COL_INK);
-    icon[0] = FIGURINE_CODE + 1 + (phase + 3) % 6;
-    video_text(64 + (phase & 1), 55, icon, COL_RED);
+    /* Each moving figurine and its adjacent space occupy three cells. */
+    icon[2] = 0;
+    icon[(phase & 1) ^ 1] = ' ';
+    icon[phase & 1] = FIGURINE_CODE + 1 + phase;
+    video_text(61, 55, icon, COL_INK);
+    icon[phase & 1] = FIGURINE_CODE + 1 + (phase + 3) % 6;
+    video_text(64, 55, icon, COL_RED);
     strcpy(buf, "TIME 00%");
     buf[5] = '0' + percent / 10;
     buf[6] = '0' + percent % 10;

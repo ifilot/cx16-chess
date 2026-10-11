@@ -58,6 +58,30 @@ def main():
             tiles = [data[i] | ((data[i + 1] & 3) << 8) for i in range(0, len(data), 2)]
             assert tiles == [(ord(c) - 32) * 2 for c in text], (col, row, text, tiles)
 
+        def navigate(key, col, row, text, clear_message=False):
+            # Stop on any border redraw or panel clear, including transient
+            # writes that a completed screenshot would miss.
+            names = ['video_tile']
+            if not clear_message:
+                names.append('video_clear_block')
+            for name in names:
+                session.emu.request('breakpoint', address=symbols['_' + name], bank=0)
+            try:
+                session.emu.request('key', key=key, down=True)
+                result = session.emu.advance(3)
+                assert result['reason'] != 'breakpoint', (key, 'navigation redrew the panel', result)
+                session.emu.request('key', key=key, down=False)
+                result = session.emu.advance(120)
+                assert result['reason'] != 'breakpoint', (key, 'navigation redrew the panel', result)
+            finally:
+                for name in names:
+                    session.emu.request('breakpoint', action='remove', address=symbols['_' + name], bank=0)
+            text_at(col, row, text)
+            for half in range(2):
+                data = bytes(session.emu.read_memory(
+                    0x18000 + ((row + half) * 128 + col) * 2, len(text) * 2, space='vram'))
+                assert all(byte >> 4 == 7 for byte in data[1::2]), (key, 'missing red selection')
+
         def paused():
             return {name: read(name, size) for name, size in (
                 ('board', 128), ('side', 1), ('castling', 1), ('ep_square', 1),
@@ -104,10 +128,19 @@ def main():
             keys('Escape')
             snapshot = paused()
             shot('pause')
+            navigate('Up', 34, 32, 'MAIN MENU')
+            navigate('Down', 33, 22, 'RESUME GAME')
+            navigate('Down', 34, 27, 'SAVE GAME')
+            navigate('Up', 33, 22, 'RESUME GAME')
             session.emu.advance(600)
             assert paused() == snapshot, 'Pause dialog must freeze both clocks and the position'
             keys('Down', 'Return')
             shot('slots')
+            navigate('Up', 21, 41, '9')
+            navigate('Down', 21, 17, '1')
+            navigate('5', 21, 29, '5')
+            navigate('5', 21, 29, '5')  # selecting the same slot does no drawing
+            navigate('1', 21, 17, '1')
             for slot in range(1, 10):
                 save(slot)
                 data = (fsroot / f'CHESS{slot}A.SAV').read_bytes()
@@ -118,6 +151,16 @@ def main():
             text_at(35, 17, 'BOTH')
             text_at(45, 17, '9')
             shot('saved')
+            navigate('1', 26, 17, 'LOCAL', clear_message=True)
+            text_at(20, 44, 'CPU LEVEL W/B: E EASY N NORMAL H HARD')
+            navigate('Down', 35, 20, 'BOTH')
+            navigate('Up', 45, 17, '9')
+            keys('Return')
+            navigate('Down', 35, 28, 'REPLACE')
+            navigate('Down', 35, 23, 'CANCEL')
+            navigate('Up', 35, 28, 'REPLACE')
+            navigate('Up', 35, 23, 'CANCEL')
+            keys('Return')
             # Overwriting requires an explicit Replace, with Cancel selected first.
             first = (fsroot / 'CHESS1A.SAV').read_bytes()
             keys('1', 'Return', 'Return')
@@ -233,7 +276,10 @@ def main():
                 text_at(35, row, ('BOTH', 'BLACK', 'WHITE')[index // 3])
                 text_at(45, row, str(index))
             shot('metadata')
-            print('PASS: nine restart-persistent slots, castling/en passant/promotions/repetition/history/clocks, pause and Continue, overwrite confirmation, failed write, damaged-copy fallback, transactional malformed replay, persisted options')
+            navigate('Down', 26, 20, 'LOCAL')
+            navigate('9', 26, 41, 'HARD')
+            navigate('Down', 35, 17, 'BOTH')
+            print('PASS: nine restart-persistent slots, castling/en passant/promotions/repetition/history/clocks, incremental dialog navigation, pause and Continue, overwrite confirmation, failed write, damaged-copy fallback, transactional malformed replay, persisted options')
         finally:
             if session:
                 session.close()

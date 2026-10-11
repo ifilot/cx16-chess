@@ -40,12 +40,12 @@
  */
 
 /**
- * @brief Set up 640x480 tile layers, pointer and resident font; keep display hidden
+ * @brief Set up 640x480 tile layers, pointer and resident font under the loading cover
  *
  * @return 0 when a graphics file could not be loaded
  */
 uint8_t video_init(void);
-/* View loads keep the display hidden until the caller finishes drawing. */
+/* View loads retain the Loading cover until the caller finishes drawing. */
 void video_present(void);
 uint8_t video_show_start(void);
 uint8_t video_show_setup(void);

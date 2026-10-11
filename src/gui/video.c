@@ -67,10 +67,12 @@ uint8_t video_init(void) {
     uint8_t ok, saved = RAM_BANK;
 
     VERA.control = 0;
-    VERA.display.video &= 0x0F;                 // hide everything while loading
+    transition_covered = 1;                    // retain the constructor's cover
     VERA.display.border = 0;                   // opaque artwork's black underlay
     VERA.display.hscale = 128;
     VERA.display.vscale = 128;
+
+    sprite_setup(SPRITE_POINTER, VRAM_POINTER, 0, 0x50);   // hide KERNAL pointer
 
     /* Load banked loader/menu code before reading the graphics container. */
     RAM_BANK = 22;
@@ -85,10 +87,7 @@ uint8_t video_init(void) {
     if(ok) ok = load_shared();
     RAM_BANK = saved;
     if(!ok) return 0;
-    // layer 0: background, 128x64 map of 8x8 tiles at 4 bpp
-    VERA.layer0.config = 0x62;
-    VERA.layer0.mapbase = VRAM_L0_MAP_PLAIN >> 9;
-    VERA.layer0.tilebase = VRAM_L0_TILES >> 9;
+    // Keep layer 0 on the loading cover until the opening screen is ready.
     VERA.layer0.hscroll = 0;
     VERA.layer0.vscroll = 0;
 
@@ -99,10 +98,11 @@ uint8_t video_init(void) {
     VERA.layer1.hscroll = 0;
     VERA.layer1.vscroll = 0;
 
-    sprite_setup(SPRITE_POINTER, VRAM_POINTER, 3, 0x50);   // 16x16
     sprite_setup(SPRITE_CURSOR, VRAM_CURSOR, 0, 0xF0);     // 64x64, hidden
 
-    /* Keep layers hidden until the opening artwork and labels are ready. */
+    RAM_BANK = 21;
+    transition_startup();
+    RAM_BANK = saved;
     return 1;
 }
 

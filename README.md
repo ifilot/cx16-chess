@@ -1,7 +1,10 @@
 # CX16-CHESS
 
 A chess program for the **Commander X16** with a clean newspaper layout:
-640x480, sixteen colours, warm paper, bitmap lettering, serif mastheads and dark red accents.
+640x480, a sixteen-colour base palette, warm paper, bitmap lettering, serif
+mastheads and dark red accents. The start-screen masthead, menu titles, and
+in-game masthead use four additional shades in a separate tile palette to smooth
+their red ink edges.
 
 The start screen uses a dithered bishop portrait against solid paper:
 
@@ -12,9 +15,13 @@ Black, CPU vs CPU, or Two Players and a CPU difficulty. Easy, Normal and Hard ca
 at 2, 10 and 20 seconds per move; remaining clock time can shorten these
 budgets. Use Up/Down to select, Left/Right to change, and Return to start.
 Click a setting to cycle it, or click Start Game. Escape returns to the menu.
-Scene changes show a paper background sprinkled with small chess silhouettes
+Menu focus and setting changes update their controls in place. Options updates
+only the board background or pieces when the corresponding setting changes.
+Startup and scene changes show a paper background sprinkled with small chess silhouettes
 and a native-font Loading label while
 the next artwork loads. The cover stays in VRAM and needs no extra disk reads.
+Startup draws the paper and Loading label before reading any runtime files,
+then adds the silhouettes once the shared font is ready.
 
 ![Loading screen](docs/transition-screen.png)
 About (or **A** in the menu) shows the version from `VERSION`, compilation
@@ -139,8 +146,12 @@ make demo       # record a one-minute menu walkthrough and human-vs-CPU battle
 make test-dist  # run emulator tests using only the distribution files
 make test-sd    # test the ROM SD-card loader (requires mkfs.fat and mcopy)
 make dist       # package only the playable game in build/dist/CHESS.ZIP
+make site       # build the browser game in build/site (downloads pinned r49 once)
+make test-site  # run real WebAssembly browser checks (requires Playwright)
 make clean      # remove everything generated
 ```
+
+
 
 `make demo` writes `docs/cx16-chess-gameplay.gif`: a looping, 640×480 GIF
 with exactly 60 seconds of playback at 10 fps. It visits About and Options,
@@ -190,7 +201,7 @@ The loader validates the identifier against the compiled index, keeps a data
 channel open and seeks to each resource using CMDR-DOS POSITION. KERNAL MACPTR
 streams data directly into VERA or banked RAM, handling partial reads; ACPTR
 provides a fallback when bulk reads are unavailable. Read errors and premature
-EOF abort loading while the display is hidden. Screen changes load only the
+EOF abort loading while the Loading cover stays visible. Screen changes load only the
 required resources; font, sprites and game state stay resident.
 
 The distribution includes `HASHES.TXT` for verifying all four runtime files.
@@ -202,6 +213,52 @@ SD image, and tests the actual ROM CMDR-DOS path, including all twelve board/set
 combinations and save/preference writes to an isolated SD image. It requires dosfstools and mtools; it never accesses a physical disk.
 `make` also builds `src/ENGINE.PRG`, a headless engine harness for the test tools
 below; its separate linker configuration cannot overwrite the banked UI files.
+
+## Browser site
+
+`make site` builds a static website in `build/site`, following the same
+WebAssembly emulator setup as CX16 Kakuro. It keeps the game's warm paper,
+dark red PT Serif headings, and engraved artwork. The page includes controls,
+an explanation of the native 65C02 engine, the measured difficulty estimates
+and their uncertainty, and a download of the latest local game build.
+The Elo table is generated directly from the recorded strength-test summary.
+
+Serve the output over HTTP (opening `index.html` as a local file cannot load
+WebAssembly resources):
+
+```sh
+python3 -m http.server 8000 --directory build/site
+```
+
+Open `http://localhost:8000`. The emulator downloads only after Play Chess is
+pressed. It runs the real `CHESS.PRG`, `MENU.BIN`, `UI.BIN`, and `CHESS.DAT`,
+with native 640×480 pixels, integer fullscreen scaling, and touch controls.
+No developer preferences or saved games are bundled. Browser saves live in
+the emulator's memory filesystem for this page session; reloading or
+restarting clears them. The downloadable game keeps its normal disk saves.
+
+The official emulator r49 ZIP is cached in `build/site-cache` and checked
+against a pinned SHA-256 before unpacking. All website assets, including
+PT Serif and runtime files, are served locally; no CDN is needed.
+Emulator, ROM, and font notices are included with the site.
+
+For browser checks:
+
+```sh
+npm install --prefix build/browser-tools playwright@1.64.0
+build/browser-tools/node_modules/.bin/playwright install chromium
+NODE_PATH="$PWD/build/browser-tools/node_modules" make test-site
+```
+
+Checks boot the shipped WASM and compare actual canvas pixels with the
+exported artwork under a `/cx16-chess/` URL, then exercise menus, a legal
+move, fullscreen, mobile layout, and touch input. Captures go to
+`build/site-check`. `CHROMIUM_PATH` can select an existing Chromium binary.
+
+`.github/workflows/pages.yml` builds and checks the site before deploying
+from `master`. In the repository's Pages settings, select **GitHub Actions**
+as the source. The workflow publishes `build/site` using the repository's
+normal GitHub Pages address.
 
 ## Source layout
 
@@ -319,8 +376,9 @@ Earlier results with 10 s per move (October 2026, details and games in
   recorded in `docs/startup-performance.json`; HostFS timings exclude physical
   disk transfer time.
 * UI text uses Kakuro’s native 8×8 bitmap glyphs, with integer pixel
-  scaling for headings. Game clocks use the native font. The CX16 CHESS mastheads retain their original
-  serif artwork. The board margins show only coordinates;
+  scaling for headings. Game clocks use the native font. The opening masthead retains its original
+  serif artwork; menu titles and the in-game masthead use matching PT Serif Bold coverage masks.
+  The board margins show only coordinates;
   evaluation appears as a bar in the scorecard. Scorecard figurines use supplied native
   pixel art in 16×16 cells, assembled from four 8×8 tiles; text retains its
   8-pixel advance. The foreground uses 833 of VERA’s 1024 tiles, including smooth bar fills.
@@ -328,7 +386,7 @@ Earlier results with 10 s per move (October 2026, details and games in
   portraits; the runtime labels and controls remain crisp.
 * The opening screen uses the approved Black + paper only portrait,
   black dithering and solid `#EEDDBB` paper. Its shared `PALETTE` resource
-  keeps the screen within 16 colors. Setup loads the `SETPAL` resource for a four-tone
+  preserves the original portrait colors; a reserved palette row provides the masthead edge shades. Setup loads the `SETPAL` resource for a four-tone
   black/gray/white queen that extends through the bottom edge; play restores
   `PALETTE` resource. Red setup headings and clickable left/right triangles use
   the native bitmap font slots. Keyboard arrows still select and change values.

@@ -25,7 +25,7 @@ from bitmap_font import BitmapFont, glyph8
 import layout as L
 import indicators
 from palette import (ALERT, DARK, DARK_GREY, HL_DARK, HL_LIGHT,
-                     INK, PAPER, RED, RGB12, SPLASH_RGB12, SETUP_RGB12, SHADE, TEXTURE, WHITE, pil_palette, rgb, vera_palette)
+                     INK, PAPER, RED, RGB12, SPLASH_RGB12, SETUP_RGB12, SHADE, TEXTURE, WHITE, pil_palette, rgb, vera_palette, MASTHEAD_BANK, splash_colors)
 
 ASSETS = Path(__file__).resolve().parents[1]
 W, H = 640, 480
@@ -107,6 +107,18 @@ def masthead(img, cx, baseline):
         x += meta['advance'][slot]
 
 
+def serif_title(image, mask_name, cx, cy):
+    """Draw retained PT Serif coverage with the masthead's red/paper shades."""
+    with Image.open(ASSETS / 'font' / mask_name) as mask:
+        coverage = np.asarray(mask.convert('L'))
+    shades = np.array([PAPER, MASTHEAD_BANK * 16 + 3,
+                       MASTHEAD_BANK * 16 + 4, MASTHEAD_BANK * 16 + 5,
+                       MASTHEAD_BANK * 16 + 6, RED], np.uint8)
+    height, width = coverage.shape
+    x, y = cx - width // 2, cy - height // 2
+    image[y:y + height, x:x + width] = shades[np.rint(coverage / 255 * 5).astype(int)]
+
+
 def piece_image(index):
     return PIECES[:, index * L.SQUARE:(index + 1) * L.SQUARE]
 
@@ -166,10 +178,8 @@ def render(info):
             y, x = by + rank * L.SQUARE, bx + file * L.SQUARE
             img[y:y + L.SQUARE, x:x + L.SQUARE] = square_image('NEWSPRINT', (rank + file) % 2 == 0, 'NORMAL')
     cx = (L.RIGHT_X0 + L.RIGHT_X1 + 1) // 2
-    masthead(img, cx, 28)
+    serif_title(img, 'game-title-mask.png', cx, 22)
     # Red masthead; compact clocks and a centred, signed evaluation bar.
-    region = img[:36, 488:632]
-    region[region == INK] = RED
     for y in (36, 39):
         fill(img, L.RIGHT_X0, y, L.RIGHT_X1, y, INK)
     frame(img, 496, 56, 623, 63, INK)
@@ -194,7 +204,7 @@ def render(info):
 def render_options():
     image = render(False)
     fill(image, 480, 0, 639, 479, PAPER)
-    BitmapFont(2).centered(image, 560, 80, 'OPTIONS', RED)
+    serif_title(image, 'options-mask.png', 560, 70)
     for y in (104, 107, 352, 355):
         fill(image, 488, y, 631, y, INK)
     return image
@@ -225,22 +235,73 @@ class TileSet:
     def data(self):
         return b''.join(self.tiles)
 
+    def add_flipped(self, pixels):
+        """Reuse mirrored tiles with VERA's flips, preserving every pixel."""
+        for candidate, flags in ((pixels, 0), (pixels[:, ::-1], 1024),
+                                 (pixels[::-1], 2048), (pixels[::-1, ::-1], 3072)):
+            data = pack4(candidate)
+            if data in self.index:
+                return self.index[data], flags
+        return self.add(pixels), 0
+
 
 def tile_map(tiles, img):
     """128 x 64 layer-0 map of a 640 x 480 image."""
     entries = [0] * (128 * 64)
     for r in range(60):
         for c in range(80):
-            entries[r * 128 + c] = tiles.add(img[8 * r:8 * r + 8, 8 * c:8 * c + 8])
+            block = img[8 * r:8 * r + 8, 8 * c:8 * c + 8]
+            bank = MASTHEAD_BANK << 12 if np.any(block >= 16) else 0
+            entries[r * 128 + c] = tiles.add(block & 15) | bank
     return b''.join(v.to_bytes(2, 'little') for v in entries)
+
+
+def refine_masthead(image):
+    """Keep the printed letter shapes; replace quantized edge colors by coverage.
+
+    The original red ink and every portrait pixel remain intact. Only nonblack
+    edge pixels in the masthead region use palette row 15.
+    """
+    result = image.copy()
+    header = image[:96]
+    # Tile-aligned masthead regions leave the bishop's finial untouched.
+    logo = np.ones_like(header, dtype=bool)
+    logo[80:96, 272:304] = False
+    eligible = logo & (header != 0) & (header != INK) & (header != PAPER) & (header != RED)
+    colors = np.array([rgb(i) for i in range(16)], dtype=float)
+    paper, ink = colors[PAPER], colors[RED]
+    direction = ink - paper
+    coverage = np.clip((colors - paper) @ direction / (direction @ direction), 0, 1)
+    steps = np.rint(coverage * 5).astype(int)
+    lookup = np.array([PAPER, MASTHEAD_BANK * 16 + 3, MASTHEAD_BANK * 16 + 4,
+                       MASTHEAD_BANK * 16 + 5, MASTHEAD_BANK * 16 + 6, RED], np.uint8)
+    # Keep a single edge band; discarded distant quantization specks would
+    # otherwise turn into red halos when assigned the corrected colors.
+    core = header == RED
+    padded = np.pad(core, 1)
+    near = np.zeros_like(core)
+    for dy in range(3):
+        for dx in range(3):
+            near |= padded[dy:dy + 96, dx:dx + W]
+    result[:96][eligible] = PAPER
+    edges = eligible & near
+    result[:96][edges] = lookup[steps[header[edges]]]
+    return result
 
 
 def menu_artwork(artwork):
     image = load_indexed(ASSETS / f'art/{artwork}.png',
                          SPLASH_RGB12 if artwork == 'splash' else SETUP_RGB12)
     assert image.shape == (H, W) and image.max() < 16
+    if artwork == 'splash':
+        image = refine_masthead(image)
     if artwork in ('setup', 'about'):
-        BitmapFont(3).centered(image, 480, 80, 'ABOUT' if artwork == 'about' else 'NEW GAME', RED)
+        if artwork == 'setup':
+            # Retained PT Serif coverage mask: build without a system font
+            # dependency and use the same red/paper shades as the masthead.
+            serif_title(image, 'new-game-mask.png', 480, 70)
+        else:
+            serif_title(image, 'about-mask.png', 480, 72)
         for y in ((104, 107, 392, 395) if artwork == 'about' else (104, 107, 352, 355)):
             fill(image, 344, y, 615, y, INK)
     return image
@@ -255,7 +316,9 @@ def build_splash(dest, artwork="splash", prefix="SPL"):
     """
     image = menu_artwork(artwork)
     colors = SPLASH_RGB12 if artwork == 'splash' else SETUP_RGB12
-    (dest / f'{prefix}PAL.DAT').write_bytes(vera_palette(colors))
+    palette = vera_palette(colors)
+    preview_colors = splash_colors(colors)
+    (dest / f'{prefix}PAL.DAT').write_bytes(palette)
     tiles = TileSet(8)
     tiles.add(np.full((8, 8), PAPER, np.uint8))
     # Index zero is opaque in the artwork but transparent on VERA layer 1.
@@ -267,12 +330,16 @@ def build_splash(dest, artwork="splash", prefix="SPL"):
     layer0, layer1 = [0] * 8192, [0] * 8192
     for r in range(60):
         for c in range(80):
-            t = tiles.add(image[r * 8:r * 8 + 8, c * 8:c * 8 + 8])
+            block = image[r * 8:r * 8 + 8, c * 8:c * 8 + 8]
+            bank = MASTHEAD_BANK << 12 if np.any(block >= 16) else 0
+            # About's detailed portrait leaves little room for its title.
+            # Hardware flips share exact mirrored tiles without reducing art.
+            t, flips = tiles.add_flipped(block & 15) if artwork == 'about' else (tiles.add(block & 15), 0)
             if t < capacity0:
-                layer0[r * 128 + c] = t
+                layer0[r * 128 + c] = t | flips | bank
             else:
                 layer0[r * 128 + c] = underlay_tile
-                layer1[r * 128 + c] = L.L1_PIECES + t - capacity0
+                layer1[r * 128 + c] = (L.L1_PIECES + t - capacity0) | flips | bank
     count1 = L.L1_PIECES + max(0, len(tiles.tiles) - capacity0)
     if count1 > capacity1:
         raise ValueError(f'{artwork}: needs {count1} layer-1 tiles, budget is {capacity1}; '
@@ -288,13 +355,13 @@ def build_splash(dest, artwork="splash", prefix="SPL"):
     # preview. Any missing/recoloured pixel or invalid tile reference fails
     # the build before it can reach the emulator.
     from verify_graphics import verify_artwork
-    reconstructed = verify_artwork(dest, prefix, image, palette_data=vera_palette(colors), expected_palette=colors)
+    reconstructed = verify_artwork(dest, prefix, image, palette_data=palette, expected_palette=preview_colors)
     preview = reconstructed.copy()
     if artwork == 'splash':
         for y, label, color in [(368, 'NEW GAME', RED), (384, 'CONTINUE', DARK_GREY), (400, 'LOAD GAME', INK), (416, 'OPTIONS', INK), (432, 'ABOUT', INK)]:
             text(preview, 288, y, label, color)
         text_centered(preview, 0, 639, 464, 'UP/DOWN  ENTER TO SELECT', INK)
-    save_preview(preview, dest / f'{artwork}.png', colors)
+    save_preview(preview, dest / f'{artwork}.png', preview_colors)
     print(f'{artwork}: {len(tiles.tiles)} tiles across two layers')
 
 
@@ -457,8 +524,9 @@ def main(dest):
     (dest / 'SPRITES.DAT').write_bytes(build_sprites())
     (dest / 'PALETTE.DAT').write_bytes(vera_palette())
     write_header(dest / 'gfx.h', tiles)
-    save_preview(plain, dest / 'playfield.png')
-    save_preview(info, dest / 'playfield-info.png')
+    save_preview(plain, dest / 'playfield.png', splash_colors())
+    save_preview(info, dest / 'playfield-info.png', splash_colors())
+    save_preview(render_options(), dest / 'options.png', splash_colors())
     print(f'layer 0: {len(tiles.tiles)} tiles ({len(tiles.tiles) * 32} bytes)')
 
 

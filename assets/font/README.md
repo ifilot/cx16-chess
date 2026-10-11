@@ -36,3 +36,27 @@ unused large clock digits and colon saves 42 additional tiles / 1,344 bytes.
 The complete game foreground now uses 833 of VERA’s 1,024 tiles (191 free),
 down from 1,021 (three free). ASCII, arrows, mini icons, and masthead pixels
 are preserved. Tests compare native glyphs and approved graphics fixtures.
+
+The large start-screen masthead retains its original solid red letter shapes.
+The graphics exporter removes loose quantization specks and maps edge coverage
+onto four red/paper blends in VERA palette row 15, entries 3–6. Other artwork
+uses palette row zero; text ink at entry 1 remains unchanged in every row.
+
+The New Game setup title uses `new-game-mask.png`, a retained grayscale
+coverage mask of PT Serif Bold (ParaType, SIL Open Font License 1.1). It was
+rendered at 176 pixels, cropped to its ink bounds, and reduced to quarter
+size with Lanczos filtering (44-pixel type). The exporter centers it at
+(480, 70) and maps coverage onto the masthead's red/paper shades. Keeping
+the mask in the repository makes builds independent of installed fonts.
+
+The in-game `CX16 CHESS` heading uses `game-title-mask.png`, produced the
+same way at 92 pixels and reduced to quarter size (23-pixel PT Serif Bold).
+It is centered at (560, 22) above the existing sidebar rules and uses the
+same four edge shades, without changing the board or dynamic text font.
+
+`about-mask.png` and `options-mask.png` use the same process at 144 and
+120 pixels, respectively, reduced to quarter size (36- and 30-pixel type).
+The About title is centered at (480, 72); Options is centered at (560, 70)
+to fit its narrower sidebar. Both share the same red/paper edge shades.
+About also shares mirrored tiles using VERA's horizontal/vertical flip bits,
+preserving the portrait exactly while fitting the title in the tile budget.

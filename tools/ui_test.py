@@ -12,7 +12,7 @@ import numpy as np
 from screenshot import ROOT, Session
 
 sys.path.insert(0, str(ROOT / 'assets/scripts'))
-from palette import rgb, RGB12, SPLASH_RGB12, SETUP_RGB12
+from palette import rgb, RGB12, SPLASH_RGB12, SETUP_RGB12, splash_colors
 
 
 def main():
@@ -46,12 +46,15 @@ def main():
         session.shot(path)
         with Image.open(path) as im:
             assert im.size == (640, 480)
-            colors = SPLASH_RGB12 if name in ('start', 'paused-start') else SETUP_RGB12 if name in ('setup', 'white-hard-setup', 'about', 'paused-about') else RGB12
-            assert set(im.convert('RGB').getdata()) <= {rgb(i, colors) for i in range(16)}
-            palette_data = bytes(session.emu.read_memory(0x1FA00, 32, space='vram'))
+            colors = splash_colors(SETUP_RGB12) if name in ('setup', 'white-hard-setup', 'about', 'paused-about') else splash_colors()
+            assert set(im.convert('RGB').getdata()) <= {rgb(i, colors) for i in range(len(colors))}
+            palette_data = bytes(session.emu.read_memory(0x1FA00, len(colors) * 2, space='vram'))
             assert list(np.frombuffer(palette_data, dtype='<u2')) == colors, f'{name}: wrong view palette'
             actual = np.asarray(im.convert('RGB'))
         if name in ('scorecard', 'selected', 'moves', 'flipped-newsprint', 'flipped-wood', 'black-easy', 'white-hard'):
+            with Image.open(ROOT / 'build/graphics/playfield.png') as im:
+                expected_heading = np.asarray(im.convert('RGB'))[:40, 488:632]
+            np.testing.assert_array_equal(actual[:40, 488:632], expected_heading)
             # Only eight file labels may occupy the strip below the board.
             mask = np.zeros((480, 640), dtype=bool)
             mask[458:, :480] = True
@@ -94,7 +97,10 @@ def main():
                 mask[:368] = True
                 with Image.open(ROOT / 'tests/fixtures/graphics/splash-approved.png') as im:
                     approved = np.asarray(im.convert('RGB'))
-                np.testing.assert_array_equal(actual[:368], approved[:368])
+                # The reviewed portrait stays exact; the masthead is verified
+                # against its new hardware reconstruction below.
+                np.testing.assert_array_equal(actual[96:368], approved[96:368])
+                np.testing.assert_array_equal(actual[80:96, 272:304], approved[80:96, 272:304])
             else:
                 mask[:, :320] = True
                 mask[:136] = True

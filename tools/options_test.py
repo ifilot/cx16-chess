@@ -11,7 +11,7 @@ from screenshot import ROOT, Session
 
 sys.path.insert(0, str(ROOT / 'assets/scripts'))
 from build_graphics import load_indexed, square_image, blit, ASSETS
-from palette import rgb
+from palette import rgb, splash_colors
 import layout as L
 
 SETS = ['victorian', 'continental', 'letterpress']
@@ -57,6 +57,9 @@ def main():
         session.click(320, 424)  # Opening screen OPTIONS, not New Game.
         visible()
         session.move_mouse(639, 479)
+        colors = splash_colors()
+        with Image.open(ROOT / 'build/graphics/options.png') as im:
+            expected_heading = np.asarray(im.convert('RGB'))[:136, 488:632]
         for index, piece_set in enumerate(SETS):
             for board, theme in enumerate(L.BOARD_THEMES):
                 assert read('start_piece_set') == bytes([index])
@@ -65,7 +68,8 @@ def main():
                 session.shot(path)
                 image = Image.open(path).convert('RGB')
                 assert image.size == (640, 480)
-                assert set(image.getdata()) <= {rgb(i) for i in range(16)}
+                assert set(image.getdata()) <= {rgb(i, colors) for i in range(len(colors))}
+                np.testing.assert_array_equal(np.asarray(image)[:136, 488:632], expected_heading)
                 np.testing.assert_array_equal(np.asarray(image)[8:456, 24:472], expected_board(piece_set, theme))
                 session.press('Right')
                 visible()

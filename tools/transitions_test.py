@@ -37,6 +37,25 @@ def main():
                         assert memory(0x1E000, 2048, 'vram') == bytes(2048)
                         assert memory(0x1E800, 32, 'vram') == b'\x22' * 32
                         assert memory(0x1FC16, 2, 'vram') == b'\x0c\x77'
+                        if not seen_figures:
+                            # Check visible pixels, since centering the sprite's
+                            # canvas alone misses the font's empty edge pixels.
+                            sprite = memory(0x1FC10, 8, 'vram')
+                            source = (sprite[0] | ((sprite[1] & 15) << 8)) << 5
+                            packed = memory(source, 512, 'vram')
+                            ink = {(x, y) for y in range(16) for x in range(64)
+                                   if (packed[y * 32 + x // 2] >> (0 if x & 1 else 4)) & 15}
+                            text = {(x, y) for x, y in ink if 4 <= y < 12}
+                            sx = sprite[2] | ((sprite[3] & 3) << 8)
+                            sy = sprite[4] | ((sprite[5] & 3) << 8)
+                            for pixels in (ink, text):
+                                left = min(x for x, y in pixels)
+                                right = max(x for x, y in pixels)
+                                top = min(y for x, y in pixels)
+                                bottom = max(y for x, y in pixels)
+                                assert 2 * sx + left + right == 640, (name, 'Label off center horizontally')
+                                assert 2 * sy + top + bottom == 480, (name, 'Label off center vertically')
+                            assert {x for x, y in ink if y == 2} == {x for x, y in ink if y == 14}
                         depths = []
                         for index in range(12):
                             attributes = memory(0x1FC1E + index * 8, 2, 'vram')

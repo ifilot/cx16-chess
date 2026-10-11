@@ -3,13 +3,19 @@ ROM ?= $(abspath $(firstword $(wildcard ../emulator/rom.bin ../emulator-win/rom.
 EMU_FLAGS ?= -scale 2
 DEMO_GIF ?= docs/cx16-chess-gameplay.gif
 
-.PHONY: all run screenshot demo test test-ui test-dist test-sd test-storage parity fuzz bench wac dist clean
+.PHONY: all run screenshot demo test test-ui test-dist test-sd test-storage test-site site parity fuzz bench wac dist clean
 
 all:
 	$(MAKE) -C src
 
 dist: all
 	python3 tools/distribute.py
+
+site: dist
+	python3 tools/build_site.py
+
+test-site: site
+	node tests/check_site.cjs
 
 run: all
 	cd src && "$(EMU)" -rom "$(ROM)" -prg CHESS.PRG -run $(EMU_FLAGS)
@@ -30,6 +36,7 @@ test-ui: all
 	python3 tools/startup_test.py
 	python3 tools/transitions_test.py
 	python3 tools/ui_test.py
+	python3 tools/menu_redraw_test.py
 	python3 tools/scorecard_test.py
 	python3 tools/options_test.py
 	python3 tools/indicators_test.py

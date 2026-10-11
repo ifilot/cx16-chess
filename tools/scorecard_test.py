@@ -13,7 +13,7 @@ from screenshot import ROOT, Session
 sys.path.insert(0, str(ROOT / 'assets/scripts'))
 from bitmap_font import BitmapFont
 from build_graphics import FIGURINES16, font_codes
-from palette import INK, rgb
+from palette import INK, rgb, splash_colors
 from layout import MOVES_Y, MOVE_ROWS
 
 MOVES = ['e4', 'e5', 'Nf3', 'Nc6', 'Bb5', 'Nf6', 'Bxc6+', 'dxc6',
@@ -31,7 +31,7 @@ def main():
         session.emu.advance(480)
         session.press('Return')
         session.emu.advance(300)
-        for key in ['Right', 'Right', 'Down', 'Down', 'Return']:
+        for key in ['Right', 'Right', 'Right', 'Down', 'Down', 'Return']:
             session.press(key)
         session.emu.advance(300)
         for _ in range(120):
@@ -40,6 +40,7 @@ def main():
             session.emu.advance(10)
         else:
             raise AssertionError('Game never became visible')
+        assert session.emu.read_memory(symbols['_match_computer'])[0] == 0
         data = b''.join(move.encode('ascii').ljust(8, b'\0') for move in MOVES)
         session.emu.write_memory(0, data, space='banked_ram', bank=19)
         session.emu.write_memory(symbols['_ply'], len(MOVES).to_bytes(2, 'little'))
@@ -72,10 +73,11 @@ def main():
                     else:
                         font.draw(expected, x, y + 12, char, INK)
                         x += 8
-        palette = np.array([rgb(i) for i in range(16)], np.uint8)
+        colors = splash_colors()
+        palette = np.array([rgb(i, colors) for i in range(len(colors))], np.uint8)
         np.testing.assert_array_equal(actual[MOVES_Y:MOVES_Y + MOVE_ROWS * 16, 488:], palette[expected][MOVES_Y:MOVES_Y + MOVE_ROWS * 16, 488:])
         assert Image.open(dest).size == (640, 480)
-        assert set(Image.open(dest).getdata()) <= {rgb(i) for i in range(16)}
+        assert set(Image.open(dest).getdata()) <= {rgb(i, colors) for i in range(len(colors))}
         Image.open(dest).crop((488, 112, 640, 432)).resize((456, 960), Image.Resampling.NEAREST).save(ROOT / 'build/scorecard-icons-detail.png')
         print('PASS: all scorecard fixture pixels match, including 16x16 icons, notation spacing, promotions and check/mate marks')
         # Evaluation is signed from White's view; verify both directions,
@@ -113,18 +115,24 @@ def main():
         assert int.from_bytes(session.emu.read_memory(symbols['_match_think_budget'], 2), 'little') == 600
         glyphs = {index * 2: chr(code) for index, code in enumerate(font_codes())}
         snapshots, percentages = [], []
-        for index in range(3):
-            session.emu.advance(40)
-            path = ROOT / f'build/scorecard-thinking-{index}.png'
-            session.shot(path)
-            pixels = np.asarray(Image.open(path).convert('RGB'))
-            snapshots.append(pixels[440:456, 488:544].copy())
-            cells = session.emu.read_memory(0x18000 + (55 * 128 + 69) * 2, 16, space='vram')
-            tiles = np.frombuffer(cells, dtype='<u2') & 1023
-            label = ''.join(glyphs[int(tile)] for tile in tiles)
-            assert label.startswith('TIME ') and label.endswith('%'), label
-            percentages.append(int(label[5:7]))
-            assert set(Image.open(path).getdata()) <= {rgb(i) for i in range(16)}
+        clear = symbols['_video_clear_block']
+        session.emu.request('breakpoint', address=clear, bank=0)
+        try:
+            for index in range(3):
+                result = session.emu.advance(40)
+                assert result['reason'] != 'breakpoint', 'Thinking animation blanked its status row'
+                path = ROOT / f'build/scorecard-thinking-{index}.png'
+                session.shot(path)
+                pixels = np.asarray(Image.open(path).convert('RGB'))
+                snapshots.append(pixels[440:456, 488:544].copy())
+                cells = session.emu.read_memory(0x18000 + (55 * 128 + 69) * 2, 16, space='vram')
+                tiles = np.frombuffer(cells, dtype='<u2') & 1023
+                label = ''.join(glyphs[int(tile)] for tile in tiles)
+                assert label.startswith('TIME ') and label.endswith('%'), label
+                percentages.append(int(label[5:7]))
+                assert set(Image.open(path).getdata()) <= {rgb(i, colors) for i in range(len(colors))}
+        finally:
+            session.emu.request('breakpoint', action='remove', address=clear, bank=0)
         assert percentages[0] < percentages[-1] < 100, percentages
         assert any(not np.array_equal(snapshots[0], frame) for frame in snapshots[1:]), 'Figurines did not animate'
         session.emu.advance(650)

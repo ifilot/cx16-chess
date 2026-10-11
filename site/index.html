@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#eeddbb">
+  <meta name="description" content="Play CX16 Chess in your browser. A newspaper-style chess game for the Commander X16, with a native 65C02 engine, three computer levels, and local two-player chess.">
+  <title>CX16 Chess — chess on an 8-bit machine</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script defer src="app.js"></script>
+</head>
+<body>
+<a class="skip" href="#play-section">Skip to the game</a>
+<header class="masthead">
+  <div class="edition"><span>A COMMANDER X16 CHESS PAPER</span><a href="https://github.com/ifilot/cx16-chess">SOURCE &amp; DEVELOPMENT ↗</a></div>
+  <h1>CX16 CHESS</h1>
+  <div class="strap"><span>65C02 · 8 MHz · 640 × 480</span><nav aria-label="Main navigation"><a href="#play-section">Play</a><a href="#engine">The engine</a><a href="#strength">Strength</a><a href="#download">Download</a></nav></div>
+</header>
+<main>
+  <section class="opening" aria-label="Introduction">
+    <div><p class="eyebrow">THE ROYAL GAME, IN INK &amp; PAPER</p><h2>A small machine.<br>A proper game of chess.</h2></div>
+    <p class="standfirst">Engraved pieces, a printed scorecard, and an engine written for the Commander X16. Play against the computer, share the board with a friend, or watch two computers work out their next move.</p>
+  </section>
+  <section class="play-section" id="play-section" aria-label="Play CX16 Chess">
+    <div class="game-heading"><span id="status" role="status" aria-live="polite">Ready when you are</span><span class="spec">THE ORIGINAL GAME · LIVE IN YOUR BROWSER</span></div>
+    <div class="play-layout">
+      <div class="game-column">
+        <div class="player" id="player">
+          <div class="game-viewport" id="game-viewport" tabindex="0" aria-label="Game viewport; swipe to pan on a small screen">
+            <div class="screen" id="screen">
+              <canvas id="canvas" width="640" height="480" tabindex="0" aria-label="CX16 Chess. Use arrows and Enter to choose a game, then click pieces and destination squares. Escape pauses the game." hidden></canvas>
+              <div class="cover" id="cover"><img src="start.png" width="640" height="480" alt="CX16 Chess masthead above an engraved bishop on warm paper"><div class="cover-action"><button id="play" class="primary" type="button">PLAY CHESS <span aria-hidden="true">→</span></button><p>Starts the Commander X16 emulator</p></div></div>
+            </div>
+          </div>
+          <p class="mobile-hint">Swipe to pan; tap a piece, then its destination. Landscape gives you more room. <button type="button" id="exit-fullscreen">Exit fullscreen</button></p>
+          <div class="touch-keys" id="touch-keys" aria-label="Game keyboard">
+            <button type="button" data-key="ArrowUp" aria-label="Up" disabled>↑</button><button type="button" data-key="ArrowDown" aria-label="Down" disabled>↓</button><button type="button" data-key="ArrowLeft" aria-label="Left" disabled>←</button><button type="button" data-key="ArrowRight" aria-label="Right" disabled>→</button><button type="button" data-key="Enter" disabled>Enter</button><button type="button" data-key="Escape" disabled>Esc</button><button type="button" data-key="m" disabled>Menu</button><button type="button" data-key="f" disabled>Flip</button><button type="button" data-key="i" disabled>Scores</button><button type="button" data-key="t" disabled>Theme</button>
+          </div>
+        </div>
+        <div class="toolbar"><p>Click the board to focus. <kbd>Esc</kbd> pauses play.</p><div class="tools"><button id="fullscreen" type="button" disabled>Fullscreen ↗</button><button id="restart" type="button" disabled>Restart</button></div></div>
+        <noscript><p>Enable JavaScript to play here, or download the X16 game below.</p></noscript>
+        <p id="error" class="error" role="alert" hidden></p>
+      </div>
+      <aside class="play-guide" aria-label="Getting started">
+        <p class="eyebrow">AT THE BOARD</p><h3>Your move.</h3>
+        <ol><li><strong>Choose New Game.</strong> Play White or Black, select Two Players, or choose CPU vs CPU for a demonstration.</li><li><strong>Set the thinking time.</strong> Easy, Normal, and Hard give the same engine different search budgets.</li><li><strong>Make your move.</strong> Click a piece, then its destination. Or use the arrows and <kbd>Enter</kbd> to select squares.</li></ol>
+        <dl class="controls"><div><dt><kbd>Esc</kbd></dt><dd>Pause, save, or return</dd></div><div><dt><kbd>M</kbd></dt><dd>Open the main menu</dd></div><div><dt><kbd>F</kbd></dt><dd>Flip the board</dd></div><div><dt><kbd>I</kbd></dt><dd>Toggle the scorecard</dd></div><div><dt><kbd>T</kbd></dt><dd>Change board theme</dd></div></dl>
+        <p class="small">Options offers three engraved piece sets and four board styles. Browser saves and preferences last for this page session; restarting or reloading clears them.</p>
+      </aside>
+    </div>
+  </section>
+  <section class="engine-section" id="engine">
+    <div class="section-heading"><p class="eyebrow">UNDER THE BONNET</p><h2>How an 8-bit machine finds a move</h2><span class="section-number" aria-hidden="true">01</span></div>
+    <div class="engine-intro"><p>The browser runs the actual X16 program inside a WebAssembly emulator. The chess engine itself runs as <strong>65C02 machine code</strong>, just as it does on the 8 MHz computer.</p><p>The project keeps matching implementations in C and assembly. C makes native testing practical; assembly handles the work done at every search node on the X16. Parity tests check that both implementations visit exactly the same nodes.</p></div>
+    <div class="engine-columns">
+      <article><span class="step">I.</span><h3>Represent the position</h3><p>A <strong>0x88 board</strong> stores 64 playable squares in a 128-slot array. A simple bit test catches moves that leave the board. Material, piece-square scores, and a 32-bit position hash update as moves are made and undone.</p></article>
+      <article><span class="step">II.</span><h3>Search a little deeper</h3><p><strong>Iterative deepening</strong> searches one ply deeper at a time, keeping a move from the last completed search. Principal variation search narrows the score window for later candidates. Capture search follows tactical exchanges beyond the main depth limit.</p><p>Move ordering and selective pruning focus the limited time on promising lines. Check extensions spend extra effort when a king is under attack.</p></article>
+      <article><span class="step">III.</span><h3>Evaluate &amp; remember</h3><p>The score considers material, piece placement, bishop pairs, pawn structure, and king safety. Endgame king tables help guide the king when few pieces remain.</p><p>A <strong>16,384-entry transposition table</strong> in banked RAM remembers searched positions, bounds, and good moves. Reaching the same position through another move order can reuse that work.</p></article>
+    </div>
+    <p class="engine-footnote">At 8 MHz, the engine typically searches about 400–1,200 nodes per second. Opening and middlegame depth is often 3–6 plies; sparse endgames can go much deeper. <a href="https://github.com/ifilot/cx16-chess#the-engine">Read the engine notes ↗</a></p>
+  </section>
+  <section class="strength-section" id="strength">
+    <div class="section-heading"><p class="eyebrow">THE COMPUTER OPPONENT</p><h2>Three budgets. One engine.</h2><span class="section-number" aria-hidden="true">02</span></div>
+    <p class="section-lead">Difficulty changes how long the engine can think. The 30-minute game clock can shorten the budget as time runs low. These measured strength estimates come from 144 games against Stockfish 16: 48 for each level.</p>
+    <div class="table-scroll"><table><caption>Measured strength · 10 October 2026</caption><thead><tr><th scope="col">Level</th><th scope="col">Search cap</th><th scope="col">Estimated Elo</th><th scope="col">95% interval</th><th scope="col">Wins / draws / losses</th></tr></thead><tbody><!-- STRENGTH_ROWS --></tbody></table></div>
+    <div class="rating-notes"><p><strong>Read these as estimates.</strong> These numbers use Stockfish’s UCI_Elo scale, rather than a measured FIDE rating. Their intervals overlap: Normal scored below Easy in this sample, so this run does not establish a clear strength ordering.</p><p>Each level played the same twelve openings in both colours against Stockfish settings 1320 and 1500. The intervals describe sampling uncertainty; values below 1320 are extrapolated. <a href="research/RESULTS.md">Full test report ↓</a> · <a href="research/summary.json">Results data ↓</a></p></div>
+  </section>
+  <section class="download-section" id="download">
+    <div><p class="eyebrow">TAKE IT TO THE MACHINE</p><h2>Play on your own Commander X16.</h2><p>Download the program and its runtime files. Keep the CHESS directory together on your SD card and load <code>CHESS.PRG</code>, or run it in a desktop X16 emulator. Native saves stay on your card.</p></div><a class="download-link" href="CHESS.ZIP" download>DOWNLOAD THE GAME ↓<span>Program + artwork + menu overlays</span></a>
+  </section>
+</main>
+<footer><p>Made by <a href="https://github.com/ifilot">Ivo Filot</a> · <span id="version">CX16 Chess</span><br><a href="https://github.com/ifilot/cx16-chess">Source &amp; GPL-3.0-or-later</a></p><p>Powered by the <a href="https://github.com/X16Community/x16-emulator/releases/tag/r49">Commander X16 emulator r49</a><br><a href="emulator-license.txt">Emulator license</a> · <a href="rom-license.txt">ROM notices</a> · <a href="fonts/LICENSE.txt">PT Serif license</a></p></footer>
+</body>
+</html>
