@@ -92,10 +92,11 @@ game clocks stop while a menu or dialog is open.
 ## Installation
 
 Download `CHESS.ZIP` from the
-[releases page](https://github.com/ifilot/cx16-chess/releases) and copy its
-contents to the root of your SD card, or to the folder you use with the
-emulator. `AUTOBOOT.X16` starts the game automatically when the X16 boots.
-You can also load it yourself:
+[releases page](https://github.com/ifilot/cx16-chess/releases) and copy the
+files inside its `CHESS` folder to the root of your SD card, or to the folder
+you use with the emulator. `AUTOBOOT.X16` is a copy of `CHESS.PRG`; the X16
+runs it automatically when it starts up with that file in the root of the SD
+card. You can also load the game yourself:
 
 ```
 LOAD "CHESS.PRG"
