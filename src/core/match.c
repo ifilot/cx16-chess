@@ -20,6 +20,7 @@
 
 #ifdef __CC65__
 #include <ascii_charmap.h>
+/* The game controller is nonrecursive; the engine has its own stacks. */
 #pragma static-locals (on)
 #endif
 #include <string.h>
@@ -28,6 +29,12 @@
 #include "rules.h"
 #include "engine.h"
 #include "match.h"
+
+/*
+ * The game controller: plays moves through rules.c, keeps the SAN and
+ * coordinate lists of the game, runs the clocks, detects the end of the
+ * game and asks the engine for moves. See match.h.
+ */
 
 uint8_t match_state;
 uint8_t match_result;
@@ -46,7 +53,7 @@ char match_best[8];
 
 #define ANALYSIS_TIME   (10 * 60)       // jiffies
 
-static uint8_t jiffy_count;
+static uint8_t jiffy_count;             // jiffies towards the next clock second
 
 /*
  * The SAN of every half move, 8 bytes each. On the X16 the list lives in
@@ -69,6 +76,10 @@ static char SAN_LIST[MAX_HISTORY * SAN_SIZE];
 static uint8_t MOVE_LIST[MAX_HISTORY * 3];
 #endif
 
+/**
+ * @brief Copy from, to and promotion of a played half move (0 = white's
+ *        first); the flags of move are left untouched
+ */
 void match_move_at(uint16_t index, move_t* move) {
     uint8_t from, to, promo;
 #ifdef __CC65__
@@ -87,6 +98,9 @@ void match_move_at(uint16_t index, move_t* move) {
     move->promo = promo;
 }
 
+/**
+ * @brief Store from, to and promotion of the move about to be played
+ */
 static void record_move(const move_t* move) {
     uint16_t index = ply * 3;
     uint8_t from = move->from, to = move->to, promo = move->promo;
@@ -102,9 +116,19 @@ static void record_move(const move_t* move) {
 #endif
 }
 
+/**
+ * @brief Jiffies (0..59) counted towards the next clock second, for saves
+ */
 uint8_t match_clock_fraction(void) { return jiffy_count; }
+
+/**
+ * @brief Restore the jiffies counted towards the next clock second
+ */
 void match_restore_fraction(uint8_t value) { jiffy_count = value; }
 
+/**
+ * @brief Store the SAN of a half move in the banked SAN list
+ */
 static void san_store(uint16_t half_move, const char* san) {
 #ifdef __CC65__
     uint8_t saved = RAM_BANK;
@@ -116,6 +140,9 @@ static void san_store(uint16_t half_move, const char* san) {
 #endif
 }
 
+/**
+ * @brief Copy the SAN of a played half move (0 = white's first) into buf
+ */
 void match_san(uint16_t half_move, char* buf) {
 #ifdef __CC65__
     uint8_t saved = RAM_BANK;
@@ -158,10 +185,22 @@ static void check_end(void) {
     if(match_result != RESULT_NONE) match_state = MATCH_OVER;
 }
 
+/**
+ * @brief Prepare the engine; call once at start-up
+ */
 void match_init(void) {
     engine_init();
 }
 
+/**
+ * @brief Start a new game from the initial position
+ *
+ * Seeds the engine's weakening noise from the clock, so weak levels play
+ * differently in every game.
+ *
+ * @param seconds  time per player
+ * @param computer COMPUTER_* bits
+ */
 void match_new(uint16_t seconds, uint8_t computer) {
     rules_new_game();
     engine_new_game();
@@ -179,6 +218,11 @@ void match_new(uint16_t seconds, uint8_t computer) {
     jiffy_count = 0;
 }
 
+/**
+ * @brief Play a legal move (an entry of legal_moves) and record it
+ *
+ * Ignored once the game is over.
+ */
 void match_play(const move_t* m) {
     move_t mv;
     char san[SAN_SIZE];
@@ -198,6 +242,10 @@ void match_play(const move_t* m) {
     check_end();
 }
 
+/**
+ * @brief Find the legal move from-to (promo: piece type, or EMPTY for the
+ *        first matching one); NULL if there is none
+ */
 const move_t* match_find_move(uint8_t from, uint8_t to, uint8_t promo) {
     uint8_t i;
 
@@ -210,6 +258,13 @@ const move_t* match_find_move(uint8_t from, uint8_t to, uint8_t promo) {
     return 0;
 }
 
+/**
+ * @brief Run the clock of the side to move
+ *
+ * A flag fall without mating material for the opponent is a draw.
+ *
+ * @return 1 when a displayed second changed or the game ended
+ */
 uint8_t match_tick(uint8_t jiffies) {
     uint8_t idx, changed = 0;
 
@@ -232,6 +287,9 @@ uint8_t match_tick(uint8_t jiffies) {
     return changed;
 }
 
+/**
+ * @brief Is the engine to move?
+ */
 uint8_t match_computer_to_move(void) {
     return match_state == MATCH_PLAYING &&
            (match_computer & ((side == WHITE) ? COMPUTER_WHITE : COMPUTER_BLACK));
@@ -244,10 +302,14 @@ static uint8_t cpu_difficulty(void) {
     return match_computer == COMPUTER_BOTH && side == BLACK ? match_black_difficulty : match_difficulty;
 }
 
-static engine_result_t result;
+static engine_result_t result;          // result of the last search
 
 /**
  * @brief Search the current position; keeps the evaluation (white's view)
+ *
+ * @param poll    Called regularly while the engine thinks
+ * @param depth   Maximum depth, 0 for no limit
+ * @param jiffies Time limit, 0 for no limit
  */
 static void think(void (*poll)(void), uint8_t depth, uint16_t jiffies) {
     match_think_start = (uint16_t)clock();
@@ -260,6 +322,12 @@ static void think(void (*poll)(void), uint8_t depth, uint16_t jiffies) {
     match_eval_valid = 1;
 }
 
+/**
+ * @brief Let the engine analyse the position for the side to move: sets
+ *        match_best and match_eval
+ *
+ * Analysis searches at full strength for ANALYSIS_TIME.
+ */
 void match_analyse(void (*poll)(void)) {
     const move_t* m;
     move_t mv;
@@ -275,6 +343,12 @@ void match_analyse(void (*poll)(void)) {
     }
 }
 
+/**
+ * @brief Let the engine choose and play a move at the current difficulty
+ *
+ * Maps DIFFICULTY_* to a search depth and root noise. Plays the first
+ * legal move if the search returned none (e.g. when it was aborted).
+ */
 void match_computer_move(void (*poll)(void)) {
     const move_t* m;
     uint8_t difficulty = cpu_difficulty();

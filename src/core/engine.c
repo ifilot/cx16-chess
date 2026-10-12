@@ -59,14 +59,24 @@ static uint8_t root_to[MAX_MOVES];
 #pragma bss-name (pop)
 #endif
 static uint8_t root_flags[MAX_MOVES];
-static uint8_t root_count;
-static uint16_t weakness, random_state = 1;
+static uint8_t root_count;              // legal root moves
+static uint16_t weakness, random_state = 1; // root noise in centipawns, xorshift state
 
+/**
+ * @brief Weaken the engine by adding random noise to root move scores
+ *
+ * @param noise Noise in centipawns, 0 disables weakening; capped at 2000
+ * @param seed  Nonzero seeds start a reproducible stream; zero preserves
+ *              its state
+ */
 void engine_set_weakness(uint16_t noise, uint16_t seed) {
     weakness = noise > 2000 ? 2000 : noise;
     if(seed) random_state = seed;
 }
 
+/**
+ * @brief Next random noise value, 0..weakness
+ */
 static uint16_t move_noise(void) {
     /* 16-bit xorshift; explicit truncation gives identical arithmetic on
      * cc65 and x64. No use of the platform's rand() or clock in tests. */
@@ -80,6 +90,10 @@ static uint16_t move_noise(void) {
  * TIME
  *****************************************************************************/
 
+/**
+ * @brief Jiffy clock (1/60 s); always 0 in native builds, which have no
+ *        time limits
+ */
 static uint16_t now(void) {
 #ifdef __CC65__
     return (uint16_t)clock();
@@ -114,11 +128,11 @@ void search_poll(void) {
 #define TT_UPPER        3       // score is an upper bound (fail low)
 
 typedef struct {
-    uint16_t check;
-    uint8_t from;
+    uint16_t check;             // hash_hi of the position
+    uint8_t from;               // best move; from == to == 0 marks an empty entry
     uint8_t to;
-    int16_t score;
-    uint8_t depth;
+    int16_t score;              // relative to the node for mates (score_to_tt)
+    uint8_t depth;              // remaining depth of the search that stored it
     uint8_t bound_promo;        // bound << 4 | promotion flags
 } tt_entry_t;
 
@@ -126,11 +140,17 @@ typedef struct {
 #define TT_FIRST_BANK   2
 #define TT_BANKS        16      // 128 KiB, 16384 entries
 
+/**
+ * @brief Entry of the current position; selects its RAM bank
+ */
 static tt_entry_t* tt_slot(void) {
     RAM_BANK = TT_FIRST_BANK + ((uint8_t)(hash_lo >> 10) & (TT_BANKS - 1));
     return (tt_entry_t*)(0xA000 + ((hash_lo & 1023) << 3));
 }
 
+/**
+ * @brief Empty the whole transposition table
+ */
 static void tt_clear(void) {
     uint8_t bank, saved = RAM_BANK;
 
@@ -158,13 +178,19 @@ static void tt_clear(void) {
 #define BANK_RESTORE
 #endif
 
-// mate scores are stored relative to the node, not the root
+/**
+ * @brief Convert a score for storage: mate scores are stored relative to
+ *        the node, not the root
+ */
 static int16_t score_to_tt(int16_t score) {
     if(score > ENGINE_MATE - 512) return score + sply;
     if(score < -ENGINE_MATE + 512) return score - sply;
     return score;
 }
 
+/**
+ * @brief Convert a stored score back to the root's mate distances
+ */
 static int16_t score_from_tt(int16_t score) {
     if(score > ENGINE_MATE - 512) return score - sply;
     if(score < -ENGINE_MATE + 512) return score + sply;
@@ -189,6 +215,16 @@ static uint8_t tt_probe(tt_entry_t* out) {
     return hit;
 }
 
+/**
+ * @brief Store the result of a search of the current position
+ *
+ * @param depth Remaining depth of the search
+ * @param score Score of the node
+ * @param bound TT_EXACT, TT_LOWER or TT_UPPER
+ * @param from  Best move found
+ * @param to    Best move found
+ * @param flags Move flags; only the promotion bits are kept
+ */
 static void tt_store(uint8_t depth, int16_t score, uint8_t bound,
                      uint8_t from, uint8_t to, uint8_t flags) {
     tt_entry_t* e;
@@ -278,13 +314,22 @@ int16_t search_entry(void);
 #else
 #define SEARCH(d, a, b, n) search(d, a, b, n)
 
-static uint8_t poll_count;
+static uint8_t poll_count;              // nodes since the last search_poll(), mod 256
 
+/**
+ * @brief Call search_poll() every 256 nodes
+ */
 static void check_limits(void) {
     if(++poll_count) return;
     search_poll();
 }
 
+/**
+ * @brief Credit a quiet move that caused a beta cutoff
+ *
+ * Makes it the first killer of this ply and raises its history counter by
+ * depth squared (at most 64), halving all counters before one overflows.
+ */
 static void remember_quiet(uint8_t from, uint8_t to, uint8_t depth) {
     uint8_t* h;
     uint16_t i;
@@ -544,6 +589,11 @@ static void collect_pv(engine_result_t* result) {
 
 /**
  * @brief Find the best move; stops at max_depth, time (jiffies) or nodes
+ *
+ * The root driver: iterative deepening over the legal root moves, with the
+ * best move of each iteration searched first in the next. With weakness
+ * set, every root move gets a full window and noise picks among them. Stops
+ * early on a forced mate, or at depth 4 when there is only one legal move.
  */
 void engine_search(uint8_t max_depth, uint16_t time_lim, uint32_t node_lim,
                    engine_result_t* result) {
@@ -694,6 +744,9 @@ void engine_new_game(void) {
     LEAVE_ENGINE;
 }
 
+/**
+ * @brief Forget the recorded game positions (before replaying a game)
+ */
 void engine_clear_history(void) {
     ENTER_ENGINE;
     history_clear();

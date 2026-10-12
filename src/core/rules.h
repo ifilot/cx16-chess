@@ -64,17 +64,17 @@
 #define UNDO_DEPTH      8       // moves that can be taken back with rules_unmake
 
 typedef struct {
-    uint8_t from;
-    uint8_t to;
+    uint8_t from;       // 0x88 square
+    uint8_t to;         // 0x88 square
     uint8_t promo;      // piece type, or EMPTY
-    uint8_t flags;
+    uint8_t flags;      // MF_* bits
 } move_t;
 
-extern uint8_t board[128];
+extern uint8_t board[128];      // 0x88 board of pieces, EMPTY when free
 extern uint8_t side;            // WHITE or BLACK to move
-extern uint8_t castling;
+extern uint8_t castling;        // CASTLE_* rights still available
 extern uint8_t ep_square;       // NO_SQUARE when en passant is impossible
-extern uint8_t halfmove_clock;
+extern uint8_t halfmove_clock;  // plies since the last capture or pawn move
 extern uint16_t ply;            // half moves since the initial position
 
 // legal moves of the current position, refreshed by rules_generate_legal()
@@ -150,10 +150,24 @@ uint8_t rules_insufficient_material(void);
 
 /* Used to validate a disk replay without changing the current match. */
 typedef struct {
-    uint8_t board[128], side, castling, ep_square, halfmove_clock;
+    uint8_t board[128];
+    uint8_t side;
+    uint8_t castling;
+    uint8_t ep_square;
+    uint8_t halfmove_clock;
     uint16_t ply;
 } rules_position_t;
+
+/**
+ * @brief Copy the current position, including ply, into position
+ */
 void rules_capture(rules_position_t* position);
+
+/**
+ * @brief Make a captured position current again
+ *
+ * Forgets the undo history and regenerates legal_moves.
+ */
 void rules_restore(const rules_position_t* position);
 
 #endif // _RULES_H

@@ -39,7 +39,7 @@ typedef struct {
     uint8_t promo;                  // piece type or 0
     uint8_t depth;                  // last completed iteration
     int16_t score;                  // centipawns, side to move's view
-    uint32_t nodes;
+    uint32_t nodes;                 // positions visited
     uint16_t time;                  // jiffies used (X16 only)
     uint8_t pv[32];                 // principal variation, from/to pairs
 } engine_result_t;
@@ -59,8 +59,13 @@ void engine_init(void);
  */
 void engine_new_game(void);
 
-/* Root move score noise, 0 disables weakening; maximum 2000 centipawns.
- * Nonzero seeds start a reproducible stream; zero preserves its state. */
+/**
+ * @brief Weaken the engine by adding random noise to root move scores
+ *
+ * @param noise Noise in centipawns, 0 disables weakening; maximum 2000
+ * @param seed  Nonzero seeds start a reproducible stream; zero preserves
+ *              its state
+ */
 void engine_set_weakness(uint16_t noise, uint16_t seed);
 
 /**

@@ -262,10 +262,12 @@ slide_kind: .byte 0, 0, 0, ATT_DIAG, ATT_STRAIGHT, ATT_DIAG | ATT_STRAIGHT, 0, 0
 ;--------------------------------------------------------------------------
         .segment "CODE"
 
+;------------------------------------------------------------------------------
+; ROUTINE hash_piece
 ;
 ; Hash piece Y on square X into the position hash; keeps the first key
 ; half in z0lo/z0hi for the pawn hash.
-;
+;------------------------------------------------------------------------------
 hash_piece:
         lda zpage,y
         sta zptr+1
@@ -297,9 +299,11 @@ hash_piece:
         sta _hash_hi+1
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE piece_add
 ;
 ; Put piece A on the empty square X and update all incremental terms.
-;
+;------------------------------------------------------------------------------
 piece_add:
         sta _bd,x
         sta t_p
@@ -398,9 +402,11 @@ piece_add:
 @nopawnhash:
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE piece_remove
 ;
 ; Remove the piece on square X and update all incremental terms.
-;
+;------------------------------------------------------------------------------
 piece_remove:
         lda _bd,x
         sta t_p
@@ -497,16 +503,20 @@ piece_remove:
 @nopawnhash:
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE _board_put
 ;
 ; void board_put(uint8_t piece): put a piece on square mk_to
-;
+;------------------------------------------------------------------------------
 _board_put:
         ldx _mk_to
         jmp piece_add
 
+;------------------------------------------------------------------------------
+; ROUTINE hash_state
 ;
 ; XOR the castling and en passant keys into the hash
-;
+;------------------------------------------------------------------------------
 hash_state:
         lda _castle
         asl
@@ -542,6 +552,11 @@ hash_state:
         sta _hash_hi+1
 @done:  rts
 
+;------------------------------------------------------------------------------
+; ROUTINE hash_side
+;
+; Toggle the side-to-move key in the position hash
+;------------------------------------------------------------------------------
 hash_side:
         lda _hash_lo
         eor _zob_side_lo
@@ -557,10 +572,12 @@ hash_side:
         sta _hash_hi+1
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE update_state_hash
 ;
 ; XOR the castling / en passant keys that changed during the move of undo
 ; slot sply (equivalent to removing all old keys and adding all new ones)
-;
+;------------------------------------------------------------------------------
 update_state_hash:
         ldx _sply
         lda u_castle,x
@@ -585,6 +602,11 @@ update_state_hash:
         jmp xor_ep
 @done:  rts
 
+;------------------------------------------------------------------------------
+; ROUTINE xor_castle
+;
+; Toggle the castling key of the rights in Y (Y = 2 * castling rights)
+;------------------------------------------------------------------------------
 xor_castle:                     ; Y = 2 * castling rights
         lda _hash_lo
         eor _zob_castle_lo,y
@@ -600,6 +622,11 @@ xor_castle:                     ; Y = 2 * castling rights
         sta _hash_hi+1
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE xor_ep
+;
+; Toggle the en passant key of the file of square A
+;------------------------------------------------------------------------------
 xor_ep:                         ; A = en passant square
         and #7
         asl
@@ -618,9 +645,11 @@ xor_ep:                         ; A = en passant square
         sta _hash_hi+1
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE save_hash
 ;
 ; Save the hash in the undo slot X and push it on the repetition list
-;
+;------------------------------------------------------------------------------
 save_hash:
         lda _pawn_hash
         sta u_ph0,x
@@ -648,6 +677,12 @@ save_hash:
         inc _rep_count
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE restore_hash
+;
+; Restore the hashes saved in undo slot X and drop the newest entry
+; of the repetition list
+;------------------------------------------------------------------------------
 restore_hash:
         lda u_ph0,x
         sta _pawn_hash
@@ -666,10 +701,12 @@ restore_hash:
         dec _rep_count
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE _make_move
 ;
 ; uint8_t make_move(void): play mk_from-mk_to (mk_flags); returns 0 when
 ; the move leaves the own king in check (undo it anyway)
-;
+;------------------------------------------------------------------------------
 _make_move:
         ldx _sply
         lda _mk_from
@@ -873,11 +910,13 @@ _make_move:
         tax
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE compute_check
 ;
 ; After a legal move: does it give check? Stores chk_flag[sply].
 ; Direct check by the piece on mk_to, or discovered through mk_from;
 ; castling and en passant use the full test.
-;
+;------------------------------------------------------------------------------
 compute_check:
         lda _stm
         lsr
@@ -989,9 +1028,11 @@ compute_check:
         jsr _square_attacked
         bra @store
 
+;------------------------------------------------------------------------------
+; ROUTINE _refresh_check
 ;
 ; void refresh_check(void): full check test of the current position
-;
+;------------------------------------------------------------------------------
 _refresh_check:
         lda _stm
         lsr
@@ -1007,9 +1048,11 @@ _refresh_check:
         sta chk_flag,x
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE _unmake_move
 ;
 ; void unmake_move(void)
-;
+;------------------------------------------------------------------------------
 _unmake_move:
         lda #1                  ; hashes come back from the undo record
         sta no_hash
@@ -1102,9 +1145,12 @@ _unmake_move:
         stz no_hash
         jmp restore_hash
 
+;------------------------------------------------------------------------------
+; ROUTINES _make_null, _unmake_null
 ;
-; void make_null(void) / void unmake_null(void)
-;
+; void make_null(void) / void unmake_null(void): pass the move to the
+; opponent for null-move pruning, and take it back
+;------------------------------------------------------------------------------
 _make_null:
         ldx _sply
         lda _ep
@@ -1148,9 +1194,11 @@ _unmake_null:
         sta _ep
         jmp restore_hash
 
+;------------------------------------------------------------------------------
+; ROUTINE _is_repetition
 ;
 ; uint8_t is_repetition(void)
-;
+;------------------------------------------------------------------------------
 _is_repetition:
         lda _fifty
         cmp #4
@@ -1191,9 +1239,11 @@ _is_repetition:
         tax
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE _square_attacked
 ;
 ; uint8_t square_attacked(uint8_t by): is att_sq attacked by colour by?
-;
+;------------------------------------------------------------------------------
 _square_attacked:
         sta a_by
         ora #2                  ; target piece codes of colour by
@@ -1318,18 +1368,22 @@ _square_attacked:
         ldx #0
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE _in_check
 ;
 ; uint8_t in_check(void): is the side to move in check?
-;
+;------------------------------------------------------------------------------
 _in_check:
         ldx _sply
         lda chk_flag,x
         ldx #0
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE emit
 ;
 ; Store the move g_sq-g_to with flags A
-;
+;------------------------------------------------------------------------------
 emit:   ldy g_n
         sta (mflp),y
         lda g_sq
@@ -1339,9 +1393,11 @@ emit:   ldy g_n
         inc g_n
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE pawn_capture
 ;
 ; Pawn capture (or en passant) to square A
-;
+;------------------------------------------------------------------------------
 pawn_capture:
         sta g_to
         tax
@@ -1378,10 +1434,12 @@ pawn_capture:
         jmp emit
 @done:  rts
 
+;------------------------------------------------------------------------------
+; ROUTINE castle_safe
 ;
 ; Are squares A, X and Y safe from the opponent (castling path)? Carry
 ; clear when safe.
-;
+;------------------------------------------------------------------------------
 castle_safe:
         sta g_to
         stx g_step
@@ -1410,9 +1468,11 @@ castle_safe:
         sec
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE _generate_moves
 ;
 ; uint16_t generate_moves(uint8_t captures_only)
-;
+;------------------------------------------------------------------------------
 _generate_moves:
         sta g_caps
         lda _ms_top+1           ; move stack full: no moves
@@ -1679,9 +1739,11 @@ _generate_moves:
         lda _ms_top
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINES add_s8, sub_s8, add_u8, sub_u8
 ;
 ; Evaluation helpers: add / subtract a signed or unsigned byte to e_s
-;
+;------------------------------------------------------------------------------
 add_s8: ldx #0
         cmp #$80
         bcc :+
@@ -1725,9 +1787,11 @@ sub_u8: sta tmp
         dec e_s+1
 :       rts
 
+;------------------------------------------------------------------------------
+; ROUTINE shelter
 ;
 ; Pawn shelter penalty of colour X (0/1) in A
-;
+;------------------------------------------------------------------------------
 shelter:
         lda _ksq,x
         lsr
@@ -1780,9 +1844,11 @@ shelter:
 @zero:  lda #0
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE mop_up
 ;
 ; Mop-up bonus in A: X = losing king, Y = winning king
-;
+;------------------------------------------------------------------------------
 mop_up: lda _center_dist,x
         sta mp_c
         txa
@@ -1832,11 +1898,13 @@ mop_up: lda _center_dist,x
         adc mp_t
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE _validate_move
 ;
 ; uint8_t validate_move(void): flags of the pseudo-legal move mk_from-mk_to
 ; with promotion piece mk_flags (bits 0-2), or $FF. Produces exactly the
 ; flags generate_moves() would give the move.
-;
+;------------------------------------------------------------------------------
 _validate_move:
         lda _mk_from
         ora _mk_to
@@ -2040,10 +2108,12 @@ _validate_move:
         ldx #0
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE promotion
 ;
 ; Pawn move to mk_to: the promotion piece must be given exactly on the last
 ; rank; returns it (or $FF) in A
-;
+;------------------------------------------------------------------------------
 promotion:
         lda _mk_to
         lsr
@@ -2071,10 +2141,12 @@ promotion:
         ldx #0
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE _pawn_structure_compute
 ;
 ; int16_t pawn_structure_compute(void): doubled, isolated and passed pawns
 ; (C reference in engine_board.c); stores the result in the pawn cache
-;
+;------------------------------------------------------------------------------
 ps_f    = mp_c                  ; (scratch of mop_up, not used meanwhile)
 ps_m    = mp_d
 ps_r    = mp_t
@@ -2178,8 +2250,12 @@ _pawn_structure_compute:
         ldx e_s+1
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINES neighbours_w, neighbours_b
+;
 ; Z clear when a neighbouring file (ps_f +- 1) has a white / black pawn
 ; (preserves Y)
+;------------------------------------------------------------------------------
 neighbours_w:
         lda #0
         ldx ps_f
@@ -2201,7 +2277,12 @@ neighbours_b:
 :       cmp #0
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINES ahead_b, ahead_w
+;
 ; Z clear when the opponent has a pawn in mask A on files ps_f-1..ps_f+1
+; (ahead_b tests black pawns, ahead_w white pawns)
+;------------------------------------------------------------------------------
 ahead_b:
         sta tmp
         ldx ps_f
@@ -2227,9 +2308,11 @@ ahead_w:
 :       and tmp
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE _evaluate
 ;
 ; int16_t evaluate(void): static evaluation, side to move's view
-;
+;------------------------------------------------------------------------------
 _evaluate:
         lda _psq_score
         sta e_s

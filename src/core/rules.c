@@ -20,11 +20,18 @@
 
 #ifdef __CC65__
 #include <ascii_charmap.h>      // SAN letters must match the ASCII font
+/* No rules function calls itself, so locals can be static. */
 #pragma static-locals (on)
 #endif
 #include <string.h>
 
 #include "rules.h"
+
+/*
+ * The move rules of the game: move generation, legality, making and taking
+ * back moves, SAN and the draw by insufficient material. Independent of the
+ * engine, which has its own faster board representation.
+ */
 
 uint8_t board[128];
 uint8_t side;
@@ -36,17 +43,18 @@ uint16_t ply;
 move_t legal_moves[MAX_MOVES];
 uint8_t legal_count;
 
+/* What rules_unmake() needs to take a move back */
 typedef struct {
     move_t move;
-    uint8_t captured;
-    uint8_t castling;
-    uint8_t ep_square;
-    uint8_t halfmove_clock;
+    uint8_t captured;           // piece taken, EMPTY if none
+    uint8_t castling;           // rights before the move
+    uint8_t ep_square;          // en passant square before the move
+    uint8_t halfmove_clock;     // fifty-move counter before the move
 } undo_t;
 
-static undo_t history[UNDO_DEPTH];
-static uint8_t history_len;
-static uint8_t king_sq[2];
+static undo_t history[UNDO_DEPTH];      // moves not yet committed
+static uint8_t history_len;             // entries used in history
+static uint8_t king_sq[2];              // king squares, [0] white, [1] black
 
 static const int8_t knight_steps[8] = {33, 31, 18, 14, -33, -31, -18, -14};
 static const int8_t king_steps[8] = {1, -1, 16, -16, 17, 15, -17, -15};
@@ -82,6 +90,9 @@ void rules_new_game(void) {
 #if defined(__CC65__) && defined(NO_TEST_HOOKS)
 #pragma code-name (push, "UICODE")
 #endif
+/**
+ * @brief Copy the current position, including ply, into position
+ */
 void rules_capture(rules_position_t* position) {
     memcpy(position->board, board, 128);
     position->side = side;
@@ -91,6 +102,11 @@ void rules_capture(rules_position_t* position) {
     position->ply = ply;
 }
 
+/**
+ * @brief Make a captured position current again
+ *
+ * Forgets the undo history, finds the kings and regenerates legal_moves.
+ */
 void rules_restore(const rules_position_t* position) {
     uint8_t square;
     memcpy(board, position->board, 128);
@@ -225,9 +241,12 @@ uint8_t rules_in_check(void) {
     return rules_attacked(king_sq[KING_INDEX(side)], side ^ BLACK);
 }
 
-static move_t* gen_out;
-static uint8_t gen_count;
+static move_t* gen_out;                 // move list being filled
+static uint8_t gen_count;               // moves in gen_out
 
+/**
+ * @brief Append a move without promotion to gen_out
+ */
 static void add_move(uint8_t from, uint8_t to, uint8_t flags) {
     move_t* m = &gen_out[gen_count++];
     m->from = from;
@@ -236,6 +255,10 @@ static void add_move(uint8_t from, uint8_t to, uint8_t flags) {
     m->flags = flags;
 }
 
+/**
+ * @brief Append a pawn move; on the last rank one move per promotion
+ *        piece, queen first
+ */
 static void add_pawn_move(uint8_t from, uint8_t to, uint8_t flags) {
     uint8_t promo;
     uint8_t rank = RANK_OF(to);
@@ -250,6 +273,14 @@ static void add_pawn_move(uint8_t from, uint8_t to, uint8_t flags) {
     }
 }
 
+/**
+ * @brief Append the moves of a piece along a set of directions
+ *
+ * @param from  Square of the piece
+ * @param steps 0x88 square offsets of the directions
+ * @param n     Number of directions
+ * @param slide 1 for sliding pieces, 0 for a single step
+ */
 static void gen_steps(uint8_t from, const int8_t* steps, uint8_t n, uint8_t slide) {
     uint8_t i, t, p;
     int8_t step;
@@ -373,6 +404,8 @@ static uint8_t castle_loss(uint8_t sq) {
 
 /**
  * @brief Play a move; returns 0 when it leaves the own king in check
+ *
+ * The move is always made; call rules_unmake() to take it back.
  */
 uint8_t rules_make(const move_t* m) {
     undo_t* u = &history[history_len++];
@@ -423,7 +456,7 @@ uint8_t rules_make(const move_t* m) {
 }
 
 /**
- * @brief Make the moves played so far permanent
+ * @brief Make the moves played so far permanent (forget their undo data)
  */
 void rules_commit(void) {
     history_len = 0;
@@ -507,6 +540,10 @@ static const char piece_letters[] = " PNBRQK";
 
 /**
  * @brief Write the SAN of a legal move into buf (8 bytes)
+ *
+ * Adds a file, rank or both when another piece of the same kind can reach
+ * the same square. Overwrites legal_moves when the move gives check. On
+ * the X16 this lives in menu bank 21, behind the resident rules_san().
  */
 #if defined(__CC65__) && defined(NO_TEST_HOOKS)
 static void banked_san(const move_t* m, char* buf) {
@@ -567,6 +604,10 @@ void rules_san(const move_t* m, char* buf) {
 
 #if defined(__CC65__) && defined(NO_TEST_HOOKS)
 #pragma code-name (pop)
+/**
+ * @brief Resident entry to the banked SAN writer; selects bank 21 and
+ *        restores the caller's bank
+ */
 void rules_san(const move_t* m, char* buf) {
     uint8_t saved = *(uint8_t*)0;
     *(uint8_t*)0 = 21;

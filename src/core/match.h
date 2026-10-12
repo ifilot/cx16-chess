@@ -56,25 +56,28 @@
 #define COMPUTER_BLACK          2
 #define COMPUTER_BOTH           3
 
-extern uint8_t match_state;
-extern uint8_t match_result;
-extern uint8_t match_computer;
-/* Preserve depth IDs for old saves; the menu cycles in strength order. */
+extern uint8_t match_state;             // MATCH_*
+extern uint8_t match_result;            // RESULT_*
+extern uint8_t match_computer;          // COMPUTER_*
+
+/* Difficulty IDs. IDs 0-4 search 2-6 ply; the others were added later.
+ * Preserve depth IDs for old saves; the menu cycles in strength order. */
 #define DIFFICULTY_COUNT 10
 #define DIFFICULTY_SEVEN_PLY 8
 #define DIFFICULTY_EIGHT_PLY 9
 #define DIFFICULTY_ONE_PLY 5
-#define DIFFICULTY_EASY 6
-#define DIFFICULTY_BEGINNER 7
-#define EASY_NOISE 50
+#define DIFFICULTY_EASY 6               // 1 ply with EASY_NOISE
+#define DIFFICULTY_BEGINNER 7           // 1 ply with BEGINNER_NOISE
+#define EASY_NOISE 50                   // root move noise in centipawns
 #define BEGINNER_NOISE 350
-#define DEFAULT_DIFFICULTY 2
-extern uint8_t match_difficulty;
+#define DEFAULT_DIFFICULTY 2            // Strong, 4 ply
+extern uint8_t match_difficulty;        // DIFFICULTY_* (White's in CPU vs CPU)
 /* Black's independent difficulty in computer-versus-computer mode. */
 extern uint8_t match_black_difficulty;
-extern uint8_t match_think_depth;
+extern uint8_t match_think_depth;       // depth of the running search, 0 when timed
 /* Search budget and starting jiffy, for the thinking indicator. */
-extern uint16_t match_think_start, match_think_budget;
+extern uint16_t match_think_start;      // clock() when the search started
+extern uint16_t match_think_budget;     // jiffies allowed, 0 for a depth search
 extern uint16_t match_clock[2];         // seconds left, [0] white, [1] black
 extern uint8_t match_last_from;         // most recent move, NO_SQUARE if none
 extern uint8_t match_last_to;
@@ -138,8 +141,20 @@ void match_analyse(void (*poll)(void));
  */
 void match_san(uint16_t half_move, char* buf);
 
+/**
+ * @brief Copy from, to and promotion of a played half move (0 = white's
+ *        first); the flags of move are left untouched
+ */
 void match_move_at(uint16_t index, move_t* move);
+
+/**
+ * @brief Jiffies (0..59) counted towards the next clock second, for saves
+ */
 uint8_t match_clock_fraction(void);
+
+/**
+ * @brief Restore the jiffies counted towards the next clock second
+ */
 void match_restore_fraction(uint8_t value);
 
 #endif // _MATCH_H

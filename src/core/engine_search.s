@@ -211,18 +211,22 @@ lmp_count:      .byte 0, 8, 14              ; quiet moves searched near the hori
 ;--------------------------------------------------------------------------
         .segment "CODE"
 
+;------------------------------------------------------------------------------
+; ROUTINE _search_entry
 ;
 ; int16_t search_entry(void): search(s_depth, s_alpha, s_beta, s_null)
-;
+;------------------------------------------------------------------------------
 _search_entry:
         jsr search_node
         lda r_lo
         ldx r_hi
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE count_node
 ;
 ; Count a node and check the limits every 256 nodes
-;
+;------------------------------------------------------------------------------
 count_node:
         inc _nodes
         bne :+
@@ -236,9 +240,11 @@ count_node:
         jsr _search_poll
 :       rts
 
+;------------------------------------------------------------------------------
+; ROUTINE set_ptrs
 ;
 ; Point pf/pt/pfl/psc at the move list of node X
-;
+;------------------------------------------------------------------------------
 set_ptrs:
         clc
         lda n_firstlo,x
@@ -270,9 +276,11 @@ set_ptrs:
         sta psc+1
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE release_moves
 ;
 ; ms_top = first of node X
-;
+;------------------------------------------------------------------------------
 release_moves:
         lda n_firstlo,x
         sta _ms_top
@@ -280,9 +288,11 @@ release_moves:
         sta _ms_top+1
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE history_slot
 ;
 ; Point hptr/Y at HISTORY[piece A][square64 of X]
-;
+;------------------------------------------------------------------------------
 history_slot:
         sta tmp
         lsr
@@ -300,9 +310,11 @@ history_slot:
         tay
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE score_moves
 ;
 ; Ordering scores for the moves of node X (see score_moves in engine.c)
-;
+;------------------------------------------------------------------------------
 score_moves:
         ldy #0
 @loop:  tya
@@ -392,9 +404,11 @@ score_moves:
         iny
         jmp @loop
 
+;------------------------------------------------------------------------------
+; ROUTINE pick_move
 ;
 ; Bring the best scored move of k..cnt-1 of node X to position k
-;
+;------------------------------------------------------------------------------
 pick_move:
         lda n_flat,x
         jne @done
@@ -423,9 +437,11 @@ pick_move:
         SWAP psc
 @done:  rts
 
+;------------------------------------------------------------------------------
+; ROUTINE tt_addr
 ;
 ; Locate the TT entry of the current position: bank and ttp
-;
+;------------------------------------------------------------------------------
 tt_addr:
         lda _hash_lo+1
         lsr
@@ -456,9 +472,11 @@ tt_addr:
         sta ttp+1
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE tt_probe
 ;
 ; Probe the TT: tt_hit and the tt_* fields (score relative to the root)
-;
+;------------------------------------------------------------------------------
 tt_probe:
         jsr tt_addr
         stz tt_hit
@@ -521,9 +539,11 @@ tt_probe:
         sta RAM_BANK
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE tt_store
 ;
 ; Store node X in the TT: depth, best, bound A, best move
-;
+;------------------------------------------------------------------------------
 tt_store:
         sta tmp2                ; bound
         jsr tt_addr
@@ -602,9 +622,11 @@ tt_store:
         sta RAM_BANK
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE remember_quiet
 ;
 ; Killer and history update for the quiet cutoff move of node X
-;
+;------------------------------------------------------------------------------
 remember_quiet:
         lda n_mf,x
         cmp _killer_from,x
@@ -666,9 +688,11 @@ remember_quiet:
         sta (hptr),y
         rts
 
-;--------------------------------------------------------------------------
-; Node exits: the value goes to r_lo/r_hi
-
+;------------------------------------------------------------------------------
+; ROUTINES ret_zero, ret_eval
+;
+; Node exits: the value goes to r_lo/r_hi (zero, or the static evaluation)
+;------------------------------------------------------------------------------
 ret_zero:
         stz r_lo
         stz r_hi
@@ -680,9 +704,11 @@ ret_eval:
         stx r_hi
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE search_node
 ;
 ; Search node: search(s_depth, s_alpha, s_beta, s_null)
-;
+;------------------------------------------------------------------------------
 search_node:
         ldx _sply
         lda _s_depth
@@ -1174,9 +1200,11 @@ search_node:
         sta r_hi
         rts
 
+;------------------------------------------------------------------------------
+; ROUTINE quiesce_node
 ;
 ; Quiescence node: quiesce(s_alpha, s_beta) at ply sply
-;
+;------------------------------------------------------------------------------
 quiesce_node:
         ldx _sply
         lda _s_alpha

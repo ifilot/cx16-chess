@@ -30,7 +30,7 @@
 #include "engine_int.h"
 
 #ifdef __CC65__
-#pragma static-locals (on)
+#pragma static-locals (on)      // only perft below is recursive
 #endif
 
 const int16_t piece_value[7] = {0, 100, 320, 330, 500, 900, 0};
@@ -77,8 +77,11 @@ static const int8_t pst[8][64] = {
 };
 
 
-static uint16_t rng_state = 0xACE1;
+static uint16_t rng_state = 0xACE1;     // fixed seed: identical keys on every build
 
+/**
+ * @brief 16-bit xorshift for the Zobrist keys
+ */
 static uint16_t rng(void) {
     rng_state ^= rng_state << 7;
     rng_state ^= rng_state >> 9;
@@ -167,6 +170,9 @@ void board_init(void) {
     }
 }
 
+/**
+ * @brief Invalidate every entry of the pawn structure cache
+ */
 void pawn_cache_clear(void) {
 #ifdef __CC65__
     uint8_t saved = RAM_BANK;
@@ -183,6 +189,10 @@ void pawn_cache_clear(void) {
  * POSITION
  *****************************************************************************/
 
+/**
+ * @brief Set the position to search; rebuilds all incremental terms and
+ *        the hash from scratch
+ */
 void engine_set_position(const uint8_t* board, uint8_t to_move, uint8_t castling,
                          uint8_t ep_square, uint8_t halfmove) {
     uint8_t sq;
@@ -222,11 +232,17 @@ void engine_set_position(const uint8_t* board, uint8_t to_move, uint8_t castling
     LEAVE_ENGINE;
 }
 
+/**
+ * @brief Does entry k of the repetition list hold the current position?
+ */
 static uint8_t rep_matches(uint8_t k) {
     return REP_PAGES[0][k] == (uint8_t)hash_lo && REP_PAGES[1][k] == (hash_lo >> 8) &&
            REP_PAGES[2][k] == (uint8_t)hash_hi && REP_PAGES[3][k] == (hash_hi >> 8);
 }
 
+/**
+ * @brief Append the current position to the repetition list
+ */
 static void rep_store(void) {
     REP_PAGES[0][rep_count] = (uint8_t)hash_lo;
     REP_PAGES[1][rep_count] = hash_lo >> 8;
@@ -235,10 +251,19 @@ static void rep_store(void) {
     rep_count++;
 }
 
+/**
+ * @brief Empty the repetition list
+ */
 void history_clear(void) {
     rep_count = 0;
 }
 
+/**
+ * @brief Remember the current position as played (for repetition draws)
+ *
+ * The list restarts after a capture or pawn move, and keeps MAX_PLY
+ * entries free for the search path.
+ */
 void engine_record_position(void) {
     ENTER_ENGINE;
     if(fifty == 0) rep_count = 0;               // nothing before can repeat
@@ -260,6 +285,9 @@ uint8_t history_drop_root(void) {
     return 0;
 }
 
+/**
+ * @brief How often the recorded current position has occurred (>= 1)
+ */
 uint8_t engine_repetitions(void) {
     uint8_t n = 1, k;
     ENTER_ENGINE;
@@ -272,18 +300,32 @@ uint8_t engine_repetitions(void) {
     return n;
 }
 
+/**
+ * @brief After a search: record the root position again
+ */
 void history_restore_root(void) {
     rep_store();
 }
 
+/**
+ * @brief Does colour (0 or BLACK_SIDE) have pieces other than king and pawns?
+ */
 uint8_t has_pieces(uint8_t color) {
     return npm[color >> 3] != 0;
 }
 
+/**
+ * @brief No pawns and at most one minor piece left on the board
+ */
 uint8_t insufficient_material(void) {
     return pawn_count[0] == 0 && pawn_count[1] == 0 && npm[0] + npm[1] <= 330;
 }
 
+/**
+ * @brief Flags of the pseudo-legal move from-to(-promo), or 0xFF
+ *
+ * Generates on top of the move stack and leaves ms_top unchanged.
+ */
 uint8_t find_move_flags(uint8_t from, uint8_t to, uint8_t promo) {
     uint16_t first = ms_top, last, i;
     uint8_t fl = 0xFF;
@@ -306,6 +348,9 @@ uint8_t find_move_flags(uint8_t from, uint8_t to, uint8_t promo) {
 #ifndef __CC65__
 static const uint8_t passed_bonus[8] = {0, 10, 15, 25, 40, 65, 100, 0};
 
+/**
+ * @brief Number of set bits
+ */
 static uint8_t bit_count(uint8_t x) {
     uint8_t n = 0;
 
@@ -367,6 +412,9 @@ int16_t pawn_structure_compute(void) {
 }
 #endif
 
+/**
+ * @brief Static evaluation of the current position, side to move's view
+ */
 int16_t engine_evaluate(void) {
     int16_t s;
     ENTER_ENGINE;
@@ -380,6 +428,9 @@ int16_t engine_evaluate(void) {
  * TEST HOOKS (engine harness and native tests only)
  *****************************************************************************/
 
+/**
+ * @brief Flags of a pseudo-legal move, 0xFF if none (validator test hook)
+ */
 uint8_t engine_validate(uint8_t from, uint8_t to, uint8_t promo) {
     uint8_t fl;
     ENTER_ENGINE;
@@ -391,10 +442,16 @@ uint8_t engine_validate(uint8_t from, uint8_t to, uint8_t promo) {
     return fl;
 }
 
+/**
+ * @brief Copy the engine's board (debugging)
+ */
 void engine_debug_board(uint8_t* out) {
     memcpy(out, bd, 128);
 }
 
+/**
+ * @brief Write the legal moves as from/to pairs; returns their number
+ */
 uint8_t engine_legal_moves(uint8_t* out) {
     uint16_t last, i;
     uint8_t n = 0;
@@ -421,6 +478,11 @@ uint8_t engine_legal_moves(uint8_t* out) {
 
 uint16_t engine_perft_hash;
 
+/**
+ * @brief Count the legal leaf nodes below the current position
+ *
+ * Folds the hash of every leaf into engine_perft_hash.
+ */
 static uint32_t perft(uint8_t depth) {
     uint16_t first = ms_top, last, i;
     uint32_t count = 0;
@@ -441,6 +503,9 @@ static uint32_t perft(uint8_t depth) {
     return count;
 }
 
+/**
+ * @brief Count leaf nodes of the legal move tree (move generator test)
+ */
 uint32_t engine_perft(uint8_t depth) {
     uint32_t n;
     ENTER_ENGINE;

@@ -1,7 +1,34 @@
+;**************************************************************************
+;                                                                         *
+;   Author: Ivo Filot <ivo@ivofilot.nl>                                   *
+;                                                                         *
+;   CX16-CHESS is free software:                                          *
+;   you can redistribute it and/or modify it under the terms of the       *
+;   GNU General Public License as published by the Free Software          *
+;   Foundation, either version 3 of the License, or (at your option)      *
+;   any later version.                                                    *
+;                                                                         *
+;   CX16-CHESS is distributed in the hope that it will be useful,         *
+;   but WITHOUT ANY WARRANTY; without even the implied warranty           *
+;   of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               *
+;   See the GNU General Public License for more details.                  *
+;                                                                         *
+;   You should have received a copy of the GNU General Public License     *
+;   along with this program.  If not, see http://www.gnu.org/licenses/.   *
+;                                                                         *
+;**************************************************************************
+
+;
 ; Indexed CHESS.DAT loader. Device 8, data channel 2, command channel 15.
 ; Seek/open/validation code lives in bank 21. The reader stays resident so
 ; SQTILES can be loaded with RAM bank 20 active without executing banked code.
 ; Documented KERNAL APIs only: POSITION, MACPTR, ACPTR fallback.
+;
+; CHESS.DAT starts with a 16-byte build stamp that must match the stamp
+; compiled into assets.inc, followed by the resources. assets.inc also
+; holds the index: per resource a 32-bit file offset and a 16-bit length.
+; Both channels stay open between resources until asset_close().
+;
         .include "zeropage.inc"
         .macpack longbranch
         .repeat 26, letter
@@ -12,34 +39,48 @@
         .export asset_stamp, asset_command, asset_address
 
 .segment "BSS"
-_asset_stream:  .res 1
-asset_remaining: .res 2
-asset_address: .res 2
-asset_count: .res 1
-asset_slot: .res 1
-asset_opened: .res 1
-asset_stamp: .res 16
-asset_command: .res 6
+_asset_stream:  .res 1                  ; 1: write every byte to VERA DATA0
+asset_remaining: .res 2                 ; bytes still to read
+asset_address: .res 2                   ; destination of the next read
+asset_count: .res 1                     ; bytes delivered by the last read
+asset_slot: .res 1                      ; offset of the resource's index record
+asset_opened: .res 1                    ; 1 while both channels are open
+asset_stamp: .res 16                    ; build stamp read from the file
+asset_command: .res 6                   ; "P", channel, 32-bit offset
 
 .segment "CODE"
+
+;------------------------------------------------------------------------------
+; ROUTINE _asset_close
+;
+; void asset_close(void) closes the data and command channels, if open, so
+; other code (saves, preferences) can use the drive.
+;------------------------------------------------------------------------------
 _asset_close:
         lda asset_opened
         beq close_done
         lda $01
         pha
-        stz $01
-        jsr $FFCC
+        stz $01                 ; public KERNAL entry points are in ROM bank 0
+        jsr $FFCC               ; CLRCHN
         lda #2
-        jsr $FFC3
+        jsr $FFC3               ; CLOSE data channel
         lda #15
-        jsr $FFC3
+        jsr $FFC3               ; CLOSE command channel
         stz asset_opened
         pla
         sta $01
 close_done:
         rts
 
-; __fastcall__: destination address in A/X; byte count supplied by prepare.
+;------------------------------------------------------------------------------
+; ROUTINE _asset_read
+;
+; uint8_t __fastcall__ asset_read(uint16_t address) reads the bytes left
+; by asset_prepare() to `address` (A low, X high). With asset_stream set,
+; every byte goes to the same address (VERA DATA0, $9F23). Returns 1 on
+; success; on failure both channels are closed and 0 is returned.
+;------------------------------------------------------------------------------
 _asset_read:
         sta asset_address
         stx asset_address+1
@@ -106,6 +147,7 @@ read_done:
         lda #1
         ldx #0
         rts
+; Close both channels and return 0; the caller's ROM bank is on the stack.
 asset_abort:
         jsr $FFCC
         lda #2
@@ -120,6 +162,15 @@ asset_abort:
         rts
 
 .segment "MENUCODE"
+
+;------------------------------------------------------------------------------
+; ROUTINE _asset_prepare
+;
+; uint8_t __fastcall__ asset_prepare(uint8_t resource) seeks to resource
+; `resource` (an ASSET_* index, in A) and sets the byte count for
+; asset_read(). The first call opens both channels and checks the build
+; stamp. Returns 1 on success and 0 on failure.
+;------------------------------------------------------------------------------
 _asset_prepare:
         asl a                   ; index records are six bytes each
         sta asset_slot
@@ -185,7 +236,7 @@ copy_offset:
         sta asset_remaining
         lda asset_index+1,x
         sta asset_remaining+1
-        lda #'P'
+        lda #'P'                ; POSITION channel 2 to the 32-bit offset
         sta asset_command
         lda #2
         sta asset_command+1

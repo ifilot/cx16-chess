@@ -1,6 +1,33 @@
+;**************************************************************************
+;                                                                         *
+;   Author: Ivo Filot <ivo@ivofilot.nl>                                   *
+;                                                                         *
+;   CX16-CHESS is free software:                                          *
+;   you can redistribute it and/or modify it under the terms of the       *
+;   GNU General Public License as published by the Free Software          *
+;   Foundation, either version 3 of the License, or (at your option)      *
+;   any later version.                                                    *
+;                                                                         *
+;   CX16-CHESS is distributed in the hope that it will be useful,         *
+;   but WITHOUT ANY WARRANTY; without even the implied warranty           *
+;   of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.               *
+;   See the GNU General Public License for more details.                  *
+;                                                                         *
+;   You should have received a copy of the GNU General Public License     *
+;   along with this program.  If not, see http://www.gnu.org/licenses/.   *
+;                                                                         *
+;**************************************************************************
+
+;
 ; Show paper and the centered native Loading label before any disk reads.
 ; ONCE constructors run before BSS clearing, so both this code and its bitmap
 ; are reclaimed as game state. The cover itself remains resident in VRAM.
+;
+; VRAM layout of the cover (see also transition.c):
+;   $1E000  32x32 cover map, all tile 0
+;   $1E800  tile 0: solid paper
+;   $1EA00  64x16 Loading label, sprite 2
+;
         .constructor boot_loading
         .export boot_loading_ready
 
@@ -13,6 +40,7 @@ VERA_VIDEO = $9F29
 
 .segment "ONCE"
 
+; Point data port 0 at $1<middle><low>, incrementing by one.
 .macro address low, middle
         lda #low
         sta VERA_ADDR_LO
@@ -22,6 +50,12 @@ VERA_VIDEO = $9F29
         sta VERA_ADDR_HI
 .endmacro
 
+;------------------------------------------------------------------------------
+; ROUTINE boot_loading
+;
+; Constructor: set up 640x480, the paper palette entries, the cover map,
+; paper tile and Loading sprite, and show them on layer 0 and sprite 2.
+;------------------------------------------------------------------------------
 boot_loading:
         ; Disable an inherited KERNAL pointer before drawing/loading any art.
         ; Do not install its default bitmap in our layer-1 tile memory.
@@ -114,6 +148,7 @@ attributes:
 boot_loading_ready:
         rts
 
+; Sprite 2 attributes, copied to $1FC10
 loading_attributes:
         .byte $50, $0F          ; image $1EA00, 4bpp
         .word 289, 232          ; visible ink centered at (320,240)
@@ -125,6 +160,7 @@ loading_attributes:
         .byte (((bits >> (7 - pair * 2)) & 1) << 4) | ((bits >> (6 - pair * 2)) & 1)
         .endrepeat
 .endmacro
+; One pixel row of the label: the seven letters of LOADING between margins.
 .macro row letter_l, letter_o, letter_a, letter_d, letter_i, letter_n, letter_g
         .word 0
         glyph letter_l
@@ -136,6 +172,7 @@ loading_attributes:
         glyph letter_g
         .word 0
 .endmacro
+; A one-pixel ink rule above or below the letters.
 .macro rule
         .word 0
         .repeat 27

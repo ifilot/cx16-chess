@@ -30,8 +30,15 @@
 #include "engine.h"
 #include "bridge.h"
 
+/**
+ * @brief Count the leaf nodes of the move tree with the game's rules.c
+ *
+ * @param depth Depth in plies, 1..4
+ *
+ * @return Number of positions at that depth
+ */
 static uint32_t rules_perft(uint8_t depth) {
-    static move_t lists[5][MAX_MOVES];
+    static move_t lists[5][MAX_MOVES];  // one move list per depth
     move_t* moves = lists[depth];
     uint32_t nodes = 0;
     uint8_t i, n;
@@ -72,6 +79,9 @@ static void replay_moves(void) {
     BRIDGE.replayed = i;
 }
 
+/**
+ * @brief Report ready, then run mailbox commands forever
+ */
 void main(void) {
     static engine_result_t result;
     char fen[128];

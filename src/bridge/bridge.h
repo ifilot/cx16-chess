@@ -47,13 +47,14 @@
 #define MOVES_ADDR      0x0600  // CMD_SEARCH: count, then from/to/promo triples played
                                 // after the FEN position (for repetitions)
 
-#define BRIDGE_FRESH    0x01
+#define BRIDGE_FRESH    0x01    // flags: start a new game (clear TT, set weakness)
 
-#define STATUS_BOOT     0
-#define STATUS_READY    1
-#define STATUS_BUSY     2
-#define STATUS_DONE     3
-#define STATUS_ERROR    4
+// status
+#define STATUS_BOOT     0       // ENGINE.PRG has not started yet
+#define STATUS_READY    1       // waiting for the first command
+#define STATUS_BUSY     2       // running a command
+#define STATUS_DONE     3       // results are in the mailbox
+#define STATUS_ERROR    4       // malformed FEN or unknown command
 
 typedef struct {
     uint8_t cmd;                // $0400

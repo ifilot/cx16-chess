@@ -1,11 +1,47 @@
+/**************************************************************************
+ *                                                                        *
+ *   Author: Ivo Filot <ivo@ivofilot.nl>                                  *
+ *                                                                        *
+ *   CX16-CHESS is free software:                                         *
+ *   you can redistribute it and/or modify it under the terms of the      *
+ *   GNU General Public License as published by the Free Software         *
+ *   Foundation, either version 3 of the License, or (at your option)     *
+ *   any later version.                                                   *
+ *                                                                        *
+ *   CX16-CHESS is distributed in the hope that it will be useful,        *
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty          *
+ *   of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.              *
+ *   See the GNU General Public License for more details.                 *
+ *                                                                        *
+ *   You should have received a copy of the GNU General Public License    *
+ *   along with this program.  If not, see http://www.gnu.org/licenses/.  *
+ *                                                                        *
+ **************************************************************************/
+
 #include <stdint.h>
 #include "storage.h"
+
+/* Hit testing is nonrecursive and runs only in the main loop. */
 #pragma static-locals (on)
 #pragma code-name ("DRAGCODE")
 #pragma bss-name ("DRAGBSS")
 
-/* Shared hit testing, through a resident entry that restores the caller's bank.
- * Layouts: main, setup, two CPUs, options, about, pause, slots, replace. */
+/*
+ * Mouse hit testing for every menu and dialog, shared through the resident
+ * gui_mouse_hit() entry in drag.s, which restores the caller's bank.
+ */
+
+/**
+ * @brief Find the menu entry under the pointer
+ *
+ * @param x      Pointer position in screen pixels
+ * @param y      Pointer position in screen pixels
+ * @param layout 0 main menu, 1 setup, 2 setup with two CPUs, 3 options,
+ *               4 about, 5 pause, 6 save/load slots, 7 replace confirmation
+ *
+ * @return Entry index, SAVE_SLOTS for BACK in the slot table, or 0xFF
+ *         when the pointer is not over an entry
+ */
 uint8_t menu_mouse_hit(uint16_t x, uint16_t y, uint8_t layout) {
     uint8_t index;
     if(layout == 0) {
@@ -29,9 +65,11 @@ uint8_t menu_mouse_hit(uint16_t x, uint16_t y, uint8_t layout) {
     } else if(layout == 4) {
         if(x >= 440 && x < 520 && y >= 400 && y < 424) return 0;
     } else {
+        // dialogs on the board panel
         if(x < (layout == 6 ? 152 : 176) || x >= (layout == 6 ? 456 : 432)) return 0xFF;
         if(layout == 6) {
             if(x >= 272 && x < 336 && y >= 384 && y < 400) return SAVE_SLOTS;
+            // slot rows are three tiles apart, starting at tile row 17
             for(index = 0; index < SAVE_SLOTS; index++)
                 if(y >= (17 + index * 3) * 8 && y < (19 + index * 3) * 8) return index;
         } else if(layout == 7) {

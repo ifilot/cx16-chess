@@ -22,6 +22,7 @@
 #include <cbm.h>
 #include <stdint.h>
 #include <ascii_charmap.h>
+/* The program is nonrecursive outside the engine, which has its own stacks. */
 #pragma static-locals (on)
 
 #include "video.h"
@@ -32,14 +33,26 @@
 #include "dialog.h"
 #include "sound.h"
 
+/*
+ * Application entry point and scene loop. Once per 60 Hz frame it reads
+ * the mouse and keyboard and hands them to the active scene: a dialog
+ * (bank 22), the menus (bank 21) or the playing field (bank 23). Dialogs
+ * and menus need their bank selected here; the playing field is reached
+ * through resident entries that select bank 23 themselves.
+ */
+
 // KERNAL mouse_get stores the pointer position in r0 (x) and r1 (y)
 #define MOUSE_X     (*(volatile uint16_t*)0x02)
 #define MOUSE_Y     (*(volatile uint16_t*)0x04)
 
-static uint8_t mouse_buttons;
+static uint8_t mouse_buttons;          // KERNAL button bits of this frame
 
-/** Enable the already loaded native pointer once the first menu is ready.
- * Explicit bounds are independent of the inherited BASIC screen mode. */
+/**
+ * @brief Enable the already loaded native pointer once the first menu is ready
+ *
+ * Explicit bounds (640x480) are independent of the inherited BASIC screen
+ * mode.
+ */
 static void mouse_init(void) {
     asm("lda #$FF");               // preserve our custom sprite image
     asm("ldx #80");
@@ -53,7 +66,7 @@ static void mouse_init(void) {
  * Replaces cc65's waitvsync, which (in cc65 2.19) polls the jiffy counter
  * through the pre-R39 memory map and never returns on current ROMs.
  */
-static uint8_t jiffy;
+static uint8_t jiffy;                  // jiffy clock at the start of the wait
 static void wait_frame(void) {
     asm("jsr $FFDE");               // RDTIM: A = low byte of the jiffy clock
     asm("sta %v", jiffy);
@@ -63,19 +76,32 @@ wait:
     asm("beq %g", wait);
 }
 
+/**
+ * @brief Read the KERNAL mouse into MOUSE_X, MOUSE_Y and mouse_buttons
+ */
 static void mouse_read(void) {
     asm("ldx #2");
     asm("jsr $FF6B");
     asm("sta %v", mouse_buttons);
 }
 
+/**
+ * @brief Load the game, then run the scene loop until a load error occurs
+ */
 void main(void) {
-    uint8_t key, action, menu = 1, has_game = 0, release_mouse = 1, dialog = 0, initialized = 0;
+    uint8_t key;                        // key of this frame, or 0
+    uint8_t action;                     // DIALOG_* or START_* result of this frame
+    uint8_t menu = 1;                   // 1 while the menus are shown
+    uint8_t has_game = 0;               // 1 once a game can be continued
+    uint8_t release_mouse = 1;          // ignore the mouse until the button is released
+    uint8_t dialog = 0;                 // 1 while a dialog is open
+    uint8_t initialized = 0;            // 1 once the engine has been prepared
 
     if(!video_init()) {
         return;
     }
     sound_init();
+    // preferences live in UI bank 22, the menus in bank 21
     *(volatile uint8_t*)0x00 = 22;
     storage_preferences_load();
     *(volatile uint8_t*)0x00 = 21;
@@ -89,7 +115,7 @@ void main(void) {
         wait_frame();
         mouse_read();
         key = playfield_pending_key ? playfield_pending_key : cbm_k_getin();
-        playfield_pending_key = 0;
+        playfield_pending_key = 0;          // Escape caught during a CPU vs CPU search
         if(dialog) {
             action = DIALOG_NONE;
             if(!(mouse_buttons & 1)) release_mouse = 0;
@@ -139,12 +165,14 @@ void main(void) {
                 release_mouse = 1;
             }
         } else if(key == KEY_ESCAPE) {
+            // pause: stop the clock first, then cancel any selection or drag
             playfield_tick();
             playfield_key(KEY_ESCAPE);
             *(volatile uint8_t*)0x00 = 22;
             dialog_open(0);
             dialog = release_mouse = 1;
         } else if(key == 'M' || key == 'm') {
+            // back to the main menu; the game stays available through Continue
             playfield_key(KEY_ESCAPE);
             *(volatile uint8_t*)0x00 = 21;
             if(!start_open(has_game)) return;
@@ -154,6 +182,7 @@ void main(void) {
             if(!release_mouse) playfield_mouse(MOUSE_X, MOUSE_Y, mouse_buttons);
             if(key) playfield_key(key);
             if(playfield_new_requested) {
+                // N on the board opens the New Game setup
                 playfield_new_requested = 0;
                 *(volatile uint8_t*)0x00 = 21;
                 if(!start_open(has_game)) return;

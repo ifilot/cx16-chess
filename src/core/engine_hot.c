@@ -49,7 +49,7 @@ uint8_t att_kinds[256];
 int8_t att_step[256];
 uint8_t history_table[16][64], rep_pages[4][256];
 
-// undo information per ply
+// undo information per search ply
 static uint8_t u_from[MAX_PLY], u_to[MAX_PLY], u_flags[MAX_PLY], u_captured[MAX_PLY];
 static uint8_t u_castle[MAX_PLY], u_ep[MAX_PLY], u_fifty[MAX_PLY];
 static uint16_t u_hash_lo[MAX_PLY], u_hash_hi[MAX_PLY];
@@ -68,6 +68,9 @@ static const int8_t straight_steps[4] = {1, -1, 16, -16};
 
 static uint16_t z0, z1;             // key of the last piece hashed
 
+/**
+ * @brief Toggle a piece on a square in the hash; keeps its key in z0/z1
+ */
 static void hash_piece(uint8_t p, uint8_t sq) {
     uint8_t* page = ZPAGE(p);
     uint8_t s = SQ64(sq);
@@ -78,6 +81,9 @@ static void hash_piece(uint8_t p, uint8_t sq) {
     hash_hi ^= z1;
 }
 
+/**
+ * @brief Put a piece on an empty square, updating all incremental terms
+ */
 static void piece_add(uint8_t p, uint8_t sq) {
     uint8_t c = p >> 3, t = p & 7;
 
@@ -98,6 +104,9 @@ static void piece_add(uint8_t p, uint8_t sq) {
     }
 }
 
+/**
+ * @brief Take the piece off a square, updating all incremental terms
+ */
 static void piece_remove(uint8_t sq) {
     uint8_t p = bd[sq];
     uint8_t c = p >> 3, t = p & 7;
@@ -117,18 +126,31 @@ static void piece_remove(uint8_t sq) {
     }
 }
 
+/**
+ * @brief Put a piece on the empty square mk_to (position setup)
+ */
 void board_put(uint8_t piece) {
     piece_add(piece, mk_to);
 }
 
+/**
+ * @brief Nothing to do: the C version computes check status on demand
+ */
 void refresh_check(void) {
 }
 
+/**
+ * @brief Flags of the pseudo-legal move mk_from-mk_to with promotion piece
+ *        mk_flags (bits 0-2), or 0xFF when it is not a move here
+ */
 uint8_t validate_move(void) {
     if((mk_from | mk_to) & 0x88) return 0xFF;
     return find_move_flags(mk_from, mk_to, mk_flags & F_PROMO_MASK);
 }
 
+/**
+ * @brief Toggle the castling and en passant keys in the hash
+ */
 static void hash_state(void) {
     hash_lo ^= zob_castle_lo[castle];
     hash_hi ^= zob_castle_hi[castle];
@@ -138,6 +160,9 @@ static void hash_state(void) {
     }
 }
 
+/**
+ * @brief Append the current position to the repetition list
+ */
 static void rep_push(void) {
     REP_PAGES[0][rep_count] = (uint8_t)hash_lo;
     REP_PAGES[1][rep_count] = hash_lo >> 8;
@@ -146,6 +171,10 @@ static void rep_push(void) {
     rep_count++;
 }
 
+/**
+ * @brief Make the move mk_from-mk_to (mk_flags); 0 if it leaves the king
+ *        in check. Always undo with unmake_move(), also for illegal moves.
+ */
 uint8_t make_move(void) {
     uint8_t from = mk_from, to = mk_to, fl = mk_flags;
     uint8_t p = bd[from];
@@ -190,6 +219,9 @@ uint8_t make_move(void) {
     return !square_attacked(stm);
 }
 
+/**
+ * @brief Take back the move made at the current search ply
+ */
 void unmake_move(void) {
     uint8_t u = --sply;
     uint8_t from = u_from[u], to = u_to[u], fl = u_flags[u];
@@ -219,6 +251,9 @@ void unmake_move(void) {
     rep_count--;
 }
 
+/**
+ * @brief Pass the move to the opponent (null-move pruning)
+ */
 void make_null(void) {
     uint8_t u = sply;
 
@@ -237,6 +272,9 @@ void make_null(void) {
     sply++;
 }
 
+/**
+ * @brief Take back a null move
+ */
 void unmake_null(void) {
     uint8_t u = --sply;
 
@@ -270,6 +308,12 @@ uint8_t is_repetition(void) {
  * ATTACKS AND MOVE GENERATION
  *****************************************************************************/
 
+/**
+ * @brief Is att_sq attacked by colour by (0 or BLACK_SIDE)?
+ *
+ * Looks up which pieces could attack along the square difference in
+ * ATT_KINDS, and walks sliding lines with ATT_STEP.
+ */
 uint8_t square_attacked(uint8_t by) {
     uint8_t sq = att_sq, i, t, p;
     int8_t step;
@@ -312,11 +356,17 @@ uint8_t square_attacked(uint8_t by) {
     return 0;
 }
 
+/**
+ * @brief Is the side to move in check?
+ */
 uint8_t in_check(void) {
     att_sq = ksq[stm >> 3];
     return square_attacked(stm ^ BLACK_SIDE);
 }
 
+/**
+ * @brief Are the king's square and the two squares it crosses unattacked?
+ */
 static uint8_t castle_path_safe(uint8_t a, uint8_t b, uint8_t c, uint8_t them) {
     att_sq = a;
     if(square_attacked(them)) return 0;
@@ -328,6 +378,11 @@ static uint8_t castle_path_safe(uint8_t a, uint8_t b, uint8_t c, uint8_t them) {
 
 #define ADD(f, t, fl) do { mv_from[n] = (f); mv_to[n] = (t); mv_flags[n] = (fl); n++; } while(0)
 
+/**
+ * @brief Append pseudo-legal moves at ms_top; returns (and sets) the new top
+ *
+ * @param captures_only 1 for captures and queen promotions only (quiescence)
+ */
 uint16_t generate_moves(uint8_t captures_only) {
     uint16_t n = ms_top;
     uint8_t sq, p, t, q, i, them, forward, start_rank, last_rank;
@@ -456,6 +511,13 @@ static int16_t mop_up(uint8_t loser, uint8_t winner) {
     return 10 * center_dist[loser] + 4 * (14 - df - dr);
 }
 
+/**
+ * @brief Static evaluation in centipawns, side to move's view
+ *
+ * Material and piece-square tables, king tables and mop-up in the
+ * endgame, pawn shelter otherwise, bishop pair and the cached pawn
+ * structure, plus a small bonus for the side to move.
+ */
 int16_t evaluate(void) {
     int16_t s = psq_score;
     uint16_t slot;

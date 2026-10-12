@@ -31,12 +31,18 @@
 #define COL_RED         7
 #define COL_GREY        10
 
-#define SPRITE_POINTER  0
-#define SPRITE_CURSOR   1
+#define SPRITE_POINTER  0               // mouse pointer
+#define SPRITE_CURSOR   1               // keyboard cursor on the board
 
 /*
- * Both layers use 8x8 tiles, addressed by (col, row) in 8-pixel units.
- * Layer 0 has two maps: PLAIN (board only) and INFO (with side columns).
+ * VERA set-up, scene loading and drawing on the two tile layers. Both
+ * layers use 8x8 tiles, addressed by (col, row) in 8-pixel units. Layer 0
+ * holds the background and has two maps: PLAIN (board only) and INFO
+ * (with side columns). Layer 1 holds pieces and text over it.
+ *
+ * Scene loaders (video_show_*) run in menu bank 21. They keep the loading
+ * cover up until the caller has drawn the scene and calls video_present().
+ * They return 0 when a graphics resource could not be loaded.
  */
 
 /**
@@ -45,17 +51,46 @@
  * @return 0 when a graphics file could not be loaded
  */
 uint8_t video_init(void);
-/* View loads retain the Loading cover until the caller finishes drawing. */
+
+/**
+ * @brief Remove the loading cover and enable both layers and sprites
+ */
 void video_present(void);
+
+/**
+ * @brief Load the start screen: bishop portrait and masthead
+ */
 uint8_t video_show_start(void);
+
+/**
+ * @brief Load the New Game setup screen with the queen portrait
+ */
 uint8_t video_show_setup(void);
+
+/**
+ * @brief Load the About screen with the knight portrait
+ */
 uint8_t video_show_about(void);
+
+/**
+ * @brief Load the playing field; loads the square tables on first use
+ */
 uint8_t video_show_game(void);
+
+/**
+ * @brief Load the Options screen: the playing field with an options column
+ */
 uint8_t video_show_options(void);
+
+/**
+ * @brief Load the tiles of the piece set chosen in start_piece_set
+ */
 uint8_t video_load_piece_set(void);
 
 /**
  * @brief Show the background with (1) or without (0) the side columns
+ *
+ * While the loading cover is up, the choice takes effect when it is removed.
  */
 void video_show_info(uint8_t on);
 
@@ -72,6 +107,11 @@ void video_square(uint8_t col, uint8_t row, uint8_t v);
 
 /**
  * @brief Draw bitmap text on layer 1; figurines occupy 16x16, text 8x16
+ *
+ * @param col   Tile column of the first character
+ * @param row   Tile row of the upper half
+ * @param s     Text in ASCII; FIGURINE_CODE + piece type draws a figurine
+ * @param color Palette ink (COL_*)
  */
 void video_text(uint8_t col, uint8_t row, const char* s, uint8_t color);
 

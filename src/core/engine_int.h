@@ -68,16 +68,17 @@
  * STATE (defined in engine_hot.c / engine_asm.s)
  *****************************************************************************/
 
-extern uint8_t bd[128];
+extern uint8_t bd[128];         // 0x88 board, rules.h piece encoding
 extern uint8_t stm;             // side to move: 0 or BLACK_SIDE
-extern uint8_t castle;
-extern uint8_t ep;
-extern uint8_t fifty;
+extern uint8_t castle;          // castling rights, CASTLE_* bits of rules.h
+extern uint8_t ep;              // en passant square, NO_SQ if none
+extern uint8_t fifty;           // plies since the last capture or pawn move
 extern uint8_t sply;            // search ply: depth below the root
-extern uint16_t hash_lo, hash_hi;
-extern uint32_t nodes;
+extern uint16_t hash_lo, hash_hi; // 32-bit Zobrist key of the position
+extern uint32_t nodes;          // nodes visited by the current search
 
-extern uint16_t ms_top;
+// move stack: the moves of every ply, from/to/flags/ordering score
+extern uint16_t ms_top;         // first free entry
 extern uint8_t mv_from[MS_SIZE];
 extern uint8_t mv_to[MS_SIZE];
 extern uint8_t mv_flags[MS_SIZE];
@@ -86,12 +87,12 @@ extern uint8_t mv_score[MS_SIZE];
 // incrementally updated evaluation terms, index 0 = white, 1 = black
 extern int16_t psq_score;       // material + piece-square, white's view
 extern int16_t npm[2];          // non-pawn material
-extern uint8_t pawn_count[2];
-extern uint8_t bishop_count[2];
+extern uint8_t pawn_count[2];   // pawns per side
+extern uint8_t bishop_count[2]; // bishops per side (bishop pair bonus)
 extern uint8_t pawn_files[16];  // [colour * 8 + file]: bit per rank with a pawn
 extern uint16_t pawn_hash;      // hash of the pawns alone (24 bits with pawn_hash2)
 extern uint8_t pawn_hash2;
-extern uint8_t ksq[2];
+extern uint8_t ksq[2];          // king squares
 extern uint8_t rep_count;       // entries in the repetition list
 
 // arguments of make_move() and square_attacked()
@@ -159,9 +160,9 @@ extern const int16_t piece_value[7];
 extern int8_t king_endgame[128];    // endgame minus middlegame king bonus
 extern uint8_t center_dist[128];    // king steps from the centre squares
 extern uint8_t castle_keep[128];    // castling rights kept when a square is touched
-extern uint16_t zob_castle_lo[16], zob_castle_hi[16];
-extern uint16_t zob_ep_lo[8], zob_ep_hi[8];
-extern uint16_t zob_side_lo, zob_side_hi;
+extern uint16_t zob_castle_lo[16], zob_castle_hi[16]; // Zobrist keys per castling state
+extern uint16_t zob_ep_lo[8], zob_ep_hi[8];           // per en passant file
+extern uint16_t zob_side_lo, zob_side_hi;             // black to move
 
 /*****************************************************************************
  * PER-NODE FUNCTIONS (engine_hot)
@@ -173,14 +174,30 @@ extern uint16_t zob_side_lo, zob_side_hi;
  */
 uint8_t make_move(void);
 #define MAKE(f, t, fl)  (mk_from = (f), mk_to = (t), mk_flags = (fl), make_move())
+
+/**
+ * @brief Take back the move made at the current search ply
+ */
 void unmake_move(void);
+
+/**
+ * @brief Pass the move to the opponent (null-move pruning)
+ */
 void make_null(void);
+
+/**
+ * @brief Take back a null move
+ */
 void unmake_null(void);
 
 /**
  * @brief Is att_sq attacked by colour by (0 or BLACK_SIDE)?
  */
 uint8_t __fastcall__ square_attacked(uint8_t by);
+
+/**
+ * @brief Is the side to move in check?
+ */
 uint8_t in_check(void);
 
 /**
@@ -188,7 +205,14 @@ uint8_t in_check(void);
  */
 uint16_t __fastcall__ generate_moves(uint8_t captures_only);
 
+/**
+ * @brief Static evaluation in centipawns, side to move's view
+ */
 int16_t evaluate(void);
+
+/**
+ * @brief Has the current position occurred before (game or search path)?
+ */
 uint8_t is_repetition(void);
 
 /**
@@ -216,13 +240,45 @@ void refresh_check(void);
  * SHARED C (engine_board.c)
  *****************************************************************************/
 
+/**
+ * @brief Fill evaluation and hashing tables (identical on every build)
+ */
 void board_init(void);
+
+/**
+ * @brief Empty the repetition list
+ */
 void history_clear(void);
+
+/**
+ * @brief Before a search: drop the game's entry for the root position;
+ *        returns 1 when an entry was dropped
+ */
 uint8_t history_drop_root(void);
+
+/**
+ * @brief After a search: record the root position again
+ */
 void history_restore_root(void);
+
+/**
+ * @brief No pawns and at most one minor piece left on the board
+ */
 uint8_t insufficient_material(void);
+
+/**
+ * @brief Does colour (0 or BLACK_SIDE) have pieces other than king and pawns?
+ */
 uint8_t has_pieces(uint8_t color);
+
+/**
+ * @brief Doubled, isolated and passed pawns; stores the result in the cache
+ */
 int16_t pawn_structure_compute(void);
+
+/**
+ * @brief Invalidate every entry of the pawn structure cache
+ */
 void pawn_cache_clear(void);
 
 /**

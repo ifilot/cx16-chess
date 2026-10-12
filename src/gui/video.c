@@ -29,12 +29,18 @@
 #include "start.h"
 #include "transition.h"
 
+/*
+ * VERA set-up, scene loading and the drawing primitives of both layers.
+ * Most drawing functions are resident so any bank can call them; scene
+ * loaders live in menu bank 21.
+ */
+
 #define SPRITE_ATTR     0xFC00      // in VRAM bank 1
 #define AUTO_INC_1      0x10
 #define RAM_BANK        (*(volatile uint8_t*)0x00)
 #define SQUARE_TABLE    ((const uint16_t*)0xA000)   // SQTILES.DAT in GUI_BANK
 
-static uint8_t game_tables_loaded;
+static uint8_t game_tables_loaded;      // SQTILES and the INFO map are resident
 uint8_t __fastcall__ bank_load_raw(uint8_t bank);
 void playfield_drag_init(void);         // called with RAM bank 23 selected
 
@@ -53,6 +59,11 @@ static uint8_t load_shared(void);
 
 /**
  * @brief Set sprite attributes (except the position)
+ *
+ * @param n    Sprite number
+ * @param addr VRAM address of the 4bpp image
+ * @param z    Depth: 0 hidden, 3 in front of both layers
+ * @param size Size and palette byte of the attributes
  */
 static void sprite_setup(uint8_t n, uint32_t addr, uint8_t z, uint8_t size) {
     VERA.control = 0;
@@ -65,6 +76,13 @@ static void sprite_setup(uint8_t n, uint32_t addr, uint8_t z, uint8_t size) {
     VERA.data0 = size;
 }
 
+/**
+ * @brief Set up 640x480 tile layers, pointer and resident font under the loading cover
+ *
+ * Loads CHESS.BIN (banked code and audio) and the shared sprites and font.
+ *
+ * @return 0 when a graphics file could not be loaded
+ */
 uint8_t video_init(void) {
     uint8_t ok, saved = RAM_BANK;
 
@@ -107,21 +125,34 @@ uint8_t video_init(void) {
     return 1;
 }
 
+/**
+ * @brief Remove the loading cover and enable both layers and sprites
+ */
 void video_present(void) {
     transition_finish();
     VERA.control = 0;
     VERA.display.video |= 0x70;
 }
 
+/**
+ * @brief Show the background with (1) or without (0) the side columns
+ */
 void video_show_info(uint8_t on) {
     uint8_t value = (on ? VRAM_L0_MAP_INFO : VRAM_L0_MAP_PLAIN) >> 9;
     if(transition_covered) transition_mapbase = value;
     else VERA.layer0.mapbase = value;
 }
 
-/* Artwork shares VRAM with the playing field; read only the view's resources.
- * Engine banks, game history and pointer stay resident; each view loads its palette. */
-/* Bank switching must run in resident code, never in MENUCODE at $A000. */
+/**
+ * @brief Load SQTILES into GUI_BANK and the INFO map into VRAM, once
+ *
+ * Artwork shares VRAM with the playing field; read only the view's
+ * resources. Engine banks, game history and pointer stay resident; each
+ * view loads its palette. Bank switching must run in resident code, never
+ * in MENUCODE at $A000.
+ *
+ * @return 0 when a resource could not be loaded
+ */
 static uint8_t load_game_tables(void) {
     uint8_t ok, saved = RAM_BANK;
     if(!asset_prepare(ASSET_SQTILES)) return 0;
@@ -136,6 +167,14 @@ static uint8_t load_game_tables(void) {
 }
 
 #pragma code-name (push, "MENUCODE")
+/**
+ * @brief Stream a CHESS.DAT resource into VRAM through data port 0
+ *
+ * @param resource ASSET_* index of the resource
+ * @param addr     17-bit VRAM destination
+ *
+ * @return 0 when the resource could not be read
+ */
 static uint8_t load_vram(uint8_t resource, uint32_t addr) {
     if(!asset_prepare(resource)) return 0;
     VERA.control = 0;
@@ -145,11 +184,17 @@ static uint8_t load_vram(uint8_t resource, uint32_t addr) {
     return asset_read(0x9F23);
 }
 
+/**
+ * @brief Load the resources every scene shares: sprites and the font
+ */
 static uint8_t load_shared(void) {
     return load_vram(ASSET_SPRITES, VRAM_SPRITES) &&
            load_vram(ASSET_FONT, VRAM_L1_TILES);
 }
 
+/**
+ * @brief Load the start screen: bishop portrait and masthead
+ */
 uint8_t video_show_start(void) {
     uint8_t ok;
     transition_begin();
@@ -163,6 +208,9 @@ uint8_t video_show_start(void) {
     return ok;
 }
 
+/**
+ * @brief Load the New Game setup screen with the queen portrait
+ */
 uint8_t video_show_setup(void) {
     uint8_t ok;
     transition_begin();
@@ -175,6 +223,9 @@ uint8_t video_show_setup(void) {
     return ok;
 }
 
+/**
+ * @brief Load the About screen with the knight portrait
+ */
 uint8_t video_show_about(void) {
     uint8_t ok;
     transition_begin();
@@ -187,6 +238,9 @@ uint8_t video_show_about(void) {
     return ok;
 }
 
+/**
+ * @brief Load the tiles of the piece set chosen in start_piece_set
+ */
 uint8_t video_load_piece_set(void) {
     transition_begin();
     return load_vram(start_piece_set == 1 ? ASSET_ENGART :
@@ -194,6 +248,9 @@ uint8_t video_load_piece_set(void) {
                      VRAM_L1_TILES + L1_PIECES * 32UL);
 }
 
+/**
+ * @brief Load the Options screen: the playing field with an options column
+ */
 uint8_t video_show_options(void) {
     if(!video_show_game()) return 0;
     if(!load_vram(ASSET_OPTMAP, VRAM_L0_MAP_PLAIN)) return 0;
@@ -202,6 +259,9 @@ uint8_t video_show_options(void) {
     return 1;
 }
 
+/**
+ * @brief Load the playing field; loads the square tables on first use
+ */
 uint8_t video_show_game(void) {
     uint8_t ok;
     transition_begin();
@@ -216,6 +276,9 @@ uint8_t video_show_game(void) {
 
 #pragma code-name (pop)
 
+/**
+ * @brief Clear all of layer 1 (pieces and text)
+ */
 void video_clear_layer1(void) {
     map_address(VRAM_L1_MAP, 0, 0);
     /* 64 pages of 256 bytes; VERA auto-increments after every store. */
@@ -231,6 +294,10 @@ byte:
     asm("bne %g", page);
 }
 
+/**
+ * @brief Draw board square variant v (index into SQTILES.DAT) at a 7x7
+ *        tile block, in both background maps
+ */
 void video_square(uint8_t col, uint8_t row, uint8_t v) {
     const uint16_t* entries;
     uint8_t x, y, saved = RAM_BANK;
@@ -266,6 +333,12 @@ static uint16_t glyph_tile(uint8_t c) {
     return L1_FONT + ((uint16_t)slot << 1);
 }
 
+/**
+ * @brief Draw bitmap text on layer 1; figurines occupy 16x16, text 8x16
+ *
+ * Each character is two tiles high; the loop draws the upper halves of
+ * all characters, then the lower halves.
+ */
 void video_text(uint8_t col, uint8_t row, const char* s, uint8_t color) {
     const uint8_t* p;
     uint16_t tile;
@@ -290,11 +363,17 @@ void video_text(uint8_t col, uint8_t row, const char* s, uint8_t color) {
     }
 }
 
+/**
+ * @brief Draw text centred on pixel column cx (rounded to the 8 px grid)
+ */
 void video_text_centered(uint16_t cx, uint8_t row, const char* s, uint8_t color) {
     uint16_t x = cx - (strlen(s) << 2) + 4;
     video_text(x >> 3, row, s, color);
 }
 
+/**
+ * @brief Blank a w x h block of layer-1 tiles
+ */
 void video_clear_block(uint8_t col, uint8_t row, uint8_t w, uint8_t h) {
     uint8_t x, y;
 
@@ -307,10 +386,19 @@ void video_clear_block(uint8_t col, uint8_t row, uint8_t w, uint8_t h) {
     }
 }
 
+/**
+ * @brief Blank n 8x16 character cells on layer 1
+ */
 void video_text_clear(uint8_t col, uint8_t row, uint8_t n) {
     video_clear_block(col, row, n, 2);
 }
 
+/**
+ * @brief Draw a 56x56 piece (0-11), or clear the cell when piece is 0xFF
+ *
+ * Pieces 0-5 are White's pawn, knight, bishop, rook, queen and king; 6-11
+ * are Black's.
+ */
 void video_piece(uint8_t col, uint8_t row, uint8_t piece) {
     uint16_t tile = L1_PIECES + piece * 49;
     uint8_t x, y;
@@ -329,12 +417,21 @@ void video_piece(uint8_t col, uint8_t row, uint8_t piece) {
     }
 }
 
+/**
+ * @brief Put a single layer-1 tile
+ */
 void video_tile(uint8_t col, uint8_t row, uint16_t tile, uint8_t color) {
     map_address(VRAM_L1_MAP, col, row);
     VERA.data0 = (uint8_t)tile;
     VERA.data0 = (uint8_t)(tile >> 8) | (color << 4);
 }
 
+/**
+ * @brief Show the 64x64 cursor sprite at pixel position, or hide it
+ *
+ * While the loading cover is up the cursor stays hidden; the cover
+ * restores it afterwards.
+ */
 void video_cursor(uint8_t visible, uint16_t x, uint16_t y) {
     VERA.control = 0;
     VERA.address = SPRITE_ATTR + (SPRITE_CURSOR << 3) + 2;

@@ -64,35 +64,41 @@
 #define INPUT_MOVE      0
 #define INPUT_PROMOTE   1
 
-static uint8_t input_phase;
+static uint8_t input_phase;             // INPUT_MOVE or INPUT_PROMOTE
 uint8_t playfield_new_requested;
 uint8_t playfield_flipped;           // black at the bottom
 uint8_t playfield_theme = THEME_NEWSPRINT;
 uint8_t playfield_info = 1;          // score sheet shown
-static uint16_t thinking_frame;
+static uint16_t thinking_frame;         // animation frame last drawn, 0xFFFF to force
 #pragma bss-name ("DRAGBSS")
 static uint8_t thinking;                // the engine is busy
-static uint8_t dragging;
+static uint8_t dragging;                // a piece sprite follows the pointer
 void playfield_cancel_drag(void);       // resident bank-switching entry point
 static uint8_t selected;                // square of the selected piece
 static uint8_t check_square;            // king in check
 static uint8_t marks[128];              // legal destinations of the selection
 static uint8_t drawn_state[64];         // what is on screen, per square
-static uint8_t drawn_piece[64];
+static uint8_t drawn_piece[64];         // piece on screen, per square
 
 static uint8_t cursor_col, cursor_row;  // keyboard cursor (screen coordinates)
-static uint8_t cursor_visible;
+static uint8_t cursor_visible;          // shown after keyboard use, hidden by the mouse
 
 static uint8_t promo_from, promo_to;    // pending promotion
 static const uint8_t promo_choices[4] = {QUEEN, KNIGHT, ROOK, BISHOP};
 
-static clock_t last_clock;
-static char buf[24];
+static clock_t last_clock;              // clock() at the previous tick
+static char buf[24];                    // scratch text
 
 /*****************************************************************************
  * BOARD
  *****************************************************************************/
 
+/**
+ * @brief 0x88 square shown at a screen position, honouring the flip
+ *
+ * @param col Board column on screen, 0..7 from the left
+ * @param row Board row on screen, 0..7 from the top
+ */
 static uint8_t square_at(uint8_t col, uint8_t row) {
     return playfield_flipped ? SQ(7 - col, row) : SQ(col, 7 - row);
 }
@@ -150,6 +156,9 @@ static void board_refresh(void) {
     }
 }
 
+/**
+ * @brief Forget what is on screen and redraw every square
+ */
 static void redraw_board(void) {
     memset(drawn_state, NOT_DRAWN, sizeof(drawn_state));
     memset(drawn_piece, NOT_DRAWN, sizeof(drawn_piece));
@@ -173,6 +182,9 @@ static void draw_labels(void) {
     }
 }
 
+/**
+ * @brief Move the keyboard cursor sprite to its square, or hide it
+ */
 static void update_cursor(void) {
     video_cursor(cursor_visible, BOARD_X - 4 + cursor_col * SQUARE,
                  BOARD_Y - 4 + cursor_row * SQUARE);
@@ -274,7 +286,10 @@ static void draw_analysis(void) {
     }
 }
 
-/** Compact clocks following WHITE / BLACK on a single text line. */
+/**
+ * @brief Compact clocks following WHITE / BLACK on a single text line;
+ *        the clock of the side to move is red
+ */
 static void draw_clocks(void) {
     uint8_t top = playfield_flipped ? WHITE : BLACK;
     uint8_t color, row, active;
@@ -290,7 +305,14 @@ static void draw_clocks(void) {
     }
 }
 
-/** Rotate two figurines four times a second; percentage is time budget used. */
+/**
+ * @brief Thinking indicator: two figurines rotate four times a second
+ *
+ * Shows the search depth, or for a timed analysis the percentage of the
+ * time budget used.
+ *
+ * @param now Current clock() value
+ */
 static void draw_thinking(uint16_t now) {
     uint16_t frame = now / 15;
     uint16_t elapsed = now - match_think_start;
@@ -380,12 +402,18 @@ static void refresh_all(void) {
  * INPUT
  *****************************************************************************/
 
+/**
+ * @brief Drop the selection, its destination marks and any drag
+ */
 static void clear_selection(void) {
     if(dragging) playfield_cancel_drag();
     selected = NO_SQUARE;
     memset(marks, 0, sizeof(marks));
 }
 
+/**
+ * @brief Select the piece on a square and mark its legal destinations
+ */
 static void select_square(uint8_t sq) {
     uint8_t i;
     sound_sfx(SFX_PICKUP);
@@ -399,6 +427,9 @@ static void select_square(uint8_t sq) {
     }
 }
 
+/**
+ * @brief Play a human move and redraw everything it affects
+ */
 static void play(const move_t* m) {
     input_phase = INPUT_MOVE;
     clear_selection();
@@ -407,6 +438,9 @@ static void play(const move_t* m) {
     refresh_all();
 }
 
+/**
+ * @brief Close the promotion picker without moving
+ */
 static void cancel_promotion(void) {
     input_phase = INPUT_MOVE;
     clear_selection();
@@ -416,6 +450,10 @@ static void cancel_promotion(void) {
 
 /**
  * @brief Click or Return on a board square
+ *
+ * Selects an own piece, moves the selected piece to a marked square
+ * (opening the promotion picker when needed), or chooses a promotion
+ * piece. Anything else drops the selection.
  */
 static void activate(uint8_t sq) {
     const move_t* m;
@@ -457,15 +495,17 @@ static void activate(uint8_t sq) {
     board_refresh();
 }
 
-/**
- * @brief Run the engine (for its own move or an analysis)
- */
 /* Let a demo finish its current search early when Escape is pressed. */
 extern uint8_t search_aborted;
 #pragma bss-name (push, "BSS")
 uint8_t playfield_pending_key;
 #pragma bss-name (pop)
 void demo_poll(void);  /* Resident callback: the engine can select any RAM bank. */
+
+/**
+ * @brief Engine callback while it thinks: run the clocks and, in CPU vs
+ *        CPU, let Escape stop the search
+ */
 void playfield_demo_poll(void) {
     uint8_t key;
     playfield_tick();
@@ -478,6 +518,12 @@ void playfield_demo_poll(void) {
     }
 }
 
+/**
+ * @brief Run the engine (for its own move or an analysis)
+ *
+ * @param analyse 1 to analyse the position for the human, 0 to let the
+ *                computer move
+ */
 static void engine_turn(uint8_t analyse) {
     uint16_t previous_ply = ply;
     thinking = 1;
@@ -497,6 +543,9 @@ static void engine_turn(uint8_t analyse) {
     refresh_all();
 }
 
+/**
+ * @brief Turn the board around, including labels and keyboard cursor
+ */
 static void flip_board(void) {
     playfield_flipped ^= 1;
     cursor_col = 7 - cursor_col;
@@ -527,6 +576,11 @@ static void cycle_computer(void) {
  * PUBLIC INTERFACE
  *****************************************************************************/
 
+/**
+ * @brief Start a new game and draw the complete playing field
+ *
+ * The board is flipped when the computer plays White.
+ */
 void playfield_new_banked(void) {
     playfield_new_requested = 0;
     match_new(CLOCK_START, match_computer);
@@ -549,6 +603,9 @@ void playfield_new_banked(void) {
     update_cursor();
 }
 
+/**
+ * @brief Redraw a paused game and reset its wall-clock sampling point
+ */
 void playfield_resume_banked(void) {
     sound_event(SOUND_RESUME);
     last_clock = clock();
@@ -561,6 +618,9 @@ void playfield_resume_banked(void) {
     update_cursor();
 }
 
+/**
+ * @brief Reset the input state for a game just loaded, then redraw it
+ */
 void playfield_loaded_banked(void) {
     input_phase = INPUT_MOVE;
     thinking = 0;
@@ -571,6 +631,12 @@ void playfield_loaded_banked(void) {
     playfield_resume();
 }
 
+/**
+ * @brief Run the clocks; call once per frame
+ *
+ * A single tick advances at most two seconds, so a long pause in the
+ * caller cannot lose a game on time.
+ */
 void playfield_tick_banked(void) {
     clock_t now = clock();
     clock_t delta = now - last_clock;
@@ -589,10 +655,23 @@ void playfield_tick_banked(void) {
     }
 }
 
+/**
+ * @brief Let the computer move when it is its turn; call once per frame
+ */
 void playfield_update_banked(void) {
     if(match_computer_to_move()) engine_turn(0);
 }
 
+/**
+ * @brief Handle a key press on the board
+ *
+ * Arrow keys show and move the keyboard cursor; Return or Space acts on
+ * its square. Escape cancels a selection or promotion. Shortcuts: F flip,
+ * T board style, C computer side, I or Tab move sheet, A analyse, N new
+ * game, V music and S sound effects.
+ *
+ * @param key PETSCII keycode returned by GETIN
+ */
 void playfield_key_banked(uint8_t key) {
     if(dragging) { clear_selection(); board_refresh(); }
     switch(key) {
@@ -652,25 +731,39 @@ void playfield_key_banked(uint8_t key) {
  * sprites 0/1 belong to the pointer/cursor and 2..14 to the loading cover. */
 #pragma code-name ("DRAGCODE")
 #pragma bss-name ("DRAGBSS")
-#define DRAG_ATTR 0xFC78
-static uint8_t grab_x, grab_y, drag_toggle, last_buttons;
-static uint16_t last_x, last_y;
+#define DRAG_ATTR 0xFC78                // attributes of sprite 15
+static uint8_t grab_x, grab_y;          // pointer offset within the dragged sprite
+static uint8_t drag_toggle;             // the drag started on the selected piece
+static uint8_t last_buttons;            // mouse buttons of the previous frame
+static uint16_t last_x, last_y;         // pointer position of the previous frame
 
+/**
+ * @brief Point data port 0 at VRAM bank 1, incrementing by one
+ */
 static void drag_address(uint16_t address) {
     VERA.control = 0;
     VERA.address = address;
     VERA.address_hi = 0x11;
 }
+/**
+ * @brief Hide the dragged piece sprite and end the drag
+ */
 void playfield_drag_stop(void) {
     drag_address(DRAG_ATTR + 6);
     VERA.data0 = 0;
     dragging = 0;
 }
+/**
+ * @brief Reset the mouse state; called once at startup
+ */
 void playfield_drag_init(void) {
     last_buttons = 0;
     last_x = last_y = 0;
     playfield_drag_stop();
 }
+/**
+ * @brief Move the dragged sprite with the pointer and show it in front
+ */
 static void drag_position(uint16_t x, uint16_t y) {
     x -= grab_x;
     y -= grab_y;
@@ -681,8 +774,13 @@ static void drag_position(uint16_t x, uint16_t y) {
     VERA.data0 = y >> 8;
     VERA.data0 = 12;
 }
-/* Assemble the current set's 49 resident piece tiles into a padded 64x64
- * sprite. Both VERA ports stream VRAM; no disk access or RAM image is needed. */
+/**
+ * @brief Build the dragged sprite from the piece's board tiles
+ *
+ * Assembles the current set's 49 resident piece tiles into a padded 64x64
+ * sprite. Both VERA ports stream VRAM; no disk access or RAM image is
+ * needed.
+ */
 static void drag_image(uint8_t piece) {
     uint16_t n, tile;
     uint8_t y, x, b;
@@ -706,6 +804,17 @@ static void drag_image(uint8_t piece) {
     VERA.data0 = 0;
     VERA.data0 = 0xF0;           // 64x64, 4bpp, palette 0
 }
+/**
+ * @brief Handle the mouse: click to move, or drag and drop
+ *
+ * Pressing on an own piece selects it and starts a drag; releasing over a
+ * marked square plays the move, anywhere else returns the piece. A press
+ * elsewhere acts as a click on that square.
+ *
+ * @param x       Pointer position in screen pixels
+ * @param y       Pointer position in screen pixels
+ * @param buttons KERNAL mouse button bits; bit 0 is the left button
+ */
 void playfield_drag_mouse(uint16_t x, uint16_t y, uint8_t buttons) {
     uint8_t pressed = (buttons & 1) && !(last_buttons & 1);
     uint8_t moved = x != last_x || y != last_y;
