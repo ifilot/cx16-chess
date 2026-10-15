@@ -55,9 +55,10 @@ def main():
                 keys('Escape', 'Down', 'Down', 'Return')
                 for name, value in (('start_computer', 3), ('start_difficulty', 8), ('start_black_difficulty', 9)):
                     session.emu.write_memory(symbols['_' + name], bytes([value]))
-                keys('o', 'Down', 'Down', 'Return')
+                # Save Preferences follows the board, pieces and two audio rows.
+                keys('o', 'Down', 'Down', 'Down', 'Down', 'Return')
                 prefs = (Path(folder) / 'CHESSOPT.DAT').read_bytes()
-                assert prefs[:5] == b'X16P4' and prefs[7:9] == bytes([3, 98])
+                assert prefs[:5] == b'X16P5' and prefs[7:9] == bytes([3, 98])
                 session.close()
                 session = Session(ROOT.parent / 'x16-emulator/build/x16emu', rom, fsroot=folder)
                 session.emu.advance(480)

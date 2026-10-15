@@ -34,6 +34,7 @@
 #define START_NEW       1       // start a new game with the start_* settings
 #define START_CONTINUE  2       // resume the game held in RAM
 #define START_ERROR     3       // artwork could not be loaded; quit
+#define START_EXIT      5       // return from main to BASIC
 #define START_LOAD      4       // open the load dialog
 
 extern uint8_t start_computer;          // COMPUTER_* chosen in New Game

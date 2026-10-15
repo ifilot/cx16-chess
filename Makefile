@@ -34,6 +34,7 @@ test:
 	python3 tests/evidence_test.py
 
 test-ui: all
+	python3 tools/exit_test.py
 	python3 tools/startup_test.py
 	python3 tools/startup_input_test.py
 	python3 tools/input_test.py

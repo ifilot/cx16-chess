@@ -72,7 +72,7 @@ def main():
             data = (Path(folder) / 'CHESS1A.SAV').read_bytes()
             assert data[16] == 3 and data[17] == 0 and data[25] == 4
             shot('saved')
-            keys('Escape', 'Down', 'Down', 'Return', 'o', 'Down', 'Down', 'Return')
+            keys('Escape', 'Down', 'Down', 'Return', 'o', 'Down', 'Down', 'Down', 'Down', 'Return')
             assert (Path(folder) / 'CHESSOPT.DAT').read_bytes()[7:9] == bytes((3, 40))
             boot()
             assert read('start_computer') == 3

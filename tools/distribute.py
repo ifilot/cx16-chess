@@ -24,6 +24,7 @@ def main():
         'Music and Sounds can be toggled in Options or the midgame Escape menu.\n'
         'Keyboard: V toggles music; S toggles sound effects.\n'
         'Save Preferences in Options remembers both settings.\n'
+        'To return to BASIC, select Exit in the main menu or press X there.\n'
         'CHESS.BIN contains all banked code, music and effects; CHESS.DAT holds graphics.\n\n'
         'Source, license and credits: https://github.com/ifilot/cx16-chess\n\n'
         'ZSMKit audio library license:\n\n' + (ROOT / 'src/vendor/zsmkit/LICENSE').read_text())

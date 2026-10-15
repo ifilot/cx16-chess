@@ -129,6 +129,30 @@ The front end only talks to `match.h` and never calls the engine directly. The
 engine shares only the 0x88 board encoding with `rules.h` and receives
 positions through `engine_set_position()`.
 
+## Returning to BASIC
+
+The main menu's Exit entry (or X) returns from `main()`. All returns, including
+loading failures, share the cleanup in `src/gui/runtime.s`. This replaces the
+CX16 r37 startup in cc65 2.19, which accesses obsolete bank registers at
+`$9F60/$9F61` and does not preserve BASIC's zero page.
+
+Before constructors or C code run, the game saves `$22–$7F`, the RAM bank and
+the hardware stack pointer in resident INIT storage. On return it runs library
+destructors, stops both ZSMKit priorities and restores the previous IRQ vector,
+closes the graphics channels, disables the mouse and calls KERNAL CINT to
+restore text mode. It then restores zero page, the RAM bank and hardware stack,
+selects BASIC ROM bank 4 and returns to the SYS caller. The game uses the
+current `$00/$01` bank registers and does not jump to `$FF47`.
+
+The game still occupies its loaded main RAM, golden RAM, VRAM and working RAM
+banks 1–45; exit does not erase these areas or restore a program that was
+replaced by loading CHESS.PRG. BASIC can accept commands, create programs and
+load another application. `tools/exit_test.py` checks the actual return path,
+byte-for-byte zero-page and vector restoration, the bank registers and CPU
+stack, system bank 0 outside KERNAL input/audio state, an untouched bank-46
+sentinel, silent PSG channels, BASIC execution and reloading the game. It covers
+keyboard, mouse, a played game, and missing code/graphics files.
+
 ## The engine
 
 * 0x88 board with incrementally updated material, piece-square score,

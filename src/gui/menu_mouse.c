@@ -45,7 +45,7 @@
 uint8_t menu_mouse_hit(uint16_t x, uint16_t y, uint8_t layout) {
     uint8_t index;
     if(layout == 0) {
-        if(x >= 288 && x < 360 && y >= 368 && y < 448) return (y - 368) / 16;
+        if(x >= 288 && x < 360 && y >= 368 && y < 464) return (y - 368) / 16;
     } else if(layout == 1 || layout == 2) {
         if(x < 344 || x >= 616) return 0xFF;
         if(y >= 136 && y < 184) return 0;

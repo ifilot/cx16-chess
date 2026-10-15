@@ -75,7 +75,9 @@ def main():
             with guard():
                 key('Down'); text(36, 50, 'LOAD GAME', 7)
                 key('Up'); text(36, 46, 'NEW GAME', 7)
+                key('Up'); text(36, 56, 'EXIT', 7)
                 key('Up'); text(36, 54, 'ABOUT', 7)
+                key('Down'); text(36, 56, 'EXIT', 7)
                 key('Down'); text(36, 46, 'NEW GAME', 7)
             key('n'); session.emu.advance(120)
             with guard():

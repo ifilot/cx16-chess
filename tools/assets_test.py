@@ -49,11 +49,17 @@ def main():
                 assert session.emu.read_memory(0x9F29)[0] & 0x70 == 0x50, case
                 assert session.emu.read_memory(0x9F2D, 3) == bytes((2, 0xF0, 0xF4)), case
                 session.emu.request('breakpoint', action='remove', address=symbols['asset_abort'], bank=0)
-                session.emu.advance(120)
+                session.emu.request('breakpoint', address=symbols['runtime_restored'], bank=0)
+                assert session.emu.advance(120)['reason'] == 'breakpoint'
                 assert session.emu.read_memory(symbols['asset_opened'])[0] == 0
-                assert session.emu.read_memory(0x9F29)[0] & 0x70 == 0x50
-                assert session.emu.read_memory(0x1FC16, 2, space='vram') == b'\x0c\x77'
-                print(f'PASS: {case} rejected; loading cover stays visible and file channels close')
+                assert session.emu.read_memory(1)[0] == 4
+                session.emu.request('breakpoint', action='remove', address=symbols['runtime_restored'], bank=0)
+                session.emu.advance(120)
+                session.emu.request('paste', text='PRINT 120+4\r')
+                session.emu.advance(120)
+                screen = session.emu.read_memory(0x1B000, 80 * 60 * 2, space='vram')[::2]
+                assert b'124' in screen, case
+                print(f'PASS: {case} rejected under loading cover; channels close and BASIC returns')
             finally:
                 session.emu.close()
         file.write_bytes(original)

@@ -86,7 +86,7 @@ static void mouse_read(void) {
 }
 
 /**
- * @brief Load the game, then run the scene loop until a load error occurs
+ * @brief Load the game, then run the scene loop until Exit is selected or a load error occurs
  */
 void main(void) {
     uint8_t key;                        // key of this frame, or 0
@@ -141,7 +141,7 @@ void main(void) {
             if(!(mouse_buttons & 1)) release_mouse = 0;
             action = release_mouse ? START_NONE : start_mouse(MOUSE_X, MOUSE_Y, mouse_buttons);
             if(!action && key) action = start_key(key);
-            if(action == START_ERROR) return;
+            if(action == START_ERROR || action == START_EXIT) return;
             if(action == START_LOAD) {
                 if(!initialized) { match_init(); initialized = 1; }
                 *(volatile uint8_t*)0x00 = 22;

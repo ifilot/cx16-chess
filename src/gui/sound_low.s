@@ -171,3 +171,18 @@ _sound_music_volume:
 _sound_effects_volume:
         ldx #1
         jmp zsm_setatten
+
+; Stop both memory players and detach the ISR on every return from main.
+.import zsm_stop, zsmkit_clearisr
+.export _sound_shutdown
+_sound_shutdown:
+        lda _sound_ready
+        beq shutdown_done
+        jsr zsmkit_clearisr
+        ldx #1
+        jsr zsm_stop
+        ldx #0
+        jsr zsm_stop
+        stz _sound_ready
+shutdown_done:
+        rts

@@ -136,7 +136,7 @@ static void draw_focus(uint8_t index) {
     uint8_t row;
     if(!setup) {
         if(index == 1 && !resumable) color = COL_GREY;
-        video_text(36, 46 + index * 2, index == 0 ? "NEW GAME" : index == 1 ? "CONTINUE" : index == 2 ? "LOAD GAME" : index == 3 ? "OPTIONS" : "ABOUT", color);
+        video_text(36, 46 + index * 2, index == 0 ? "NEW GAME" : index == 1 ? "CONTINUE" : index == 2 ? "LOAD GAME" : index == 3 ? "OPTIONS" : index == 4 ? "ABOUT" : "EXIT", color);
     } else if(setup == 1) {
         if(index < (player_side == 2 ? 3 : 2)) {
             // a setting with its value between left and right arrows
@@ -255,8 +255,7 @@ static void draw_menu(void) {
         return;
     }
     video_clear_block(0, 46, 80, 14);
-    for(i=0; i<5; i++) draw_focus(i);
-    video_text_centered(320, 58, "UP/DOWN  ENTER TO SELECT", COL_INK);
+    for(i=0; i<6; i++) draw_focus(i);
     video_present();
 }
 
@@ -366,6 +365,7 @@ static uint8_t activate(void) {
     } else if(selection == 1) {
         if(resumable) return START_CONTINUE;
     } else {
+        if(selection == 5) return START_EXIT;
         if(selection == 2) return START_LOAD;
         if(selection == 4) {
             if(!video_show_about()) return START_ERROR;
@@ -390,7 +390,7 @@ static uint8_t activate(void) {
  *
  * Up/Down move the focus (skipping an unavailable Continue), Left/Right
  * change a setting, Return/Space activate and Escape goes back. In the
- * main menu N, C, L, A and O are shortcuts; V and S toggle the audio.
+ * main menu N, C, L, A, O and X are shortcuts; V and S toggle the audio.
  *
  * @param key PETSCII keycode returned by GETIN
  *
@@ -403,13 +403,13 @@ uint8_t start_key(uint8_t key) {
         case KEY_UP:
             sound_sfx(SFX_MENU_MOVE);
             if(setup == 3) return START_NONE;
-            selection = selection == 0 ? (setup == 2 ? 5 : setup ? (player_side == 2 ? 3 : 2) : 4) : selection - 1;
+            selection = selection == 0 ? (setup == 2 ? 5 : setup ? (player_side == 2 ? 3 : 2) : 5) : selection - 1;
             if(!setup && !resumable && selection == 1) selection = 0;
             break;
         case KEY_DOWN:
             sound_sfx(SFX_MENU_MOVE);
             if(setup == 3) return START_NONE;
-            selection = selection == (setup == 2 ? 5 : setup ? (player_side == 2 ? 3 : 2) : 4) ? 0 : selection + 1;
+            selection = selection == (setup == 2 ? 5 : setup ? (player_side == 2 ? 3 : 2) : 5) ? 0 : selection + 1;
             if(!setup && !resumable && selection == 1) selection = 2;
             break;
         case KEY_LEFT: case KEY_RIGHT:
@@ -436,6 +436,9 @@ uint8_t start_key(uint8_t key) {
             return START_NONE;
         case 'L': case 'l':
             if(!setup) return START_LOAD;
+            return START_NONE;
+        case 'X': case 'x':
+            if(!setup) return START_EXIT;
             return START_NONE;
         case 'A': case 'a':
             if(!setup) { selection = 4; return activate(); }

@@ -116,8 +116,8 @@ def main():
         session.emu.advance(480)
         shot('start')
         initial = read('match_clock', 4)
-        # Main-menu wrap includes About, skipping disabled Continue.
-        keys('Up', 'Return')
+        # Main-menu wrap reaches Exit, then About.
+        keys('Up', 'Up', 'Return')
         session.emu.advance(300)
         shot('about')
         assert read('match_clock', 4) == initial

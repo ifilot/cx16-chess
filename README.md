@@ -77,6 +77,7 @@ move, and the game shows a warning when you select one of them.
 | Cancel a selection | Click an empty square | |
 | Pause, save or return to the menu | | Escape |
 | Open the menu | | M |
+| Exit to BASIC | Main menu: Exit | X in the main menu |
 | Analyse the position | | A |
 | Show or hide the move sheet | | I or Tab |
 | Flip the board | | F |
